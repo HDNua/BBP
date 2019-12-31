@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scenes/RxpbUsage/maps/Map2.unity
+- path: Assets/scenes/RxpbUsage/maps/Map3.unity
   isLoaded: 1
   isActive: 1

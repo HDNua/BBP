@@ -1,4 +1,13 @@
-﻿RXPB v6.7.2.0
+﻿BBP v1.0.0.0
+----
+
+- Ataho initial boss battle was added.
+
+
+end.
+
+
+RXPB v6.7.2.0
 
 - 모든 Manager 개체가 자신에 대한 Instance 속성을 가지도록 변경.
 

@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+
+
 /// <summary>
 /// 보스 적 캐릭터를 정의합니다.
 /// </summary>

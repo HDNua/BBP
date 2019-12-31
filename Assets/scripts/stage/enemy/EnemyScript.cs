@@ -394,8 +394,9 @@ public abstract class EnemyScript : MonoBehaviour
     /// <summary>
     /// 기본 색상 팔레트를 설정합니다.
     /// </summary>
-    protected Color[] DefaultPalette
+    public Color[] DefaultPalette
     {
+        get { return _defaultPalette; }
         set { _defaultPalette = value; }
     }
 

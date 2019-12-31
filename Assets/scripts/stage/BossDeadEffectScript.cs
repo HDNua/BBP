@@ -23,6 +23,10 @@ public class BossDeadEffectScript : EffectScript
     /// 
     /// </summary>
     public EffectBossExplosionScript _explosion;
+    /// <summary>
+    /// 보스 캐릭터입니다.
+    /// </summary>
+    public EnemyBossScript _boss;
 
     /// <summary>
     /// 불이 켜진 상태라면 참입니다.
@@ -56,6 +60,9 @@ public class BossDeadEffectScript : EffectScript
     /// </summary>
     public float _explosionEndTime = 5f;
 
+
+    public Color[] _defaultPalette;
+
     #endregion
 
 
@@ -69,12 +76,15 @@ public class BossDeadEffectScript : EffectScript
         StartCoroutine(CoroutineDead());
 
         // 
+        _defaultPalette = _boss.DefaultPalette;
+
+        // 
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         Sprite sprite = renderer.sprite;
         _originalTexture = sprite.texture;
         _blinkingTexture = GetColorUpdatedTexture(
             sprite.texture,
-            EnemyColorPalette.IntroBossHoverMechPalette,
+            _boss.DefaultPalette,
             EnemyColorPalette.InvenciblePalette);
     }
     /// <summary>

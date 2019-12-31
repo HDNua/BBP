@@ -137,39 +137,39 @@ public class EffectScript : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="texture"></param>
-    /// <param name="src"></param>
-    /// <param name="dst"></param>
+    /// <param name="srcColors"></param>
+    /// <param name="dstColors"></param>
     /// <returns></returns>
-    protected Texture2D GetColorUpdatedTexture(Texture2D texture, Color[] src, Color[] dst)
+    protected Texture2D GetColorUpdatedTexture(Texture2D texture, Color[] srcColors, Color[] dstColors)
     {
-        Color[] colors = texture.GetPixels();
-        Color[] pixels = new Color[colors.Length];
+        Color[] texturePixelArray = texture.GetPixels();
+        Color[] pixels = new Color[texturePixelArray.Length];
 
         // 모든 픽셀을 돌면서 색상을 업데이트합니다.
-        for (int pixelIndex = 0, pixelCount = colors.Length; pixelIndex < pixelCount; ++pixelIndex)
+        for (int pixelIndex = 0, pixelCount = texturePixelArray.Length; pixelIndex < pixelCount; ++pixelIndex)
         {
-            Color color = colors[pixelIndex];
-            pixels[pixelIndex] = color;
-            if (color.a == 1)
+            Color currentPixelColor = texturePixelArray[pixelIndex];
+            pixels[pixelIndex] = currentPixelColor;
+            if (currentPixelColor.a == 1)
             {
-                for (int targetIndex = 0, targetPixelCount = src.Length;
+                for (int targetIndex = 0, targetPixelCount = srcColors.Length;
                     targetIndex < targetPixelCount;
                     ++targetIndex)
                 {
-                    Color colorDst = src[targetIndex];
-                    if (Mathf.Approximately(color.r, colorDst.r) &&
-                        Mathf.Approximately(color.g, colorDst.g) &&
-                        Mathf.Approximately(color.b, colorDst.b) &&
-                        Mathf.Approximately(color.a, colorDst.a))
+                    Color srcColor = srcColors[targetIndex];
+                    if (Mathf.Approximately(currentPixelColor.r, srcColor.r) &&
+                        Mathf.Approximately(currentPixelColor.g, srcColor.g) &&
+                        Mathf.Approximately(currentPixelColor.b, srcColor.b) &&
+                        Mathf.Approximately(currentPixelColor.a, srcColor.a))
                     {
-                        pixels[pixelIndex] = dst[targetIndex];
+                        pixels[pixelIndex] = dstColors[targetIndex];
                         break;
                     }
                 }
             }
             else
             {
-                pixels[pixelIndex] = color;
+                pixels[pixelIndex] = currentPixelColor;
             }
         }
 

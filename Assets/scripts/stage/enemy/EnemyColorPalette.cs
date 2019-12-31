@@ -100,6 +100,18 @@ public static class EnemyColorPalette
     };
 
 
+
+    /// <summary>
+    /// 아타호 보스의 기본 색상표입니다.
+    /// </summary>
+    static readonly int[] BOSS_ATAHO_PALETTE =
+    {
+        0x000000, 0xFFFFFF, 0xFF0000, 0x523100, 0x734221, 0xCE5200, 0xDE8C10, 0xFFBD10, 0xFFDE52, 0xFFDECE, 0x214200, 0x637321, 0x8C9C31, 0x316310, 0x316310,
+        0x000000, 0xFFFFFF, 0xFF0000, 0x523100, 0x734221, 0xCE5200, 0xDE8C10, 0xFFBD10, 0xFFDE52, 0xFFDECE, 0x214200, 0x637321, 0x8C9C31, 0x316310, 0x316310,
+    };
+
+
+
     /// <summary>
     /// 
     /// </summary>
@@ -159,6 +171,8 @@ public static class EnemyColorPalette
     public static Color[] IntroBossBodyPalette { get; private set; }
     public static Color[] IntroBossArmPalette { get; private set; }
 
+    public static Color[] BossAtahoPalette { get; private set; }
+
     #endregion
 
 
@@ -191,6 +205,8 @@ public static class EnemyColorPalette
         Color[] introBossBodyPalette;
         Color[] introBossArmPalette;
 
+        Color[] bossAtahoPalette;
+
         // 팔레트를 초기화합니다.
         invenciblePalette = new Color[PALETTE_COUNT];
         gigadeathPalette = new Color[PALETTE_COUNT];
@@ -198,6 +214,8 @@ public static class EnemyColorPalette
         trapBlastPalette = new Color[PALETTE_COUNT];
         spikyMk2Palette = new Color[PALETTE_COUNT];
         battonBonePalette = new Color[PALETTE_COUNT];
+
+        // 
         introBossHoverMechPalette = new Color[PALETTE_COUNT];
 
         // 
@@ -205,6 +223,10 @@ public static class EnemyColorPalette
         introBossBodyPalette = new Color[PALETTE_COUNT];
         introBossArmPalette = new Color[PALETTE_COUNT];
 
+        // 
+        bossAtahoPalette = new Color[PALETTE_COUNT];
+
+        // 
         for (int i = 0; i < PALETTE_COUNT; ++i)
         {
             // 기본 색상표를 초기화합니다.
@@ -214,12 +236,17 @@ public static class EnemyColorPalette
             trapBlastPalette[i] = ColorFromInt(TRAP_BLAST_COLOR_PALETTE[i]);
             spikyMk2Palette[i] = ColorFromInt(SPIKY_MK2_COLOR_PALETTE[i]);
             battonBonePalette[i] = ColorFromInt(BATTON_BONE_COLOR_PALETTE[i]);
+
+            // 
             introBossHoverMechPalette[i] = ColorFromInt(INTRO_BOSS_HOVER_MECH_PALETTE[i]);
 
             // 
             introBossHeadPalette[i] = ColorFromInt(INTRO_BOSS_HEAD_COLOR_PALETTE[i]);
             introBossBodyPalette[i] = ColorFromInt(INTRO_BOSS_BODY_COLOR_PALETTE[i]);
             introBossArmPalette[i] = ColorFromInt(INTRO_BOSS_ARM_COLOR_PALETTE[i]);
+
+            // 
+            bossAtahoPalette[i] = ColorFromInt(BOSS_ATAHO_PALETTE[i]);
         }
         InvenciblePalette = invenciblePalette;
         GigadeathPalette = gigadeathPalette;
@@ -227,12 +254,17 @@ public static class EnemyColorPalette
         TrapBlastPalette = trapBlastPalette;
         SpikyMK2Plaette = spikyMk2Palette;
         BattonBonePalette = battonBonePalette;
+
+        // 
         IntroBossHoverMechPalette = introBossHoverMechPalette;
 
         // 
         IntroBossHeadPalette = introBossHeadPalette;
         IntroBossBodyPalette = introBossBodyPalette;
         IntroBossArmPalette = introBossArmPalette;
+
+        // 
+        BossAtahoPalette = bossAtahoPalette;
     }
 
 

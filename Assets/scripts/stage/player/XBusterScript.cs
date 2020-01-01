@@ -116,6 +116,11 @@ public class XBusterScript : AttackScript
                 // 반사 효과를 생성합니다.
                 MakeReflectedParticle(_rigidbody.velocity.x < 0, transform);
             }
+            // 
+            else if (enemy.DoesIgnoreBullets)
+            {
+
+            }
             // 그 외의 경우
             else
             {
@@ -125,7 +130,11 @@ public class XBusterScript : AttackScript
             }
 
             // 적이 살아있다면 탄환을 제거합니다.
-            if (enemy.IsAlive())
+            if (enemy.DoesIgnoreBullets)
+            {
+
+            }
+            else if (enemy.IsAlive())
             {
                 Destroy(gameObject);
             }

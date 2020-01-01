@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
+
 /// <summary>
 /// 적 캐릭터를 정의합니다.
 /// </summary>
@@ -61,6 +62,12 @@ public abstract class EnemyScript : MonoBehaviour
     public bool _alwaysInvencible = false;
 
     /// <summary>
+    /// 탄환을 무시한다면 참입니다.
+    /// </summary>
+    public bool _doesIgnoreBullets = false;
+
+
+    /// <summary>
     /// 캐릭터가 사용할 효과음 집합입니다.
     /// </summary>
     public AudioClip[] audioClips;
@@ -83,7 +90,7 @@ public abstract class EnemyScript : MonoBehaviour
     /// 피격 텍스쳐 집합입니다.
     /// </summary>
     Dictionary<int, Texture2D> _hit_textures = new Dictionary<int, Texture2D>();
-    
+
     #endregion
     
 
@@ -209,6 +216,14 @@ public abstract class EnemyScript : MonoBehaviour
     protected StageManager _StageManager
     {
         get { return StageManager.Instance; }
+    }
+
+    /// <summary>
+    /// 탄환을 무시한다면 참입니다.
+    /// </summary>
+    public bool DoesIgnoreBullets
+    {
+        get { return _doesIgnoreBullets; }
     }
 
     #endregion

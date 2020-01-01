@@ -60,8 +60,10 @@ public class BossDeadEffectScript : EffectScript
     /// </summary>
     public float _explosionEndTime = 5f;
 
-
-    public Color[] _defaultPalette;
+    /// <summary>
+    /// 
+    /// </summary>
+    public Color[] _defaultBossPalette;
 
     #endregion
 
@@ -76,7 +78,7 @@ public class BossDeadEffectScript : EffectScript
         StartCoroutine(CoroutineDead());
 
         // 
-        _defaultPalette = _boss.DefaultPalette;
+        _defaultBossPalette = _boss.DefaultPalette;
 
         // 
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();

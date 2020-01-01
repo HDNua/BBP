@@ -34,7 +34,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// <summary>
     /// 
     /// </summary>
-    public Transform _ultimateStartPosition;
+    public Transform[] _positions;
 
     /// <summary>
     /// X축 속력입니다.
@@ -56,7 +56,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// <summary>
     /// 방패를 들어 막는 시간입니다.
     /// </summary>
-    public float _guardTime = 3f;
+    public float _guardTime = 0.5f;
     /// <summary>
     /// 추적 시간입니다.
     /// </summary>
@@ -102,6 +102,10 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// 방패를 들어 막는 중이라면 참입니다.
     /// </summary>
     bool _guarding = false;
+    /// <summary>
+    /// 위치를 변경하는 중이라면 참입니다.
+    /// </summary>
+    bool _hopping = false;
 
     #endregion
 
@@ -126,6 +130,15 @@ public class EnemyBossAtahoScript : EnemyBossScript
         get { return _guarding; }
         set { _Animator.SetBool("Guarding", _guarding = value); }
     }
+    /// <summary>
+    /// 위치를 전환하는 중이라면 참입니다.
+    /// </summary>
+    bool Hopping
+    {
+        get { return _hopping; }
+        set { _Animator.SetBool("Hopping", _hopping = value); }
+    }
+
 
     /// <summary>
     /// 궁극기가 활성화되었다면 참입니다.
@@ -149,13 +162,12 @@ public class EnemyBossAtahoScript : EnemyBossScript
         // 컬러 팔레트를 설정합니다.
         DefaultPalette = EnemyColorPalette.BossAtahoPalette;
 
-        // 비행 상태로 변경합니다.
-        Flying = true;
+        // 떨어지는 상태로 변경합니다.
         Landed = false;
-        StopFalling();
+        Fall();
 
         // 아래로 내려오는 것으로 시작합니다.
-        MoveDown();
+        // MoveDown();
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트합니다.
@@ -177,7 +189,13 @@ public class EnemyBossAtahoScript : EnemyBossScript
             return;
         }
 
-        //
+        // 
+        if (Attacking)
+        {
+
+        }
+
+        /*
         if (UltimateEnabled == false && Health <= _dangerHealth)
         {
             // 
@@ -206,6 +224,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
             UltimateEnabled = true;
             ReadyUltimate();
         }
+        */
     }
     /// <summary>
     /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.
@@ -298,7 +317,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
     protected override void Land()
     {
         base.Land();
-        SoundEffects[1].Play();
+        SoundEffects[0].Play();
     }
     /// <summary>
     /// 등장 액션입니다.
@@ -407,7 +426,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
     void Guard()
     {
         Guarding = true;
-        _guard.gameObject.SetActive(true);
+        // _guard.gameObject.SetActive(true);
 
         // 막기 코루틴을 시작합니다.
         _coroutineGuard = StartCoroutine(CoroutineGuard());
@@ -418,8 +437,45 @@ public class EnemyBossAtahoScript : EnemyBossScript
     void StopGuarding()
     {
         Guarding = false;
-        _guard.gameObject.SetActive(false);
+        //_guard.gameObject.SetActive(false);
     }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    Vector3 _hopStartPoint;
+    /// <summary>
+    /// 
+    /// </summary>
+    Vector3 _hopEndPoint;
+
+
+    /// <summary>
+    /// 위치를 바꿉니다.
+    /// </summary>
+    /// <param name="newPosition">새 위치입니다.</param>
+    void HopTo(Transform newPosition)
+    {
+        Hopping = true;
+
+        // 
+        _hopStartPoint = transform.position;
+        _hopEndPoint = newPosition.position;
+
+        // 위치 전환 코루틴을 시작합니다.
+        _coroutineHop = StartCoroutine(CoroutineHop());
+    }
+    /// <summary>
+    /// 위치 전환을 중지합니다.
+    /// </summary>
+    void StopHopping()
+    {
+        // 
+        Hopping = false;
+    }
+
+
     /// <summary>
     /// 플레이어를 추적합니다.
     /// </summary>
@@ -447,7 +503,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
         Attacking = false;
 
         // 가드를 활성화합니다.
-        _guard.gameObject.SetActive(true);
+        // _guard.gameObject.SetActive(true);
 
         // 추적 코루틴을 시작합니다.
         _coroutineFollow = StartCoroutine(CoroutineFollow());
@@ -610,7 +666,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
     }
 
     /// <summary>
-    /// 
+    /// 플레이어를 향해 탄환을 발사합니다.
     /// </summary>
     public void ShotToPlayer()
     {
@@ -631,15 +687,82 @@ public class EnemyBossAtahoScript : EnemyBossScript
         }
 
         // 탄환을 발사합니다.
-        Shot(_shotPosition[0]);
+        Shot(_shotPosition[1]);
     }
+
+
+
+    /// <summary>
+    /// 다음 뛸 지점의 집합을 반환합니다.
+    /// </summary>
+    /// <returns>다음 뛸 지점의 집합을 반환합니다.</returns>
+    int[] GetHopPositionArray()
+    {
+        float[] diffs =
+        {
+            Vector3.Distance(transform.position, _positions[0].position),
+            Vector3.Distance(transform.position, _positions[1].position),
+            Vector3.Distance(transform.position, _positions[2].position),
+            Vector3.Distance(transform.position, _positions[3].position),
+            Vector3.Distance(transform.position, _positions[4].position),
+            Vector3.Distance(transform.position, _positions[5].position),
+            Vector3.Distance(transform.position, _positions[6].position),
+        };
+
+        // 
+        float minDist = Mathf.Min(diffs);
+
+        // 
+        int[] hopPositionArray;
+        if (minDist == diffs[0])
+        {
+            hopPositionArray = new int[] { 1, 2 };
+        }
+        else if (minDist == diffs[1])
+        {
+            hopPositionArray = new int[] { 0, 3 };
+        }
+        else if (minDist == diffs[2])
+        {
+            hopPositionArray = new int[] { 0, 3, 4 };
+        }
+        else if (minDist == diffs[3])
+        {
+            hopPositionArray = new int[] { 1, 2, 4, 5 };
+        }
+        else if (minDist == diffs[4])
+        {
+            hopPositionArray = new int[] { 2, 3, 6 };
+        }
+        else if (minDist == diffs[5])
+        {
+            hopPositionArray = new int[] { 3, 6 };
+        }
+        else if (minDist == diffs[6])
+        {
+            hopPositionArray = new int[] { 4, 5 };
+        }
+        else
+        {
+            hopPositionArray = new int[] { 1, 2 };
+        }
+
+        // 
+        return hopPositionArray;
+    }
+
+
 
     /// <summary>
     /// 막기 다음 액션을 수행합니다.
     /// </summary>
     void PerformActionAfterGuard()
     {
-        Attack();
+        // 
+        int[] hopPositionArray = GetHopPositionArray();
+        int newPositionIndex = hopPositionArray[Random.Range(0, hopPositionArray.Length)];
+        Transform newPosition = _positions[newPositionIndex];
+        HopTo(newPosition);
     }
     /// <summary>
     /// 공격 다음 액션을 수행합니다.
@@ -652,7 +775,9 @@ public class EnemyBossAtahoScript : EnemyBossScript
         }
         else
         {
-            Follow();
+            // Follow();
+            // Attack();
+            Guard();
         }
     }
     /// <summary>
@@ -676,6 +801,13 @@ public class EnemyBossAtahoScript : EnemyBossScript
     {
         Guard();
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    void PerformActionAfterHop()
+    {
+        Attack();
+    }
 
     #endregion
 
@@ -693,9 +825,15 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// </summary>
     Coroutine _coroutineGuard;
     /// <summary>
+    /// 위치 전환 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineHop;
+    /// <summary>
     /// 추적 코루틴입니다.
     /// </summary>
     Coroutine _coroutineFollow;
+
+
 
     /// <summary>
     /// 등장 코루틴입니다.
@@ -721,8 +859,14 @@ public class EnemyBossAtahoScript : EnemyBossScript
         // 움직임을 멈춥니다.
         StopMoving();
 
-        // 탄환을 세 번 발사합니다.
+        // 탄환을 발사합니다.
+        while (IsAnimationPlaying("BossAtahoShot") == false)
+        {
+            yield return false;
+        }
         ShotToPlayer();
+
+        /*
         yield return new WaitForSeconds(_shotInterval);
         /// Shot(_shotPosition[0]);
         ShotToPlayer();
@@ -730,6 +874,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
         /// Shot(_shotPosition[0]);
         ShotToPlayer();
         yield return new WaitForSeconds(_shotInterval);
+        */
 
         // 공격을 끝냅니다.
         Attacking = false;
@@ -755,6 +900,78 @@ public class EnemyBossAtahoScript : EnemyBossScript
         _coroutineGuard = null;
         yield break;
     }
+
+
+    float _hopSpeed = 10f;
+    float _arcHeight = 5f;
+
+    /// <summary>
+    /// 위치 전환 코루틴입니다.
+    /// http://luminaryapps.com/blog/arcing-projectiles-in-unity/
+    /// </summary>
+    IEnumerator CoroutineHop()
+    {
+        Jump();
+        float x0 = _hopStartPoint.x;
+        float x1 = _hopEndPoint.x;
+
+        yield return false;
+
+        // 점프 하고 있는 중에는 코루틴을 그냥 진행합니다.
+        while (Jumping)
+        {
+            // Compute the next position, with arc added in
+            float dist = x1 - x0;
+            float nextX = Mathf.MoveTowards(transform.position.x, x1, _hopSpeed * Time.deltaTime);
+            float baseY = Mathf.Lerp(_hopStartPoint.y, _hopEndPoint.y, (nextX - x0) / dist);
+            float arc = _arcHeight * (nextX - x0) * (nextX - x1) / (-0.25f * dist * dist);
+            Vector3 nextPos = new Vector3(nextX, baseY + arc, transform.position.z);
+
+            // Rotate to face the next position, and then move there
+            transform.position = nextPos;
+
+            //
+            yield return false;
+        }
+
+        // 
+        Fall();
+        while (Landed == false)
+        {
+            // Compute the next position, with arc added in
+            float dist = x1 - x0;
+            float nextX = Mathf.MoveTowards(transform.position.x, x1, _hopSpeed * Time.deltaTime);
+            float baseY = Mathf.Lerp(_hopStartPoint.y, _hopEndPoint.y, (nextX - x0) / dist);
+            float arc = _arcHeight * (nextX - x0) * (nextX - x1) / (-0.25f * dist * dist);
+            Vector3 nextPos = new Vector3(nextX, baseY + arc, transform.position.z);
+
+            // Rotate to face the next position, and then move there
+            transform.position = nextPos;
+
+            // Do something when we reach the target
+            if (nextPos.x == _hopEndPoint.x)
+            {
+                break;
+            }
+
+            // 
+            yield return false;
+        }
+
+        // Do something when we reach the target
+        // if (nextPos == targetPos) Arrived();
+        // _hopStartPoint = null;
+        // _hopEndPoint = null;
+
+        // 
+        StopFalling();
+        StopHopping();
+        PerformActionAfterHop();
+        _coroutineHop = null;
+        yield break;
+    }
+
+
     /// <summary>
     /// 추적 코루틴입니다.
     /// </summary>
@@ -786,23 +1003,27 @@ public class EnemyBossAtahoScript : EnemyBossScript
         _movingSpeedX = _ultimateSpeedX1;
         _movingSpeedY = _ultimateSpeedY1;
 
-        MoveTo(_ultimateStartPosition);
+        // 
+        int newPositionIndex = Random.Range(0, _positions.Length);
+        Transform newPosition = _positions[newPositionIndex];
+
+        // 
+        MoveTo(newPosition);
         while (true)
         {
             // 
             Vector3 newPos = transform.position;
-            Vector3 ultPos = _ultimateStartPosition.position;
+            Vector3 dstPos = newPosition.position;
 
             // 
-            if (newPos.x > ultPos.x)
-                newPos.x = ultPos.x;
-            if (newPos.y < ultPos.y)
-                newPos.y = ultPos.y;
-            /// Handy.Log("NewPos={0}, UltPos={1}", newPos, ultPos);
+            if (newPos.x > dstPos.x)
+                newPos.x = dstPos.x;
+            if (newPos.y < dstPos.y)
+                newPos.y = dstPos.y;
             transform.position = newPos;
 
             // 
-            if (Vector3.Distance(newPos, ultPos) < 0.1f)
+            if (Vector3.Distance(newPos, dstPos) < 0.1f)
             {
                 break;
             }

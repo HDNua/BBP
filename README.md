@@ -17,6 +17,8 @@ Composer: flamme
 
 Graphic Designer: 알엑스
 
+Graphic Designer: 장코
+
 Sprites Creator: 하루나
 
 Boss Concept Designer: <a href="http://apselhaven.deviantart.com/">ApselHaven</a>

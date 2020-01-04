@@ -67,14 +67,21 @@ public class CameraZoneBorder : MonoBehaviour
     /// 카메라 존 경계의 부모 개체입니다.
     /// </summary>
     CameraZoneBorderParent _parent;
-    
+
     #endregion
-    
+
 
 
 
 
     #region MonoBehaviour 기본 메서드를 재정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    void Awake()
+    {
+        _database = DataBase.Instance;
+    }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다.
     /// </summary>
@@ -82,7 +89,6 @@ public class CameraZoneBorder : MonoBehaviour
     {
         // 필드를 초기화합니다.
         _parent = GetComponentInParent<CameraZoneBorderParent>();
-        _database = DataBase.Instance;
         _stageManager = StageManager.Instance;
         _cameraFollow = Camera.main.GetComponent<CameraFollow>();
         

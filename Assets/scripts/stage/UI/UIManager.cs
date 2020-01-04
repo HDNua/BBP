@@ -30,15 +30,41 @@ public class UIManager : MonoBehaviour
     public HUDScript _subHUD;
 
     /// <summary>
-    /// 보스 HUD 개체입니다.
+    /// 
     /// </summary>
-    public BossHUDScript _bossHUD;
-    
+    public BossHUDScript[] _bossHudArray;
+
     #endregion
 
 
 
-    
+
+    #region Unity 개체에 대한 참조를 보관합니다.
+    /// <summary>
+    /// 보스 전투 관리자입니다.
+    /// </summary>
+    BossBattleManager _bossBattleManager;
+
+    #endregion
+
+
+
+
+
+    #region MonoBehaviour 기본 메서드를 재정의 합니다.
+    /// <summary>
+    /// MonoBehaviour 개체를 초기화합니다. (최초 1회만 수행)
+    /// </summary>
+    void Awake()
+    {
+        _bossBattleManager = BossBattleManager.Instance;
+    }
+
+    #endregion
+
+
+
+
 
     #region 요청 메서드를 정의합니다.
     /// <summary>
@@ -78,7 +104,12 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void UpdateBossHealthText()
     {
-        _bossHUD._healthText.text = _database._bossBattleManager._boss.Health.ToString();
+        EnemyBossScript[] bosses = _bossBattleManager.Bosses;
+        for (int i = 0, len = bosses.Length; i < len; ++i)
+        {
+            EnemyBossScript boss = bosses[i];
+            _bossHudArray[i]._healthText.text = boss.Health.ToString();
+        }
     }
 
     /// <summary>
@@ -86,15 +117,35 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void ActivateBossHUD()
     {
-        _bossHUD.gameObject.SetActive(true);
+        /// _bossHUD.gameObject.SetActive(true);
+        foreach (BossHUDScript hud in _bossHudArray)
+        {
+            hud.gameObject.SetActive(true);
+        }
     }
     /// <summary>
     /// 보스 HUD를 비활성화합니다.
     /// </summary>
     public void DeactivateBossHUD()
     {
-        _bossHUD.gameObject.SetActive(false);
+        /// _bossHUD.gameObject.SetActive(false);
+        foreach (BossHUDScript hud in _bossHudArray)
+        {
+            hud.gameObject.SetActive(false);
+        }
     }
+
+    #endregion
+
+
+
+
+    #region 구형 정의를 보관합니다.
+    [Obsolete("_bossHUD는 더 이상 사용되지 않습니다. _bossHudArray로 대체되었습니다.")]
+    /// <summary>
+    /// 보스 HUD 개체입니다.
+    /// </summary>
+    public BossHUDScript _bossHUD;
 
     #endregion
 }

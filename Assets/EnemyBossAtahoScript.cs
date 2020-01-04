@@ -32,7 +32,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
     public Transform[] _shotPosition;
 
     /// <summary>
-    /// 
+    /// 이동할 위치 집합입니다.
     /// </summary>
     public Transform[] _positions;
 
@@ -285,20 +285,51 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// </summary>
     public override void Dead()
     {
+        BossBattleManager _bossBattleManager = BossBattleManager.Instance;
+        Transform enemyParent = _StageManager._enemyParent.transform;
+
+        // 
+        bool isEveryBossesDead = _bossBattleManager.IsEveryBossesDead();
+
         // 모든 탄환을 제거합니다.
-        _StageManager.RequestDisableAllEnemy();
+        if (isEveryBossesDead)
+        {
+            _StageManager.RequestDisableAllEnemy();
+        }
+        else
+        {
+            transform.SetParent(enemyParent);
+        }
 
         // 개체 대신 놓일 그림을 활성화합니다.
         Vector3 position = transform.position;
-        BossDeadEffectScript effect = BossBattleManager.Instance._bossDeadEffect;
+
+        // 
+        /// BossDeadEffectScript effect = _bossBattleManager._bossDeadEffect;
+        BossDeadEffectScript effect;
+        if (isEveryBossesDead)
+        {
+            effect = _bossBattleManager._lastBossDeadEffect;
+        }
+        else
+        {
+            effect = _bossBattleManager._bossDeadEffect;
+        }
+        // 
+        Instantiate(effect, position, transform.rotation)
+            .gameObject.SetActive(true);
         effect.transform.position = position;
         if (FacingRight)
             effect.transform.localScale = new Vector3
                 (-effect.transform.localScale.x, effect.transform.localScale.x);
+
         effect.gameObject.SetActive(true);
 
         // 플레이어의 움직임을 막습니다.
-        _StageManager.RequestBlockMoving();
+        if (isEveryBossesDead)
+        {
+            _StageManager.RequestBlockMoving();
+        }
 
         // 개체 자신을 제거합니다.
         RequestDestroy();

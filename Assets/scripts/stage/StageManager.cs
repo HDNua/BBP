@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Runtime.CompilerServices;
 
+
+
 /// <summary>
 /// 스테이지 장면 관리자입니다.
 /// </summary>
@@ -32,10 +34,6 @@ public class StageManager : HDSceneManager
     /// 체크포인트 카메라 존 집합입니다.
     /// </summary>
     public CameraZone[] _checkpointCameraZones;
-    /// <summary>
-    /// 
-    /// </summary>
-    public GameObject[] _checkpointCameraZoneObjects;
 
     /// <summary>
     /// 사용자 인터페이스 관리자입니다.
@@ -806,25 +804,11 @@ public class StageManager : HDSceneManager
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("_players 필드로 대체되었습니다.")]
-    /// <summary>
-    /// 엑스에 대한 PlayerController니다.
-    /// </summary>
-    PlayerController _playerX = null;
-    [Obsolete("_players 필드로 대체되었습니다.")]
-    /// <summary>
-    /// 제로에 대한 PlayerController입니다.
-    /// </summary>
-    PlayerController _playerZ = null;
-    [Obsolete("경고 제거용 임시 메서드입니다.")]
+    [Obsolete("사용되지 않습니다.")]
     /// <summary>
     /// 
     /// </summary>
-    void Test()
-    {
-        _playerX.RequestSpawn();
-        _playerZ.RequestSpawn();
-    }
+    public GameObject[] _checkpointCameraZoneObjects;
 
     #endregion
 }

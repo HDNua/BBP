@@ -210,16 +210,16 @@ public class XController : PlayerController
     /// 피격 효과음입니다.
     /// </summary>
     protected override AudioSource SoundHit { get { return SoundEffects[11]; } }
-    
+
     #endregion
 
 
 
-    
+
 
     #region MonoBehavior 기본 메서드를 재정의합니다.
     /// <summary>
-    /// MonoBehaviour 개체를 초기화합니다.
+    /// MonoBehaviour 개체를 초기화합니다. (최초 1회만 수행)
     /// </summary>
     protected override void Awake()
     {
@@ -229,7 +229,7 @@ public class XController : PlayerController
         _DefaultPalette = XColorPalette.DefaultPalette;
     }
     /// <summary>
-    /// MonoBehaviour 개체를 초기화합니다.
+    /// MonoBehaviour 개체를 초기화합니다. (생성될 때마다)
     /// </summary>
     void Start()
     {

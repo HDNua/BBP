@@ -95,9 +95,9 @@ public class EffectBossExplosionScript : EffectScript
             Vector3 position = transform.position + new Vector3(distortionX, distortionY);
             CreateExplosion(position);
 
-            CreateYellowRay();
-            CreateYellowRay();
-            CreateYellowRay();
+            ///CreateYellowRay();
+            ///CreateYellowRay();
+            ///CreateYellowRay();
 
             // 
             float distortionTime = UnityEngine.Random.Range

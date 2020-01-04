@@ -9,18 +9,34 @@ using UnityEngine;
 /// </summary>
 public class BossDeadEffectScript : EffectScript
 {
+    #region 컨트롤러가 사용할 Unity 개체를 정의합니다.
+    /// <summary>
+    /// 보스 전투 관리자입니다.
+    /// </summary>
+    BossBattleManager _bossBattleManager;
+    /// <summary>
+    /// 스테이지 관리자입니다.
+    /// </summary>
+    StageManager _stageManager;
+
+    #endregion
+
+
+
+
+
     #region 필드를 정의합니다.
     /// <summary>
-    /// 
+    /// 원본 텍스쳐입니다.
     /// </summary>
     public Texture2D _originalTexture;
     /// <summary>
-    /// 
+    /// 피격 텍스쳐입니다.
     /// </summary>
     public Texture2D _blinkingTexture;
 
     /// <summary>
-    /// 
+    /// 폭발 개체입니다.
     /// </summary>
     public EffectBossExplosionScript _explosion;
     /// <summary>
@@ -56,9 +72,14 @@ public class BossDeadEffectScript : EffectScript
     public float _blinkInterval2 = 0.1f;
 
     /// <summary>
+    /// 폭발 효과가 지속된 시간입니다.
+    /// </summary>
+    float _explosionTime = 0f;
+
+    /// <summary>
     /// 
     /// </summary>
-    public float _explosionEndTime = 5f;
+    public float _explosionEndTime = 2f;
 
     /// <summary>
     /// 
@@ -69,13 +90,30 @@ public class BossDeadEffectScript : EffectScript
 
 
 
+
+
     #region MonoBehaviour 기본 메서드를 재정의합니다.
+    /// <summary>
+    /// MonoBehaviour 개체를 초기화합니다. (최초 1회 수행)
+    /// </summary>
+    void Awake()
+    {
+        _bossBattleManager = BossBattleManager.Instance;
+        _stageManager = StageManager.Instance;
+    }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다.
     /// </summary>
     void Start()
     {
-        StartCoroutine(CoroutineDead());
+        if (_bossBattleManager.IsEveryBossesDead())
+        {
+            StartCoroutine(CoroutineLastDead());
+        }
+        else
+        {
+            StartCoroutine(CoroutineDead());
+        }
 
         // 
         _defaultBossPalette = _boss.DefaultPalette;
@@ -116,6 +154,8 @@ public class BossDeadEffectScript : EffectScript
 
 
 
+
+
     #region 코루틴 메서드를 정의합니다.
     /// <summary>
     /// 사망 코루틴입니다.
@@ -125,18 +165,60 @@ public class BossDeadEffectScript : EffectScript
         // 
         for (int i = 0; i < _blinkCount1; ++i)
         {
+            if (_bossBattleManager.IsEveryBossesDead())
+            {
+                transform.SetParent(_stageManager._enemyParent.transform);
+                yield break;
+            }
+
             ToggleHighlighted();
             yield return new WaitForSeconds(_blinkInterval1);
         }
 
-        /*
         // 
-        for (int i = 0; i < _blinkCount2; ++i)
+        EffectBossExplosionScript explosion = Instantiate
+            (_explosion, transform.position, transform.rotation);
+        explosion.gameObject.SetActive(true);
+
+        // 
+        _explosionTime = 0f;
+        while (ExplosionEnd() == false)
         {
+            if (_bossBattleManager.IsEveryBossesDead())
+            {
+                transform.SetParent(_stageManager._enemyParent.transform);
+                explosion.gameObject.SetActive(false);
+                yield break;
+            }
+
             ToggleHighlighted();
+            _explosionTime += Time.deltaTime + _blinkInterval2;
             yield return new WaitForSeconds(_blinkInterval2);
         }
-        */
+
+        // 
+        AudioSource se = _stageManager.BossClearExplosionSoundEffect;
+        se.Play();
+
+        // 
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.sprite = null;
+        explosion.gameObject.SetActive(false);
+
+        // 
+        yield break;
+    }
+    /// <summary>
+    /// 최종 사망 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineLastDead()
+    {
+        // 
+        for (int i = 0; i < _blinkCount1; ++i)
+        {
+            ToggleHighlighted();
+            yield return new WaitForSeconds(_blinkInterval1);
+        }
 
         // 
         StageManager stageManager = StageManager.Instance;
@@ -207,7 +289,15 @@ public class BossDeadEffectScript : EffectScript
     /// <returns>폭발이 끝났다면 참입니다.</returns>
     bool ExplosionEnd()
     {
-        return ScreenFader.Instance.FadeOutEnded;
+        if (_bossBattleManager.IsEveryBossesDead())
+        {
+            return ScreenFader.Instance.FadeOutEnded;
+        }
+        else
+        {
+            //Debug.Log(_explosionTime);
+            return (_explosionTime >= _explosionEndTime);
+        }
     }
 
     #endregion

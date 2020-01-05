@@ -2012,7 +2012,10 @@ public abstract class PlayerController : MonoBehaviour
         Invencible = true;
         InputBlocked = true;
         StopMoving();
-        StopDashing(false);
+        ///StopDashing(userCanceled: false);
+        // 대시 중 대미지를 받았을 때 코루틴이 남아서
+        // 한 번 추가로 대시하는 듯한 에러가 있습니다.
+        StopDashing(userCanceled: true);
         StopJumping();
         StopFalling();
         

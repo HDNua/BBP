@@ -20,6 +20,10 @@ public class BossBattleManager : MonoBehaviour
     /// </summary>
     public EnemyBossScript[] _bosses;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public BossBattlePattern _bossBattlePattern;
 
     /// <summary>
     /// 
@@ -31,6 +35,7 @@ public class BossBattleManager : MonoBehaviour
     public BossDeadEffectScript[] _lastBossDeadEffects;
 
     #endregion
+
 
 
 
@@ -191,7 +196,6 @@ public class BossBattleManager : MonoBehaviour
         return true;
     }
 
-
     #endregion
 
     
@@ -230,6 +234,8 @@ public class BossBattleManager : MonoBehaviour
     void Warning()
     {
         _warning = true;
+
+        // 경고를 시작합니다.
         StartCoroutine(CoroutineWarning());
     }
     /// <summary>
@@ -239,6 +245,8 @@ public class BossBattleManager : MonoBehaviour
     {
         _warning = false;
         _appearing = true;
+
+        // 등장을 진행합니다.
         StartCoroutine(CoroutineAppearing());
     }
     /// <summary>
@@ -248,6 +256,8 @@ public class BossBattleManager : MonoBehaviour
     {
         _appearing = false;
         _scripting = true;
+
+        // 대사를 진행합니다.
         StartCoroutine(CoroutineScripting());
     }
     /// <summary>
@@ -257,6 +267,8 @@ public class BossBattleManager : MonoBehaviour
     {
         _scripting = false;
         _readying = true;
+
+        // 전투 준비를 진행합니다.
         StartCoroutine(CoroutineReadying());
     }
     /// <summary>
@@ -267,16 +279,23 @@ public class BossBattleManager : MonoBehaviour
         _readying = false;
         _fighting = true;
 
-        // 
-        /// _boss.Fight();
+        /*
+        // 모든 보스에게 전투 시작을 요청합니다.
         foreach (EnemyBossScript boss in _bosses)
         {
             boss.Fight();
         }
+        */
 
         // 
+        _bossBattlePattern.Fight();
+
+
+        // 전투를 위해 입력 요청을 푸는 등의 정리를 합니다.
         _stageManager.RequestUnblockMoving();
         GetComponent<AudioSource>().Play();
+
+        // 전투 코루틴을 수행합니다.
         StartCoroutine(CoroutineFighting());
     }
     /// <summary>
@@ -284,6 +303,7 @@ public class BossBattleManager : MonoBehaviour
     /// </summary>
     void EndBattle()
     {
+        // 전투 종료 코루틴을 수행합니다.
         StartCoroutine(CoroutineEndBattle());
     }
 
@@ -322,19 +342,7 @@ public class BossBattleManager : MonoBehaviour
     /// </summary>
     IEnumerator CoroutineAppearing()
     {
-        /*
-        if (false)
-        {
-            _boss.gameObject.SetActive(true);
-            _boss.Appear();
-            while (_boss.AppearEnded == false)
-            {
-                yield return false;
-            }
-        }
-        */
-
-        // 
+        // 모든 보스를 등장시킵니다.
         foreach (EnemyBossScript boss in _bosses)
         {
             boss.gameObject.SetActive(true);
@@ -345,7 +353,7 @@ public class BossBattleManager : MonoBehaviour
             }
         }
 
-        // 
+        // 인물 간 대사를 출력합니다.
         Script();
         yield break;
     }
@@ -354,6 +362,9 @@ public class BossBattleManager : MonoBehaviour
     /// </summary>
     IEnumerator CoroutineScripting()
     {
+        // TODO: 인물 간 대사 출력은 아직 구현되지 않았습니다.
+
+        // 전투 준비를 시작합니다.
         Ready();
         yield break;
     }
@@ -368,9 +379,7 @@ public class BossBattleManager : MonoBehaviour
         // 보스 체력 재생을 요청합니다.
         RequestFillHealth();
 
-        // 
-        ///while (_boss.IsHealthFull() == false)
-        ///    yield return false;
+        // 스테이지에 존재하는 모든 보스의 체력이 전부 찰 때까지 루프합니다.
         foreach (EnemyBossScript boss in _bosses)
         {
             while (boss.IsHealthFull() == false)
@@ -386,6 +395,7 @@ public class BossBattleManager : MonoBehaviour
     /// </summary>
     IEnumerator CoroutineFighting()
     {
+        // 모든 보스가 죽었다면 전투를 끝냅니다.
         foreach (EnemyBossScript boss in _bosses)
         {
             if (IsEveryBossesDead())
@@ -393,7 +403,6 @@ public class BossBattleManager : MonoBehaviour
                 EndBattle();
             }
         }
-
         yield break;
     }
     /// <summary>

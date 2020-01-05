@@ -710,14 +710,14 @@ public class StageManager : HDSceneManager
     }
 
     /// <summary>
-    /// 
+    /// 플레이어의 입력 요청을 막습니다.
     /// </summary>
     public virtual void RequestBlockInput()
     {
         MainPlayer.RequestBlockInput();
     }
     /// <summary>
-    /// 
+    /// 플레이어의 입력 요청을 받아들입니다.
     /// </summary>
     public virtual void RequestUnblockInput()
     {
@@ -804,11 +804,7 @@ public class StageManager : HDSceneManager
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("사용되지 않습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    public GameObject[] _checkpointCameraZoneObjects;
+
 
     #endregion
 }

@@ -1,4 +1,28 @@
-﻿BBP v1.2.0.0 (IMPORTANT)
+﻿BBP v1.2.1.0
+----
+
+* !!!!! IMPORTANT !!!!!
+  치명적인 대시 결함 해결.
+
+* !!!!! IMPORTANT !!!!!
+  BossBattlePattern 추가.
+> 스테이지의 보스 패턴을 BossScript를 상속하여 개별적으로 만들면 
+  보스 간 연계 공격 등의 상호 작용을 시키기가 매우 어렵게 된다
+  따라서 스테이지에서 보스의 패턴을 정의하는 개체를 만들고
+  BossBattleManager 등에서 보스를 가져와 패턴을 정의하자는 의도이다
+
+- 주석 강화.
+
+- UI 관련 수정.
+
+- 거의 대부분의 commit이 IMPORTANT이므로,
+  임시 커밋에 대해 (TEMPORARY)를 붙이기로 하자.
+
+
+end.
+
+
+BBP v1.2.0.0 (IMPORTANT)
 ----
 
 - Reimport를 통해 에셋들 모두 다시 임포트함.

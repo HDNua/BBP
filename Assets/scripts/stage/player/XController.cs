@@ -1046,7 +1046,7 @@ public class XController : PlayerController
         // DashEnd (사용자 입력 중지가 아닌 기본 대쉬 중지 행동입니다.)
         if (DashJumping == false && Landed)
         {
-            StartDashEnd(false);
+            StartDashEnd(userCanceled: false);
         }
 
         // 코루틴을 중지합니다.
@@ -1222,6 +1222,10 @@ public class XController : PlayerController
         SoundEffects[3].Play();
 
         // 대쉬 코루틴을 실행합니다.
+        if (_dashCoroutine != null)
+        {
+            StopCoroutine(_dashCoroutine);
+        }
         _dashCoroutine = StartCoroutine(CoroutineDash());
     }
     /// <summary>

@@ -591,6 +591,8 @@ public abstract class EnemyBossScript : EnemyScript
     }
 
 
+    public GameObject _indicatorObject;
+    public Vector3 _position;
     public Vector2 _previousRayHit;
 
     
@@ -676,11 +678,12 @@ public abstract class EnemyBossScript : EnemyScript
             {
                 ray = rayB.distance < rayF.distance ? rayB : rayF;
             }
+            _position = transform.position;
             _previousRayHit = ray.point;
 
             /// Vector3 pos = transform.position;
             /// pos.y -= difY;
-            
+
             // 지형과 Y 좌표의 차이가 작으면 추락을 중지합니다.
             float difY = ray.distance / transform.localScale.y;
             if (Mathf.Abs(difY) < _jumpDecSize)
@@ -689,9 +692,14 @@ public abstract class EnemyBossScript : EnemyScript
                 float vy = _Velocity.y > 0 ? _Velocity.y : 0;
                 _Velocity = new Vector2(_Velocity.x, vy);
 
+                // 
+                BoxCollider2D boxCollider = _Collider as BoxCollider2D;
+                float posY = 
+                    ((boxCollider.size.y / 2) - (boxCollider.offset.y))
+                    * transform.localScale.y;
+                _PosY = posY + _previousRayHit.y;
 
-                _PosY = _previousRayHit.y;
-
+                // 
                 Landed = true;
             }
             else

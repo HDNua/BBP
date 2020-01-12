@@ -22,7 +22,7 @@ public abstract class EnemyScript : MonoBehaviour
     /// 무적 시간입니다.
     /// </summary>
     public float INVENCIBLE_TIME_LENGTH = 1f;
-    
+
     #endregion
 
 
@@ -75,7 +75,7 @@ public abstract class EnemyScript : MonoBehaviour
     /// 캐릭터가 사용할 효과 집합입니다.
     /// </summary>
     public GameObject[] effects;
-    
+
     /// <summary>
     /// 적이 사망할 때 드롭 가능한 아이템의 목록입니다.
     /// </summary>
@@ -91,8 +91,9 @@ public abstract class EnemyScript : MonoBehaviour
     /// </summary>
     Dictionary<int, Texture2D> _hit_textures = new Dictionary<int, Texture2D>();
 
+
     #endregion
-    
+
 
 
 
@@ -120,7 +121,7 @@ public abstract class EnemyScript : MonoBehaviour
     /// 피해를 입었다면 참입니다.
     /// </summary>
     bool _damaged;
-    
+
     /// <summary>
     /// 캐릭터가 오른쪽을 보고 있다면 참입니다.
     /// </summary>
@@ -130,7 +131,7 @@ public abstract class EnemyScript : MonoBehaviour
     /// 무적 상태 시간입니다.
     /// </summary>
     float _invencibleTime = 0;
-    
+
     /// <summary>
     /// 적 캐릭터가 소환되는 영역을 지정합니다.
     /// </summary>
@@ -151,7 +152,7 @@ public abstract class EnemyScript : MonoBehaviour
 
     #endregion
 
-    
+
 
 
 
@@ -183,7 +184,7 @@ public abstract class EnemyScript : MonoBehaviour
         get { return _damaged; }
         protected set { _damaged = value; }
     }
-    
+
     /// <summary>
     /// 캐릭터가 죽었다면 참입니다.
     /// </summary>
@@ -200,7 +201,7 @@ public abstract class EnemyScript : MonoBehaviour
         get { return _invencible; }
         protected set { _invencible = value; }
     }
-    
+
     /// <summary>
     /// 캐릭터가 살아있는지 확인합니다.
     /// </summary>
@@ -226,9 +227,34 @@ public abstract class EnemyScript : MonoBehaviour
         get { return _doesIgnoreBullets; }
     }
 
+    /// <summary>
+    /// X 좌표 값입니다.
+    /// </summary>
+    public float _PosX
+    {
+        get { return transform.position.x; }
+        protected set { transform.position = new Vector3(value, transform.position.y, transform.position.z); }
+    }
+    /// <summary>
+    /// Y 좌표 값입니다.
+    /// </summary>
+    public float _PosY
+    {
+        get { return transform.position.y; }
+        protected set { transform.position = new Vector3(transform.position.x, value, transform.position.z); }
+    }
+    /// <summary>
+    /// Z 좌표 값입니다.
+    /// </summary>
+    public float _PosZ
+    {
+        get { return transform.position.z; }
+        protected set { transform.position = new Vector3(transform.position.x, transform.position.y, value); }
+    }
+
     #endregion
 
-    
+
 
 
 

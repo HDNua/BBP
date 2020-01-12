@@ -140,6 +140,7 @@ public class UIManager : MonoBehaviour
 
 
 
+
     #region 구형 정의를 보관합니다.
     [Obsolete("_bossHUD는 더 이상 사용되지 않습니다. _bossHudArray로 대체되었습니다.")]
     /// <summary>

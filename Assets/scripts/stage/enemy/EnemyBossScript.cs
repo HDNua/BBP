@@ -589,6 +589,10 @@ public abstract class EnemyBossScript : EnemyScript
     {
         UpdatePhysicsState(collision);
     }
+
+
+    public Vector2 _previousRayHit;
+
     
     /// <summary>
     /// 플레이어가 땅과 접촉했는지에 대한 필드를 갱신합니다.
@@ -672,6 +676,7 @@ public abstract class EnemyBossScript : EnemyScript
             {
                 ray = rayB.distance < rayF.distance ? rayB : rayF;
             }
+            _previousRayHit = ray.point;
 
             /// Vector3 pos = transform.position;
             /// pos.y -= difY;
@@ -683,6 +688,10 @@ public abstract class EnemyBossScript : EnemyScript
                 // transform.position = pos;
                 float vy = _Velocity.y > 0 ? _Velocity.y : 0;
                 _Velocity = new Vector2(_Velocity.x, vy);
+
+
+                _PosY = _previousRayHit.y;
+
                 Landed = true;
             }
             else

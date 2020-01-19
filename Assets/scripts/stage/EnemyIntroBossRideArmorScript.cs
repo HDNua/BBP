@@ -204,9 +204,9 @@ public class EnemyIntroBossRideArmorScript : EnemyBossScript
         }
 
         // 떨어지고 나서 몇 초간 대기합니다.
-        while (IsAnimationPlaying("FallRun"))
+        while (IsAnimatorInState("FallRun"))
             yield return false;
-        while (IsAnimationPlaying("FallEnd"))
+        while (IsAnimatorInState("FallEnd"))
             yield return false;
 
         // 공격을 두 번 합니다.
@@ -227,20 +227,20 @@ public class EnemyIntroBossRideArmorScript : EnemyBossScript
         StopMoving();
 
         // 
-        while (IsAnimationPlaying("Idle"))
+        while (IsAnimatorInState("Idle"))
             yield return false;
 
         SoundEffects[4].Play();
-        while (IsAnimationPlaying("Attack1"))
+        while (IsAnimatorInState("Attack1"))
             yield return false;
 
         SoundEffects[5].Play();
-        while (IsAnimationPlaying("Attack2"))
+        while (IsAnimatorInState("Attack2"))
             yield return false;
 
         // 공격을 종료합니다.
         Attacking = false;
-        while (IsAnimationPlaying("Idle"))
+        while (IsAnimatorInState("Idle"))
             yield return false;
 
         yield break;

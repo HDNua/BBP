@@ -860,7 +860,7 @@ public class EnemyBossRinshanScript : EnemyBossScript
         StopMoving();
 
         // 탄환을 발사합니다.
-        while (IsAnimationPlaying("BossAtahoShot") == false)
+        while (IsAnimatorInState("BossAtahoShot") == false)
         {
             yield return false;
         }

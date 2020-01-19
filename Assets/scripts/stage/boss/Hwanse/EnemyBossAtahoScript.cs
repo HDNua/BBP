@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// 아타호를 정의합니다.
@@ -19,9 +19,10 @@ public class EnemyBossAtahoScript : EnemyBossScript
 
     #region Unity에서 접근 가능한 공용 객체를 정의합니다.
     /// <summary>
-    /// 방패 개체입니다.
+    /// 팀원 리스트입니다. 아타호의 경우 린샹과 스마슈가 됩니다.
     /// </summary>
-    public EnemyScript _guard;
+    public EnemyScript[] _team;
+
     /// <summary>
     /// 탄환 개체입니다.
     /// </summary>
@@ -87,6 +88,11 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// </summary>
     public float _ultimateInterval2 = 0.3f;
 
+    /// <summary>
+    /// 보스 페이즈 변수입니다.
+    /// </summary>
+    public int _phase = 0;
+
     #endregion
 
 
@@ -106,6 +112,10 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// 위치를 변경하는 중이라면 참입니다.
     /// </summary>
     bool _hopping = false;
+    /// <summary>
+    /// 팀원을 호출하는 중이라면 참입니다.
+    /// </summary>
+    bool _calling = false;
 
     /// <summary>
     /// 위치 전환 시에 얼마나 오랫동안 공중에 있을지를 나타냅니다.
@@ -152,6 +162,14 @@ public class EnemyBossAtahoScript : EnemyBossScript
     {
         get { return _hopping; }
         set { _Animator.SetBool("Hopping", _hopping = value); }
+    }
+    /// <summary>
+    /// 팀원을 호출하는 중이라면 참입니다.
+    /// </summary>
+    bool Calling
+    {
+        get { return _calling; }
+        set { _Animator.SetBool("Calling", _calling = value); }
     }
 
     /// <summary>
@@ -531,16 +549,26 @@ public class EnemyBossAtahoScript : EnemyBossScript
     {
         Attacking = false;
     }
+
     /// <summary>
-    /// 방패를 들어 공격을 막습니다.
+    /// 막기 1 행동입니다.
     /// </summary>
-    void Guard()
+    void Guard1()
     {
         Guarding = true;
-        // _guard.gameObject.SetActive(true);
 
         // 막기 코루틴을 시작합니다.
-        _coroutineGuard = StartCoroutine(CoroutineGuard());
+        _coroutineGuard = StartCoroutine(CoroutineGuard1());
+    }
+    /// <summary>
+    /// 막기 2 행동입니다.
+    /// </summary>
+    void Guard2()
+    {
+        Guarding = true;
+
+        // 막기 코루틴을 시작합니다.
+        _coroutineGuard = StartCoroutine(CoroutineGuard2());
     }
     /// <summary>
     /// 막기를 중지합니다.
@@ -548,7 +576,6 @@ public class EnemyBossAtahoScript : EnemyBossScript
     void StopGuarding()
     {
         Guarding = false;
-        //_guard.gameObject.SetActive(false);
     }
 
 
@@ -560,8 +587,6 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// 이동할 좌표 위치입니다.
     /// </summary>
     Vector3 _absHopEndPoint;
-
-
     /// <summary>
     /// 위치를 바꿉니다.
     /// </summary>
@@ -586,6 +611,24 @@ public class EnemyBossAtahoScript : EnemyBossScript
         Hopping = false;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_enemy"></param>
+    void Call(EnemyScript _enemy)
+    {
+        Calling = true;
+
+        // 
+        _coroutineCall = StartCoroutine(CoroutineCall());
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    void StopCalling()
+    {
+        Calling = false;
+    }
 
     /// <summary>
     /// 플레이어를 추적합니다.
@@ -660,7 +703,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
         base.Fight();
 
         // 
-        Guard();
+        Attack();
     }
 
     #endregion
@@ -865,9 +908,9 @@ public class EnemyBossAtahoScript : EnemyBossScript
 
 
     /// <summary>
-    /// 막기 다음 액션을 수행합니다.
+    /// 막기1 다음 액션을 수행합니다.
     /// </summary>
-    void PerformActionAfterGuard()
+    void PerformActionAfterGuard1()
     {
         // 
         int[] hopPositionArray = GetHopPositionArray();
@@ -880,42 +923,41 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// </summary>
     void PerformActionAfterAttack()
     {
-        if (UltimateEnabled)
-        {
-            GuardFollow();
-        }
-        else
-        {
-            // Follow();
-            // Attack();
-            Guard();
-        }
+        Guard1();
     }
     /// <summary>
-    /// 추적 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterFollow()
-    {
-        if (UltimateEnabled)
-        {
-            ReadyUltimate();
-        }
-        else
-        {
-            Guard();
-        }
-    }
-    /// <summary>
-    /// 궁극기를 시전한 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterUltimate()
-    {
-        Guard();
-    }
-    /// <summary>
-    /// 
+    /// 위치 전환 다음 액션을 수행합니다.
     /// </summary>
     void PerformActionAfterHop()
+    {
+        ///Attack();
+        if (_phase == 0)
+        {
+            EnemyScript enemy = _team[Random.Range(0, 2)];
+            Call(enemy);
+        }
+        else if (_phase == 1)
+        {
+            EnemyScript enemy = _team[Random.Range(2, 4)];
+            Call(enemy);
+        }
+        else
+        {
+            EnemyScript enemy = _team[Random.Range(4, 6)];
+            Call(enemy);
+        }
+    }
+    /// <summary>
+    /// 팀 호출 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterCall()
+    {
+        Guard2();
+    }
+    /// <summary>
+    /// 막기2 행동 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterGuard2()
     {
         Attack();
     }
@@ -943,6 +985,10 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// 추적 코루틴입니다.
     /// </summary>
     Coroutine _coroutineFollow;
+    /// <summary>
+    /// 호출 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineCall;
 
 
 
@@ -971,21 +1017,30 @@ public class EnemyBossAtahoScript : EnemyBossScript
         StopMoving();
 
         // 탄환을 발사합니다.
-        while (IsAnimationPlaying("BossAtahoShot") == false)
+        if (_phase == 0)
         {
-            yield return false;
+            while (IsAnimatorInState("P1_02_HokyukkwonRun") == false)
+            {
+                yield return false;
+            }
+            ShotToPlayer();
         }
-        ShotToPlayer();
-
-        /*
-        yield return new WaitForSeconds(_shotInterval);
-        /// Shot(_shotPosition[0]);
-        ShotToPlayer();
-        yield return new WaitForSeconds(_shotInterval);
-        /// Shot(_shotPosition[0]);
-        ShotToPlayer();
-        yield return new WaitForSeconds(_shotInterval);
-        */
+        else if (_phase == 1)
+        {
+            while (IsAnimatorInState("P2_02_HopokwonRun") == false)
+            {
+                yield return false;
+            }
+            ShotToPlayer();
+        }
+        else
+        {
+            while (IsAnimatorInState("BossAtahoShot") == false)
+            {
+                yield return false;
+            }
+            ShotToPlayer();
+        }
 
         // 공격을 끝냅니다.
         Attacking = false;
@@ -994,9 +1049,27 @@ public class EnemyBossAtahoScript : EnemyBossScript
         yield break;
     }
     /// <summary>
-    /// 막기 코루틴입니다.
+    /// 막기1 코루틴입니다.
     /// </summary>
-    IEnumerator CoroutineGuard()
+    IEnumerator CoroutineGuard1()
+    {
+        float time = 0;
+        while (time < _guardTime)
+        {
+            time += Time.deltaTime;
+            yield return false;
+        }
+
+        // 막기 상태를 끝냅니다.
+        StopGuarding();
+        PerformActionAfterGuard1();
+        _coroutineGuard = null;
+        yield break;
+    }
+    /// <summary>
+    /// 막기2 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineGuard2()
     {
         float time = 0;
         while (time < _guardTime)
@@ -1007,13 +1080,10 @@ public class EnemyBossAtahoScript : EnemyBossScript
 
         // 막기 상태를 끝냅니다.
         StopGuarding();
-        PerformActionAfterGuard();
+        PerformActionAfterGuard2();
         _coroutineGuard = null;
         yield break;
     }
-
-
-
     /// <summary>
     /// 위치 전환 코루틴입니다.
     /// http://luminaryapps.com/blog/arcing-projectiles-in-unity/
@@ -1072,41 +1142,29 @@ public class EnemyBossAtahoScript : EnemyBossScript
             yield return false;
         }
 
-        /*
-        Fall();
-        while (Landed == false)
-        {
-            // Compute the next position, with arc added in
-            float dist = x1 - x0;
-            float nextX = Mathf.MoveTowards(transform.position.x, x1, _hopSpeed * Time.deltaTime);
-            float baseY = Mathf.Lerp(_hopStartPoint.y, _hopEndPoint.y, (nextX - x0) / dist);
-            float arc = _arcHeight * (nextX - x0) * (nextX - x1) / (-0.25f * dist * dist);
-            Vector3 nextPos = new Vector3(nextX, baseY + arc, transform.position.z);
-
-            // Rotate to face the next position, and then move there
-            transform.position = nextPos;
-
-            // Do something when we reach the target
-            if (nextPos.x == _hopEndPoint.x)
-            {
-                break;
-            }
-
-            // 
-            yield return false;
-        }
-        */
-
-        // Do something when we reach the target
-        // if (nextPos == targetPos) Arrived();
-        // _hopStartPoint = null;
-        // _hopEndPoint = null;
-
         // 
         StopFalling();
         StopHopping();
         PerformActionAfterHop();
         _coroutineHop = null;
+        yield break;
+    }
+    /// <summary>
+    /// 팀원 호출 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineCall()
+    {
+        float time = 0;
+        while (time < _followTime)
+        {
+            time += Time.deltaTime;
+            yield return false;
+        }
+
+        // 팀원 호출 상태를 끝냅니다.
+        StopCalling();
+        PerformActionAfterCall();
+        _coroutineCall = null;
         yield break;
     }
 
@@ -1252,7 +1310,35 @@ public class EnemyBossAtahoScript : EnemyBossScript
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("RXPB 인트로 보스 만들 때 쓰던 거라 여기랑 안 맞습니다.")]
+    /// <summary>
+    /// 방패 개체입니다.
+    /// </summary>
+    public EnemyScript _guard;
 
+    [Obsolete("RXPB 인트로 보스 만들 때 쓰던 거라 여기랑 안 맞습니다.")]
+    /// <summary>
+    /// 추적 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterFollow()
+    {
+        if (UltimateEnabled)
+        {
+            ReadyUltimate();
+        }
+        else
+        {
+            Guard1();
+        }
+    }
+    [Obsolete("RXPB 인트로 보스 만들 때 쓰던 거라 여기랑 안 맞습니다.")]
+    /// <summary>
+    /// 궁극기를 시전한 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterUltimate()
+    {
+        Guard1();
+    }
 
     #endregion
 }

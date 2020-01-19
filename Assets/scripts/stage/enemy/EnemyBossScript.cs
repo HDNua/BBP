@@ -531,11 +531,11 @@ public abstract class EnemyBossScript : EnemyScript
 
     #region 보조 메서드를 정의합니다.
     /// <summary>
-    /// 애니메이션이 재생 중인지 확인합니다.
+    /// 애니메이터가 지정된 문자열의 상태인지 확인합니다.
     /// </summary>
-    /// <param name="stateName">재생 중인지 확인하려는 애니메이션의 이름입니다.</param>
-    /// <returns>애니메이션이 재생 중이라면 true를 반환합니다.</returns>
-    protected bool IsAnimationPlaying(string stateName)
+    /// <param name="stateName">재생 중인지 확인하려는 상태의 이름입니다.</param>
+    /// <returns>애니메이터가 지정된 문자열의 상태라면 true를 반환합니다.</returns>
+    protected bool IsAnimatorInState(string stateName)
     {
         return _Animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
     }

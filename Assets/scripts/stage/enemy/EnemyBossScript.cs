@@ -305,7 +305,7 @@ public abstract class EnemyBossScript : EnemyScript
                 }
                 else
                 {
-                    _Velocity = new Vector2(_Velocity.x, _Velocity.y - _jumpDecSize);
+                    UpdateVy();
                 }
             }
             // 떨어지고 있다면
@@ -317,8 +317,7 @@ public abstract class EnemyBossScript : EnemyScript
                 }
                 else
                 {
-                    float vy = _Velocity.y - _jumpDecSize;
-                    _Velocity = new Vector2(_Velocity.x, vy > -16 ? vy : -16);
+                    UpdateVy();
                 }
             }
             // 그 외의 경우
@@ -477,16 +476,6 @@ public abstract class EnemyBossScript : EnemyScript
         // 
         Moving = false;
     }
-    /**
-    /// <summary>
-    /// 개체 제거를 요청합니다.
-    /// </summary>
-    protected void RequestDestroy()
-    {
-        Destroy(gameObject);
-    }
-    */
-    void TEST() { }
     
     
     ///////////////////////////////////////////////////////////////////
@@ -549,6 +538,14 @@ public abstract class EnemyBossScript : EnemyScript
     protected bool IsAnimationPlaying(string stateName)
     {
         return _Animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+    }
+    /// <summary>
+    /// 중력 가속도를 반영하여 종단 속도를 업데이트 합니다.
+    /// </summary>
+    protected void UpdateVy()
+    {
+        float vy = _Velocity.y - _jumpDecSize;
+        _Velocity = new Vector2(_Velocity.x, vy > -16 ? vy : -16);
     }
 
     #endregion
@@ -858,6 +855,7 @@ public abstract class EnemyBossScript : EnemyScript
             }
             */
         }
+
         // 벽과 닿아있지 않으면 거짓입니다.
         return false;
     }
@@ -869,13 +867,11 @@ public abstract class EnemyBossScript : EnemyScript
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("도대체 이게 뭐죠...")]
     /// <summary>
-    /// 걷는 소리를 재생합니다.
+    /// 
     /// </summary>
-    void FE_PlayWalkSound()
-    {
-        SoundEffects[1].Play();
-    }
+    void TEST() { }
 
 
     #endregion

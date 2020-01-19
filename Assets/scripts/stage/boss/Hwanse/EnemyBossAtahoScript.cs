@@ -107,6 +107,21 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// </summary>
     bool _hopping = false;
 
+    /// <summary>
+    /// 위치 전환 시에 얼마나 오랫동안 공중에 있을지를 나타냅니다.
+    /// </summary>
+    float _hopTime = 0.8f;
+    /// <summary>
+    /// 위치 전환 시에 얼마나 높이 점프할지를 나타냅니다.
+    /// </summary>
+    float _arcHeight = 5f;
+
+    /// <summary>
+    /// 착지가 막혀있다면 참입니다.
+    /// </summary>
+    public bool _landBlocked = false;
+
+
     #endregion
 
 
@@ -139,11 +154,18 @@ public class EnemyBossAtahoScript : EnemyBossScript
         set { _Animator.SetBool("Hopping", _hopping = value); }
     }
 
-
     /// <summary>
     /// 궁극기가 활성화되었다면 참입니다.
     /// </summary>
     bool UltimateEnabled { get; set; }
+    /// <summary>
+    /// 착지가 불가능하다면 참입니다.
+    /// </summary>
+    bool LandBlocked
+    {
+        get { return _landBlocked; }
+        set { _landBlocked = value; }
+    }
 
     #endregion
 
@@ -225,6 +247,64 @@ public class EnemyBossAtahoScript : EnemyBossScript
             ReadyUltimate();
         }
         */
+    }
+    /// <summary>
+    /// FixedTimestep에 설정된 값에 따라 일정한 간격으로 업데이트 합니다.
+    /// 물리 효과가 적용된 오브젝트를 조정할 때 사용됩니다.
+    /// (Update는 불규칙한 호출이기 때문에 물리엔진 충돌검사가 제대로 되지 않을 수 있습니다.)
+    /// </summary>
+    protected override void FixedUpdate()
+    {
+        // 점프 중이라면
+        if (Jumping)
+        {
+            if (Landed)
+            {
+                if (LandBlocked)
+                {
+                    UpdateVy();
+                }
+                else
+                {
+                    Land();
+                }
+            }
+            else if (_Velocity.y <= 0)
+            {
+                Fall();
+            }
+            else
+            {
+                UpdateVy();
+            }
+        }
+        // 떨어지고 있다면
+        else if (Falling)
+        {
+            if (Landed)
+            {
+                if (LandBlocked)
+                {
+                    UpdateVy();
+                }
+                else
+                {
+                    Land();
+                }
+            }
+            else
+            {
+                UpdateVy();
+            }
+        }
+        // 그 외의 경우
+        else
+        {
+            if (Landed == false)
+            {
+                Fall();
+            }
+        }
     }
     /// <summary>
     /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.
@@ -475,11 +555,11 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// <summary>
     /// 현재 위치 좌표입니다.
     /// </summary>
-    Vector3 _hopStartPoint;
+    Vector3 _absHopStartPoint;
     /// <summary>
     /// 이동할 좌표 위치입니다.
     /// </summary>
-    Vector3 _hopEndPoint;
+    Vector3 _absHopEndPoint;
 
 
     /// <summary>
@@ -491,8 +571,8 @@ public class EnemyBossAtahoScript : EnemyBossScript
         Hopping = true;
 
         // 
-        _hopStartPoint = transform.position;
-        _hopEndPoint = newPosition.position;
+        _absHopStartPoint = transform.position + transform.parent.transform.position;
+        _absHopEndPoint = newPosition.position + newPosition.parent.transform.position;
 
         // 위치 전환 코루틴을 시작합니다.
         _coroutineHop = StartCoroutine(CoroutineHop());
@@ -933,8 +1013,6 @@ public class EnemyBossAtahoScript : EnemyBossScript
     }
 
 
-    float _hopSpeed = 10f;
-    float _arcHeight = 5f;
 
     /// <summary>
     /// 위치 전환 코루틴입니다.
@@ -943,29 +1021,58 @@ public class EnemyBossAtahoScript : EnemyBossScript
     IEnumerator CoroutineHop()
     {
         Jump();
-        float x0 = _hopStartPoint.x;
-        float x1 = _hopEndPoint.x;
-
+        LandBlocked = true;
+        float x0 = _absHopStartPoint.x;
+        float x1 = _absHopEndPoint.x;
         yield return false;
 
+        // 
+        float posY = transform.position.y;
+
         // 점프 하고 있는 중에는 코루틴을 그냥 진행합니다.
-        while (Jumping)
+        while (Hopping)
         {
+            float deltaTime = Time.deltaTime;
+
             // Compute the next position, with arc added in
             float dist = x1 - x0;
-            float nextX = Mathf.MoveTowards(transform.position.x, x1, _hopSpeed * Time.deltaTime);
-            float baseY = Mathf.Lerp(_hopStartPoint.y, _hopEndPoint.y, (nextX - x0) / dist);
+            float vx = Mathf.Abs(dist / _hopTime);
+
+            float nextX = Mathf.MoveTowards(transform.position.x, x1, vx * deltaTime);
+            float baseY = Mathf.Lerp(_absHopStartPoint.y, _absHopEndPoint.y, (nextX - x0) / dist);
             float arc = _arcHeight * (nextX - x0) * (nextX - x1) / (-0.25f * dist * dist);
             Vector3 nextPos = new Vector3(nextX, baseY + arc, transform.position.z);
 
+            // 
+            float diffX = nextX - transform.position.x;
+            float diffY = baseY + arc - transform.position.y;
+
             // Rotate to face the next position, and then move there
+            ///_Velocity = new Vector2(diffX / deltaTime, diffY / deltaTime);
+            if (transform.position.y > nextPos.y)
+            {
+                Fall();
+            }
             transform.position = nextPos;
+
+            // Do something when we reach the target
+            if (nextPos == _absHopEndPoint)
+            {
+                LandBlocked = false;
+                Land();
+                break;
+            }
+            else if (nextPos.x == _absHopEndPoint.x)
+            {
+                LandBlocked = false;
+                break;
+            }
 
             //
             yield return false;
         }
 
-        // 
+        /*
         Fall();
         while (Landed == false)
         {
@@ -988,6 +1095,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
             // 
             yield return false;
         }
+        */
 
         // Do something when we reach the target
         // if (nextPos == targetPos) Arrived();

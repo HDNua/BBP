@@ -1,4 +1,14 @@
-﻿BBP v1.4.0.2
+﻿BBP v1.4.0.3
+----
+
+- 리팩터링 및 Unit, Groundable 정의 시도 중.
+> 유닛 업데이트 중.
+
+
+end.
+
+
+BBP v1.4.0.2
 ----
 
 - 리팩터링 및 Unit, Groundable 정의 시도 중.

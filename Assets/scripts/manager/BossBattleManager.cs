@@ -34,6 +34,11 @@ public class BossBattleManager : MonoBehaviour
     /// </summary>
     public BossDeadEffectScript[] _lastBossDeadEffects;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public GameObject _enemyParent;
+
     #endregion
 
 

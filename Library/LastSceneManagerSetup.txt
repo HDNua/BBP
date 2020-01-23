@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scenes/RxpbUsage/maps/Map4.unity
+- path: Assets/scenes/project/bbp/03_Hwanse.unity
   isLoaded: 1
   isActive: 1

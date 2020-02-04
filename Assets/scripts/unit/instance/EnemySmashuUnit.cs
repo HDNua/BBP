@@ -96,9 +96,21 @@ public class EnemySmashuUnit : EnemyUnit
 
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
     /// <summary>
-    /// 등장 시간입니다.
+    /// 등장 준비 시간입니다.
+    /// 등장 준비 시간 이후부터 스마슈가 반짝이며 나타납니다.
     /// </summary>
-    float _appearTime = 3f;
+    public float _appearReadyTime = 0.6f;
+
+    #endregion
+
+
+
+
+    #region 상태 필드를 정의합니다.
+    /// <summary>
+    /// 등장 상태라면 참입니다.
+    /// </summary>
+    bool _appearing = false;
 
     #endregion
 
@@ -111,8 +123,8 @@ public class EnemySmashuUnit : EnemyUnit
     /// </summary>
     bool Appearing
     {
-        get { return _Animator.GetBool("Appearing"); }
-        set { _Animator.SetBool("Appearing", value); }
+        get { return _appearing; }
+        set { _Animator.SetBool("Appearing", _appearing = value); }
     }
 
     /// <summary>
@@ -141,6 +153,15 @@ public class EnemySmashuUnit : EnemyUnit
     protected override void Start()
     {
         base.Start();
+
+        // 색상을 없애고 시작합니다.
+        Color color;
+        color = _Renderer.color;
+        color.a = 0f;
+        _Renderer.color = color;
+
+        // 등장합니다.
+        Appear();
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트합니다.
@@ -148,6 +169,16 @@ public class EnemySmashuUnit : EnemyUnit
     protected override void Update()
     {
         base.Update();
+
+        // 
+        if (Appearing == false)
+        {
+            _damage = 3;
+        }
+        else
+        {
+            _damage = 0;
+        }
     }
     /// <summary>
     /// FixedTimestep에 설정된 값에 따라 일정한 간격으로 업데이트 합니다.
@@ -156,6 +187,7 @@ public class EnemySmashuUnit : EnemyUnit
     /// </summary>
     protected override void FixedUpdate()
     {
+        // 
         if (_isGroundableNow)
         {
             // 점프 중이라면
@@ -223,7 +255,7 @@ public class EnemySmashuUnit : EnemyUnit
     /// </summary>
     void PerformActionAfterAppear()
     {
-
+        DoSkillKwaejinkyuk();
     }
 
     /// <summary>
@@ -294,17 +326,52 @@ public class EnemySmashuUnit : EnemyUnit
     IEnumerator CoroutineAppear()
     {
         // 닌자 등장 풀때기 효과를 생성합니다.
-        Instantiate(EffectNinjaGrass, transform.position, transform.rotation)
-            .gameObject.SetActive(true);
+        GameObject effectGrassObject = Instantiate(
+            EffectNinjaGrass, 
+            transform.position, 
+            transform.rotation);
+        effectGrassObject.SetActive(true);
+        EffectScript effectGrass = effectGrassObject.GetComponent<EffectScript>();
+        float effectClipLength = effectGrass._clipLength;
 
         // 
         float time = 0;
-        while (time < _appearTime)
+        while (time < _appearReadyTime)
         {
             time += Time.deltaTime;
             yield return false;
         }
 
+        // 
+        Color color;
+        bool blink = false;
+        while (time < effectClipLength)
+        {
+            time += TIME_30FPS + Time.deltaTime;
+
+            if (blink)
+            {
+                color = _Renderer.color;
+                color.a = 1f;
+                _Renderer.color = color;
+            }
+            else
+            {
+                color = _Renderer.color;
+                color.a = 0f;
+                _Renderer.color = color;
+            }
+            blink = !blink;
+
+            // 30 FPS 간격으로 반짝이게 합니다.
+            yield return new WaitForSeconds(TIME_30FPS);
+        }
+
+        // 효과를 제거하고 스마슈의 색상을 원래대로 돌립니다.
+        effectGrass.RequestDestroy();
+        color = _Renderer.color;
+        color.a = 1f;
+        _Renderer.color = color;
 
         // 등장을 끝냅니다.
         StopAppearing();

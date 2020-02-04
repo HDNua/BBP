@@ -13,11 +13,20 @@ public class EffectScript : MonoBehaviour
     AudioSource _audioSource = null;
     Animator _animator;
 
+    #endregion
+
+
+
+    #region Unity에서 접근 가능한 공용 필드를 정의합니다.
+    /// <summary>
+    /// 효과 애니메이션의 클립 길이를 가져옵니다.
+    /// </summary>
+    public float _clipLength;
 
     #endregion
 
 
-    
+
 
 
     #region 필드 및 프로퍼티를 정의합니다.
@@ -47,15 +56,15 @@ public class EffectScript : MonoBehaviour
     }
     
     /// <summary>
-    /// 
+    /// 팔레트 변경 요청이 들어왔다면 참입니다.
     /// </summary>
     bool _paletteChangeRequested = false;
     /// <summary>
-    /// 
+    /// 기본 색상 팔레트입니다.
     /// </summary>
     Color[] _defaultPalette = null;
     /// <summary>
-    /// 
+    /// 현재 팔레트입니다.
     /// </summary>
     Color[] _currentPalette = null;
     
@@ -72,6 +81,11 @@ public class EffectScript : MonoBehaviour
     void Awake()
     {
         _animator = GetComponent<Animator>();
+
+        // 효과 개체에서 애니메이션은 유일하게 하나 존재합니다.
+        // 해당 애니메이션의 길이로 초기화 합니다.
+        var clips = _animator.runtimeAnimatorController.animationClips;
+        _clipLength = clips[0].length;
     }
     /// <summary>
     /// MonoBehaviour 객체를 초기화합니다.
@@ -274,7 +288,18 @@ public class EffectScript : MonoBehaviour
         _currentPalette = targetPalette;
         _paletteChangeRequested = true;
     }
-    
+
+    /// <summary>
+    /// 애니메이터가 지정된 문자열의 상태인지 확인합니다.
+    /// </summary>
+    /// <param name="stateName">재생 중인지 확인하려는 상태의 이름입니다.</param>
+    /// <param name="layerIndex">애니메이터 레이어 인덱스입니다. 기본값은 0입니다.</param>
+    /// <returns>애니메이터가 지정된 문자열의 상태라면 true를 반환합니다.</returns>
+    public bool IsAnimatorInState(string stateName, int layerIndex = 0)
+    {
+        return _animator.GetCurrentAnimatorStateInfo(layerIndex).IsName(stateName);
+    }
+
     #endregion
 
 

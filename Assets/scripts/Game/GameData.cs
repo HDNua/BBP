@@ -41,10 +41,7 @@ public class GameData
         set { _tryCount = value; }
     }
 
-
     #endregion
-
-    
 
 
 
@@ -66,12 +63,10 @@ public class GameData
         set { _maxHealthZ = value; }
     }
 
-
     /// <summary>
     /// 맵 상태 집합입니다.
     /// </summary>
     public GameMapStatus[] MapStatuses { get { return _mapStatuses; } }
-
 
     #endregion
 }

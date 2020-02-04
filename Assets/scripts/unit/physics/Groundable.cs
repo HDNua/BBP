@@ -693,11 +693,6 @@ public class Groundable : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("이거 쓰긴 쓰나요?")]
-    /// <summary>
-    /// 자신의 밑에 지면이 존재하는지 검사하기 위해 사용합니다.
-    /// </summary>
-    public Transform _groundCheck;
 
     #endregion
 }

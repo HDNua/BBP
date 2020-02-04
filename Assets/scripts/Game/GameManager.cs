@@ -63,7 +63,7 @@ public class GameManager
     public GameMapStatus[] MapStatuses { get { return _gameData.MapStatuses; } }
 
     /// <summary>
-    /// 
+    /// 트라이 카운트입니다.
     /// </summary>
     public int TryCount
     {

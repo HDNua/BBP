@@ -376,10 +376,11 @@ public class Unit : MonoBehaviour
     /// 애니메이터가 지정된 문자열의 상태인지 확인합니다.
     /// </summary>
     /// <param name="stateName">재생 중인지 확인하려는 상태의 이름입니다.</param>
+    /// <param name="layerIndex">애니메이터 레이어 인덱스입니다. 기본값은 0입니다.</param>
     /// <returns>애니메이터가 지정된 문자열의 상태라면 true를 반환합니다.</returns>
-    protected bool IsAnimatorInState(string stateName)
+    protected bool IsAnimatorInState(string stateName, int layerIndex = 0)
     {
-        return _Animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+        return _Animator.GetCurrentAnimatorStateInfo(layerIndex).IsName(stateName);
     }
 
     #endregion
@@ -527,8 +528,8 @@ public class Unit : MonoBehaviour
             }
             invencibleColorState = !invencibleColorState;
 
-            ///yield return new WaitForSeconds(TIME_30FPS);
-            yield return false;
+            // 
+            yield return new WaitForSeconds(TIME_30FPS);
         }
         Invencible = false;
         IsDamaged = false;

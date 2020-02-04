@@ -5,6 +5,7 @@ using System.Text;
 
 
 
+[Obsolete("StageData로 대체되었습니다.")]
 [Serializable]
 /// <summary>
 /// 맵 상태입니다.

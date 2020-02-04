@@ -62,7 +62,7 @@ public class TeamUnit : Unit
     /// <summary>
     /// 캐릭터를 소환합니다.
     /// </summary>
-    public void Spawn()
+    public override void Spawn()
     {
 
     }

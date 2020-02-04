@@ -272,7 +272,7 @@ public class EnemyIntroBossHoverMechScript : EnemyBossScript
 
         // 개체 대신 놓일 그림을 활성화합니다.
         Vector3 position = transform.position;
-        BossDeadEffectScript effect = BossBattleManager.Instance._bossDeadEffect;
+        BossDeadEffectScript effect = BossBattleManager.Instance._bossDeadEffects[0];
         effect.transform.position = position;
         if (FacingRight)
             effect.transform.localScale = new Vector3

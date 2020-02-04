@@ -23,7 +23,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// <summary>
     /// 팀원 리스트입니다. 아타호의 경우 린샹과 스마슈가 됩니다.
     /// </summary>
-    public EnemyScript[] _team;
+    public EnemyUnit[] _team;
 
     /// <summary>
     /// 탄환 개체입니다.
@@ -60,10 +60,16 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// 방패를 들어 막는 시간입니다.
     /// </summary>
     public float _guardTime = 0.5f;
+
     /// <summary>
-    /// 추적 시간입니다.
+    /// 팀원을 호출하는 데 걸리는 시간입니다.
     /// </summary>
-    public float _followTime = 5f;
+    public float _callReadyTime = 0.9f;
+    /// <summary>
+    /// 팀원을 호출하는 데 걸리는 시간입니다.
+    /// </summary>
+    public float _callTime = 5f;
+
     /// <summary>
     /// 샷 간격입니다.
     /// </summary>
@@ -409,11 +415,13 @@ public class EnemyBossAtahoScript : EnemyBossScript
         BossDeadEffectScript effect;
         if (isEveryBossesDead)
         {
-            effect = _bossBattleManager._lastBossDeadEffect;
+            ///effect = _bossBattleManager._lastBossDeadEffect;
+            effect = _bossBattleManager._bossDeadEffects[0];
         }
         else
         {
-            effect = _bossBattleManager._bossDeadEffect;
+            ///effect = _bossBattleManager._bossDeadEffect;
+            effect = _bossBattleManager._bossDeadEffects[1];
         }
         // 
         Instantiate(effect, position, transform.rotation)
@@ -502,7 +510,10 @@ public class EnemyBossAtahoScript : EnemyBossScript
         if (FacingRight == false)
             Flip();
 
+        // 상태를 정의합니다.
         Moving = true;
+        
+        // 내용을 정의합니다.
         _Rigidbody.velocity = new Vector2(_movingSpeedX, _Rigidbody.velocity.y);
     }
     /// <summary>
@@ -510,8 +521,10 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// </summary>
     protected void MoveUp()
     {
+        // 상태를 정의합니다.
         Moving = true;
 
+        // 내용을 정의합니다.
         _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, _movingSpeedY);
     }
     /// <summary>
@@ -519,8 +532,10 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// </summary>
     protected void MoveDown()
     {
+        // 상태를 정의합니다.
         Moving = true;
 
+        // 내용을 정의합니다.
         _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, -_movingSpeedY);
     }
     /// <summary>
@@ -530,7 +545,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
     {
         _Velocity = new Vector2(0, 0);
 
-        // 
+        // 상태를 정의합니다.
         Moving = false;
     }
 
@@ -609,68 +624,28 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// </summary>
     void StopHopping()
     {
-        // 
+        // 상태를 정의합니다.
         Hopping = false;
     }
 
     /// <summary>
-    /// 
+    /// 팀원을 호출합니다.
     /// </summary>
-    /// <param name="_enemy"></param>
-    void Call(EnemyScript _enemy)
+    /// <param name="_enemy">호출할 팀원입니다.</param>
+    void CallTeamUnit(EnemyUnit _enemy)
     {
+        // 상태를 정의합니다.
         Calling = true;
 
-        // 
-        _coroutineCall = StartCoroutine(CoroutineCall());
+        // 내용을 정의합니다.
+        _coroutineCallTeamUnit = StartCoroutine(CoroutineCallTeamUnit());
     }
     /// <summary>
-    /// 
+    /// 팀원 호출을 중지합니다.
     /// </summary>
-    void StopCalling()
+    void StopCallingTeamUnit()
     {
         Calling = false;
-    }
-
-    /// <summary>
-    /// 플레이어를 추적합니다.
-    /// </summary>
-    void Follow()
-    {
-        Guarding = false;
-        Attacking = false;
-
-        // 추적 코루틴을 시작합니다.
-        _coroutineFollow = StartCoroutine(CoroutineFollow());
-    }
-    /// <summary>
-    /// 추적을 중지합니다.
-    /// </summary>
-    void StopFollowing()
-    {
-        StopMoving();
-    }
-    /// <summary>
-    /// 방어 상태로 플레이어를 추적합니다.
-    /// </summary>
-    void GuardFollow()
-    {
-        Guarding = true;
-        Attacking = false;
-
-        // 가드를 활성화합니다.
-        // _guard.gameObject.SetActive(true);
-
-        // 추적 코루틴을 시작합니다.
-        _coroutineFollow = StartCoroutine(CoroutineFollow());
-    }
-    /// <summary>
-    /// 추적을 중지합니다.
-    /// </summary>
-    void StopGuardFollowing()
-    {
-        StopGuarding();
-        StopMoving();
     }
 
     /// <summary>
@@ -687,6 +662,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
     {
         Guarding = false;
 
+        // 내용을 정의합니다.
         StartCoroutine(CoroutineUltimate1());
     }
     /// <summary>
@@ -694,6 +670,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// </summary>
     void Ultimate2()
     {
+        // 내용을 정의합니다.
         StartCoroutine(CoroutineUltimate2());
     }
 
@@ -778,7 +755,8 @@ public class EnemyBossAtahoScript : EnemyBossScript
     public void Shot(Transform shotPosition)
     {
         SoundEffects[1].Play();
-        GameObject effect = Instantiate(effects[1], shotPosition.position, shotPosition.rotation);
+        GameObject effect = Instantiate
+            (effects[1], shotPosition.position, shotPosition.rotation);
         if (FacingRight)
         {
             Vector3 scale = effect.transform.localScale;
@@ -803,7 +781,8 @@ public class EnemyBossAtahoScript : EnemyBossScript
     public void Shot(Transform shotPosition, Vector3 destination)
     {
         SoundEffects[1].Play();
-        GameObject effect = Instantiate(effects[1], shotPosition.position, shotPosition.rotation);
+        GameObject effect = Instantiate
+            (effects[1], shotPosition.position, shotPosition.rotation);
         if (FacingRight)
         {
             Vector3 scale = effect.transform.localScale;
@@ -852,7 +831,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// 다음 뛸 지점의 집합을 반환합니다.
     /// </summary>
     /// <returns>다음 뛸 지점의 집합을 반환합니다.</returns>
-    int[] GetHopPositionArray()
+    int[] GetNextHopPositionArray()
     {
         float[] diffs =
         {
@@ -907,7 +886,8 @@ public class EnemyBossAtahoScript : EnemyBossScript
         return hopPositionArray;
     }
 
-
+    public int _previousPositionIndex = 0;
+    public int _currentPositionIndex = 0;
 
     /// <summary>
     /// 막기1 다음 액션을 수행합니다.
@@ -915,8 +895,15 @@ public class EnemyBossAtahoScript : EnemyBossScript
     void PerformActionAfterGuard1()
     {
         // 
-        int[] hopPositionArray = GetHopPositionArray();
-        int newPositionIndex = hopPositionArray[Random.Range(0, hopPositionArray.Length)];
+        int[] nextHopPositionArray = GetNextHopPositionArray();
+        int newPositionIndex = nextHopPositionArray
+            [Random.Range(0, nextHopPositionArray.Length)];
+
+        // 
+        _previousPositionIndex = _currentPositionIndex;
+        _currentPositionIndex = newPositionIndex;
+
+        // 
         Transform newPosition = _positions[newPositionIndex];
         HopTo(newPosition);
     }
@@ -935,18 +922,18 @@ public class EnemyBossAtahoScript : EnemyBossScript
         ///Attack();
         if (_phase == 0)
         {
-            EnemyScript enemy = _team[Random.Range(0, 2)];
-            Call(enemy);
+            EnemyUnit enemy = _team[Random.Range(0, 2)];
+            CallTeamUnit(enemy);
         }
         else if (_phase == 1)
         {
-            EnemyScript enemy = _team[Random.Range(2, 4)];
-            Call(enemy);
+            EnemyUnit enemy = _team[Random.Range(2, 4)];
+            CallTeamUnit(enemy);
         }
         else
         {
-            EnemyScript enemy = _team[Random.Range(4, 6)];
-            Call(enemy);
+            EnemyUnit enemy = _team[Random.Range(4, 6)];
+            CallTeamUnit(enemy);
         }
     }
     /// <summary>
@@ -984,15 +971,9 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// </summary>
     Coroutine _coroutineHop;
     /// <summary>
-    /// 추적 코루틴입니다.
-    /// </summary>
-    Coroutine _coroutineFollow;
-    /// <summary>
     /// 호출 코루틴입니다.
     /// </summary>
-    Coroutine _coroutineCall;
-
-
+    Coroutine _coroutineCallTeamUnit;
 
     /// <summary>
     /// 등장 코루틴입니다.
@@ -1099,7 +1080,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
         yield return false;
 
         // 
-        float posY = transform.position.y;
+        ///float posY = transform.position.y;
 
         // 점프 하고 있는 중에는 코루틴을 그냥 진행합니다.
         while (Hopping)
@@ -1154,40 +1135,45 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// <summary>
     /// 팀원 호출 코루틴입니다.
     /// </summary>
-    IEnumerator CoroutineCall()
+    IEnumerator CoroutineCallTeamUnit()
     {
+        // 팀원 호출 AnimatorState로 진입할 수 있게 해주는 강제 대기 시간입니다.
+        // (이 시간이 없으면 상태 천이 이전에 새 유닛이 생성될 수 있습니다.)
         float time = 0;
-        while (time < _followTime)
+        while (time < _callReadyTime)
+        {
+            time += Time.deltaTime;
+            yield return false;
+        }
+
+        // 아타호가 팀원을 호출하는 준비 동작입니다.
+        while (IsAnimatorInState("P1_06_CallBeg"))
+        {
+            yield return false;
+        }
+
+        // 새 유닛을 생성합니다.
+        int newUnitPositionIndex = _previousPositionIndex;
+        Transform newUnitPosition = _positions[newUnitPositionIndex];
+        EnemyUnit newUnit = Instantiate(
+            _team[1],
+            newUnitPosition.position,
+            newUnitPosition.rotation,
+            _StageManager._enemyParent.transform
+            );
+        newUnit.gameObject.SetActive(true);
+
+        // 아타호가 팀원을 호출하는 동작입니다.
+        while (time < _callTime)
         {
             time += Time.deltaTime;
             yield return false;
         }
 
         // 팀원 호출 상태를 끝냅니다.
-        StopCalling();
+        StopCallingTeamUnit();
         PerformActionAfterCall();
-        _coroutineCall = null;
-        yield break;
-    }
-
-
-    /// <summary>
-    /// 추적 코루틴입니다.
-    /// </summary>
-    IEnumerator CoroutineFollow()
-    {
-        float time = 0;
-        while (time < _followTime)
-        {
-            MoveToPlayer();
-            time += Time.deltaTime;
-            yield return false;
-        }
-
-        // 막기 상태를 끝냅니다.
-        StopFollowing();
-        PerformActionAfterFollow();
-        _coroutineFollow = null;
+        _coroutineCallTeamUnit = null;
         yield break;
     }
 
@@ -1301,7 +1287,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
         // 궁극기를 끝냅니다.
         _movingSpeedX = originalSpeedX;
         _movingSpeedY = originalSpeedY;
-        PerformActionAfterUltimate();
+        //PerformActionAfterUltimate();
         yield break;
     }
 
@@ -1312,35 +1298,6 @@ public class EnemyBossAtahoScript : EnemyBossScript
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("RXPB 인트로 보스 만들 때 쓰던 거라 여기랑 안 맞습니다.")]
-    /// <summary>
-    /// 방패 개체입니다.
-    /// </summary>
-    public EnemyScript _guard;
-
-    [Obsolete("RXPB 인트로 보스 만들 때 쓰던 거라 여기랑 안 맞습니다.")]
-    /// <summary>
-    /// 추적 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterFollow()
-    {
-        if (UltimateEnabled)
-        {
-            ReadyUltimate();
-        }
-        else
-        {
-            Guard1();
-        }
-    }
-    [Obsolete("RXPB 인트로 보스 만들 때 쓰던 거라 여기랑 안 맞습니다.")]
-    /// <summary>
-    /// 궁극기를 시전한 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterUltimate()
-    {
-        Guard1();
-    }
 
     #endregion
 }

@@ -159,16 +159,16 @@ public class EnemyRinshanUnit : EnemyUnit
 
     #region 보조 메서드를 정의합니다.
     /// <summary>
-    /// 
+    /// 캐릭터를 소환합니다.
     /// </summary>
-    void Spawn()
+    public override void Spawn()
     {
 
     }
     /// <summary>
-    /// 
+    /// 캐릭터를 사라지게 합니다.
     /// </summary>
-    void Disappear()
+    public override void Disappear()
     {
 
     }

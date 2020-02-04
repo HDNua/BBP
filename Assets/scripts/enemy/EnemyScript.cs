@@ -318,7 +318,7 @@ public abstract class EnemyScript : MonoBehaviour
     /// <summary>
     /// 캐릭터에게 대미지를 입힙니다.
     /// </summary>
-    /// <param name="damage"></param>
+    /// <param name="damage">입힐 대미지의 양입니다.</param>
     public virtual void Hurt(int damage)
     {
         Health -= damage;
@@ -351,7 +351,7 @@ public abstract class EnemyScript : MonoBehaviour
                 .gameObject.SetActive(true);
         }
 
-        //
+        // 개체 제거를 요청합니다.
         RequestDestroy();
     }    
     /// <summary>

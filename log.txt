@@ -1,4 +1,29 @@
-﻿BBP v1.4.0.3
+﻿BBP v1.4.1.0
+----
+
+- Unit, Groundable 어느 정도 안착시킨 것 같다.
+> Unit
+> EnemyUnit
+> TeamUnit
+> Groundable
+> EnemySmashuUnit
+
+* 스마슈 호출과 생성에 대한 초기 코드 작성.
+> 패턴을 넣어야 됨.
+> 피격 시 반짝이게 팔레트를 넣어야 됨.
+> 풀때기 등장 효과 구현해야 됨.
+
+- AnimationImporter 에셋 추가.
+> Aseprite와 결합하여 최적화에 큰 도움을 줄 것으로 기대된다.
+
+- 기타 구형 정의 제거하거나 휴지통으로 이동.
+
+
+end.
+
+
+
+BBP v1.4.0.3
 ----
 
 - 리팩터링 및 Unit, Groundable 정의 시도 중.

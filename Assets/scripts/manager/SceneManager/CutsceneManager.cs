@@ -34,44 +34,62 @@ public class CutsceneManager : MonoBehaviour
 
 
 
-
-
-
-
-
     #region 필드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
     AudioSource _bgmSource;
+    /// <summary>
+    /// 
+    /// </summary>
     AudioSource[] _audioSources;
+    /// <summary>
+    /// 
+    /// </summary>
     GUIText _guiText;
 
-    // 스크립트 리스트입니다.
+    /// <summary>
+    /// 
+    /// </summary>
     int _scriptIndex;
+    /// <summary>
+    /// 
+    /// </summary>
     List<string> _scriptList;
+    /// <summary>
+    /// 
+    /// </summary>
     int _actionScriptIndex;
+    /// <summary>
+    /// 
+    /// </summary>
     List<string[]> _actionScriptList;
 
     // 사용자 인터페이스 상태입니다.
     bool _inputBlocked = false;
-    bool _actionScriptPlaying = false; // 액션 스크립트가 재생중이라면 참입니다.
-    bool _speechScriptPlaying = false; // 대사 스크립트가 재생중이라면 참입니다.
-    bool _scriptEndRequested = false; // 스크립트 skip이 요청되었습니다.
+    /// <summary>
+    /// 액션 스크립트가 재생중이라면 참입니다.
+    /// </summary>
+    bool _actionScriptPlaying = false;
+    /// <summary>
+    /// 대사 스크립트가 재생중이라면 참입니다.
+    /// </summary>
+    bool _speechScriptPlaying = false;
+    /// <summary>
+    /// 스크립트 skip이 요청되었습니다.
+    /// </summary>
+    bool _scriptEndRequested = false;
 
     // 대사 스크립트 코루틴에 대한 포인터입니다.
     /// Coroutine _speechScriptCoroutine = null;
     /// Coroutine _actionScriptCoroutine = null;
 
-
     #endregion
+    
+    
 
 
-
-
-
-
-
-
-
-
+    
     #region MonoBehavior 기본 행동을 재정의합니다.
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다.
@@ -210,13 +228,7 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -309,7 +321,8 @@ public class CutsceneManager : MonoBehaviour
                 {
                     SpriteRenderer image = _cutsceneImages[index];
                     Rigidbody2D image_rbody = image.GetComponent<Rigidbody2D>();
-                    Vector2 diff = position - new Vector2(image.transform.position.x, image.transform.position.y);
+                    Vector2 diff = position - new Vector2
+                        (image.transform.position.x, image.transform.position.y);
                     image_rbody.velocity = diff / _time;
                     yield return new WaitForSeconds(_time);
                     image_rbody.velocity = Vector2.zero;
@@ -466,14 +479,11 @@ public class CutsceneManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
-
         /// StopCoroutine(_speechScriptCoroutine);
         /// _speechScriptCoroutine = null;
         _inputBlocked = false;
         _speechScriptPlaying = false;
     }
 
-
     #endregion
-
 }

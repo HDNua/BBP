@@ -278,11 +278,13 @@ public class EnemyBossRinshanScript : EnemyBossScript
         BossDeadEffectScript effect;
         if (isEveryBossesDead)
         {
-            effect = _bossBattleManager._lastBossDeadEffect;
+            ///effect = _bossBattleManager._lastBossDeadEffect;
+            effect = _bossBattleManager._bossDeadEffects[0];
         }
         else
         {
-            effect = _bossBattleManager._bossDeadEffect;
+            ///effect = _bossBattleManager._bossDeadEffect;
+            effect = _bossBattleManager._bossDeadEffects[1];
         }
         // 
         Instantiate(effect, position, transform.rotation)

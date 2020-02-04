@@ -21,11 +21,11 @@ public class XBusterScript : AttackScript
     public Camera MainCamera { set { mainCamera = value; } }
 
     /// <summary>
-    /// 
+    /// Collider2D 컴포넌트입니다.
     /// </summary>
     Collider2D _collider;
     /// <summary>
-    /// 
+    /// Rigidbody2D 컴포넌트입니다.
     /// </summary>
     Rigidbody2D _rigidbody;
     
@@ -37,9 +37,9 @@ public class XBusterScript : AttackScript
 
     #region Unity에서 접근 가능한 공용 객체를 정의합니다.
     /// <summary>
-    /// 
+    /// 버스터가 통과할 수 없는 지형에 대한 마스크입니다.
     /// </summary>
-    public LayerMask busterUnpassable;
+    public LayerMask _busterUnpassable;
     
     #endregion
 
@@ -108,39 +108,79 @@ public class XBusterScript : AttackScript
         // 적과 충돌했습니다.
         if (other.gameObject.CompareTag("Enemy"))
         {
-            EnemyScript enemy = other.gameObject.GetComponent<EnemyScript>();
+            GameObject otherObject = other.gameObject;
+            EnemyScript enemyScript = otherObject.GetComponent<EnemyScript>();
+            EnemyUnit enemyUnit = otherObject.GetComponent<EnemyUnit>();
 
-            // 적이 무적 상태라면
-            if (enemy.Invencible)
+            if (enemyScript)
             {
-                // 반사 효과를 생성합니다.
-                MakeReflectedParticle(_rigidbody.velocity.x < 0, transform);
-            }
-            // 
-            else if (enemy.DoesIgnoreBullets)
-            {
+                EnemyScript enemy = enemyScript;
 
-            }
-            // 그 외의 경우
-            else
-            {
-                // 타격 효과를 생성하고 대미지를 입힙니다.
-                MakeHitParticle(_rigidbody.velocity.x < 0, transform);
-                enemy.Hurt(damage);
-            }
+                // 적이 무적 상태라면
+                if (enemy.Invencible)
+                {
+                    // 반사 효과를 생성합니다.
+                    MakeReflectedParticle(_rigidbody.velocity.x < 0, transform);
+                }
+                // 
+                else if (enemy.DoesIgnoreBullets)
+                {
 
-            // 적이 살아있다면 탄환을 제거합니다.
-            if (enemy.DoesIgnoreBullets)
-            {
+                }
+                // 그 외의 경우
+                else
+                {
+                    // 타격 효과를 생성하고 대미지를 입힙니다.
+                    MakeHitParticle(_rigidbody.velocity.x < 0, transform);
+                    enemy.Hurt(damage);
+                }
 
+                // 적이 살아있다면 탄환을 제거합니다.
+                if (enemy.DoesIgnoreBullets)
+                {
+
+                }
+                else if (enemy.IsAlive())
+                {
+                    Destroy(gameObject);
+                }
             }
-            else if (enemy.IsAlive())
+            else if (enemyUnit)
             {
-                Destroy(gameObject);
+                EnemyUnit enemy = enemyUnit;
+
+                // 적이 무적 상태라면
+                if (enemy.Invencible)
+                {
+                    // 반사 효과를 생성합니다.
+                    MakeReflectedParticle(_rigidbody.velocity.x < 0, transform);
+                }
+                // 
+                else if (enemy.HasBulletImmunity)
+                {
+
+                }
+                // 그 외의 경우
+                else
+                {
+                    // 타격 효과를 생성하고 대미지를 입힙니다.
+                    MakeHitParticle(_rigidbody.velocity.x < 0, transform);
+                    enemy.Hurt(damage);
+                }
+
+                // 적이 살아있다면 탄환을 제거합니다.
+                if (enemy.HasBulletImmunity)
+                {
+
+                }
+                else if (enemy.IsAlive())
+                {
+                    Destroy(gameObject);
+                }
             }
         }
         // X 버스터가 통과할 수 없는 레이어와 충돌했습니다.
-        else if (_collider.IsTouchingLayers(busterUnpassable))
+        else if (_collider.IsTouchingLayers(_busterUnpassable))
         {
             // 타격 입자를 생성하고 탄환을 제거합니다.
             MakeHitParticle(_rigidbody.velocity.x < 0, transform);

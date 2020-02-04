@@ -12,6 +12,24 @@ using UnityEngine;
 /// </summary>
 public class Unit : MonoBehaviour
 {
+    #region 상수를 정의합니다.
+    /// <summary>
+    /// 1/30 프레임 간의 시간입니다.
+    /// </summary>
+    public const float TIME_30FPS = 0.0333333f;
+    /// <summary>
+    /// 1/60 프레임 간의 시간입니다.
+    /// </summary>
+    public const float TIME_60FPS = 0.0166667f;
+    /// <summary>
+    /// 무적 시간입니다.
+    /// </summary>
+    public float INVENCIBLE_TIME_LENGTH = 1f;
+
+    #endregion
+
+
+
     #region 컨트롤러가 사용할 Unity 개체를 정의합니다.
     /// <summary>
     /// Rigidbody2D 요소를 가져옵니다.
@@ -329,13 +347,23 @@ public class Unit : MonoBehaviour
 
     }
     /// <summary>
-         /// 사망합니다.
-         /// </summary>
+    /// 사망합니다.
+    /// </summary>
     public virtual void Dead()
     {
+        gameObject.SetActive(false);
 
+        // 사망 효과가 존재하는 적이라면 호출합니다.
+        if (_deadParticleSpreadEffect != null)
+        {
+            Instantiate
+                (_deadParticleSpreadEffect, transform.position, transform.rotation)
+                .gameObject.SetActive(true);
+        }
+
+        //
+        Destroy(gameObject);
     }
-
 
     #endregion
 
@@ -352,6 +380,181 @@ public class Unit : MonoBehaviour
     protected bool IsAnimatorInState(string stateName)
     {
         return _Animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+    }
+
+    #endregion
+
+
+
+
+    #region 컬러 팔레트 관련 메서드를 정의합니다.
+    /// <summary>
+    /// 현재 색상 팔레트입니다.
+    /// </summary>
+    protected Color[] _currentPalette = null;
+    /// <summary>
+    /// 기본 색상 팔레트입니다.
+    /// </summary>
+    Color[] _defaultPalette = null;
+    /// <summary>
+    /// 기본 색상 팔레트를 설정합니다.
+    /// </summary>
+    public Color[] DefaultPalette
+    {
+        get { return _defaultPalette; }
+        set { _defaultPalette = value; }
+    }
+
+
+    /// <summary>
+    /// 색상을 업데이트합니다.
+    /// </summary>
+    protected void UpdateColor()
+    {
+        if (IsDamaged)
+        {
+            // 바디 색상을 맞춥니다.
+            UpdateBodyColor(_currentPalette);
+        }
+    }
+    /// <summary>
+    /// 색상을 주어진 팔레트로 업데이트합니다.
+    /// </summary>
+    /// <param name="_currentPalette">현재 팔레트입니다.</param>
+    void UpdateBodyColor(Color[] currentPalette)
+    {
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        Sprite sprite = renderer.sprite;
+        Texture2D texture = sprite.texture;
+        Texture2D cloneTexture = null;
+
+        // 
+        if (currentPalette == null)
+        {
+            cloneTexture = texture;
+        }
+        else if (_hitTextures.ContainsKey(sprite.GetInstanceID()))
+        {
+            cloneTexture = _hitTextures[sprite.GetInstanceID()];
+        }
+        else
+        {
+            // !!!!! IMPORTANT !!!!!
+            // 1. 텍스쳐 파일은 Read/Write 속성이 Enabled여야 합니다.
+            // 2. 반드시 Generate Mip Maps 속성을 켜십시오.
+            Color[] colors = texture.GetPixels();
+            Color[] pixels = new Color[colors.Length];
+            Color[] DefaultPalette = _defaultPalette;
+
+            // 모든 픽셀을 돌면서 색상을 업데이트합니다.
+            for (int pixelIndex = 0, pixelCount = colors.Length; pixelIndex < pixelCount; ++pixelIndex)
+            {
+                Color color = colors[pixelIndex];
+                if (color.a == 1)
+                {
+                    for (int targetIndex = 0, targetPixelCount = DefaultPalette.Length; targetIndex < targetPixelCount; ++targetIndex)
+                    {
+                        Color colorDst = DefaultPalette[targetIndex];
+                        if (Mathf.Approximately(color.r, colorDst.r) &&
+                            Mathf.Approximately(color.g, colorDst.g) &&
+                            Mathf.Approximately(color.b, colorDst.b) &&
+                            Mathf.Approximately(color.a, colorDst.a))
+                        {
+                            pixels[pixelIndex] = currentPalette[targetIndex];
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    /// pixels[pixelIndex] = color;
+                }
+            }
+
+            // 텍스쳐를 복제하고 새 픽셀 팔레트로 덮어씌웁니다.
+            cloneTexture = new Texture2D(texture.width, texture.height);
+            cloneTexture.filterMode = FilterMode.Point;
+            cloneTexture.SetPixels(pixels);
+            cloneTexture.Apply();
+
+            // 
+            _hitTextures.Add(sprite.GetInstanceID(), cloneTexture);
+        }
+
+        // 새 텍스쳐를 렌더러에 반영합니다.
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+        block.SetTexture("_MainTex", cloneTexture);
+        renderer.SetPropertyBlock(block);
+    }
+    /// <summary>
+    /// 바디 색상표를 초기화합니다.
+    /// </summary>
+    void ResetBodyColor()
+    {
+        _currentPalette = null;
+    }
+
+    #endregion
+
+
+
+    #region 코루틴을 정의합니다.
+    /// <summary>
+    /// 무적 상태 코루틴입니다.
+    /// </summary>
+    protected Coroutine _coroutineInvencible;
+
+    /// <summary>
+    /// 무적 상태에 대한 코루틴입니다.
+    /// </summary>
+    /// <returns>코루틴 열거자입니다.</returns>
+    protected IEnumerator CoroutineInvencible()
+    {
+        _invencibleTime = 0;
+        bool invencibleColorState = false;
+        while (_invencibleTime < INVENCIBLE_TIME_LENGTH)
+        {
+            _invencibleTime += TIME_30FPS + Time.deltaTime;
+
+            // 
+            if (invencibleColorState)
+            {
+                UpdateColorWithInvenciblePalette();
+            }
+            else
+            {
+                UpdateColorWithoutInvenciblePalette();
+            }
+            invencibleColorState = !invencibleColorState;
+
+            ///yield return new WaitForSeconds(TIME_30FPS);
+            yield return false;
+        }
+        Invencible = false;
+        IsDamaged = false;
+        UpdateColorEndOfInvencibleTime();
+        yield break;
+    }
+    /// <summary>
+    /// 무적 상태 팔레트로 색상을 업데이트합니다.
+    /// </summary>
+    void UpdateColorWithInvenciblePalette()
+    {
+        _currentPalette = EnemyColorPalette.InvenciblePalette;
+    }
+    /// <summary>
+    /// 무적 상태가 아닌 팔레트로 색상을 업데이트합니다.
+    /// </summary>
+    void UpdateColorWithoutInvenciblePalette()
+    {
+        ResetBodyColor();
+    }
+    /// <summary>
+    /// 무적 상태가 끝난 후의 색상을 업데이트합니다.
+    /// </summary>
+    void UpdateColorEndOfInvencibleTime()
+    {
+        ResetBodyColor();
     }
 
     #endregion

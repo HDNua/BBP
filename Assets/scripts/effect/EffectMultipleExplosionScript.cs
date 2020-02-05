@@ -54,7 +54,10 @@ public class EffectMultipleExplosionScript : EffectScript
     /// </summary>
     void Update()
     {
-
+        if (DestroyRequested)
+        {
+            Destroy(gameObject);
+        }
     }
 
     #endregion

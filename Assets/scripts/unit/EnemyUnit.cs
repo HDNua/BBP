@@ -94,14 +94,14 @@ public class EnemyUnit : Unit
     /// <summary>
     /// 캐릭터를 소환합니다.
     /// </summary>
-    public override void Spawn()
+    public override void Appear()
     {
 
     }
     /// <summary>
     /// 캐릭터를 사라지게 합니다.
     /// </summary>
-    public virtual void Disappear()
+    public override void Disappear()
     {
 
     }

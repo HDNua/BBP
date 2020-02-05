@@ -94,14 +94,25 @@ public class EnemySmashuUnit : EnemyUnit
 
 
 
+
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
     /// <summary>
     /// 등장 준비 시간입니다.
     /// 등장 준비 시간 이후부터 스마슈가 반짝이며 나타납니다.
     /// </summary>
-    public float _appearReadyTime = 0.6f;
+    public float _appearReadyTime = 0.9f;
+    /// <summary>
+    /// 퇴장 준비 시간입니다.
+    /// 퇴장 준비 시간 이후부터 스마슈가 반짝이며 사라집니다.
+    /// </summary>
+    public float _disappearReadyTime = 0.9f;
+    /// <summary>
+    /// 피격 시 사라지기 전까지 피격 모션을 재생할 시간입니다.
+    /// </summary>
+    public float _damagedTime = 1.6f;
 
     #endregion
+
 
 
 
@@ -111,8 +122,23 @@ public class EnemySmashuUnit : EnemyUnit
     /// 등장 상태라면 참입니다.
     /// </summary>
     bool _appearing = false;
+    /// <summary>
+    /// 사라지기 상태라면 참입니다.
+    /// </summary>
+    bool _disappearing = false;
+
+    /// <summary>
+    /// Groundable 컴포넌트가 활성화된 상태라면 참입니다.
+    /// </summary>
+    bool _isGroundableNow = true;
+
+    /// <summary>
+    /// 페이즈입니다.
+    /// </summary>
+    public int _phase = 0;
 
     #endregion
+
 
 
 
@@ -126,11 +152,30 @@ public class EnemySmashuUnit : EnemyUnit
         get { return _appearing; }
         set { _Animator.SetBool("Appearing", _appearing = value); }
     }
+    /// <summary>
+    /// 등장 상태라면 참입니다.
+    /// </summary>
+    bool Disappearing
+    {
+        get { return _disappearing; }
+        set { _Animator.SetBool("Disappearing", _disappearing = value); }
+    }
+    /// <summary>
+    /// 대미지를 받았다면 참입니다.
+    /// </summary>
+    bool Damaged
+    {
+        get { return _Animator.GetBool("Damaged"); }
+        set { _Animator.SetBool("Damaged", value); }
+    }
 
     /// <summary>
-    /// Groundable 컴포넌트가 활성화된 상태라면 참입니다.
+    /// 스마슈의 패턴입니다.
     /// </summary>
-    bool _isGroundableNow = true;
+    int Pattern
+    {
+        set { _Animator.SetInteger("Pattern", value); }
+    }
 
     /// <summary>
     /// 등장 풀때기 효과입니다.
@@ -153,6 +198,9 @@ public class EnemySmashuUnit : EnemyUnit
     protected override void Start()
     {
         base.Start();
+
+        // 컬러 팔레트를 설정합니다.
+        DefaultPalette = EnemyColorPalette.EnemySmashuPalette;
 
         // 색상을 없애고 시작합니다.
         Color color;
@@ -224,6 +272,15 @@ public class EnemySmashuUnit : EnemyUnit
             }
         }
     }
+    /// <summary>
+    /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.
+    /// 주로 오브젝트를 따라가게 설정한 카메라는 LastUpdate를 사용합니다.
+    /// </summary>
+    protected override void LateUpdate()
+    {
+        // 색상표를 사용하는 개체인 경우 이 메서드를 오버라이드하고 다음 문장을 호출합니다.
+        UpdateColor();
+    }
 
     #endregion
 
@@ -235,10 +292,13 @@ public class EnemySmashuUnit : EnemyUnit
     /// <summary>
     /// 등장합니다.
     /// </summary>
-    void Appear()
+    public override void Appear()
     {
         // 상태를 정의합니다.
         Appearing = true;
+
+        // 효과음을 재생합니다.
+        SoundEffects[0].Play();
 
         // 내용을 정의합니다.
         _coroutineAppear = StartCoroutine(CoroutineAppear());
@@ -255,8 +315,190 @@ public class EnemySmashuUnit : EnemyUnit
     /// </summary>
     void PerformActionAfterAppear()
     {
-        DoSkillKwaejinkyuk();
+        int patternOffset = 0; // Random.Range(0, 2);
+        int patternBase;
+
+        // 
+        switch (_phase)
+        {
+            case 0:
+                patternBase = 11;
+                break;
+            case 1:
+                patternBase = 21;
+                break;
+            default:
+                patternBase = 31;
+                break;
+        }
+
+        // 
+        DoPattern(patternBase + patternOffset);
     }
+    /// <summary>
+    /// 캐릭터를 사라지게 합니다.
+    /// </summary>
+    public override void Disappear()
+    {
+        // 상태를 정의합니다.
+        Disappearing = true;
+
+        // 
+        _coroutineDisappear = StartCoroutine(CoroutineDisappear());
+    }
+    /// <summary>
+    /// 캐릭터 퇴장을 중지합니다.
+    /// </summary>
+    void StopDisappearing()
+    {
+        Disappearing = false;
+    }
+    /// <summary>
+    /// 사라지기 이후의 행동을 정의합니다.
+    /// </summary>
+    void PerformActionAfterDisappearing()
+    {
+        // 생성된 개체를 파괴합니다.
+        Destroy(gameObject);
+    }
+
+    #endregion
+
+
+
+
+    #region 패턴을 정의합니다.
+    /// <summary>
+    /// 패턴을 수행합니다.
+    /// </summary>
+    /// <param name="patternIndex">수행할 패턴의 인덱스입니다.</param>
+    void DoPattern(int patternIndex)
+    {
+        // 상태를 정의합니다.
+        Pattern = patternIndex;
+
+        // 
+        switch (patternIndex)
+        {
+            case 11:
+                DoPattern11();
+                break;
+            case 12:
+                DoPattern12();
+                break;
+            case 21:
+                DoPattern21();
+                break;
+            case 22:
+                DoPattern22();
+                break;
+            case 31:
+                DoPattern31();
+                break;
+            case 32:
+                DoPattern32();
+                break;
+            default:
+                break;
+        }
+    }
+    /// <summary>
+    /// 패턴을 중지합니다.
+    /// </summary>
+    void StopPattern()
+    {
+        Pattern = 0;
+    }
+    /// <summary>
+    /// 페이즈 1의 패턴 1을 실행합니다.
+    /// </summary>
+    void DoPattern11()
+    {
+        _coroutinePattern = StartCoroutine(CoroutinePattern11());
+    }
+    /// <summary>
+    /// 페이즈 1의 패턴 1이 실행된 후의 행동을 정의합니다.
+    /// </summary>
+    void PerformActionAfterPattern11()
+    {
+        Disappear();
+    }
+    /// <summary>
+    /// 페이즈 1의 패턴 2를 실행합니다.
+    /// </summary>
+    void DoPattern12()
+    {
+        _coroutinePattern = StartCoroutine(CoroutinePattern12());
+    }
+    /// <summary>
+    /// 페이즈 1의 패턴 2가 실행된 후의 행동을 정의합니다.
+    /// </summary>
+    void PerformActionAfterPattern12()
+    {
+        Disappear();
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    void DoPattern21()
+    {
+
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    void DoPattern22()
+    {
+
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    void DoPattern31()
+    {
+
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    void DoPattern32()
+    {
+
+    }
+
+    #endregion
+
+
+
+
+
+    #region 행동 메서드를 정의합니다.
+    /// <summary>
+    /// 캐릭터를 죽입니다.
+    /// </summary>
+    public override void Dead()
+    {
+        if (false)
+        {
+            // 폭발 효과를 생성하고 효과음을 재생합니다.
+            Instantiate(DataBase.Instance.MultipleExplosionEffect,
+                transform.position, transform.rotation);
+
+            // 캐릭터를 죽입니다.
+            base.Dead();
+        }
+
+        //
+        Damaged = true;
+
+        // 
+        if (_coroutineAppear != null) StopCoroutine(_coroutineAppear);
+        if (_coroutinePattern != null) StopCoroutine(_coroutinePattern);
+
+        // 
+        _coroutineDead = StartCoroutine(CoroutineDead());
+    }
+
 
     /// <summary>
     /// 쾌진격 기술을 사용합니다.
@@ -285,46 +527,32 @@ public class EnemySmashuUnit : EnemyUnit
 
 
 
-
-    #region 행동 메서드를 정의합니다.
-    /// <summary>
-    /// 캐릭터를 죽입니다.
-    /// </summary>
-    public override void Dead()
-    {
-        // 폭발 효과를 생성하고 효과음을 재생합니다.
-        Instantiate(DataBase.Instance.MultipleExplosionEffect,
-            transform.position, transform.rotation);
-
-        // 캐릭터를 죽입니다.
-        base.Dead();
-    }
-
-    /// <summary>
-    /// 폭발 효과를 생성합니다. (주의: 효과 0번은 폭발 개체여야 합니다.)
-    /// </summary>
-    protected virtual void CreateExplosion(Vector3 position)
-    {
-        Instantiate(DataBase.Instance.Explosion1Effect, position, transform.rotation)
-            .gameObject.SetActive(true);
-    }
-
-    #endregion
-
-
-
-
     #region 코루틴 메서드를 정의합니다.
     /// <summary>
     /// 등장 코루틴입니다.
     /// </summary>
     Coroutine _coroutineAppear;
+    /// <summary>
+    /// 패턴 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutinePattern;
+    /// <summary>
+    /// 사라지기 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineDisappear;
+    /// <summary>
+    /// 사망 코루틴입니다. 스마슈는 실제로 사망하지 않고 그저 사라지기만 합니다.
+    /// </summary>
+    Coroutine _coroutineDead;
 
     /// <summary>
     /// 등장 코루틴입니다.
     /// </summary>
     IEnumerator CoroutineAppear()
     {
+        // 
+        gameObject.tag = "Untagged";
+
         // 닌자 등장 풀때기 효과를 생성합니다.
         GameObject effectGrassObject = Instantiate(
             EffectNinjaGrass, 
@@ -341,6 +569,9 @@ public class EnemySmashuUnit : EnemyUnit
             time += Time.deltaTime;
             yield return false;
         }
+
+        // 
+        gameObject.tag = "Enemy";
 
         // 
         Color color;
@@ -379,6 +610,173 @@ public class EnemySmashuUnit : EnemyUnit
         _coroutineAppear = null;
         yield break;
     }
+    /// <summary>
+    /// 페이즈 1의 패턴 1 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutinePattern11()
+    {
+        // 
+        yield return new WaitForSeconds(TIME_30FPS);
+        while (IsAnimatorInState("Pattern111"))
+        {
+            yield return false;
+        }
+
+        // 
+        yield return new WaitForSeconds(TIME_30FPS);
+        while (IsAnimatorInState("Pattern112"))
+        {
+            yield return false;
+        }
+
+        // 
+        yield return new WaitForSeconds(TIME_30FPS);
+        while (IsAnimatorInState("Pattern113"))
+        {
+            yield return false;
+        }
+
+        // 
+        yield return new WaitForSeconds(TIME_30FPS);
+
+        // 패턴을 끝냅니다.
+        StopPattern();
+        PerformActionAfterPattern11();
+        _coroutinePattern = null;
+        yield break;
+    }
+    /// <summary>
+    /// 페이즈 1의 패턴 2 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutinePattern12()
+    {
+        // 
+        while (IsAnimatorInState("Pattern121"))
+        {
+            yield return false;
+        }
+
+        // 
+        while (IsAnimatorInState("Pattern122"))
+        {
+            yield return false;
+        }
+
+        // 
+        while (IsAnimatorInState("Pattern12E"))
+        {
+            yield return false;
+        }
+
+        // 패턴을 끝냅니다.
+        StopPattern();
+        PerformActionAfterPattern12();
+        _coroutinePattern = null;
+        yield break;
+    }
+    /// <summary>
+    /// 사라지기 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineDisappear()
+    {
+        float time = 0;
+        while (time < _disappearReadyTime)
+        {
+            time += Time.deltaTime;
+
+            // 30 FPS 간격으로 반짝이게 합니다.
+            yield return false;
+        }
+
+        // 
+        gameObject.tag = "Untagged";
+
+        // 효과음을 재생합니다.
+        SoundEffects[0].Play();
+
+        // 닌자 등장 풀때기 효과를 생성합니다.
+        GameObject effectGrassObject = Instantiate(
+            EffectNinjaGrass,
+            transform.position,
+            transform.rotation);
+        effectGrassObject.SetActive(true);
+        EffectScript effectGrass = effectGrassObject.GetComponent<EffectScript>();
+        float effectClipLength = effectGrass._clipLength;
+
+        // 
+        Color color;
+        bool blink = false;
+        time = 0;
+        while (time < effectClipLength)
+        {
+            time += TIME_30FPS + Time.deltaTime;
+
+            if (blink)
+            {
+                color = _Renderer.color;
+                color.a = 1f;
+                _Renderer.color = color;
+            }
+            else
+            {
+                color = _Renderer.color;
+                color.a = 0f;
+                _Renderer.color = color;
+            }
+            blink = !blink;
+
+            // 30 FPS 간격으로 반짝이게 합니다.
+            yield return new WaitForSeconds(TIME_30FPS);
+        }
+
+        // 효과를 제거하고 스마슈의 색상을 없앱니다.
+        effectGrass.RequestDestroy();
+        color = _Renderer.color;
+        color.a = 0f;
+        _Renderer.color = color;
+
+        // 등장을 끝냅니다.
+        StopDisappearing();
+        PerformActionAfterDisappearing();
+        _coroutineDisappear = null;
+        yield break;
+    }
+    /// <summary>
+    /// 사망 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineDead()
+    {
+        // 
+        Color color;
+        bool blink = false;
+        float time = 0;
+        while (time < _damagedTime)
+        {
+            time += TIME_30FPS + Time.deltaTime;
+
+            if (blink)
+            {
+                color = _Renderer.color;
+                color.a = 1f;
+                _Renderer.color = color;
+            }
+            else
+            {
+                color = _Renderer.color;
+                color.a = 0f;
+                _Renderer.color = color;
+            }
+            blink = !blink;
+
+            // 30 FPS 간격으로 반짝이게 합니다.
+            yield return new WaitForSeconds(TIME_30FPS);
+        }
+
+        // 
+        Damaged = false;
+        Disappear();
+        yield break;
+    }
 
     #endregion
 
@@ -387,7 +785,14 @@ public class EnemySmashuUnit : EnemyUnit
 
 
     #region 보조 메서드를 정의합니다.
-
+    /// <summary>
+    /// 폭발 효과를 생성합니다. (주의: 효과 0번은 폭발 개체여야 합니다.)
+    /// </summary>
+    protected virtual void CreateExplosion(Vector3 position)
+    {
+        Instantiate(DataBase.Instance.Explosion1Effect, position, transform.rotation)
+            .gameObject.SetActive(true);
+    }
 
     #endregion
 }

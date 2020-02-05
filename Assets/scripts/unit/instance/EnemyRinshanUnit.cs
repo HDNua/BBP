@@ -161,7 +161,7 @@ public class EnemyRinshanUnit : EnemyUnit
     /// <summary>
     /// 캐릭터를 소환합니다.
     /// </summary>
-    public override void Spawn()
+    public override void Appear()
     {
 
     }

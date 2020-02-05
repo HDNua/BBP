@@ -919,7 +919,6 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// </summary>
     void PerformActionAfterHop()
     {
-        ///Attack();
         if (_phase == 0)
         {
             EnemyUnit enemy = _team[Random.Range(0, 2)];
@@ -1097,8 +1096,8 @@ public class EnemyBossAtahoScript : EnemyBossScript
             Vector3 nextPos = new Vector3(nextX, baseY + arc, transform.position.z);
 
             // 
-            float diffX = nextX - transform.position.x;
-            float diffY = baseY + arc - transform.position.y;
+            ///float diffX = nextX - transform.position.x;
+            ///float diffY = baseY + arc - transform.position.y;
 
             // Rotate to face the next position, and then move there
             ///_Velocity = new Vector2(diffX / deltaTime, diffY / deltaTime);

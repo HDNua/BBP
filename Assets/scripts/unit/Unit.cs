@@ -342,7 +342,14 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// 유닛을 소환합니다.
     /// </summary>
-    public virtual void Spawn()
+    public virtual void Appear()
+    {
+
+    }
+    /// <summary>
+    /// 유닛을 사라지게 합니다.
+    /// </summary>
+    public virtual void Disappear()
     {
 
     }

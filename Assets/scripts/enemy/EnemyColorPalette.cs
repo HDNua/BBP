@@ -36,15 +36,7 @@ public static class EnemyColorPalette
         */
     };
 
-
     #endregion
-
-
-
-
-
-
-
 
 
 
@@ -100,7 +92,6 @@ public static class EnemyColorPalette
     };
 
 
-
     /// <summary>
     /// 아타호 보스의 기본 색상표입니다.
     /// </summary>
@@ -109,42 +100,25 @@ public static class EnemyColorPalette
         0x000000, 0xFFFFFF, 0xFF0000, 0x523100, 0x734221, 0xCE5200, 0xDE8C10, 0xFFBD10, 0xFFDE52, 0xFFDECE, 0x214200, 0x637321, 0x8C9C31, 0x316310, 0x316310,
         0x000000, 0xFFFFFF, 0xFF0000, 0x523100, 0x734221, 0xCE5200, 0xDE8C10, 0xFFBD10, 0xFFDE52, 0xFFDECE, 0x214200, 0x637321, 0x8C9C31, 0x316310, 0x316310,
     };
-
-
-
     /// <summary>
-    /// 
+    /// 린샹의 기본 색상표입니다.
     /// </summary>
-    static readonly int[] INTRO_BOSS_HEAD_COLOR_PALETTE =
+    static readonly int[] ENEMY_RINSHAN_PALETTE =
     {
-        0xE7F1E3, 0x5E9848, 0x386040, 0x293B24, 0x1B171C, 0x2D4E32, 0x586B5A, 0xC0B9AD, 0x3F773B, 0x7EBF4F, 0x282B30, 0x1D2321, 0x563819, 0x3E3420, 0x130D12,
-        0x744B1F, 0x281916, 0x26242F, 0x8D9A96, 0x7B867B, 0x2A3138, 0x422926, 0x6C756C, 0x383F41, 0x525759, 0x44484C, 0x35353A, 0x3A1F12, 0x221E29, 0xC54D40,
+        0x000000, 0xFFFFFF, 0xFF0000, 0x523100, 0x734221, 0xCE5200, 0xDE8C10, 0xFFBD10, 0xFFDE52, 0xFFDECE, 0x214200, 0x637321, 0x8C9C31, 0x316310, 0x316310,
+        0x000000, 0xFFFFFF, 0xFF0000, 0x523100, 0x734221, 0xCE5200, 0xDE8C10, 0xFFBD10, 0xFFDE52, 0xFFDECE, 0x214200, 0x637321, 0x8C9C31, 0x316310, 0x316310,
     };
     /// <summary>
-    /// 
+    /// 스마슈의 기본 색상표입니다.
     /// </summary>
-    static readonly int[] INTRO_BOSS_BODY_COLOR_PALETTE =
+    static readonly int[] ENEMY_SMASHU_PALETTE =
     {
-        0xD2D4D4, 0x140F14, 0x22212B, 0x282C34, 0xA6A7B0, 0x2D3C38, 0x5A5B5B, 0x4B403E, 0x3C2928, 0x7E6F67, 0x1B1B1E, 0x19221C, 0x366542, 0x8F8F87, 0x284E39,
-        0x341914, 0xEDEBEA, 0x529247, 0x1D2B23, 0xFDFCFC, 0x87BB4D, 0xACE560, 0xBCBDC7, 0x745C2D, 0x662A23, 0xCC8144, 0xB93B29, 0xAFB2BE, 0xF3BF50, 0xE2D2CD,
+        0xFFFFFF, 0xAD0000, 0xDE3100, 0x633110, 0xCE5200, 0xDE8C10, 0xFFBD10, 0xFFDE5A, 0x425A18, 0x7B8CC6, 0x101039, 0x5A4A7B, 0xC6C6E7, 0x5A4A7B, 0xC6C6E7,
+        0xFFFFFF, 0xAD0000, 0xDE3100, 0x633110, 0xCE5200, 0xDE8C10, 0xFFBD10, 0xFFDE5A, 0x425A18, 0x7B8CC6, 0x101039, 0x5A4A7B, 0xC6C6E7, 0x5A4A7B, 0xC6C6E7,
     };
-    /// <summary>
-    /// 
-    /// </summary>
-    static readonly int[] INTRO_BOSS_ARM_COLOR_PALETTE =
-    {
-        0xBDE2C7, 0x82908E, 0x306B3A, 0x434F4F, 0x303943, 0xBDC5C1, 0x4D7243, 0x364449, 0x29342E, 0x292E38, 0xF2F6F5, 0x63736F, 0x202B2A, 0x1B2422, 0xA6B4B0,
-        0x625746, 0x4B5B59, 0x736F41, 0x252332, 0x6CA04B, 0x523224, 0x96A39F, 0x707F7E, 0x191B20, 0xBA992B, 0x0F1416, 0x586663, 0xA0701E, 0x785026, 0xC0807B,
-    };
+
     
     #endregion
-
-
-
-
-
-
-
 
 
 
@@ -172,13 +146,10 @@ public static class EnemyColorPalette
     public static Color[] IntroBossArmPalette { get; private set; }
 
     public static Color[] BossAtahoPalette { get; private set; }
+    public static Color[] EnemyRinshanPalette { get; private set; }
+    public static Color[] EnemySmashuPalette { get; private set; }
 
     #endregion
-
-
-
-
-
 
 
 
@@ -206,6 +177,8 @@ public static class EnemyColorPalette
         Color[] introBossArmPalette;
 
         Color[] bossAtahoPalette;
+        Color[] enemyRinshanPalette;
+        Color[] enemySmashuPalette;
 
         // 팔레트를 초기화합니다.
         invenciblePalette = new Color[PALETTE_COUNT];
@@ -225,6 +198,8 @@ public static class EnemyColorPalette
 
         // 
         bossAtahoPalette = new Color[PALETTE_COUNT];
+        enemyRinshanPalette = new Color[PALETTE_COUNT];
+        enemySmashuPalette = new Color[PALETTE_COUNT];
 
         // 
         for (int i = 0; i < PALETTE_COUNT; ++i)
@@ -247,6 +222,8 @@ public static class EnemyColorPalette
 
             // 
             bossAtahoPalette[i] = ColorFromInt(BOSS_ATAHO_PALETTE[i]);
+            enemyRinshanPalette[i] = ColorFromInt(ENEMY_RINSHAN_PALETTE[i]);
+            enemySmashuPalette[i] = ColorFromInt(ENEMY_SMASHU_PALETTE[i]);
         }
         InvenciblePalette = invenciblePalette;
         GigadeathPalette = gigadeathPalette;
@@ -265,17 +242,13 @@ public static class EnemyColorPalette
 
         // 
         BossAtahoPalette = bossAtahoPalette;
+        EnemyRinshanPalette = enemyRinshanPalette;
+        EnemySmashuPalette = enemySmashuPalette;
     }
-
 
     #endregion
 
-
-
-
-
-
-
+    
 
 
 
@@ -316,13 +289,34 @@ public static class EnemyColorPalette
 
 
 
-
-
-
-
-
     #region 구형 정의를 보관합니다.
-
+    [Obsolete("RXPB 인트로 보스의 헤드 컬러 팔레트입니다.")]
+    /// <summary>
+    /// RXPB 인트로 보스의 헤드 컬러 팔레트입니다.
+    /// </summary>
+    static readonly int[] INTRO_BOSS_HEAD_COLOR_PALETTE =
+    {
+        0xE7F1E3, 0x5E9848, 0x386040, 0x293B24, 0x1B171C, 0x2D4E32, 0x586B5A, 0xC0B9AD, 0x3F773B, 0x7EBF4F, 0x282B30, 0x1D2321, 0x563819, 0x3E3420, 0x130D12,
+        0x744B1F, 0x281916, 0x26242F, 0x8D9A96, 0x7B867B, 0x2A3138, 0x422926, 0x6C756C, 0x383F41, 0x525759, 0x44484C, 0x35353A, 0x3A1F12, 0x221E29, 0xC54D40,
+    };
+    [Obsolete("RXPB 인트로 보스의 바디 컬러 팔레트입니다.")]
+    /// <summary>
+    /// RXPB 인트로 보스의 바디 컬러 팔레트입니다.
+    /// </summary>
+    static readonly int[] INTRO_BOSS_BODY_COLOR_PALETTE =
+    {
+        0xD2D4D4, 0x140F14, 0x22212B, 0x282C34, 0xA6A7B0, 0x2D3C38, 0x5A5B5B, 0x4B403E, 0x3C2928, 0x7E6F67, 0x1B1B1E, 0x19221C, 0x366542, 0x8F8F87, 0x284E39,
+        0x341914, 0xEDEBEA, 0x529247, 0x1D2B23, 0xFDFCFC, 0x87BB4D, 0xACE560, 0xBCBDC7, 0x745C2D, 0x662A23, 0xCC8144, 0xB93B29, 0xAFB2BE, 0xF3BF50, 0xE2D2CD,
+    };
+    [Obsolete("RXPB 인트로 보스의 암 컬러 팔레트입니다.")]
+    /// <summary>
+    /// RXPB 인트로 보스의 암 컬러 팔레트입니다.
+    /// </summary>
+    static readonly int[] INTRO_BOSS_ARM_COLOR_PALETTE =
+    {
+        0xBDE2C7, 0x82908E, 0x306B3A, 0x434F4F, 0x303943, 0xBDC5C1, 0x4D7243, 0x364449, 0x29342E, 0x292E38, 0xF2F6F5, 0x63736F, 0x202B2A, 0x1B2422, 0xA6B4B0,
+        0x625746, 0x4B5B59, 0x736F41, 0x252332, 0x6CA04B, 0x523224, 0x96A39F, 0x707F7E, 0x191B20, 0xBA992B, 0x0F1416, 0x586663, 0xA0701E, 0x785026, 0xC0807B,
+    };
 
     #endregion
 }

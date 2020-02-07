@@ -1,4 +1,12 @@
-﻿BBP v1.4.3.0
+﻿BBP v1.4.3.1 (temp)
+----
+
+- 어렵다
+
+end.
+
+
+BBP v1.4.3.0
 ----
 
 * 다음 튜토리얼을 기반으로 Shader를 이용한 Palette swap 준비 완료.

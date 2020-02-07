@@ -28,7 +28,7 @@ public class PaletteSwapTest : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public InputColorDictElem[] _inputColors;
+    public ColorDictElem[] _inputColors;
 
     /// <summary>
     /// 
@@ -99,7 +99,7 @@ public class PaletteSwapTest : MonoBehaviour
 
         for (int i = 0; i < 13; ++i)
         {
-            _inputColors[i] = new InputColorDictElem(palettes[i] >> 8, _inputColors[i].color);
+            _inputColors[i] = new ColorDictElem(palettes[i] >> 8, _inputColors[i].color);
         }
     }
 
@@ -176,7 +176,7 @@ public class PaletteSwapTest : MonoBehaviour
     {
         for (int i = 0; i < _inputColors.Length; ++i)
         {
-            InputColorDictElem elem = _inputColors[i];
+            ColorDictElem elem = _inputColors[i];
             if (elem.key == key)
                 return i;
         }
@@ -194,7 +194,7 @@ public class PaletteSwapTest : MonoBehaviour
             _inputColorDict = new Dictionary<uint, Color>();
             for (int i = 0; i < _inputColors.Length; ++i)
             {
-                InputColorDictElem elem = _inputColors[i];
+                ColorDictElem elem = _inputColors[i];
                 _inputColorDict.Add(elem.key, elem.color);
             }
 
@@ -241,17 +241,6 @@ public class PaletteSwapTest : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("_spriteColorDict로 대체되었습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    public Color[] _spriteColors;
-    [Obsolete("_inputColorDict로 대체되었습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    public Color[] _inputColorArrayDep;
-
 
     #endregion
 }

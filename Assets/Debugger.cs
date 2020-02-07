@@ -16,7 +16,7 @@ public class Debugger : MonoBehaviour
     {
         foreach (AnimationClip clip in animationClips)
         {
-            Debug.Log(clip.length);
+            //Debug.Log(clip.length);
         }
     }
 

@@ -192,9 +192,9 @@ public static class EnemyColorPalette
         introBossHoverMechPalette = new Color[PALETTE_COUNT];
 
         // 
-        introBossHeadPalette = new Color[PALETTE_COUNT];
-        introBossBodyPalette = new Color[PALETTE_COUNT];
-        introBossArmPalette = new Color[PALETTE_COUNT];
+        ///introBossHeadPalette = new Color[PALETTE_COUNT];
+        ///introBossBodyPalette = new Color[PALETTE_COUNT];
+        ///introBossArmPalette = new Color[PALETTE_COUNT];
 
         // 
         bossAtahoPalette = new Color[PALETTE_COUNT];
@@ -216,9 +216,9 @@ public static class EnemyColorPalette
             introBossHoverMechPalette[i] = ColorFromInt(INTRO_BOSS_HOVER_MECH_PALETTE[i]);
 
             // 
-            introBossHeadPalette[i] = ColorFromInt(INTRO_BOSS_HEAD_COLOR_PALETTE[i]);
-            introBossBodyPalette[i] = ColorFromInt(INTRO_BOSS_BODY_COLOR_PALETTE[i]);
-            introBossArmPalette[i] = ColorFromInt(INTRO_BOSS_ARM_COLOR_PALETTE[i]);
+            ///introBossHeadPalette[i] = ColorFromInt(INTRO_BOSS_HEAD_COLOR_PALETTE[i]);
+            ///introBossBodyPalette[i] = ColorFromInt(INTRO_BOSS_BODY_COLOR_PALETTE[i]);
+            ///introBossArmPalette[i] = ColorFromInt(INTRO_BOSS_ARM_COLOR_PALETTE[i]);
 
             // 
             bossAtahoPalette[i] = ColorFromInt(BOSS_ATAHO_PALETTE[i]);
@@ -236,9 +236,9 @@ public static class EnemyColorPalette
         IntroBossHoverMechPalette = introBossHoverMechPalette;
 
         // 
-        IntroBossHeadPalette = introBossHeadPalette;
-        IntroBossBodyPalette = introBossBodyPalette;
-        IntroBossArmPalette = introBossArmPalette;
+        ///IntroBossHeadPalette = introBossHeadPalette;
+        ///IntroBossBodyPalette = introBossBodyPalette;
+        ///IntroBossArmPalette = introBossArmPalette;
 
         // 
         BossAtahoPalette = bossAtahoPalette;

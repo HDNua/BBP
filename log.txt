@@ -1,13 +1,15 @@
-﻿BBP v1.4.2.1
+﻿BBP v1.4.3.0
 ----
-
-* X 스프라이트 재생성 완료.
 
 * 다음 튜토리얼을 기반으로 Shader를 이용한 Palette swap 준비 완료.
   https://gamedevelopment.tutsplus.com/tutorials/how-to-use-a-shader-to-dynamically-swap-a-sprites-colors--cms-25129#post_comments
 
-end.
+* !!!!! IMPORTANT !!!!!
+  팔레트 스왑! 팔레트 스왑! 팔레트 스왑!
+- 아니 안 쓰는 색인데 툴이 그냥 팔레트에 끼워넣는다니까?
+  이거 때문에 완전 헤맸네;;;;
 
+end.
 
 
 BBP v1.4.2.0

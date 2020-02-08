@@ -11,11 +11,11 @@ using System.Collections.Generic;
 /// </summary>
 public class PaletteSwapperable : MonoBehaviour
 {
-    #region 컨트롤러가 사용할 Unity 개체를 보관합니다.
+    #region 컨트롤러가 사용할 Unity 컴포넌트를 정의합니다.
     /// <summary>
     /// 
     /// </summary>
-    SpriteRenderer _spriteRenderer;
+    SpriteRenderer _renderer;
 
     #endregion
 
@@ -25,31 +25,49 @@ public class PaletteSwapperable : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    public Texture2D[] _paletteTextures;
+
+    #endregion
+
+
+
+
+
+    #region 필드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    public int _paletteWidth;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public Texture2D _MainTex;
     /// <summary>
     /// 
     /// </summary>
-    public Texture2D _colorSwapTex;
+    public Texture2D _colorSwapTexture;
 
     /// <summary>
     /// 
     /// </summary>
-    public ColorDictElem[] _inputColors;
+    public Color[][] _palettes;
+    /// <summary>
+    /// 
+    /// </summary>
+    public int _paletteIndex = 0;
 
     /// <summary>
     /// 
     /// </summary>
-    public Dictionary<uint, Color> _spriteColorDict;
+    public Color[] _defaultPalette;
 
     /// <summary>
-    /// 
+    /// SwapInfo[]의 배열입니다.
+    /// SwapInfo[0]: 디폴트 스왑 정보입니다. key에 대한 color가 자신과 같습니다.
     /// </summary>
-    public int _step = 0;
+    //SwapInfo[][] _swapDicts;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public Texture2D _1;
 
     #endregion
 
@@ -59,52 +77,24 @@ public class PaletteSwapperable : MonoBehaviour
 
     #region MonoBehaviour 기본 메서드를 재정의 합니다.
     /// <summary>
-    /// MonoBehaviour 개체를 초기화합니다. (최초 1회만 수행)
+    /// MonoBehaviour 객체를 초기화합니다.
     /// </summary>
     void Awake()
     {
         // !!!!! IMPORTANT !!!!!
         // SpriteRenderer를 이 시점에 가져오지 않으면 이후의 과정이 동작하지 않는다
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _renderer = GetComponent<SpriteRenderer>();
 
+        // 스왑 텍스쳐를 초기화 합니다.
+        InitColorSwapTexture();
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    private void Start()
+    {
         // 
-        InitColorSwapTex();
-    }
-    /// <summary>
-    /// MonoBehaviour 개체를 초기화합니다. (생성될 때마다)
-    /// </summary>
-    public void Start()
-    {
-    }
-    /// <summary>
-    /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트 합니다.
-    /// </summary>
-    private void Update()
-    {
-        if (_step == 1)
-        {
-            foreach (uint key in _spriteColorDict.Keys)
-            {
-                SwapColor(key, TextureIndexFromColorKey(key), ColorFromIntRGB(255, 0, 0));
-            }
-            _colorSwapTex.Apply();
-        }
-    }
-    /// <summary>
-    /// FixedTimestep에 설정된 값에 따라 일정한 간격으로 업데이트 합니다.
-    /// 물리 효과가 적용된 오브젝트를 조정할 때 사용됩니다.
-    /// (Update는 불규칙한 호출이기 때문에 물리엔진 충돌검사가 제대로 되지 않을 수 있습니다.)
-    /// </summary>
-    private void FixedUpdate()
-    {
-        if (_step == 2)
-        {
-            foreach (uint key in _spriteColorDict.Keys)
-            {
-                SwapColor(key, TextureIndexFromColorKey(key), ColorFromIntRGB(0, 255, 0));
-            }
-            _colorSwapTex.Apply();
-        }
+        // _valuesArray = new uint[][] { _values0, _values1 };
     }
     /// <summary>
     /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.
@@ -112,24 +102,44 @@ public class PaletteSwapperable : MonoBehaviour
     /// </summary>
     void LateUpdate()
     {
-        if (_step == 3)
-        {
-            // 
-            Dictionary<uint, Color> inputColorDict = new Dictionary<uint, Color>();
-            for (int i = 0; i < _inputColors.Length; ++i)
-            {
-                ColorDictElem elem = _inputColors[i];
-                inputColorDict.Add(elem.key, elem.color);
-            }
+        // 
+        _valuesArray = new uint[][] { _values0, _values1 };
+        uint[] values = _valuesArray[_valuesArrayIndex];
 
-            // 
-            foreach (uint key in inputColorDict.Keys)
-            {
-                SwapColor(key, TextureIndexFromColorKey(key), inputColorDict[key]);
-            }
-            _colorSwapTex.Apply();
+        //
+        for (int i = 0; i < _indexes.Length; ++i)
+        {
+            int index = _indexes[i];
+            int value = (int)(values[i] >> 8);
+            _colorSwapTexture.SetPixel(index, 0, ColorFromInt(value));
         }
+        _colorSwapTexture.SetPixel(_startIndex, 0, ColorFromInt((int)(values[_endIndex] >> 8)));
+        _colorSwapTexture.Apply();
     }
+
+    public Color[] _outColors;
+    public int _startIndex;
+    public int _endIndex;
+    public int[] _indexes =
+    {
+        124, 120, 172, 208, 240,
+        188, 144, 108, 68, 220,
+        104, 128, 176
+    };
+    public uint[] _values0 =
+    {
+        0x3068C8ff, 0x2040d0ff, 0x70a0e8ff, 0xb8d8e8ff, 0xe8f0f8ff,
+        0x98c0e0ff, 0x4088e0ff, 0x3048a8ff, 0x102078ff, 0xc8e8f0ff,
+        0x10a8c0ff, 0x30c0c0ff, 0x78e0e0ff
+    };
+    public uint[] _values1 =
+    {
+        0xC830A5FF, 0xD020BFFF, 0xE870D3FF, 0xE8B8E5FF, 0xF8E8F7FF,
+        0xE098DDFF, 0xE040DEFF, 0xA83099FF, 0x78105AFF, 0xF0C8E6FF,
+        0xC01062FF, 0xC0306BFF, 0xCB0387FF
+    };
+    public uint[][] _valuesArray;
+    public int _valuesArrayIndex = 0;
 
     #endregion
 
@@ -141,73 +151,98 @@ public class PaletteSwapperable : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public void InitColorSwapTex()
+    public void InitColorSwapTexture()
     {
-        Texture2D colorSwapTex = new Texture2D(
-            _inputColors.Length, 1, TextureFormat.RGBA32, false, false);
-        colorSwapTex.filterMode = FilterMode.Point;
+        Color[] defaultPixels = _paletteTextures[0].GetPixels();
+        _defaultPalette = defaultPixels;
 
-        for (int i = 0; i < colorSwapTex.width; ++i)
-            colorSwapTex.SetPixel(i, 0, new Color(0.0f, 0.0f, 0.0f, 0.0f));
-        colorSwapTex.Apply();
-        _spriteRenderer.material.SetTexture("_SwapTex", colorSwapTex);
-
-        //_spriteColors = new Color[colorSwapTex.width];
-        _spriteColorDict = new Dictionary<uint, Color>();
-        _colorSwapTex = colorSwapTex;
+        //
+        _paletteWidth = 256; // defaultPixels.Length;
+        Texture2D colorSwapTexture = new Texture2D
+            (_paletteWidth, 1, TextureFormat.RGBA32, false, false);
+        colorSwapTexture.filterMode = FilterMode.Point;
 
         // 
-        InitInputColorDict();
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    void InitInputColorDict()
-    {
-        uint[] palettes = {
-            0x3068C8ff, 0x2040d0ff, 0x70a0e8ff, 0xb8d8e8ff,
-            0xe8f0f8ff, 0x98c0e0ff, 0x4088e0ff, 0x3048a8ff,
-            0x102078ff, 0xc8e8f0ff, 0x10a8c0ff, 0x30c0c0ff,
-            0x78e0e0ff,
-        };
+        for (int i = 0; i < _paletteWidth; ++i)
+            colorSwapTexture.SetPixel(i, 0, new Color(0.0f, 0.0f, 0.0f, 0.0f));
+        colorSwapTexture.Apply();
 
         // 
+        _renderer.material.SetTexture("_SwapTex", colorSwapTexture);
+        _colorSwapTexture = colorSwapTexture;
 
+        // _paletteSprites를 사용하여 목적 팔레트를 생성합니다.
+        int numOfPaletteSprites = _paletteTextures.Length;
+        _palettes = new Color[numOfPaletteSprites][];
+        //_swapDicts = new SwapInfo[numOfPaletteSprites][];
 
-
-
-        // 
-        for (int i = 0; i < 13; ++i)
+        /*
+        for (int i = 0; i < numOfPaletteSprites; ++i)
         {
-            _inputColors[i] = new ColorDictElem(palettes[i] >> 8, _inputColors[i].color);
+            Color[] pixels = _paletteTextures[i].GetPixels();
+            SwapInfo[] swapDict = new SwapInfo[_paletteWidth];
+            for (int j = 0; j < _paletteWidth; ++j)
+            {
+                Color color = pixels[j];
+                if (color.a == 0)
+                {
+                    color = new Color(0, 0, 0);
+                }
+                uint key = UIntFromColor(defaultPixels[j]);
+                if (defaultPixels[j].a == 0)
+                {
+                    key = 0;
+                }
+
+                color.a = 1f;
+
+                // 
+                swapDict[j] = new SwapInfo(key & 0x00FFFFFF, color);
+            }
+
+            //
+            _swapDicts[i] = swapDict;
+        }
+        */
+    }
+
+
+
+
+
+
+
+    /// <summary>
+    /// 팔레트를 초기화 합니다.
+    /// </summary>
+    /// <param name="palette"></param>
+    /// <param name="colorKeys"></param>
+    /// <param name="colorValues"></param>
+    void InitPalette(Color[] palette, uint[] colorKeys, Color[] colorValues)
+    {
+        for (int i = 0; i < colorKeys.Length; ++i)
+        {
+            uint key = colorKeys[i];
+            Color value = colorValues[i];
+            palette[i] = value;
         }
     }
+
     /// <summary>
-    /// 
+    /// 팔레트에서 지정된 키 값을 갖는 픽셀들의 색상을 변경합니다.
     /// </summary>
-    /// <param name="dictIndex"></param>
-    /// <param name="textureIndex"></param>
-    /// <param name="color"></param>
-    public void SwapColor(uint dictIndex, int textureIndex, Color color)
-    {
-        uint realDictIndex = dictIndex;
-        _colorSwapTex.SetPixel(textureIndex, 0, color);
-    }
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <param name="palette"></param>
     /// <param name="key"></param>
-    /// <returns></returns>
-    int TextureIndexFromColorKey(uint key)
+    /// <param name="color"></param>
+    public void SwapColor(int index, Color color)
     {
-        for (int i = 0; i < _inputColors.Length; ++i)
-        {
-            ColorDictElem elem = _inputColors[i];
-            if (elem.key == key)
-                return i;
-        }
-        return -1;
+        //palette[index] = color;
+        _colorSwapTexture.SetPixel(index, 0, color);
     }
+
+
+
+
     /// <summary>
     /// 
     /// </summary>
@@ -236,6 +271,34 @@ public class PaletteSwapperable : MonoBehaviour
     {
         return new Color((float)r / 255.0f, (float)g / 255.0f, (float)b / 255.0f, 1.0f);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="color"></param>
+    /// <returns></returns>
+    private static uint UIntFromColor(Color color)
+    {
+        int a = (int)(color.a * 256);
+        int r = (int)(color.r * 256);
+        int g = (int)(color.g * 256);
+        int b = (int)(color.b * 256);
+        return (uint)((a << 24) | (r << 16) | (g << 8) | (b << 0));
+    }
+
+    #endregion
+
+
+
+
+
+    #region 공용 메서드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    public void UpdateColor()
+    {
+
+    }
 
     #endregion
 
@@ -244,11 +307,24 @@ public class PaletteSwapperable : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("")]
+    /*
     /// <summary>
     /// 
     /// </summary>
-    public Dictionary<uint, Color> _inputColorDict;
+    /// <param name="swapInfos"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    int TextureIndexFromColorKey(SwapInfo[] swapInfos, uint key)
+    {
+        for (int i = 0; i < swapInfos.Length; ++i)
+        {
+            SwapInfo elem = swapInfos[i];
+            if (elem.srcColorKey == key)
+                return i;
+        }
+        return -1;
+    }
+    */
 
     #endregion
 }

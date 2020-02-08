@@ -5,16 +5,26 @@ using UnityEngine;
 
 
 
-[Obsolete("더 안 쓸 것 같습니다.")]
 [Serializable]
 /// <summary>
 /// 
 /// </summary>
 public struct ColorDictElem
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public uint key;
+    /// <summary>
+    /// 
+    /// </summary>
     public Color color;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="color"></param>
     public ColorDictElem(uint key, Color color)
     {
         this.key = key;

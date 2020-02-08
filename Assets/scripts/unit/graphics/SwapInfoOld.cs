@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-public struct SwapInfo
+public struct SwapInfoOld
 {
     /// <summary>
     /// 
@@ -25,7 +25,7 @@ public struct SwapInfo
     /// </summary>
     /// <param name="key"></param>
     /// <param name="value"></param>
-    public SwapInfo(uint key, Color value)
+    public SwapInfoOld(uint key, Color value)
     {
         this.srcColorKey = key;
         this.dstColorValue = value;

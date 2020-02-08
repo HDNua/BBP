@@ -2,8 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
-
+using System.Linq;
 
 /// <summary>
 /// 일반 플레이어 컨트롤러입니다.
@@ -2218,7 +2217,99 @@ public abstract class PlayerController : MonoBehaviour
             // 바디 색상을 맞춥니다.
             UpdateBodyColor(_currentPalette);
         }
+
+        // 
+        //Sprite prevSprite = _Renderer.sprite;
+        //Rect prevTextureRect = prevSprite.textureRect;
+
+
+        /*
+        switch (_state)
+        {
+            case 0:
+                _Renderer.sprite = _sprite0;
+                break;
+
+            case 1:
+                _Renderer.sprite = _sprite1;
+                break;
+        }
+        */
+
+        /*
+        switch (_state)
+        {
+            case 0:
+                _spriteSheetName = "PlayerX";
+                break;
+
+            case 1:
+                _spriteSheetName = "PlayerX_Tmp";
+                break;
+
+            default:
+                _spriteSheetName = "PlayerX";
+                break;
+        }
+
+        // Check if the sprite sheet name has changed (possibly manually in the inspector)
+        if (_loadedSpriteSheetName != _spriteSheetName)
+        {
+            // Load the new sprite sheet
+            LoadSpriteSheet();
+        }
+
+        // Swap out the sprite to be rendered by its name
+        // Important: The name of the sprite must be the same!
+        _Renderer.sprite = _spriteSheet[_Renderer.sprite.name];
+        */
     }
+
+    /*
+    public string _spriteSheetName;
+    public string _loadedSpriteSheetName;
+
+    public int _state = 0;
+    public Sprite _sprite0;
+    public Sprite _sprite1;
+    private Dictionary<string, Sprite> _spriteSheet;
+    Dictionary<string, Sprite[]> _spriteDict;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void InitSpriteSheet()
+    {
+        Sprite[] sprites0 = Resources.LoadAll<Sprite>("img\\sprite\\X\\Sprites\\PlayerX.png");
+        Sprite[] sprites1 = Resources.LoadAll<Sprite>("img\\sprite\\X\\Sprites\\PlayerX_Tmp.png");
+
+        //
+        _spriteDict = new Dictionary<string, Sprite[]>
+        {
+            { "PlayerX", sprites0 },
+            { "PlayerX_Tmp", sprites1 }
+        };
+
+        //
+        var sprites = _spriteDict[_spriteSheetName];
+        _spriteSheet = sprites.ToDictionary(x => x.name, x => x);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void LoadSpriteSheet()
+    {
+        // Load the sprites from a sprite sheet file(png).
+        // Note: The file specified must exist in a folder named Resources
+        var sprites = _spriteDict[_spriteSheetName];
+        _spriteSheet = sprites.ToDictionary(x => x.name, x => x);
+
+        // Remember the name of the sprite sheet in case it is changed later
+        _loadedSpriteSheetName = _spriteSheetName;
+    }
+    */
+
 
     /// <summary>
     /// 색상을 주어진 팔레트로 업데이트합니다.
@@ -2231,6 +2322,7 @@ public abstract class PlayerController : MonoBehaviour
         Texture2D cloneTexture = null;
         int textureID = sprite.GetInstanceID();
 
+        // 
         if (currentPalette == null)
         {
             cloneTexture = texture;

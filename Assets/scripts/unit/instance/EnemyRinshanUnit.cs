@@ -164,7 +164,7 @@ public class EnemyRinshanUnit : EnemyUnit
     protected override void LateUpdate()
     {
         // base.LateUpdate();
-        _PaletteUser.UpdateColor();
+        //_PaletteUser.UpdateColor();
     }
 
     #endregion

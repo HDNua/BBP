@@ -3,6 +3,12 @@
 
 - 해냈다
 
+* !!!!! IMPORTANT !!!!!
+  팔레트 스왑 구현 완료.
+  결국 grayscale을 사용하기로 결정.
+> 다음 영상 참조.
+  https://youtu.be/Dsg6dwKRuoA
+
 
 end.
 

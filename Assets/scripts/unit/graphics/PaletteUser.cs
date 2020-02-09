@@ -140,8 +140,8 @@ public class PaletteUser : MonoBehaviour
     void InitPalette()
     {
         // _indexTexture를 사용하여 인덱스 리스트를 생성합니다
-        int paletteWidth = _indexTexture.width;
         Color[] indexPixels = _indexTexture.GetPixels();
+        int paletteWidth = indexPixels.Length;
         _indexes = new int[paletteWidth];
         for (int i = 0; i < paletteWidth; ++i)
         {

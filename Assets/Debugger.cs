@@ -82,6 +82,7 @@ public class Debugger : MonoBehaviour
     /// </summary>
     void SavePalette()
     {
+        /*
         int[] INVENCIBLE_COLOR_PALETTE =
             {
                 0x88D8F8, 0x90D8F8, 0x98D8F8, 0xA0D8F8,
@@ -93,16 +94,57 @@ public class Debugger : MonoBehaviour
                 0xC0E0F8, 0xC8E8F8, 0xD0E8F8, 0xD8E8F8,
                 0xE0F0F8, 0xE8F0F8, 0xF0F0F8, 0xF8F8F8
             };
-
-        // 
-        Texture2D texture = new Texture2D(INVENCIBLE_COLOR_PALETTE.Length, 1);
-        for (int i = 0; i < INVENCIBLE_COLOR_PALETTE.Length; ++i)
+        for (int i = 0; i < palette.Length; ++i)
         {
-            Color color = ColorFromInt(INVENCIBLE_COLOR_PALETTE[i]);
+            Color color = ColorFromInt(palette[i]);
             texture.SetPixel(i, 0, color);
         }
+        */
+
+        Color[][] playerXPalettes =
+        {
+            XColorPalette.DefaultPalette,
+            XColorPalette.InvenciblePalette,
+            XColorPalette.DashEffectColorPalette,
+            XColorPalette.XCharge1Palette,
+            XColorPalette.XCharge2Palette,
+            XColorPalette.XDefaultChargeEffectColorPalette,
+            XColorPalette.XNormalChargeEffectColorPalette1,
+            XColorPalette.XNormalChargeEffectColorPalette2,
+            XColorPalette.XWeapon1Palette,
+            XColorPalette.XWeapon2Palette,
+            XColorPalette.XWeapon3Palette,
+            XColorPalette.XWeapon4Palette
+        };
+        Color[][] enemyPalettes =
+        {
+            EnemyColorPalette.EnemyRinshanPalette,
+        };
+
+        // 
+        for (int i = 0; i < playerXPalettes.Length; ++i)
+        {
+            string filename = string.Format("playerXPalettes{0:D2}.png", i);
+            SavePalette(playerXPalettes[i], filename);
+        }
+        // 
+        for (int i = 0; i < enemyPalettes.Length; ++i)
+        {
+            string filename = string.Format("enemyPalettes{0:D2}.png", i);
+            SavePalette(enemyPalettes[i], filename);
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="palette"></param>
+    /// <param name="filename"></param>
+    void SavePalette(Color[] palette, string filename)
+    {
+        Texture2D texture = new Texture2D(palette.Length, 1);
+        texture.SetPixels(palette);
         byte[] bytes = texture.EncodeToPNG();
-        File.WriteAllBytes("palette.png", bytes);
+        File.WriteAllBytes(filename, bytes);
     }
 
     #endregion

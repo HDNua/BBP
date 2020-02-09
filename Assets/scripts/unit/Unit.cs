@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(PaletteUser))]
 /// <summary>
 /// 유닛을 정의합니다.
 /// </summary>
@@ -58,6 +60,13 @@ public class Unit : MonoBehaviour
     protected SpriteRenderer _Renderer
     {
         get { return GetComponent<SpriteRenderer>(); }
+    }
+    /// <summary>
+    /// PaletteUser 요소를 가져옵니다.
+    /// </summary>
+    protected PaletteUser _PaletteUser
+    {
+        get { return GetComponent<PaletteUser>(); }
     }
 
     /// <summary>
@@ -396,14 +405,115 @@ public class Unit : MonoBehaviour
 
 
     #region 컬러 팔레트 관련 메서드를 정의합니다.
+
+
+    #endregion
+
+
+
+    #region 코루틴을 정의합니다.
+    /// <summary>
+    /// 무적 상태 코루틴입니다.
+    /// </summary>
+    protected Coroutine _coroutineInvencible;
+
+    /// <summary>
+    /// 무적 상태에 대한 코루틴입니다.
+    /// </summary>
+    /// <returns>코루틴 열거자입니다.</returns>
+    protected IEnumerator CoroutineInvencible()
+    {
+        _invencibleTime = 0;
+        bool invencibleColorState = false;
+        while (_invencibleTime < INVENCIBLE_TIME_LENGTH)
+        {
+            _invencibleTime += TIME_30FPS + Time.deltaTime;
+
+            // 
+            if (invencibleColorState)
+            {
+                UpdateColorWithInvenciblePalette();
+            }
+            else
+            {
+                UpdateColorWithoutInvenciblePalette();
+            }
+            invencibleColorState = !invencibleColorState;
+
+            // 
+            yield return new WaitForSeconds(TIME_30FPS);
+        }
+        Invencible = false;
+        IsDamaged = false;
+        UpdateColorEndOfInvencibleTime();
+        yield break;
+    }
+
+    // 
+    int _prevPaletteIndex = 0;
+    int _currentPaletteIndex = 0;
+
+    /// <summary>
+    /// 팔레트를 업데이트 합니다.
+    /// </summary>
+    /// <param name="newPaletteIndex">새 팔레트의 인덱스입니다.</param>
+    public void UpdatePaletteIndex(int newPaletteIndex)
+    {
+        _prevPaletteIndex = _currentPaletteIndex;
+        _currentPaletteIndex = newPaletteIndex;
+        _PaletteUser.UpdatePaletteIndex(_currentPaletteIndex);
+    }
+
+    /// <summary>
+    /// 무적 상태 팔레트로 색상을 업데이트합니다.
+    /// </summary>
+    void UpdateColorWithInvenciblePalette()
+    {
+        ///_currentPalette = EnemyColorPalette.InvenciblePalette;
+
+        // 
+        UpdatePaletteIndex(1);
+    }
+    /// <summary>
+    /// 무적 상태가 아닌 팔레트로 색상을 업데이트합니다.
+    /// </summary>
+    void UpdateColorWithoutInvenciblePalette()
+    {
+        ///ResetBodyColor();
+
+        //
+        UpdatePaletteIndex(_prevPaletteIndex);
+    }
+    /// <summary>
+    /// 무적 상태가 끝난 후의 색상을 업데이트합니다.
+    /// </summary>
+    void UpdateColorEndOfInvencibleTime()
+    {
+        ///ResetBodyColor();
+
+        // 
+        if (_prevPaletteIndex == 1 && _currentPaletteIndex == 1)
+            throw new Exception("Unexpected palette index duplication");
+        UpdatePaletteIndex(_prevPaletteIndex == 1 ? _currentPaletteIndex : _prevPaletteIndex);
+    }
+
+    #endregion
+
+
+
+
+    #region 구형 정의를 보관합니다.
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 현재 색상 팔레트입니다.
     /// </summary>
     protected Color[] _currentPalette = null;
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 기본 색상 팔레트입니다.
     /// </summary>
     Color[] _defaultPalette = null;
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 기본 색상 팔레트를 설정합니다.
     /// </summary>
@@ -414,6 +524,7 @@ public class Unit : MonoBehaviour
     }
 
 
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 색상을 업데이트합니다.
     /// </summary>
@@ -425,6 +536,7 @@ public class Unit : MonoBehaviour
             UpdateBodyColor(_currentPalette);
         }
     }
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 색상을 주어진 팔레트로 업데이트합니다.
     /// </summary>
@@ -494,75 +606,13 @@ public class Unit : MonoBehaviour
         block.SetTexture("_MainTex", cloneTexture);
         renderer.SetPropertyBlock(block);
     }
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 바디 색상표를 초기화합니다.
     /// </summary>
     void ResetBodyColor()
     {
         _currentPalette = null;
-    }
-
-    #endregion
-
-
-
-    #region 코루틴을 정의합니다.
-    /// <summary>
-    /// 무적 상태 코루틴입니다.
-    /// </summary>
-    protected Coroutine _coroutineInvencible;
-
-    /// <summary>
-    /// 무적 상태에 대한 코루틴입니다.
-    /// </summary>
-    /// <returns>코루틴 열거자입니다.</returns>
-    protected IEnumerator CoroutineInvencible()
-    {
-        _invencibleTime = 0;
-        bool invencibleColorState = false;
-        while (_invencibleTime < INVENCIBLE_TIME_LENGTH)
-        {
-            _invencibleTime += TIME_30FPS + Time.deltaTime;
-
-            // 
-            if (invencibleColorState)
-            {
-                UpdateColorWithInvenciblePalette();
-            }
-            else
-            {
-                UpdateColorWithoutInvenciblePalette();
-            }
-            invencibleColorState = !invencibleColorState;
-
-            // 
-            yield return new WaitForSeconds(TIME_30FPS);
-        }
-        Invencible = false;
-        IsDamaged = false;
-        UpdateColorEndOfInvencibleTime();
-        yield break;
-    }
-    /// <summary>
-    /// 무적 상태 팔레트로 색상을 업데이트합니다.
-    /// </summary>
-    void UpdateColorWithInvenciblePalette()
-    {
-        _currentPalette = EnemyColorPalette.InvenciblePalette;
-    }
-    /// <summary>
-    /// 무적 상태가 아닌 팔레트로 색상을 업데이트합니다.
-    /// </summary>
-    void UpdateColorWithoutInvenciblePalette()
-    {
-        ResetBodyColor();
-    }
-    /// <summary>
-    /// 무적 상태가 끝난 후의 색상을 업데이트합니다.
-    /// </summary>
-    void UpdateColorEndOfInvencibleTime()
-    {
-        ResetBodyColor();
     }
 
     #endregion

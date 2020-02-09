@@ -21,9 +21,9 @@ public class EnemyRinshanUnit : EnemyUnit
     /// <summary>
     /// 팔레트 스왑 기능 사용자입니다.
     /// </summary>
-    PaletteSwapperable _PaletteUser
+    PaletteUser _PaletteUser
     {
-        get { return GetComponent<PaletteSwapperable>(); }
+        get { return GetComponent<PaletteUser>(); }
     }
 
     #endregion

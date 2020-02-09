@@ -279,8 +279,19 @@ public class EnemySmashuUnit : EnemyUnit
     protected override void LateUpdate()
     {
         // 색상표를 사용하는 개체인 경우 이 메서드를 오버라이드하고 다음 문장을 호출합니다.
-        UpdateColor();
+        ///UpdateColor();
+
+        /*
+        if (_paletteIndex >= 0)
+        {
+            UpdatePaletteIndex(_paletteIndex);
+        }
+
+        // 
+        _PaletteUser.UpdateColor();
+        */
     }
+    public int _paletteIndex = -1;
 
     #endregion
 
@@ -478,6 +489,7 @@ public class EnemySmashuUnit : EnemyUnit
     /// </summary>
     public override void Dead()
     {
+        /*
         if (false)
         {
             // 폭발 효과를 생성하고 효과음을 재생합니다.
@@ -487,6 +499,7 @@ public class EnemySmashuUnit : EnemyUnit
             // 캐릭터를 죽입니다.
             base.Dead();
         }
+        */
 
         //
         Damaged = true;

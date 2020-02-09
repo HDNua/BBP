@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -24,11 +25,11 @@ public class PaletteUser : MonoBehaviour
 
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
     /// <summary>
-    /// 
+    /// 인덱스 텍스쳐입니다.
     /// </summary>
     public Texture2D _indexTexture;
     /// <summary>
-    /// 팔레트입니다. 0번은 기본 팔레트입니다.
+    /// 팔레트 텍스쳐 리스트입니다. 0번은 기본 팔레트입니다.
     /// </summary>
     public Texture2D[] _paletteTextures;
 
@@ -47,12 +48,7 @@ public class PaletteUser : MonoBehaviour
     /// <summary>
     /// 팔레트 컬러 인덱스입니다.
     /// </summary>
-    public int[] _indexes =
-    {
-        124, 120, 172, 208, 240,
-        188, 144, 108, 68, 220,
-        104, 128, 176
-    };
+    int[] _indexes;
     /// <summary>
     /// 팔레트 리스트입니다.
     /// </summary>
@@ -72,48 +68,43 @@ public class PaletteUser : MonoBehaviour
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다. (최초 1회만 수행)
     /// </summary>
-    void Awake()
+    public void Awake()
     {
         // !!!!! IMPORTANT !!!!!
         // SpriteRenderer를 이 시점에 가져오지 않으면 이후의 과정이 동작하지 않습니다!
         _renderer = GetComponent<SpriteRenderer>();
 
-        // 스왑 텍스쳐를 초기화 합니다.
+        // 스왑 텍스쳐 및 팔레트를 초기화 합니다.
         InitColorSwapTexture();
+        InitPalette();
     }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다. (생성될 때마다)
     /// </summary>
     private void Start()
     {
-        /*
-        _indexes = new int[] {
-            124, 120, 172, 208, 240,
-            188, 144, 108, 68, 220,
-            104, 128, 176
-        };
-        _paletteArray = new uint[][] { _values0, _values1 };
-        */
+        
     }
     /// <summary>
     /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.
     /// 주로 오브젝트를 따라가게 설정한 카메라는 LastUpdate를 사용합니다.
     /// </summary>
-    void LateUpdate()
+    public void LateUpdate()
     {
         // 
-        ///uint[] colors = _paletteArray[_paletteIndex];
-        uint[] colors = _palettes[_paletteIndex];
+        UpdateColor();
 
-        //
-        for (int i = 0; i < _indexes.Length; ++i)
+        // 
+        if (_flag)
         {
-            int index = _indexes[i];
-            int colorValue = (int)(colors[i]);
-            _colorSwapTexture.SetPixel(index, 0, ColorFromInt(colorValue));
+            Texture2D targetTexture = _colorSwapTexture;
+            byte[] bytes = targetTexture.EncodeToPNG();
+            File.WriteAllBytes(_paletteName + ".png", bytes);
+            _flag = false;
         }
-        _colorSwapTexture.Apply();
     }
+    public string _paletteName = "palette";
+    public bool _flag = false;
 
     #endregion
 
@@ -135,10 +126,15 @@ public class PaletteUser : MonoBehaviour
             colorSwapTexture.SetPixel(i, 0, new Color(0.0f, 0.0f, 0.0f, 0.0f));
         colorSwapTexture.Apply();
 
-        // 
+        // 렌더에 초기화한 스왑 텍스쳐를 적용합니다.
         _renderer.material.SetTexture("_SwapTex", colorSwapTexture);
         _colorSwapTexture = colorSwapTexture;
-
+    }
+    /// <summary>
+    /// 팔레트와 인덱스를 초기화 합니다.
+    /// </summary>
+    void InitPalette()
+    {
         // _indexTexture를 사용하여 인덱스 리스트를 생성합니다
         int paletteWidth = _indexTexture.width;
         Color[] indexPixels = _indexTexture.GetPixels();
@@ -162,7 +158,6 @@ public class PaletteUser : MonoBehaviour
             _palettes[i] = palette;
         }
     }
-
     /// <summary>
     /// 팔레트를 초기화 합니다.
     /// </summary>
@@ -213,12 +208,12 @@ public class PaletteUser : MonoBehaviour
     /// </summary>
     /// <param name="color">정수 값을 가져올 Color입니다.</param>
     /// <returns>RGBA 정수 값입니다.</returns>
-    private static uint UIntFromColor(Color color)
+    public static uint UIntFromColor(Color color)
     {
-        int a = (int)(color.a * 256);
-        int r = (int)(color.r * 256);
-        int g = (int)(color.g * 256);
-        int b = (int)(color.b * 256);
+        int a = (int)(color.a * 255);
+        int r = (int)(color.r * 255);
+        int g = (int)(color.g * 255);
+        int b = (int)(color.b * 255);
         return (uint)((a << 24) | (r << 16) | (g << 8) | (b << 0));
     }
 
@@ -228,33 +223,40 @@ public class PaletteUser : MonoBehaviour
 
 
 
-    #region 구형 정의를 보관합니다.
-    [Obsolete("인덱스와 팔레트로 대체되었습니다.")]
+    #region 공용 메서드를 정의합니다.
     /// <summary>
-    /// 
+    /// 팔레트 인덱스를 업데이트 합니다.
     /// </summary>
-    public uint[][] _paletteArray;
+    /// <param name="paletteIndex">새 타겟 팔레트의 인덱스입니다.</param>
+    public void UpdatePaletteIndex(int paletteIndex)
+    {
+        _paletteIndex = paletteIndex;
+    }
+    /// <summary>
+    /// PaletteUser의 색상을 업데이트 합니다. 컨트롤러의 LateUpdate()에서 호출됩니다.
+    /// </summary>
+    public void UpdateColor()
+    {
+        // 타겟 팔레트를 가져옵니다.
+        uint[] colors = _palettes[_paletteIndex];
 
-    [Obsolete("인덱스와 팔레트로 대체되었습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    public uint[] _values0 =
-    {
-        0x3068C8ff, 0x2040d0ff, 0x70a0e8ff, 0xb8d8e8ff, 0xe8f0f8ff,
-        0x98c0e0ff, 0x4088e0ff, 0x3048a8ff, 0x102078ff, 0xc8e8f0ff,
-        0x10a8c0ff, 0x30c0c0ff, 0x78e0e0ff
-    };
-    [Obsolete("인덱스와 팔레트로 대체되었습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    public uint[] _values1 =
-    {
-        0xC830A5FF, 0xD020BFFF, 0xE870D3FF, 0xE8B8E5FF, 0xF8E8F7FF,
-        0xE098DDFF, 0xE040DEFF, 0xA83099FF, 0x78105AFF, 0xF0C8E6FF,
-        0xC01062FF, 0xC0306BFF, 0xCB0387FF
-    };
+        // 새 팔레트 값으로 색상을 덮어씌웁니다.
+        for (int i = 0; i < _indexes.Length; ++i)
+        {
+            int index = _indexes[i];
+            int colorValue = (int)(colors[i]);
+            _colorSwapTexture.SetPixel(index, 0, ColorFromInt(colorValue));
+        }
+        _colorSwapTexture.Apply();
+    }
+
+    #endregion
+
+
+
+
+
+    #region 구형 정의를 보관합니다.
 
     #endregion
 }

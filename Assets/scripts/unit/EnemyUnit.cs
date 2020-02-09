@@ -118,7 +118,7 @@ public class EnemyUnit : Unit
         // 무적 상태 코루틴을 시작합니다.
         if (_coroutineInvencible != null)
             StopCoroutine(_coroutineInvencible);
-        _coroutineInvencible = StartCoroutine(CoroutineInvencible());
+        _coroutineInvencible = StartCoroutine(CoroutineInvencible(INVENCIBLE_TIME_LENGTH));
     }
 
     /// <summary>

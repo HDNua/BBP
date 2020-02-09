@@ -18,13 +18,6 @@ public class EnemyRinshanUnit : EnemyUnit
     {
         get { return GetComponent<Groundable>(); }
     }
-    /// <summary>
-    /// 팔레트 스왑 기능 사용자입니다.
-    /// </summary>
-    PaletteUser _PaletteUser
-    {
-        get { return GetComponent<PaletteUser>(); }
-    }
 
     #endregion
 

@@ -1,4 +1,26 @@
-﻿BBP v1.4.4.2
+﻿BBP v1.4.5.0
+----
+
+* !!!!! IMPORTANT !!!!!
+  팔레트 스왑 구현 완료. 결국 grayscale을 사용하기로 결정.
+> 다음 영상 참조.
+  https://youtu.be/cxd-B-9EZek
+  https://youtu.be/HpXz8EQlDcY
+  https://youtu.be/Dsg6dwKRuoA
+  https://youtu.be/TMBRMlDtO28
+> 팔레스 스왑을 사용하는 유저 PaletteUser 구현 완료.
+
+* !!!!! IMPORTANT !!!!!
+  그레이스케일을 포함하여 색깔을 골라낼 때 0과 255를 사용하지 말 것.
+  0 -> 1, 255 -> 254로 바꾸고 진행한다
+
+- 스마슈 피격 모션 추가 및 무적 상태 관련 수정.
+
+
+end.
+
+
+BBP v1.4.4.2
 ----
 
 * !!!!! IMPORTANT !!!!!

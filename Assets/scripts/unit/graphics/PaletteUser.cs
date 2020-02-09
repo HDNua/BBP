@@ -25,6 +25,10 @@ public class PaletteUser : MonoBehaviour
 
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
     /// <summary>
+    /// 컨트롤러가 없는 개체라면 PaletteUser의 LateUpdate()에서 UpdateColor()를 실행합니다.
+    /// </summary>
+    public bool _noController = false;
+    /// <summary>
     /// 인덱스 텍스쳐입니다.
     /// </summary>
     public Texture2D _indexTexture;
@@ -68,7 +72,7 @@ public class PaletteUser : MonoBehaviour
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다. (최초 1회만 수행)
     /// </summary>
-    public void Awake()
+    private void Awake()
     {
         // !!!!! IMPORTANT !!!!!
         // SpriteRenderer를 이 시점에 가져오지 않으면 이후의 과정이 동작하지 않습니다!
@@ -89,22 +93,22 @@ public class PaletteUser : MonoBehaviour
     /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.
     /// 주로 오브젝트를 따라가게 설정한 카메라는 LastUpdate를 사용합니다.
     /// </summary>
-    public void LateUpdate()
+    private void LateUpdate()
     {
-        // 
-        UpdateColor();
-
-        // 
-        if (_flag)
+        if (_noController)
         {
-            Texture2D targetTexture = _colorSwapTexture;
-            byte[] bytes = targetTexture.EncodeToPNG();
-            File.WriteAllBytes(_paletteName + ".png", bytes);
-            _flag = false;
+            UpdateColor();
+
+            // 
+            if (_saveRequested)
+            {
+                Texture2D targetTexture = _colorSwapTexture;
+                byte[] bytes = targetTexture.EncodeToPNG();
+                File.WriteAllBytes(_savePaletteName + ".png", bytes);
+                _saveRequested = false;
+            }
         }
     }
-    public string _paletteName = "palette";
-    public bool _flag = false;
 
     #endregion
 
@@ -234,6 +238,7 @@ public class PaletteUser : MonoBehaviour
     }
     /// <summary>
     /// PaletteUser의 색상을 업데이트 합니다. 컨트롤러의 LateUpdate()에서 호출됩니다.
+    /// 중요: 그레이스케일 팔레트에서 0과 255를 사용하지 마십시오.
     /// </summary>
     public void UpdateColor()
     {
@@ -249,6 +254,20 @@ public class PaletteUser : MonoBehaviour
         }
         _colorSwapTexture.Apply();
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    public void EnableTexture()
+    {
+        _renderer.enabled = true;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public void DisableTexture()
+    {
+        _renderer.enabled = false;
+    }
 
     #endregion
 
@@ -257,6 +276,16 @@ public class PaletteUser : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("이제 사용법이 잘 파악되었습니다.")]
+    /// <summary>
+    /// 디버깅용 팔레트 추출 요청 플래그입니다.
+    /// </summary>
+    public bool _saveRequested = false;
+    [Obsolete("이제 사용법이 잘 파악되었습니다.")]
+    /// <summary>
+    /// 디버깅용 팔레트 추출 이름입니다.
+    /// </summary>
+    public string _savePaletteName = "palette";
 
     #endregion
 }

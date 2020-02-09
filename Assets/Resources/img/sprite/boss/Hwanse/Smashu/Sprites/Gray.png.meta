@@ -43,6 +43,16 @@ TextureImporter:
     21300076: Gray 38
     21300078: Gray 39
     21300080: Gray 40
+    21300082: Gray 41
+    21300084: Gray 42
+    21300086: Gray 43
+    21300088: Gray 44
+    21300090: Gray 45
+    21300092: Gray 46
+    21300094: Gray 47
+    21300096: Gray 48
+    21300098: Gray 49
+    21300100: Gray 50
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -61,7 +71,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 1
+  isReadable: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -97,16 +107,6 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-  - buildTarget: Standalone
     maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
@@ -263,7 +263,7 @@ TextureImporter:
       name: Gray 10
       rect:
         serializedVersion: 2
-        x: 768
+        x: 512
         y: 768
         width: 256
         height: 256
@@ -277,8 +277,8 @@ TextureImporter:
       name: Gray 11
       rect:
         serializedVersion: 2
-        x: 0
-        y: 512
+        x: 512
+        y: 768
         width: 256
         height: 256
       alignment: 0
@@ -291,8 +291,8 @@ TextureImporter:
       name: Gray 12
       rect:
         serializedVersion: 2
-        x: 256
-        y: 512
+        x: 768
+        y: 768
         width: 256
         height: 256
       alignment: 0
@@ -305,7 +305,7 @@ TextureImporter:
       name: Gray 13
       rect:
         serializedVersion: 2
-        x: 0
+        x: 768
         y: 768
         width: 256
         height: 256
@@ -319,7 +319,7 @@ TextureImporter:
       name: Gray 14
       rect:
         serializedVersion: 2
-        x: 256
+        x: 768
         y: 768
         width: 256
         height: 256
@@ -334,7 +334,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 768
+        y: 512
         width: 256
         height: 256
       alignment: 0
@@ -347,7 +347,7 @@ TextureImporter:
       name: Gray 16
       rect:
         serializedVersion: 2
-        x: 512
+        x: 0
         y: 512
         width: 256
         height: 256
@@ -361,7 +361,7 @@ TextureImporter:
       name: Gray 17
       rect:
         serializedVersion: 2
-        x: 512
+        x: 0
         y: 512
         width: 256
         height: 256
@@ -375,7 +375,7 @@ TextureImporter:
       name: Gray 18
       rect:
         serializedVersion: 2
-        x: 512
+        x: 256
         y: 512
         width: 256
         height: 256
@@ -389,7 +389,7 @@ TextureImporter:
       name: Gray 19
       rect:
         serializedVersion: 2
-        x: 768
+        x: 256
         y: 512
         width: 256
         height: 256
@@ -403,7 +403,7 @@ TextureImporter:
       name: Gray 20
       rect:
         serializedVersion: 2
-        x: 768
+        x: 256
         y: 512
         width: 256
         height: 256
@@ -417,8 +417,8 @@ TextureImporter:
       name: Gray 21
       rect:
         serializedVersion: 2
-        x: 768
-        y: 512
+        x: 0
+        y: 768
         width: 256
         height: 256
       alignment: 0
@@ -431,8 +431,8 @@ TextureImporter:
       name: Gray 22
       rect:
         serializedVersion: 2
-        x: 0
-        y: 256
+        x: 256
+        y: 768
         width: 256
         height: 256
       alignment: 0
@@ -445,8 +445,8 @@ TextureImporter:
       name: Gray 23
       rect:
         serializedVersion: 2
-        x: 256
-        y: 256
+        x: 0
+        y: 768
         width: 256
         height: 256
       alignment: 0
@@ -460,7 +460,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 512
-        y: 256
+        y: 512
         width: 256
         height: 256
       alignment: 0
@@ -473,8 +473,8 @@ TextureImporter:
       name: Gray 25
       rect:
         serializedVersion: 2
-        x: 0
-        y: 768
+        x: 512
+        y: 512
         width: 256
         height: 256
       alignment: 0
@@ -487,8 +487,8 @@ TextureImporter:
       name: Gray 26
       rect:
         serializedVersion: 2
-        x: 256
-        y: 768
+        x: 512
+        y: 512
         width: 256
         height: 256
       alignment: 0
@@ -501,8 +501,8 @@ TextureImporter:
       name: Gray 27
       rect:
         serializedVersion: 2
-        x: 0
-        y: 768
+        x: 768
+        y: 512
         width: 256
         height: 256
       alignment: 0
@@ -516,7 +516,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 768
-        y: 256
+        y: 512
         width: 256
         height: 256
       alignment: 0
@@ -529,8 +529,8 @@ TextureImporter:
       name: Gray 29
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 768
+        y: 512
         width: 256
         height: 256
       alignment: 0
@@ -544,7 +544,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -557,8 +557,8 @@ TextureImporter:
       name: Gray 31
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 256
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -571,8 +571,8 @@ TextureImporter:
       name: Gray 32
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
+        x: 512
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -585,8 +585,8 @@ TextureImporter:
       name: Gray 33
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
+        x: 0
+        y: 768
         width: 256
         height: 256
       alignment: 0
@@ -600,7 +600,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 256
-        y: 0
+        y: 768
         width: 256
         height: 256
       alignment: 0
@@ -627,8 +627,8 @@ TextureImporter:
       name: Gray 36
       rect:
         serializedVersion: 2
-        x: 256
-        y: 768
+        x: 768
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -641,8 +641,8 @@ TextureImporter:
       name: Gray 37
       rect:
         serializedVersion: 2
-        x: 256
-        y: 768
+        x: 0
+        y: 0
         width: 256
         height: 256
       alignment: 0
@@ -655,8 +655,8 @@ TextureImporter:
       name: Gray 38
       rect:
         serializedVersion: 2
-        x: 256
-        y: 768
+        x: 0
+        y: 0
         width: 256
         height: 256
       alignment: 0
@@ -667,6 +667,76 @@ TextureImporter:
       tessellationDetail: -1
     - serializedVersion: 2
       name: Gray 39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Gray 40
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Gray 41
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Gray 42
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Gray 43
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Gray 44
       rect:
         serializedVersion: 2
         x: 256
@@ -680,7 +750,77 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: Gray 40
+      name: Gray 45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Gray 46
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Gray 47
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Gray 48
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Gray 49
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Gray 50
       rect:
         serializedVersion: 2
         x: 256

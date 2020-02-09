@@ -199,9 +199,6 @@ public class EnemySmashuUnit : EnemyUnit
     {
         base.Start();
 
-        // 컬러 팔레트를 설정합니다.
-        DefaultPalette = EnemyColorPalette.EnemySmashuPalette;
-
         // 색상을 없애고 시작합니다.
         Color color;
         color = _Renderer.color;
@@ -278,20 +275,8 @@ public class EnemySmashuUnit : EnemyUnit
     /// </summary>
     protected override void LateUpdate()
     {
-        // 색상표를 사용하는 개체인 경우 이 메서드를 오버라이드하고 다음 문장을 호출합니다.
-        ///UpdateColor();
-
-        /*
-        if (_paletteIndex >= 0)
-        {
-            UpdatePaletteIndex(_paletteIndex);
-        }
-
-        // 
         _PaletteUser.UpdateColor();
-        */
     }
-    public int _paletteIndex = -1;
 
     #endregion
 
@@ -353,24 +338,10 @@ public class EnemySmashuUnit : EnemyUnit
     {
         // 상태를 정의합니다.
         Disappearing = true;
+        Damaged = false;
 
         // 
         _coroutineDisappear = StartCoroutine(CoroutineDisappear());
-    }
-    /// <summary>
-    /// 캐릭터 퇴장을 중지합니다.
-    /// </summary>
-    void StopDisappearing()
-    {
-        Disappearing = false;
-    }
-    /// <summary>
-    /// 사라지기 이후의 행동을 정의합니다.
-    /// </summary>
-    void PerformActionAfterDisappearing()
-    {
-        // 생성된 개체를 파괴합니다.
-        Destroy(gameObject);
     }
 
     #endregion
@@ -489,27 +460,21 @@ public class EnemySmashuUnit : EnemyUnit
     /// </summary>
     public override void Dead()
     {
-        /*
-        if (false)
-        {
-            // 폭발 효과를 생성하고 효과음을 재생합니다.
-            Instantiate(DataBase.Instance.MultipleExplosionEffect,
-                transform.position, transform.rotation);
-
-            // 캐릭터를 죽입니다.
-            base.Dead();
-        }
-        */
-
         //
-        Damaged = true;
+        if (IsDead == false)
+        {
+            IsDead = true;
+            Damaged = true;
 
-        // 
-        if (_coroutineAppear != null) StopCoroutine(_coroutineAppear);
-        if (_coroutinePattern != null) StopCoroutine(_coroutinePattern);
+            // 
+            if (_coroutineAppear != null) StopCoroutine(_coroutineAppear);
+            if (_coroutinePattern != null) StopCoroutine(_coroutinePattern);
 
-        // 
-        _coroutineDead = StartCoroutine(CoroutineDead());
+            // 
+            StopAllCoroutines();
+            _coroutineDead = StartCoroutine(CoroutineDead());
+            _coroutineInvencible = StartCoroutine(CoroutineInvencible(999));
+        }
     }
 
 
@@ -565,6 +530,7 @@ public class EnemySmashuUnit : EnemyUnit
     {
         // 
         gameObject.tag = "Untagged";
+        _PaletteUser.DisableTexture();
 
         // 닌자 등장 풀때기 효과를 생성합니다.
         GameObject effectGrassObject = Instantiate(
@@ -587,7 +553,6 @@ public class EnemySmashuUnit : EnemyUnit
         gameObject.tag = "Enemy";
 
         // 
-        Color color;
         bool blink = false;
         while (time < effectClipLength)
         {
@@ -595,15 +560,11 @@ public class EnemySmashuUnit : EnemyUnit
 
             if (blink)
             {
-                color = _Renderer.color;
-                color.a = 1f;
-                _Renderer.color = color;
+                _PaletteUser.EnableTexture();
             }
             else
             {
-                color = _Renderer.color;
-                color.a = 0f;
-                _Renderer.color = color;
+                _PaletteUser.DisableTexture();
             }
             blink = !blink;
 
@@ -613,9 +574,7 @@ public class EnemySmashuUnit : EnemyUnit
 
         // 효과를 제거하고 스마슈의 색상을 원래대로 돌립니다.
         effectGrass.RequestDestroy();
-        color = _Renderer.color;
-        color.a = 1f;
-        _Renderer.color = color;
+        _PaletteUser.EnableTexture();
 
         // 등장을 끝냅니다.
         StopAppearing();
@@ -717,7 +676,6 @@ public class EnemySmashuUnit : EnemyUnit
         float effectClipLength = effectGrass._clipLength;
 
         // 
-        Color color;
         bool blink = false;
         time = 0;
         while (time < effectClipLength)
@@ -726,15 +684,11 @@ public class EnemySmashuUnit : EnemyUnit
 
             if (blink)
             {
-                color = _Renderer.color;
-                color.a = 1f;
-                _Renderer.color = color;
+                _PaletteUser.EnableTexture();
             }
             else
             {
-                color = _Renderer.color;
-                color.a = 0f;
-                _Renderer.color = color;
+                _PaletteUser.DisableTexture();
             }
             blink = !blink;
 
@@ -744,14 +698,10 @@ public class EnemySmashuUnit : EnemyUnit
 
         // 효과를 제거하고 스마슈의 색상을 없앱니다.
         effectGrass.RequestDestroy();
-        color = _Renderer.color;
-        color.a = 0f;
-        _Renderer.color = color;
+        _PaletteUser.DisableTexture();
 
-        // 등장을 끝냅니다.
-        StopDisappearing();
-        PerformActionAfterDisappearing();
-        _coroutineDisappear = null;
+        // 퇴장을 끝냅니다.
+        Destroy(gameObject);
         yield break;
     }
     /// <summary>
@@ -760,7 +710,9 @@ public class EnemySmashuUnit : EnemyUnit
     IEnumerator CoroutineDead()
     {
         // 
-        Color color;
+        gameObject.tag = "Untagged";
+
+        // 
         bool blink = false;
         float time = 0;
         while (time < _damagedTime)
@@ -769,15 +721,11 @@ public class EnemySmashuUnit : EnemyUnit
 
             if (blink)
             {
-                color = _Renderer.color;
-                color.a = 1f;
-                _Renderer.color = color;
+                _PaletteUser.EnableTexture();
             }
             else
             {
-                color = _Renderer.color;
-                color.a = 0f;
-                _Renderer.color = color;
+                _PaletteUser.DisableTexture();
             }
             blink = !blink;
 
@@ -785,9 +733,46 @@ public class EnemySmashuUnit : EnemyUnit
             yield return new WaitForSeconds(TIME_30FPS);
         }
 
+        // 효과음을 재생합니다.
+        SoundEffects[0].Play();
+
+        // 닌자 등장 풀때기 효과를 생성합니다.
+        GameObject effectGrassObject = Instantiate(
+            EffectNinjaGrass,
+            transform.position,
+            transform.rotation);
+        effectGrassObject.SetActive(true);
+        EffectScript effectGrass = effectGrassObject.GetComponent<EffectScript>();
+        float effectClipLength = effectGrass._clipLength;
+
         // 
-        Damaged = false;
-        Disappear();
+        blink = false;
+        time = 0;
+        while (time < effectClipLength)
+        {
+            time += TIME_30FPS + Time.deltaTime;
+
+            if (blink)
+            {
+                _PaletteUser.EnableTexture();
+            }
+            else
+            {
+                _PaletteUser.DisableTexture();
+            }
+            blink = !blink;
+
+            // 30 FPS 간격으로 반짝이게 합니다.
+            yield return new WaitForSeconds(TIME_30FPS);
+        }
+
+        // 효과를 제거하고 스마슈의 색상을 없앱니다.
+        effectGrass.RequestDestroy();
+        _PaletteUser.DisableTexture();
+
+        // 등장을 끝냅니다.
+        _coroutineDead = null;
+        Destroy(gameObject);
         yield break;
     }
 

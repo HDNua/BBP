@@ -1,4 +1,31 @@
-﻿BBP v1.4.5.1
+﻿BBP v1.4.5.2
+----
+
+- BossBattleManager 갈아엎는중.
+> UnitAction 클래스를 추가하자.
+>> UnitAction은 Unit을 인자로 받고 다음과 같이 상속한 새로운 개체를 만든다.
+>>> UnitActionJump
+>>> UnitActionFall
+>>> UnitActionHop
+>>> UnitActionFly
+>>> UnitActionGuard
+>>> UnitActionWait
+>> 이후 Activate() 함수 따위를 만들고 루프를 돌면 될 것 같다
+>> UnitAction은 횡단 이동 속도, 종단 이동 속도 등의 필드를 public으로 제공해야 한다
+> BossBattlePattern -> BattlePattern
+>> UnitAction의 집합이다.
+>> UnitAction이 순서대로 정의되어 있다.
+> BossBattleManager -> BattleManager
+>> BattlePattern의 집합을 가진다.
+>> BattlePattern은 UnitAction 리스트를 가지고 있으므로 이를 호출한다
+>> 패턴 이외의 세부적인 내용을 BattleManager를 상속하는 개체를 만들어 해결하거나
+    UnitAction과 같은 방식으로 BattleSpeech, BattleScript 등의 개체를 추가할 수 있다
+    개인적으론 이들을 뜯는 방법이 확장성 측면에서 크게 매력적으로 보인다
+
+end.
+
+
+BBP v1.4.5.1
 ----
 
 - 1행 이상의 팔레트에 대해 팔레트 스왑을 처리할 수 있게 수정.

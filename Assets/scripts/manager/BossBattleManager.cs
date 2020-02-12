@@ -16,26 +16,25 @@ public class BossBattleManager : MonoBehaviour
     public DataBase _database;
 
     /// <summary>
-    /// 보스 리스트입니다.
-    /// </summary>
-    public EnemyBossScript[] _bosses;
-
-    /// <summary>
     /// 
     /// </summary>
-    public BossBattlePattern _bossBattlePattern;
+    public Unit[] _units;
+    /// <summary>
+    /// 보스 전투 패턴을 정의합니다.
+    /// </summary>
+    public BossBattlePattern[] _bossBattlePattern;
 
     /// <summary>
-    /// 
+    /// 보스 사망 효과입니다.
     /// </summary>
     public BossDeadEffectScript[] _bossDeadEffects;
     /// <summary>
-    /// 
+    /// 마지막 보스 사망 효과입니다.
     /// </summary>
     public BossDeadEffectScript[] _lastBossDeadEffects;
 
     /// <summary>
-    /// 
+    /// 적 개체의 부모 오브젝트입니다.
     /// </summary>
     public GameObject _enemyParent;
 
@@ -46,13 +45,6 @@ public class BossBattleManager : MonoBehaviour
 
 
     #region 프로퍼티를 정의합니다.
-    /// <summary>
-    /// 보스 리스트입니다.
-    /// </summary>
-    public EnemyBossScript[] Bosses
-    {
-        get { return _bosses; }
-    }
 
     #endregion
 
@@ -137,8 +129,7 @@ public class BossBattleManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        // _stageManager = StageManager.Instance;
-        // _userInterfaceManager = _database.UIManager;
+
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트 합니다.
@@ -149,7 +140,7 @@ public class BossBattleManager : MonoBehaviour
         {
 
         }
-        else if (IsEveryBossesDead())
+        else if (DoesBattleEnd())
         {
 
         }
@@ -185,15 +176,26 @@ public class BossBattleManager : MonoBehaviour
     {
         _userInterfaceManager.ActivateBossHUD();
     }
+
+    #endregion
+
+
+    public delegate bool EndChecker();
+
+    public EndChecker[] endCheckers;
+
+
+
+    #region 공용 메서드를 정의합니다.
     /// <summary>
-    /// 모든 보스가 죽었는지를 확인합니다.
+    /// 
     /// </summary>
-    /// <returns>모든 보스가 죽었다면 참입니다.</returns>
-    public bool IsEveryBossesDead()
+    /// <returns></returns>
+    public bool DoesBattleEnd()
     {
-        foreach (EnemyBossScript boss in _bosses)
+        foreach (EnemyUnit unit in _units)
         {
-            if (boss.IsAlive())
+            if (unit.IsAlive())
             {
                 return false;
             }
@@ -203,7 +205,7 @@ public class BossBattleManager : MonoBehaviour
 
     #endregion
 
-    
+
 
 
 
@@ -220,10 +222,12 @@ public class BossBattleManager : MonoBehaviour
     /// </summary>
     public void RequestFillHealth()
     {
+        /*
         foreach (EnemyBossScript boss in _bosses)
         {
             _stageManager.HealBoss(boss);
         }
+        */
     }
 
     #endregion
@@ -284,16 +288,8 @@ public class BossBattleManager : MonoBehaviour
         _readying = false;
         _fighting = true;
 
-        /*
-        // 모든 보스에게 전투 시작을 요청합니다.
-        foreach (EnemyBossScript boss in _bosses)
-        {
-            boss.Fight();
-        }
-        */
-
         // 
-        _bossBattlePattern.Fight();
+        ///_bossBattlePattern.Fight();
 
 
         // 전투를 위해 입력 요청을 푸는 등의 정리를 합니다.
@@ -347,6 +343,7 @@ public class BossBattleManager : MonoBehaviour
     /// </summary>
     IEnumerator CoroutineAppearing()
     {
+        /*
         // 모든 보스를 등장시킵니다.
         foreach (EnemyBossScript boss in _bosses)
         {
@@ -357,6 +354,7 @@ public class BossBattleManager : MonoBehaviour
                 yield return false;
             }
         }
+        */
 
         // 인물 간 대사를 출력합니다.
         Script();
@@ -384,12 +382,14 @@ public class BossBattleManager : MonoBehaviour
         // 보스 체력 재생을 요청합니다.
         RequestFillHealth();
 
+        /*
         // 스테이지에 존재하는 모든 보스의 체력이 전부 찰 때까지 루프합니다.
         foreach (EnemyBossScript boss in _bosses)
         {
             while (boss.IsHealthFull() == false)
                 yield return false;
         }
+        */
 
         // 전투를 시작합니다.
         Fight();
@@ -400,6 +400,7 @@ public class BossBattleManager : MonoBehaviour
     /// </summary>
     IEnumerator CoroutineFighting()
     {
+        /*
         // 모든 보스가 죽었다면 전투를 끝냅니다.
         foreach (EnemyBossScript boss in _bosses)
         {
@@ -408,6 +409,7 @@ public class BossBattleManager : MonoBehaviour
                 EndBattle();
             }
         }
+        */
         yield break;
     }
     /// <summary>
@@ -429,23 +431,6 @@ public class BossBattleManager : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("_boss는 구형 정의입니다. _bosses를 대신 사용하십시오.")]
-    /// <summary>
-    /// 보스 캐릭터입니다.
-    /// </summary>
-    public EnemyBossScript _boss;
-
-    [Obsolete("_bossDeadEffects를 대신 사용하십시오.")]
-    /// <summary>
-    /// 보스 사망 시 효과입니다.
-    /// </summary>
-    public BossDeadEffectScript _bossDeadEffect;
-
-    [Obsolete("_lastBossDeadEffects를 대신 사용하십시오.")]
-    /// <summary>
-    /// 보스 사망 시 효과입니다.
-    /// </summary>
-    public BossDeadEffectScript _lastBossDeadEffect;
 
 
     #endregion

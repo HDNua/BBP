@@ -29,13 +29,15 @@ public class BossBattlePattern : MonoBehaviour
 
 
     #region 필드 및 프로퍼티를 정의합니다.
-    /// <summary>
-    /// 
-    /// </summary>
-    EnemyBossScript[] _Bosses
-    {
-        get { return _bossBattleManager.Bosses; }
-    }
+
+    #endregion
+
+
+
+
+
+    #region 캐릭터의 운동 상태 필드를 정의합니다.
+
 
     #endregion
 
@@ -56,10 +58,7 @@ public class BossBattlePattern : MonoBehaviour
     /// </summary>
     void Start()
     {
-        foreach (EnemyBossScript boss in _Bosses)
-        {
-            RequestIdle(boss);
-        }
+
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트 합니다.
@@ -95,15 +94,20 @@ public class BossBattlePattern : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public void Fight()
+    void BeginAppear()
     {
-        foreach (EnemyBossScript boss in _Bosses)
-        {
-            boss.Fight();
-        }
+
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    void EndAppear()
+    {
+
     }
 
     #endregion
+
 
 
 
@@ -112,10 +116,8 @@ public class BossBattlePattern : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="boss"></param>
-    void RequestIdle(EnemyBossScript boss)
+    public void Fight()
     {
-
     }
 
     #endregion
@@ -125,14 +127,6 @@ public class BossBattlePattern : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("구형 정의 테스트입니다.")]
-    /// <summary>
-    /// 구형 정의 테스트 함수입니다.
-    /// </summary>
-    void Function()
-    {
-        Console.WriteLine("Hello, world!");
-    }
 
 
     #endregion

@@ -4,13 +4,33 @@ using System.Collections;
 using System.Collections.Generic;
 
 
+#region 형식을 정의합니다.
+/// <summary>
+/// 
+/// </summary>
+public delegate void BattleAction();
+
+#endregion
+
 
 /// <summary>
 /// 
 /// </summary>
-public class HwanseBossBattlePattern : BossBattlePattern
+public class HwanseBossBattlePattern : MonoBehaviour
 {
+    #region 상수 및 형식을 정의합니다.
+    public Action[] _actions;
+
+    
+
+    #endregion
+
+
+
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
+    public int _phase;
+    public BattleAction[] _patternActions;
+    public int _close;
 
     #endregion
 
@@ -66,6 +86,20 @@ public class HwanseBossBattlePattern : BossBattlePattern
 
 
     #region 메서드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    void Test()
+    {
+
+    }
+
+    private void OnCanvasGroupChanged()
+    {
+        UnityEngine.UI.Button button = null;
+
+        button.onClick = null;
+    }
 
     #endregion
 
@@ -74,14 +108,6 @@ public class HwanseBossBattlePattern : BossBattlePattern
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("구형 정의 테스트입니다.")]
-    /// <summary>
-    /// 구형 정의 테스트 함수입니다.
-    /// </summary>
-    void Function()
-    {
-        Console.WriteLine("Hello, world!");
-    }
 
     #endregion
 }

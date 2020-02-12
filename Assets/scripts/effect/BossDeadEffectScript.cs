@@ -106,7 +106,7 @@ public class BossDeadEffectScript : EffectScript
     /// </summary>
     void Start()
     {
-        if (_bossBattleManager.IsEveryBossesDead())
+        if (_bossBattleManager.DoesBattleEnd())
         {
             StartCoroutine(CoroutineLastDead());
         }
@@ -165,7 +165,7 @@ public class BossDeadEffectScript : EffectScript
         // 
         for (int i = 0; i < _blinkCount1; ++i)
         {
-            if (_bossBattleManager.IsEveryBossesDead())
+            if (_bossBattleManager.DoesBattleEnd())
             {
                 transform.SetParent(_stageManager._enemyParent.transform);
                 yield break;
@@ -184,7 +184,7 @@ public class BossDeadEffectScript : EffectScript
         _explosionTime = 0f;
         while (ExplosionEnd() == false)
         {
-            if (_bossBattleManager.IsEveryBossesDead())
+            if (_bossBattleManager.DoesBattleEnd())
             {
                 transform.SetParent(_stageManager._enemyParent.transform);
                 explosion.gameObject.SetActive(false);
@@ -289,7 +289,7 @@ public class BossDeadEffectScript : EffectScript
     /// <returns>폭발이 끝났다면 참입니다.</returns>
     bool ExplosionEnd()
     {
-        if (_bossBattleManager.IsEveryBossesDead())
+        if (_bossBattleManager.DoesBattleEnd())
         {
             return ScreenFader.Instance.FadeOutEnded;
         }

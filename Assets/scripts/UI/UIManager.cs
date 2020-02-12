@@ -104,12 +104,16 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void UpdateBossHealthText()
     {
+        ///_bossBattleManager.UpdateBossHealthText();
+
+        /*
         EnemyBossScript[] bosses = _bossBattleManager.Bosses;
         for (int i = 0, len = bosses.Length; i < len; ++i)
         {
             EnemyBossScript boss = bosses[i];
             _bossHudArray[i]._healthText.text = boss.Health.ToString();
         }
+        */
     }
 
     /// <summary>

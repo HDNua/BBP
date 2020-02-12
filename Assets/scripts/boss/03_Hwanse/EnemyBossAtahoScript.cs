@@ -395,7 +395,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
         Transform enemyParent = _StageManager._enemyParent.transform;
 
         // 
-        bool isEveryBossesDead = _bossBattleManager.IsEveryBossesDead();
+        bool isEveryBossesDead = false; // _bossBattleManager.IsEveryBossesDead();
 
         // 모든 탄환을 제거합니다.
         if (isEveryBossesDead)

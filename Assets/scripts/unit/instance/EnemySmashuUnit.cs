@@ -349,6 +349,7 @@ public class EnemySmashuUnit : EnemyUnit
 
 
 
+
     #region 패턴을 정의합니다.
     /// <summary>
     /// 패턴을 수행합니다.
@@ -501,6 +502,7 @@ public class EnemySmashuUnit : EnemyUnit
     }
 
     #endregion
+
 
 
 

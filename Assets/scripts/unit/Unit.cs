@@ -506,11 +506,6 @@ public class Unit : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 피격 텍스쳐 집합입니다.
-    /// </summary>
-    Dictionary<int, Texture2D> _hitTextures = new Dictionary<int, Texture2D>();
 
     #endregion
 }

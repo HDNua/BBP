@@ -455,6 +455,8 @@ public class StageManager : HDSceneManager
     public void RequestStopBackgroundMusic()
     {
         _bgmSource.Stop();
+
+        BattleManager.Instance.GetComponent<AudioSource>().Stop();
         _database._bossBattleManager.GetComponent<AudioSource>().Stop();
     }
     /// <summary>
@@ -757,10 +759,64 @@ public class StageManager : HDSceneManager
     /// <summary>
     /// 보스의 체력을 회복합니다.
     /// </summary>
+    /// <param name="boss"></param>
+    /// <param name="healStep"></param>
+    public void HealBoss(EnemyBossUnit boss, int healStep)
+    {
+        StartCoroutine(BossHealRoutine(boss, healStep));
+    }
+    /// <summary>
+    /// 보스 체력이 회복되는 루틴입니다.
+    /// </summary>
+    /// <param name="boss">플레이어 객체입니다.</param>
+    /// <param name="healStep">전투 환경 설정 시에 프레임 단위로 회복할 양입니다.</param>
+    /// <returns>Update()를 다시 호출하기 위해 함수를 종료할 때마다 null을 반환합니다.</returns>
+    IEnumerator BossHealRoutine(EnemyBossUnit boss, int healStep)
+    {
+        // 사용할 변수를 선언합니다.
+        float time = 0f;
+        float unitTime = 0.02f;
+        AudioSource audioSource = AudioSources[1];
+
+        // 체력을 회복하는 루프입니다.
+        while (boss.IsHealthFull() == false)
+        {
+            // 루프 진입시마다 시작 시간을 초기화합니다.
+            time = 0f;
+
+            // 체력을 회복하면서 체력 회복 효과음을 재생합니다.
+            audioSource.Play();
+            audioSource.time = 0;
+            boss.Heal(healStep);
+
+            // 일정한 간격으로 체력을 회복합니다.
+            while (time < unitTime)
+            {
+                time += Time.unscaledDeltaTime;
+                yield return null;
+            }
+        }
+
+        // 코루틴을 종료합니다.
+        yield break;
+    }
+
+    #endregion
+
+
+
+
+
+    #region 구형 정의를 보관합니다.
+    [Obsolete("HealBoss(EnemyBossUnit)로 대체되었습니다.")]
+    /// <summary>
+    /// 보스의 체력을 회복합니다.
+    /// </summary>
     public void HealBoss(EnemyBossScript boss)
     {
         StartCoroutine(BossHealRoutine(boss));
     }
+    [Obsolete("BossHealRoutine(EnemyBossUnit)로 대체되었습니다.")]
     /// <summary>
     /// 보스 체력이 회복되는 루틴입니다.
     /// </summary>
@@ -796,15 +852,6 @@ public class StageManager : HDSceneManager
         // 코루틴을 종료합니다.
         yield break;
     }
-
-    #endregion
-
-
-
-
-
-    #region 구형 정의를 보관합니다.
-
 
     #endregion
 }

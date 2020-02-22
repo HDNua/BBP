@@ -145,6 +145,19 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
     #region 캐릭터의 상태 필드 및 프로퍼티를 정의합니다.
     /// <summary>
+    /// 등장이 끝났다면 참입니다.
+    /// </summary>
+    bool _appearEnded = false;
+    /// <summary>
+    /// 등장이 끝났다면 참입니다.
+    /// </summary>
+    public bool AppearEnded
+    {
+        get { return _appearEnded; }
+        protected set { _appearEnded = value; }
+    }
+
+    /// <summary>
     /// 
     /// </summary>
     bool Landed
@@ -223,7 +236,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
     #region MonoBehaviour 기본 메서드를 재정의합니다.
     /// <summary>
-    /// 
+    /// MonoBehaviour 개체를 초기화합니다. (최초 1회만 수행)
     /// </summary>
     protected override void Awake()
     {
@@ -232,9 +245,8 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         // 
         _groundable = GetComponent<Groundable>();
     }
-
     /// <summary>
-    /// MonoBehaviour 개체를 초기화합니다.
+    /// MonoBehaviour 개체를 초기화합니다. (생성될 때마다)
     /// </summary>
     protected override void Start()
     {
@@ -365,11 +377,11 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// </summary>
     public override void Dead()
     {
-        BossBattleManager _bossBattleManager = BossBattleManager.Instance;
+        BattleManager _battleManager = BattleManager.Instance;
         Transform enemyParent = _StageManager._enemyParent.transform;
 
         // 
-        bool isEveryBossesDead = _bossBattleManager.DoesBattleEnd();
+        bool isEveryBossesDead = _battleManager.DoesBattleEnd();
 
         // 모든 탄환을 제거합니다.
         if (isEveryBossesDead)
@@ -390,12 +402,12 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         if (isEveryBossesDead)
         {
             ///effect = _bossBattleManager._lastBossDeadEffect;
-            effect = _bossBattleManager._bossDeadEffects[0];
+            effect = _battleManager._bossDeadEffects[0];
         }
         else
         {
             ///effect = _bossBattleManager._bossDeadEffect;
-            effect = _bossBattleManager._bossDeadEffects[1];
+            effect = _battleManager._bossDeadEffects[1];
         }
         // 
         Instantiate(effect, position, transform.rotation)
@@ -961,7 +973,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         StopMoving();
 
         // 등장을 마칩니다.
-        ///AppearEnded = true;
+        AppearEnded = true;
         yield break;
     }
     /// <summary>

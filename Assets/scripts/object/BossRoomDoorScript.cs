@@ -38,10 +38,6 @@ public class BossRoomDoorScript : MonoBehaviour
     /// 보스 방 문이라면 참입니다. 진입 시 BossBattleManager에게 스크립트 수행을 요청합니다.
     /// </summary>
     public bool _isBossRoomDoor = false;
-    /// <summary>
-    /// 보스 전투 관리자입니다.
-    /// </summary>
-    public BossBattleManager _bossBattleManager;
 
     /// <summary>
     /// 
@@ -258,9 +254,11 @@ public class BossRoomDoorScript : MonoBehaviour
         // 보스 방인 경우 시나리오를 진행합니다.
         if (_isBossRoomDoor)
         {
-            _bossBattleManager.RequestBossBattleScenario();
+            ///_bossBattleManager.RequestBossBattleScenario();
+            BattleManager.Instance.RequestStart();
+
             _collider.isTrigger = false;
-            _collider.gameObject.layer = 10; // "Wall";
+            _collider.gameObject.layer = (int)DataBase.LayerMask.Wall; // 10; // "Wall";
         }
 
         // 문의 개방 상태를 모두 내립니다.
@@ -363,6 +361,17 @@ public class BossRoomDoorScript : MonoBehaviour
         RequestClose();
         yield break;
     }
+
+    #endregion
+
+
+
+    #region 구형 정의를 보관합니다.
+    [Obsolete("BattleManager로 대체되었습니다.")]
+    /// <summary>
+    /// 보스 전투 관리자입니다.
+    /// </summary>
+    public BossBattleManager _bossBattleManager;
 
     #endregion
 }

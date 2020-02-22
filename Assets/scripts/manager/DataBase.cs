@@ -10,6 +10,16 @@ using System.Collections.Generic;
 /// </summary>
 public class DataBase : MonoBehaviour
 {
+    #region 상수를 정의합니다.
+    public enum LayerMask
+    {
+        Wall = 10
+    }
+
+    #endregion
+
+
+
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
     /// <summary>
     /// 마찰이 없는 Material입니다. Collider가 미끄러질 수 있게 해줍니다.
@@ -39,9 +49,9 @@ public class DataBase : MonoBehaviour
     public UIManager _userInterfaceManager;
 
     /// <summary>
-    /// 보스 전투 관리자입니다.
+    /// 전투 관리자입니다.
     /// </summary>
-    public BossBattleManager _bossBattleManager;
+    public BattleManager _battleManager;
 
     /// <summary>
     /// 효과 개체 집합입니다.
@@ -258,6 +268,11 @@ public class DataBase : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("BattleManager로 대체되었습니다.")]
+    /// <summary>
+    /// 보스 전투 관리자입니다.
+    /// </summary>
+    public BossBattleManager _bossBattleManager;
 
     #endregion
 }

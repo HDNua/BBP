@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 
 
+[Obsolete("EnemyBossUnit으로 대체되었습니다. 이후 발견하는 즉시 제거하십시오.")]
 /// <summary>
 /// 보스 적 캐릭터를 정의합니다.
 /// </summary>

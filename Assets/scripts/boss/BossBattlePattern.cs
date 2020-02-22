@@ -11,10 +11,6 @@ using System.Collections.Generic;
 public class BossBattlePattern : MonoBehaviour
 {
     #region 컨트롤러가 사용할 Unity 개체를 정의합니다.
-    /// <summary>
-    /// 
-    /// </summary>
-    BossBattleManager _bossBattleManager;
 
     #endregion
 
@@ -51,7 +47,7 @@ public class BossBattlePattern : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        _bossBattleManager = BossBattleManager.Instance;
+        ///_bossBattleManager = BossBattleManager.Instance;
     }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다.
@@ -127,7 +123,11 @@ public class BossBattlePattern : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-
+    [Obsolete("BattleManager로 대체되었습니다.")]
+    /// <summary>
+    /// 
+    /// </summary>
+    BossBattleManager _bossBattleManager;
 
     #endregion
 }

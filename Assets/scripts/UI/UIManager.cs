@@ -1,8 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
-
-
+using System.Linq;
 
 /// <summary>
 /// 사용자 인터페이스 관리자입니다.
@@ -39,11 +38,19 @@ public class UIManager : MonoBehaviour
 
 
 
+
     #region Unity 개체에 대한 참조를 보관합니다.
     /// <summary>
-    /// 보스 전투 관리자입니다.
+    /// 사용자 인터페이스 관리자입니다.
     /// </summary>
-    BossBattleManager _bossBattleManager;
+    public static UIManager Instance
+    {
+        get
+        {
+            return GameObject.FindGameObjectWithTag("UIManager")
+                .GetComponent<UIManager>();
+        }
+    }
 
     #endregion
 
@@ -57,7 +64,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        _bossBattleManager = BossBattleManager.Instance;
+
     }
 
     #endregion
@@ -72,7 +79,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void RequestPauseToggle()
     {
-        _pauseMenuManager.RequestPauseToggle();
+        PauseMenuManager.Instance.RequestPauseToggle();
     }
     /// <summary>
     /// 주 플레이어 HUD를 활성화합니다.
@@ -122,10 +129,29 @@ public class UIManager : MonoBehaviour
     public void ActivateBossHUD()
     {
         /// _bossHUD.gameObject.SetActive(true);
+        /*
         foreach (BossHUDScript hud in _bossHudArray)
         {
             hud.gameObject.SetActive(true);
         }
+        */
+
+        // 
+        EnemyBossUnit[] bosses = (from unit in BattleManager.Instance._units
+                                  where unit is EnemyBossUnit
+                                  select unit as EnemyBossUnit).ToArray();
+
+        //
+        for (int i = 0; i < _bossHudArray.Length; ++i)
+        {
+            EnemyBossUnit boss = bosses[i];
+            BossHUDScript hud = _bossHudArray[i];
+
+            // 
+            hud.gameObject.SetActive(true);
+            hud.RequestSetUnit(boss);
+        }
+
     }
     /// <summary>
     /// 보스 HUD를 비활성화합니다.
@@ -146,11 +172,11 @@ public class UIManager : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("_bossHUD는 더 이상 사용되지 않습니다. _bossHudArray로 대체되었습니다.")]
+    [Obsolete("BattleManager로 대체되었습니다.")]
     /// <summary>
-    /// 보스 HUD 개체입니다.
+    /// 보스 전투 관리자입니다.
     /// </summary>
-    public BossHUDScript _bossHUD;
+    BossBattleManager _bossBattleManager;
 
     #endregion
 }

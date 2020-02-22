@@ -15,24 +15,35 @@ public class PauseMenuManager : MonoBehaviour
     /// </summary>
     public DataBase _database;
 
+    #endregion
+
+    
+
+
+
+    #region 필드를 정의합니다.
+    /// <summary>
+    /// 정지된 상태라면 참입니다.
+    /// </summary>
+    bool _paused = false;
 
     #endregion
 
 
 
 
-
-
-
-
-
-
-    #region 필드 및 프로퍼티를 정의합니다.
+    #region 프로퍼티를 정의합니다.
     /// <summary>
-    /// 정지된 상태라면 참입니다.
+    /// 
     /// </summary>
-    bool _paused = false;
-
+    public static PauseMenuManager Instance
+    {
+        get
+        {
+            return GameObject.FindGameObjectWithTag("PauseMenuManager")
+                .GetComponent<PauseMenuManager>();
+        }
+    }
 
     /// <summary>
     /// UnityEngine.Time 관리자입니다.
@@ -42,13 +53,7 @@ public class PauseMenuManager : MonoBehaviour
         get { return _database.TimeManager; }
     }
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -99,15 +104,9 @@ public class PauseMenuManager : MonoBehaviour
         */
     }
 
-
     #endregion
 
-
-
-
-
-
-
+    
 
 
 
@@ -131,15 +130,9 @@ public class PauseMenuManager : MonoBehaviour
         }
     }
 
-
     #endregion
 
-
-
-
-
-
-
+    
 
 
 

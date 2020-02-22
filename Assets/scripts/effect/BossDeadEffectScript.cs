@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +11,6 @@ using UnityEngine;
 public class BossDeadEffectScript : EffectScript
 {
     #region 컨트롤러가 사용할 Unity 개체를 정의합니다.
-    /// <summary>
-    /// 보스 전투 관리자입니다.
-    /// </summary>
-    BossBattleManager _bossBattleManager;
     /// <summary>
     /// 스테이지 관리자입니다.
     /// </summary>
@@ -98,7 +95,7 @@ public class BossDeadEffectScript : EffectScript
     /// </summary>
     void Awake()
     {
-        _bossBattleManager = BossBattleManager.Instance;
+        ///_bossBattleManager = BossBattleManager.Instance;
         _stageManager = StageManager.Instance;
     }
     /// <summary>
@@ -299,6 +296,19 @@ public class BossDeadEffectScript : EffectScript
             return (_explosionTime >= _explosionEndTime);
         }
     }
+
+    #endregion
+
+
+
+
+
+    #region 구형 정의를 보관합니다.
+    [Obsolete("BattleManager로 대체되었습니다.")]
+    /// <summary>
+    /// 보스 전투 관리자입니다.
+    /// </summary>
+    BossBattleManager _bossBattleManager;
 
     #endregion
 }

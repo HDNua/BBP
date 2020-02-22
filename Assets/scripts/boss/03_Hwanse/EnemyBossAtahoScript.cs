@@ -391,7 +391,7 @@ public class EnemyBossAtahoScript : EnemyBossScript
     /// </summary>
     public override void Dead()
     {
-        BossBattleManager _bossBattleManager = BossBattleManager.Instance;
+        ///BossBattleManager _bossBattleManager = BossBattleManager.Instance;
         Transform enemyParent = _StageManager._enemyParent.transform;
 
         // 
@@ -416,12 +416,12 @@ public class EnemyBossAtahoScript : EnemyBossScript
         if (isEveryBossesDead)
         {
             ///effect = _bossBattleManager._lastBossDeadEffect;
-            effect = _bossBattleManager._bossDeadEffects[0];
+            effect = null; //_bossBattleManager._bossDeadEffects[0];
         }
         else
         {
             ///effect = _bossBattleManager._bossDeadEffect;
-            effect = _bossBattleManager._bossDeadEffects[1];
+            effect = null; // _bossBattleManager._bossDeadEffects[1];
         }
         // 
         Instantiate(effect, position, transform.rotation)

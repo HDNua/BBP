@@ -1,4 +1,48 @@
-﻿BBP v1.4.5.3 (TEMP)
+﻿BBP v1.4.6.0
+----
+
+- BossBattleManager 삭제.
+
+* !!!!! IMPORTANT !!!!!
+  BattleManager 추가.
+  BossBattleManager가 구형 정의로서, EnemyBossScript를 썼다고 하면
+  BattleManager는 새 정의 Unit을 상속하는 EnemyBossUnit을 사용한다.
+> 각 스테이지마다 전투는 BattleManager를 상속한다.
+>> 환세 스테이지의 경우 HwanseBattleManager가 생긴다.
+> BattleManager는 기본적인 형태가 존재하며, 각 코루틴을 하위 클래스에서 재정의하게 한다.
+>> 단계 메서드가 먼저 존재한다.
+>>> protected void Warning()
+>>> protected void Appear()
+>>> protected void Script()
+>>> protected void Ready()
+>>> protected void SetupBattle()
+>>> protected void Fight()
+>>> protected void EndBattle()
+>> 각 단계 메서드에 대한 코루틴 메서드가 존재한다.
+>>> protected virtual IEnumerator CoroutineWarning() -> 경고 메시지 출력
+>>> protected abstract IEnumerator CoroutineAppear()
+>>> protected abstract IEnumerator CoroutineScript()
+>>> protected abstract IEnumerator CoroutineReady()
+>>> protected virtual IEnumerator CoroutineSetupBattle() -> 전투 환경 설정
+>>> protected abstract IEnumerator CoroutineFight()
+>>> protected abstract IEnumerator CoroutineEndBattle()
+>> 이들은 상위 클래스에서 거의 변하지 않을 것들에 대해서는 virtual로,
+   많이 변하거나 반드시 변할 것으로 예상하는 것들은 abstract로 정의했다.
+> 패턴은 굳이 찢을 이유가 없을 것으로 본다.
+>> BattleManager에 넣자.
+> UnitAction도 필요한지 모르겠다.
+>> 유닛의 행동은 거의 각 유닛에 맞춰져있다. 공용으로 쓰는 경우가 거의 없다는 것.
+   있다고 해도 중복된 코드를 유닛에 붙여넣으면 그만이다.
+> 하여, 유닛의 각 행동들은 Unit을 상속하는 각 개체에 넣고,
+  BattleManager의 하위 클래스에서 패턴을 정의하면서 
+  각 패턴에서 Unit에 정의된 메서드를 호출하여 사용하기로 했다.
+
+
+end.
+
+
+
+BBP v1.4.5.3 (TEMP)
 ----
 
 - 유니티 버전 업데이트.

@@ -19,7 +19,7 @@ public delegate void BattleAction();
 public class HwanseBossBattlePattern : MonoBehaviour
 {
     #region 상수 및 형식을 정의합니다.
-    public Action[] _actions;
+    
 
     
 
@@ -29,7 +29,6 @@ public class HwanseBossBattlePattern : MonoBehaviour
 
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
     public int _phase;
-    public BattleAction[] _patternActions;
     public int _close;
 
     #endregion
@@ -48,7 +47,7 @@ public class HwanseBossBattlePattern : MonoBehaviour
 
     #region MonoBehaviour 기본 메서드를 재정의합니다.
     /// <summary>
-    /// MonoBehaviour 개체를 초기화합니다.
+    /// MonoBehaviour 개체를 초기화합니다. (생성될 때마다)
     /// </summary>
     void Start()
     {
@@ -92,13 +91,6 @@ public class HwanseBossBattlePattern : MonoBehaviour
     void Test()
     {
 
-    }
-
-    private void OnCanvasGroupChanged()
-    {
-        UnityEngine.UI.Button button = null;
-
-        button.onClick = null;
     }
 
     #endregion

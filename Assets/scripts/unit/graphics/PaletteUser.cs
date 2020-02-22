@@ -99,7 +99,8 @@ public class PaletteUser : MonoBehaviour
         {
             UpdateColor();
 
-            // 
+            /*
+             다음 릴리즈에서 이 부분을 발견하면 삭제하십시오.
             if (_saveRequested)
             {
                 Texture2D targetTexture = _colorSwapTexture;
@@ -107,6 +108,7 @@ public class PaletteUser : MonoBehaviour
                 File.WriteAllBytes(_savePaletteName + ".png", bytes);
                 _saveRequested = false;
             }
+            */
         }
     }
 

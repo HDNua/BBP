@@ -48,6 +48,27 @@ public class EnemyBossUnit : EnemyUnit
 
 
     #region 캐릭터의 상태 필드 및 프로퍼티를 정의합니다.
+    /// <summary>
+    /// 플레이어의 최대 체력을 확인합니다.
+    /// </summary>
+    public int _maxHealth = 40;
+    /// <summary>
+    /// 최대 체력입니다.
+    /// </summary>
+    public int MaxHealth
+    {
+        get { return _maxHealth; }
+        set { _maxHealth = value; }
+    }
+
+    /// <summary>
+    /// 플레이어의 체력이 가득 찼는지 확인합니다.
+    /// </summary>
+    /// <returns>체력이 가득 찼다면 true입니다.</returns>
+    public bool IsHealthFull()
+    {
+        return (Health == MaxHealth);
+    }
 
     #endregion
 
@@ -135,11 +156,11 @@ public class EnemyBossUnit : EnemyUnit
     /// </summary>
     public override void Dead()
     {
-        BossBattleManager _bossBattleManager = BossBattleManager.Instance;
+        BattleManager _battleManager = BattleManager.Instance;
         Transform enemyParent = _StageManager._enemyParent.transform;
 
         // 
-        bool isEveryBossesDead = false; // _bossBattleManager.IsEveryBossesDead();
+        bool isEveryBossesDead = _battleManager.DoesBattleEnd();
 
         // 모든 탄환을 제거합니다.
         if (isEveryBossesDead)
@@ -155,17 +176,14 @@ public class EnemyBossUnit : EnemyUnit
         Vector3 position = transform.position;
 
         // 
-        /// BossDeadEffectScript effect = _bossBattleManager._bossDeadEffect;
         BossDeadEffectScript effect;
         if (isEveryBossesDead)
         {
-            ///effect = _bossBattleManager._lastBossDeadEffect;
-            effect = _bossBattleManager._bossDeadEffects[0];
+            effect = _battleManager._bossDeadEffects[0];
         }
         else
         {
-            ///effect = _bossBattleManager._bossDeadEffect;
-            effect = _bossBattleManager._bossDeadEffects[1];
+            effect = _battleManager._bossDeadEffects[1];
         }
         // 
         Instantiate(effect, position, transform.rotation)
@@ -193,7 +211,16 @@ public class EnemyBossUnit : EnemyUnit
 
 
 
-    #region EnemyBossScript의 메서드를 오버라이드합니다.
+    #region EnemyUnit의 메서드를 오버라이드합니다.
+    /// <summary>
+    /// 플레이어가 체력을 회복합니다.
+    /// </summary>
+    public void Heal(int healStep)
+    {
+        Health += healStep;
+        if (Health > MaxHealth)
+            Health = MaxHealth;
+    }
 
     #endregion
 

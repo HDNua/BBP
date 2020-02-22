@@ -11,11 +11,6 @@ public class BossHUDScript : MonoBehaviour
 {
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
     /// <summary>
-    /// HUD를 표현할 보스 캐릭터입니다.
-    /// </summary>
-    public EnemyBossScript _boss;
-
-    /// <summary>
     /// 체력 바입니다.
     /// </summary>
     public GameObject _healthBar;
@@ -46,12 +41,11 @@ public class BossHUDScript : MonoBehaviour
 
 
 
-
     #region Unity 개체에 대한 참조를 보관합니다.
     /// <summary>
-    /// 보스 전투 관리자입니다.
+    /// 
     /// </summary>
-    BossBattleManager _bossBattleManager;
+    BattleManager _battleManager;
 
     #endregion
 
@@ -65,7 +59,8 @@ public class BossHUDScript : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        _bossBattleManager = BossBattleManager.Instance;
+        ///_bossBattleManager = BossBattleManager.Instance;
+        _battleManager = BattleManager.Instance;
     }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다.
@@ -79,11 +74,11 @@ public class BossHUDScript : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (_boss != null)
+        if (_unit != null)
         {
             // 체력을 업데이트 합니다.
             Vector3 healthScale = _healthBar.transform.localScale;
-            float value = (float)_boss.Health / _boss.MaxHealth;
+            float value = (float)_unit.Health / _unit.MaxHealth;
 
             if (_isHorizontal)
             {
@@ -103,7 +98,39 @@ public class BossHUDScript : MonoBehaviour
 
 
 
+    #region 요청 메서드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    EnemyBossUnit _unit;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="unit"></param>
+    public void RequestSetUnit(EnemyBossUnit unit)
+    {
+        _unit = unit;
+    }
+
+    #endregion
+
+
+
+
+
     #region 구형 정의를 보관합니다.
+    [Obsolete("BattleManager로 대체되었습니다.")]
+    /// <summary>
+    /// 보스 전투 관리자입니다.
+    /// </summary>
+    BossBattleManager _bossBattleManager;
+
+    [Obsolete("EnemyBossUnit으로 대체되었습니다.")]
+    /// <summary>
+    /// HUD를 표현할 보스 캐릭터입니다.
+    /// </summary>
+    public EnemyBossScript _boss;
 
     #endregion
 }

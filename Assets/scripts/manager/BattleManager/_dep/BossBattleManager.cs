@@ -4,6 +4,7 @@ using System.Collections;
 
 
 
+[Obsolete("BattleManager로 대체되었습니다.")]
 /// <summary>
 /// 보스 전투 관리자입니다.
 /// </summary>

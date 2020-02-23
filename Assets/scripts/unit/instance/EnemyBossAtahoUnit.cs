@@ -416,7 +416,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         if (FacingRight)
             effect.transform.localScale = new Vector3
                 (-effect.transform.localScale.x, effect.transform.localScale.x);
-
         effect.gameObject.SetActive(true);
 
         // 플레이어의 움직임을 막습니다.

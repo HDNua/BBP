@@ -172,11 +172,6 @@ public class UIManager : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("BattleManager로 대체되었습니다.")]
-    /// <summary>
-    /// 보스 전투 관리자입니다.
-    /// </summary>
-    BossBattleManager _bossBattleManager;
 
     #endregion
 }

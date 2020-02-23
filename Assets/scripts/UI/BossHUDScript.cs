@@ -120,17 +120,6 @@ public class BossHUDScript : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("BattleManager로 대체되었습니다.")]
-    /// <summary>
-    /// 보스 전투 관리자입니다.
-    /// </summary>
-    BossBattleManager _bossBattleManager;
-
-    [Obsolete("EnemyBossUnit으로 대체되었습니다.")]
-    /// <summary>
-    /// HUD를 표현할 보스 캐릭터입니다.
-    /// </summary>
-    public EnemyBossScript _boss;
 
     #endregion
 }

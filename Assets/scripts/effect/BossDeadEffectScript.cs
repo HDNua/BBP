@@ -15,6 +15,15 @@ public class BossDeadEffectScript : EffectScript
     /// 스테이지 관리자입니다.
     /// </summary>
     StageManager _stageManager;
+    /// <summary>
+    /// 전투 관리자입니다.
+    /// </summary>
+    BattleManager _battleManager;
+
+    /// <summary>
+    /// 팔레트 사용자입니다.
+    /// </summary>
+    PaletteUser _paletteUser;
 
     #endregion
 
@@ -36,10 +45,6 @@ public class BossDeadEffectScript : EffectScript
     /// 폭발 개체입니다.
     /// </summary>
     public EffectBossExplosionScript _explosion;
-    /// <summary>
-    /// 보스 캐릭터입니다.
-    /// </summary>
-    public EnemyBossScript _boss;
 
     /// <summary>
     /// 불이 켜진 상태라면 참입니다.
@@ -79,9 +84,9 @@ public class BossDeadEffectScript : EffectScript
     public float _explosionEndTime = 2f;
 
     /// <summary>
-    /// 
+    /// 보스 캐릭터입니다.
     /// </summary>
-    public Color[] _defaultBossPalette;
+    public EnemyBossUnit _boss;
 
     #endregion
 
@@ -95,15 +100,16 @@ public class BossDeadEffectScript : EffectScript
     /// </summary>
     void Awake()
     {
-        ///_bossBattleManager = BossBattleManager.Instance;
+        _battleManager = BattleManager.Instance;
         _stageManager = StageManager.Instance;
+        _paletteUser = GetComponent<PaletteUser>();
     }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다.
     /// </summary>
     void Start()
     {
-        if (_bossBattleManager.DoesBattleEnd())
+        if (_battleManager.DoesBattleEnd())
         {
             StartCoroutine(CoroutineLastDead());
         }
@@ -112,7 +118,17 @@ public class BossDeadEffectScript : EffectScript
             StartCoroutine(CoroutineDead());
         }
 
-        // 
+        /*
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        Sprite sprite = renderer.sprite;
+        _originalTexture = sprite.texture;
+        _blinkingTexture = GetColorUpdatedTexture(
+            sprite.texture,
+            _boss.DefaultPalette,
+            EnemyColorPalette.InvenciblePalette);
+        */
+
+        /*
         _defaultBossPalette = _boss.DefaultPalette;
 
         // 
@@ -123,6 +139,7 @@ public class BossDeadEffectScript : EffectScript
             sprite.texture,
             _boss.DefaultPalette,
             EnemyColorPalette.InvenciblePalette);
+        */
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트합니다.
@@ -137,6 +154,10 @@ public class BossDeadEffectScript : EffectScript
     /// </summary>
     void LateUpdate()
     {
+        _paletteUser.UpdateColor();
+        //_boss.UpdatePaletteIndex(_highlighted ? 0 : 1);
+
+        /*
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         Sprite sprite = renderer.sprite;
         Texture2D texture = _highlighted ? _originalTexture : _blinkingTexture;
@@ -145,6 +166,7 @@ public class BossDeadEffectScript : EffectScript
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         block.SetTexture("_MainTex", texture);
         renderer.SetPropertyBlock(block);
+        */
     }
 
     #endregion
@@ -162,7 +184,7 @@ public class BossDeadEffectScript : EffectScript
         // 
         for (int i = 0; i < _blinkCount1; ++i)
         {
-            if (_bossBattleManager.DoesBattleEnd())
+            if (_battleManager.DoesBattleEnd())
             {
                 transform.SetParent(_stageManager._enemyParent.transform);
                 yield break;
@@ -181,7 +203,7 @@ public class BossDeadEffectScript : EffectScript
         _explosionTime = 0f;
         while (ExplosionEnd() == false)
         {
-            if (_bossBattleManager.DoesBattleEnd())
+            if (_battleManager.DoesBattleEnd())
             {
                 transform.SetParent(_stageManager._enemyParent.transform);
                 explosion.gameObject.SetActive(false);
@@ -277,6 +299,14 @@ public class BossDeadEffectScript : EffectScript
     /// </summary>
     void ToggleHighlighted()
     {
+        if (_highlighted)
+        {
+            _paletteUser.UpdatePaletteIndex(0);
+        }
+        else
+        {
+            _paletteUser.UpdatePaletteIndex(1);
+        }
         _highlighted = !_highlighted;
     }
 
@@ -286,7 +316,7 @@ public class BossDeadEffectScript : EffectScript
     /// <returns>폭발이 끝났다면 참입니다.</returns>
     bool ExplosionEnd()
     {
-        if (_bossBattleManager.DoesBattleEnd())
+        if (_battleManager.DoesBattleEnd())
         {
             return ScreenFader.Instance.FadeOutEnded;
         }
@@ -304,11 +334,16 @@ public class BossDeadEffectScript : EffectScript
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("BattleManager로 대체되었습니다.")]
+    [Obsolete("EnemyBossUnit으로 대체되었습니다.")]
     /// <summary>
-    /// 보스 전투 관리자입니다.
+    /// 보스 캐릭터입니다.
     /// </summary>
-    BossBattleManager _bossBattleManager;
+    public EnemyBossScript _bossScript;
+    [Obsolete("PaletteUser로 대체되었습니다.")]
+    /// <summary>
+    /// 
+    /// </summary>
+    public Color[] _defaultBossPalette;
 
     #endregion
 }

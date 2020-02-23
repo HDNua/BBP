@@ -455,9 +455,7 @@ public class StageManager : HDSceneManager
     public void RequestStopBackgroundMusic()
     {
         _bgmSource.Stop();
-
         BattleManager.Instance.GetComponent<AudioSource>().Stop();
-        _database._bossBattleManager.GetComponent<AudioSource>().Stop();
     }
     /// <summary>
     /// 현재 조작중인 플레이어의 위치를 반환합니다.

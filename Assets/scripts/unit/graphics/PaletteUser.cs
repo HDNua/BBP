@@ -47,7 +47,7 @@ public class PaletteUser : MonoBehaviour
     /// <summary>
     /// 팔레트 스왑이 적용된 텍스쳐입니다. ColorSwap shader와 같이 사용합니다.
     /// </summary>
-    public Texture2D _colorSwapTexture;
+    Texture2D _colorSwapTexture;
 
     /// <summary>
     /// 팔레트 컬러 인덱스입니다.
@@ -98,17 +98,6 @@ public class PaletteUser : MonoBehaviour
         if (_noController)
         {
             UpdateColor();
-
-            /*
-             다음 릴리즈에서 이 부분을 발견하면 삭제하십시오.
-            if (_saveRequested)
-            {
-                Texture2D targetTexture = _colorSwapTexture;
-                byte[] bytes = targetTexture.EncodeToPNG();
-                File.WriteAllBytes(_savePaletteName + ".png", bytes);
-                _saveRequested = false;
-            }
-            */
         }
     }
 
@@ -257,14 +246,14 @@ public class PaletteUser : MonoBehaviour
         _colorSwapTexture.Apply();
     }
     /// <summary>
-    /// 
+    /// 텍스쳐를 활성화합니다.
     /// </summary>
     public void EnableTexture()
     {
         _renderer.enabled = true;
     }
     /// <summary>
-    /// 
+    /// 텍스쳐를 비활성화합니다.
     /// </summary>
     public void DisableTexture()
     {
@@ -278,16 +267,6 @@ public class PaletteUser : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("이제 사용법이 잘 파악되었습니다.")]
-    /// <summary>
-    /// 디버깅용 팔레트 추출 요청 플래그입니다.
-    /// </summary>
-    public bool _saveRequested = false;
-    [Obsolete("이제 사용법이 잘 파악되었습니다.")]
-    /// <summary>
-    /// 디버깅용 팔레트 추출 이름입니다.
-    /// </summary>
-    public string _savePaletteName = "palette";
 
     #endregion
 }

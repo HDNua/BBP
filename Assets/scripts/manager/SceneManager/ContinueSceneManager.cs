@@ -57,11 +57,6 @@ public class ContinueSceneManager : MonoBehaviour
 
 
 
-
-
-
-
-
     #region 필드를 정의합니다.
     /// <summary>
     /// Scene에서 사용할 효과음을 사용 가능한 형태로 보관합니다.
@@ -90,11 +85,6 @@ public class ContinueSceneManager : MonoBehaviour
 
 
     #endregion
-
-
-
-
-
 
 
 
@@ -138,7 +128,6 @@ public class ContinueSceneManager : MonoBehaviour
             }
             return;
         }
-
 
         // 아무 키나 눌린 경우
         if (Input.anyKeyDown)
@@ -206,7 +195,8 @@ public class ContinueSceneManager : MonoBehaviour
         GameData gameData = new GameData();
         gameData.MaxHealthX = 20;
         gameData.MaxHealthZ = 20;
-        gameData.MapStatuses[1].itemLifeUpFound = true;
+        ///gameData.MapStatuses[1].itemLifeUpFound = true;
+        gameData.StageData[1].itemLifeUpFound = true;
 
         // 
         _gameData = gameData;
@@ -252,13 +242,7 @@ public class ContinueSceneManager : MonoBehaviour
         _statusText.text = "PlayerPrefs Preserved";
     }
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -273,10 +257,13 @@ public class ContinueSceneManager : MonoBehaviour
     {
         // 
         if (_saveDataCount == 0)
+        {
             return;
+        }
         else if (index < 0 || index >= _saveDataCount)
+        {
             return;
-
+        }
 
         // 
         string filename = index.ToString();
@@ -288,7 +275,6 @@ public class ContinueSceneManager : MonoBehaviour
         {
             _gameData = null;
         }
-
 
         // 화면을 갱신하고 나머지 필드를 업데이트합니다.
         UpdateScene();
@@ -332,11 +318,22 @@ public class ContinueSceneManager : MonoBehaviour
         {
             _noDataText.enabled = false;
             ClearPreviousActiveState();
+
+            /*
             GameMapStatus[] mapStatuses = _gameData.MapStatuses;
             for (int i = 0; i < _lifeups.Length; ++i)
             {
                 _lifeups[i].SetActive(mapStatuses[i].itemLifeUpFound);
             }
+            */
+
+            StageData[] stageData = _gameData.StageData;
+            for (int i = 0; i < _lifeups.Length; ++i)
+            {
+                _lifeups[i].SetActive(stageData[i].itemLifeUpFound);
+            }
+
+            //
             _gameDataPanel.SetActive(true);
         }
     }
@@ -355,11 +352,6 @@ public class ContinueSceneManager : MonoBehaviour
 
 
     #endregion
-
-
-
-
-
 
 
 

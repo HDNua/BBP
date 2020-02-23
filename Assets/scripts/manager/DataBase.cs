@@ -268,11 +268,6 @@ public class DataBase : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("BattleManager로 대체되었습니다.")]
-    /// <summary>
-    /// 보스 전투 관리자입니다.
-    /// </summary>
-    public BossBattleManager _bossBattleManager;
 
     #endregion
 }

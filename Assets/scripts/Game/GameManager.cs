@@ -56,11 +56,11 @@ public class GameManager
     /// 제로의 최대 체력입니다.
     /// </summary>
     public int MaxHealthZ { get { return _gameData.MaxHealthZ; } }
-    
+
     /// <summary>
-    /// 맵 상태 집합입니다.
+    /// 스테이지 데이터 집합입니다.
     /// </summary>
-    public GameMapStatus[] MapStatuses { get { return _gameData.MapStatuses; } }
+    public StageData[] StageData { get { return _gameData.StageData; } }
 
     /// <summary>
     /// 트라이 카운트입니다.
@@ -112,43 +112,8 @@ public class GameManager
 
     #endregion
 
+
     
-
-
-
-    #region MonoBehaviour 기본 메서드를 재정의합니다.
-
-
-
-    /**
-    /// <summary>
-    /// MonoBehaviour 개체를 초기화합니다.
-    /// </summary>
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-        Instance = this;
-
-
-        if (_gameData == null)
-        {
-            _gameData = new GameData();
-        }
-    }
-    /// <summary>
-    /// MonoBehaviour 개체를 초기화합니다.
-    /// </summary>
-    void Start()
-    {
-        
-    }
-    */
-
-
-    #endregion
-
-
-        
 
 
     #region 메서드를 정의합니다.
@@ -156,12 +121,12 @@ public class GameManager
     /// 맵 상태를 업데이트합니다.
     /// </summary>
     /// <param name="index">상태를 업데이트할 맵의 인덱스입니다.</param>
-    /// <param name="mapStatus">맵의 새로운 상태입니다.</param>
-    public void UpdateMapStatus(int index, GameMapStatus mapStatus)
+    /// <param name="stageData">맵의 새로운 상태입니다.</param>
+    public void UpdateMapStatus(int index, StageData stageData)
     {
-        _gameData.MapStatuses[index] = mapStatus;
+        _gameData.StageData[index] = stageData;
     }
-    
+
     /// <summary>
     /// 게임 데이터를 저장합니다.
     /// </summary>
@@ -269,7 +234,6 @@ public class GameManager
         File.Delete(filename);
     }
 
-
     /// <summary>
     /// 시도 횟수를 변경합니다.
     /// </summary>
@@ -309,7 +273,22 @@ public class GameManager
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("StageData로 대체되었습니다.")]
+    /// <summary>
+    /// 맵 상태 집합입니다.
+    /// </summary>
+    public GameMapStatus[] MapStatuses { get { return _gameData.MapStatuses; } }
 
+    [Obsolete("StageData로 대체되었습니다.")]
+    /// <summary>
+    /// 맵 상태를 업데이트합니다.
+    /// </summary>
+    /// <param name="index">상태를 업데이트할 맵의 인덱스입니다.</param>
+    /// <param name="stageData">맵의 새로운 상태입니다.</param>
+    public void UpdateMapStatus(int index, GameMapStatus mapStatus)
+    {
+        _gameData.MapStatuses[index] = mapStatus;
+    }
 
     #endregion
 }

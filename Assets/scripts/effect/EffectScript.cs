@@ -4,16 +4,29 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(PaletteUser))]
 /// <summary>
 /// 효과 스크립트입니다.
 /// </summary>
 public class EffectScript : MonoBehaviour
 {
     #region 컨트롤러가 사용할 Unity 객체를 정의합니다.
+    /// <summary>
+    /// AudioSource 개체입니다.
+    /// </summary>
     AudioSource _audioSource = null;
+    /// <summary>
+    /// Animator 개체입니다.
+    /// </summary>
     Animator _animator;
+    /// <summary>
+    /// 팔레트 사용자입니다.
+    /// </summary>
+    PaletteUser _paletteUser;
 
     #endregion
+
+
 
 
 
@@ -67,20 +80,21 @@ public class EffectScript : MonoBehaviour
     /// 현재 팔레트입니다.
     /// </summary>
     Color[] _currentPalette = null;
-    
+
     #endregion
 
-    
+
 
 
 
     #region MonoBehaviour 기본 메서드를 재정의합니다.
     /// <summary>
-    /// MonoBehaviour 객체를 초기화합니다.
+    /// MonoBehaviour 개체를 초기화합니다. (최초 1회만 수행)
     /// </summary>
     void Awake()
     {
         _animator = GetComponent<Animator>();
+        _paletteUser = GetComponent<PaletteUser>();
 
         // 효과 개체에서 애니메이션은 유일하게 하나 존재합니다.
         // 해당 애니메이션의 길이로 초기화 합니다.
@@ -88,7 +102,7 @@ public class EffectScript : MonoBehaviour
         _clipLength = clips[0].length;
     }
     /// <summary>
-    /// MonoBehaviour 객체를 초기화합니다.
+    /// MonoBehaviour 개체를 초기화합니다. (생성될 때마다)
     /// </summary>
     void Start()
     {
@@ -105,7 +119,7 @@ public class EffectScript : MonoBehaviour
         // 애니메이션이 재생중이거나 음원 재생중이라면
         if (_animator.enabled || _audioSource && _audioSource.isPlaying)
         {
-
+            
         }
         // 모든 재생이 끝난 경우 파괴합니다.
         else
@@ -123,11 +137,17 @@ public class EffectScript : MonoBehaviour
         {
             UpdateTextureColor();
         }
+
+        // 
+        if (_paletteUser)
+        {
+            _paletteUser.UpdateColor();
+        }
     }
 
     #endregion
 
-    
+
 
 
 
@@ -147,70 +167,7 @@ public class EffectScript : MonoBehaviour
 
 
     #region 보조 메서드를 정의합니다.
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="texture"></param>
-    /// <param name="srcColors"></param>
-    /// <param name="dstColors"></param>
-    /// <returns></returns>
-    protected Texture2D GetColorUpdatedTexture(Texture2D texture, Color[] srcColors, Color[] dstColors)
-    {
-        Color[] texturePixelArray = texture.GetPixels();
-        Color[] pixels = new Color[texturePixelArray.Length];
 
-        // 모든 픽셀을 돌면서 색상을 업데이트합니다.
-        for (int pixelIndex = 0, pixelCount = texturePixelArray.Length; pixelIndex < pixelCount; ++pixelIndex)
-        {
-            Color currentPixelColor = texturePixelArray[pixelIndex];
-            pixels[pixelIndex] = currentPixelColor;
-            if (currentPixelColor.a == 1)
-            {
-                for (int targetIndex = 0, targetPixelCount = srcColors.Length;
-                    targetIndex < targetPixelCount;
-                    ++targetIndex)
-                {
-                    Color srcColor = srcColors[targetIndex];
-                    if (Mathf.Approximately(currentPixelColor.r, srcColor.r) &&
-                        Mathf.Approximately(currentPixelColor.g, srcColor.g) &&
-                        Mathf.Approximately(currentPixelColor.b, srcColor.b) &&
-                        Mathf.Approximately(currentPixelColor.a, srcColor.a))
-                    {
-                        pixels[pixelIndex] = dstColors[targetIndex];
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                pixels[pixelIndex] = currentPixelColor;
-            }
-        }
-
-        // 텍스쳐를 복제하고 새 픽셀 팔레트로 덮어씌웁니다.
-        Texture2D cloneTexture = new Texture2D(texture.width, texture.height);
-        cloneTexture.filterMode = FilterMode.Point;
-        cloneTexture.SetPixels(pixels);
-        cloneTexture.Apply();
-
-        // 완성된 텍스쳐를 반환합니다.
-        return cloneTexture;
-    }
-    /// <summary>
-    /// 필드 색상표를 바탕으로 텍스쳐 색상을 업데이트합니다.
-    /// </summary>
-    protected void UpdateTextureColor()
-    {
-        // 
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        Texture2D cloneTexture = GetColorUpdatedTexture
-            (renderer.sprite.texture, _defaultPalette, _currentPalette);
-
-        // 새 텍스쳐를 렌더러에 반영합니다.
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        block.SetTexture("_MainTex", cloneTexture);
-        renderer.SetPropertyBlock(block);
-    }
 
     #endregion
     
@@ -278,18 +235,6 @@ public class EffectScript : MonoBehaviour
     }
     
     /// <summary>
-    /// 텍스쳐를 업데이트합니다.
-    /// </summary>
-    /// <param name="defaultPalette">기본 색상 팔레트입니다.</param>
-    /// <param name="targetPalette">타겟 색상 팔레트입니다.</param>
-    public void RequestUpdateTexture(Color[] defaultPalette, Color[] targetPalette)
-    {
-        _defaultPalette = defaultPalette;
-        _currentPalette = targetPalette;
-        _paletteChangeRequested = true;
-    }
-
-    /// <summary>
     /// 애니메이터가 지정된 문자열의 상태인지 확인합니다.
     /// </summary>
     /// <param name="stateName">재생 중인지 확인하려는 상태의 이름입니다.</param>
@@ -307,7 +252,84 @@ public class EffectScript : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("PaletteUser로 대체되었습니다.")]
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="texture"></param>
+    /// <param name="srcColors"></param>
+    /// <param name="dstColors"></param>
+    /// <returns></returns>
+    protected Texture2D GetColorUpdatedTexture(Texture2D texture, Color[] srcColors, Color[] dstColors)
+    {
+        Color[] texturePixelArray = texture.GetPixels();
+        Color[] pixels = new Color[texturePixelArray.Length];
 
+        // 모든 픽셀을 돌면서 색상을 업데이트합니다.
+        for (int pixelIndex = 0, pixelCount = texturePixelArray.Length; pixelIndex < pixelCount; ++pixelIndex)
+        {
+            Color currentPixelColor = texturePixelArray[pixelIndex];
+            pixels[pixelIndex] = currentPixelColor;
+            if (currentPixelColor.a == 1)
+            {
+                for (int targetIndex = 0, targetPixelCount = srcColors.Length;
+                    targetIndex < targetPixelCount;
+                    ++targetIndex)
+                {
+                    Color srcColor = srcColors[targetIndex];
+                    if (Mathf.Approximately(currentPixelColor.r, srcColor.r) &&
+                        Mathf.Approximately(currentPixelColor.g, srcColor.g) &&
+                        Mathf.Approximately(currentPixelColor.b, srcColor.b) &&
+                        Mathf.Approximately(currentPixelColor.a, srcColor.a))
+                    {
+                        pixels[pixelIndex] = dstColors[targetIndex];
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                pixels[pixelIndex] = currentPixelColor;
+            }
+        }
+
+        // 텍스쳐를 복제하고 새 픽셀 팔레트로 덮어씌웁니다.
+        Texture2D cloneTexture = new Texture2D(texture.width, texture.height);
+        cloneTexture.filterMode = FilterMode.Point;
+        cloneTexture.SetPixels(pixels);
+        cloneTexture.Apply();
+
+        // 완성된 텍스쳐를 반환합니다.
+        return cloneTexture;
+    }
+    [Obsolete("PaletteUser로 대체되었습니다.")]
+    /// <summary>
+    /// 필드 색상표를 바탕으로 텍스쳐 색상을 업데이트합니다.
+    /// </summary>
+    protected void UpdateTextureColor()
+    {
+        // 
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        Texture2D cloneTexture = GetColorUpdatedTexture
+            (renderer.sprite.texture, _defaultPalette, _currentPalette);
+
+        // 새 텍스쳐를 렌더러에 반영합니다.
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+        block.SetTexture("_MainTex", cloneTexture);
+        renderer.SetPropertyBlock(block);
+    }
+    [Obsolete("PaletteUser로 대체되었습니다.")]
+    /// <summary>
+    /// 텍스쳐를 업데이트합니다.
+    /// </summary>
+    /// <param name="defaultPalette">기본 색상 팔레트입니다.</param>
+    /// <param name="targetPalette">타겟 색상 팔레트입니다.</param>
+    public void RequestUpdateTexture(Color[] defaultPalette, Color[] targetPalette)
+    {
+        _defaultPalette = defaultPalette;
+        _currentPalette = targetPalette;
+        _paletteChangeRequested = true;
+    }
 
     #endregion
 }

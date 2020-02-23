@@ -5,6 +5,7 @@ using UnityEngine;
 
 
 
+[Obsolete("이것은 아주 먼 나중에 개선되겠지요...")]
 /// <summary>
 /// 인트로 스테이지 보스 적 캐릭터를 정의합니다.
 /// </summary>
@@ -272,7 +273,7 @@ public class EnemyIntroBossHoverMechScript : EnemyBossScript
 
         // 개체 대신 놓일 그림을 활성화합니다.
         Vector3 position = transform.position;
-        BossDeadEffectScript effect = BossBattleManager.Instance._bossDeadEffects[0];
+        BossDeadEffectScript effect = BattleManager.Instance._bossDeadEffects[0];
         effect.transform.position = position;
         if (FacingRight)
             effect.transform.localScale = new Vector3

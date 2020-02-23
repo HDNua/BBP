@@ -124,7 +124,10 @@ public class HwanseBattleManager : BattleManager
         }
 
         // 
-        StopCoroutine(_coroutinePattern);
+        if (_coroutinePattern != null)
+        {
+            StopCoroutine(_coroutinePattern);
+        }
         _coroutinePattern = null;
         EndBattle();
         yield break;

@@ -172,9 +172,9 @@ public static class EnemyColorPalette
 
         Color[] introBossHoverMechPalette;
 
-        Color[] introBossHeadPalette;
-        Color[] introBossBodyPalette;
-        Color[] introBossArmPalette;
+        ///Color[] introBossHeadPalette;
+        ///Color[] introBossBodyPalette;
+        ///Color[] introBossArmPalette;
 
         Color[] bossAtahoPalette;
         Color[] enemyRinshanPalette;

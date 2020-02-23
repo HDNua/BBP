@@ -4,6 +4,7 @@ using System.Collections;
 
 
 
+[Obsolete("이것은 아주 먼 나중에 개선되겠지요...")]
 /// <summary>
 /// 인트로 스테이지 보스 적 캐릭터를 정의합니다.
 /// </summary>

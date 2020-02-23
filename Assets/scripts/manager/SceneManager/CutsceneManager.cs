@@ -36,7 +36,7 @@ public class CutsceneManager : MonoBehaviour
 
     #region 필드를 정의합니다.
     /// <summary>
-    /// 
+    /// 배경 음악 AudioSource입니다.
     /// </summary>
     AudioSource _bgmSource;
     /// <summary>

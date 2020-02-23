@@ -73,7 +73,7 @@ Shader "Sprites/ColorSwap"
 			{
 				fixed4 color = tex2D (_MainTex, uv);
 				if (_AlphaSplitEnabled)
-					color.a = tex2D (_AlphaTex, uv);
+					color.a = tex2D (_AlphaTex, uv).r;
 
 				return color;
 			}

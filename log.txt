@@ -1,4 +1,15 @@
-﻿BBP v1.4.6.2
+﻿BBP v1.4.6.3
+----
+
+* !!!!! IMPORTANT !!!!!
+  엑스에 대해 PaletteUser 컴포넌트를 사용하도록 변경 거의 완료.
+> 차지 시 색깔 팔레트를 넣으면 끝난다. 제로는 나중으로...
+
+
+end.
+
+
+BBP v1.4.6.2
 ----
 
 - BossDeadEffectScript 개선해야 함.

@@ -37,6 +37,11 @@ public class PaletteUser : MonoBehaviour
     /// </summary>
     public Texture2D[] _paletteTextures;
 
+    /// <summary>
+    /// 공용 알파 값입니다.
+    /// </summary>
+    public float _commonAlpha = 1;
+
     #endregion
 
 
@@ -241,7 +246,7 @@ public class PaletteUser : MonoBehaviour
         {
             int index = _indexes[i];
             int colorValue = (int)(colors[i]);
-            _colorSwapTexture.SetPixel(index, 0, ColorFromInt(colorValue));
+            _colorSwapTexture.SetPixel(index, 0, ColorFromInt(colorValue, _commonAlpha));
         }
         _colorSwapTexture.Apply();
     }

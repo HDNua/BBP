@@ -20,11 +20,6 @@ public class BossDeadEffectScript : EffectScript
     /// </summary>
     BattleManager _battleManager;
 
-    /// <summary>
-    /// 팔레트 사용자입니다.
-    /// </summary>
-    PaletteUser _paletteUser;
-
     #endregion
 
 
@@ -102,7 +97,6 @@ public class BossDeadEffectScript : EffectScript
     {
         _battleManager = BattleManager.Instance;
         _stageManager = StageManager.Instance;
-        _paletteUser = GetComponent<PaletteUser>();
     }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다.
@@ -119,6 +113,7 @@ public class BossDeadEffectScript : EffectScript
         }
 
         /*
+         * 다음 커밋에서 이 부분을 발견하면 바로 삭제하십시오.
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         Sprite sprite = renderer.sprite;
         _originalTexture = sprite.texture;
@@ -129,6 +124,8 @@ public class BossDeadEffectScript : EffectScript
         */
 
         /*
+         * 다음 커밋에서 이 부분을 발견하면 바로 삭제하십시오.
+         * 
         _defaultBossPalette = _boss.DefaultPalette;
 
         // 
@@ -155,9 +152,13 @@ public class BossDeadEffectScript : EffectScript
     void LateUpdate()
     {
         _paletteUser.UpdateColor();
+
+        // * 다음 커밋에서 이 부분을 발견하면 바로 삭제하십시오.
         //_boss.UpdatePaletteIndex(_highlighted ? 0 : 1);
 
         /*
+         * 다음 커밋에서 이 부분을 발견하면 바로 삭제하십시오.
+         * 
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         Sprite sprite = renderer.sprite;
         Texture2D texture = _highlighted ? _originalTexture : _blinkingTexture;

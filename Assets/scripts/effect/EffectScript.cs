@@ -18,11 +18,11 @@ public class EffectScript : MonoBehaviour
     /// <summary>
     /// Animator 개체입니다.
     /// </summary>
-    Animator _animator;
+    protected Animator _animator;
     /// <summary>
     /// 팔레트 사용자입니다.
     /// </summary>
-    PaletteUser _paletteUser;
+    protected PaletteUser _paletteUser;
 
     #endregion
 
@@ -133,15 +133,20 @@ public class EffectScript : MonoBehaviour
     /// </summary>
     void LateUpdate()
     {
+        /*
         if (_paletteChangeRequested)
         {
             UpdateTextureColor();
         }
+        */
 
         // 
         if (_paletteUser)
         {
-            _paletteUser.UpdateColor();
+            if (GetComponent<SpriteRenderer>().color != Color.clear)
+            {
+                _paletteUser.UpdateColor();
+            }
         }
     }
 

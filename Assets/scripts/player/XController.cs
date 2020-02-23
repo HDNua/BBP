@@ -271,7 +271,7 @@ public class XController : PlayerController
                 DashAfterImageTime = 0;
 
                 // 
-                UpdateEffectColor(dashAfterImage, XColorPalette.DefaultPalette, XColorPalette.DashEffectColorPalette);
+                ///UpdateEffectColor(dashAfterImage, XColorPalette.DefaultPalette, XColorPalette.DashEffectColorPalette);
             }
         }
         
@@ -995,9 +995,13 @@ public class XController : PlayerController
             {
                 if (chargedColor)
                 {
+                    /*
                     Color[] palette = (_chargeTime < CHARGE_LEVEL[2]) ?
                         XColorPalette.XCharge1Palette : XColorPalette.XCharge2Palette;
                     _CurrentPalette = palette;
+                    */
+
+                    _PaletteUser.UpdatePaletteIndex(3);
                 }
                 else
                 {
@@ -1531,6 +1535,13 @@ public class XController : PlayerController
         _weaponState = weaponIndex;
         _CurrentPalette = targetPalette;
     }
+
+
+    /// <summary>
+    /// 차지 단계입니다.
+    /// </summary>
+    public int _chargeStep = 0;
+
     
     /// <summary>
     /// 엑스의 색상을 업데이트합니다.
@@ -1542,6 +1553,7 @@ public class XController : PlayerController
         // 플레이어가 차지 중이라면 색을 업데이트합니다.
         if (_chargeTime > CHARGE_LEVEL[0])
         {
+            /*
             // 차지 효과 색상을 업데이트 합니다.
             if (_chargeEffect2 != null)
             {
@@ -1552,6 +1564,7 @@ public class XController : PlayerController
             {
                 UpdateChargeEffectColor(_chargeEffect1, XColorPalette.XNormalChargeEffectColorPalette1);
             }
+            */
         }
         else
         {
@@ -1580,20 +1593,45 @@ public class XController : PlayerController
     /// </summary>
     void ResetBodyColor()
     {
-        _CurrentPalette = GetPalette(_weaponState);
+        ///_CurrentPalette = GetPalette(_weaponState);
+
+        //
+        _PaletteUser.UpdatePaletteIndex(_weaponState);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
+
+
+    #endregion
+
+
+
+
+
+    #region 정적 보조 메서드를 정의합니다.
+
+    #endregion
+
+
+
+
+
+    #region 구형 정의를 보관합니다.
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     Dictionary<int, Texture2D> _hit_textures = new Dictionary<int, Texture2D>();
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     Dictionary<int, Texture2D> _charge1_textures = new Dictionary<int, Texture2D>();
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     Dictionary<int, Texture2D> _charge2_textures = new Dictionary<int, Texture2D>();
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     Dictionary<int, Texture2D> _weapon1_textures = new Dictionary<int, Texture2D>();
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     Dictionary<int, Texture2D> _weapon2_textures = new Dictionary<int, Texture2D>();
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     Dictionary<int, Texture2D> _weapon3_textures = new Dictionary<int, Texture2D>();
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     Dictionary<int, Texture2D> _weapon4_textures = new Dictionary<int, Texture2D>();
 
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 텍스쳐가 준비되었는지 확인합니다.
     /// </summary>
@@ -1634,6 +1672,7 @@ public class XController : PlayerController
         // 
         return false;
     }
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 준비된 텍스쳐를 가져옵니다.
     /// </summary>
@@ -1678,6 +1717,7 @@ public class XController : PlayerController
 
         return cloneTexture;
     }
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 컬러 팔레트를 이용하여 생성된 새 텍스쳐를 집합에 넣습니다.
     /// </summary>
@@ -1719,7 +1759,8 @@ public class XController : PlayerController
             throw new Exception("예기치 못한 추가 오류");
         }
     }
-    
+
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 
     /// </summary>
@@ -1727,6 +1768,7 @@ public class XController : PlayerController
     {
         _CurrentPalette = XColorPalette.InvenciblePalette;
     }
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 
     /// </summary>
@@ -1734,6 +1776,7 @@ public class XController : PlayerController
     {
         ResetBodyColor();
     }
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 
     /// </summary>
@@ -1742,13 +1785,7 @@ public class XController : PlayerController
         ResetBodyColor();
     }
 
-    #endregion
-
-
-
-
-
-    #region 정적 보조 메서드를 정의합니다.
+    [Obsolete("PaletteUser로 대체되었습니다.")]
     /// <summary>
     /// 현재 웨폰 상태에 해당하는 팔레트를 가져옵니다.
     /// </summary>
@@ -1780,45 +1817,6 @@ public class XController : PlayerController
                 break;
         }
         return palette;
-    }
-    
-    #endregion
-
-
-    
-
-
-    #region 구형 정의를 보관합니다.
-    [Obsolete("후에 사용할지도 모르죠?")]
-    /// <summary>
-    /// 애니메이션 클립 정보를 담은 사전 객체입니다.
-    /// </summary>
-    Dictionary<string, AnimatorClipInfo> _clips;
-    [Obsolete("후에 사용할지도 모르죠?")]
-    /// <summary>
-    /// 애니메이션 클립 정보를 초기화합니다.
-    /// </summary>
-    void InitializeAnimatorClips()
-    {
-        Dictionary<string, AnimatorClipInfo> dict = new Dictionary<string, AnimatorClipInfo>();
-        AnimatorClipInfo[] clipInfos = _Animator.GetCurrentAnimatorClipInfo(0);
-        foreach (AnimatorClipInfo clipInfo in clipInfos)
-        {
-            dict[clipInfo.clip.name] = clipInfo;
-        }
-        _clips = dict;
-    }
-    [Obsolete("_clips 미사용 경고를 없애기 위해 정의했습니다.")]
-    /// <summary>
-    /// _clips 변수를 사용하는 척합니다.
-    /// </summary>
-    void TestAnimatorClips()
-    {
-        foreach (string clipKey in _clips.Keys)
-        {
-            AnimatorClipInfo clipInfo = _clips[clipKey];
-            Console.WriteLine(clipInfo.clip.length);
-        }
     }
 
     #endregion

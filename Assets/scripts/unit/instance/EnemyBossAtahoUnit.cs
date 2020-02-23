@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Groundable))]
 /// <summary>
@@ -12,7 +12,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 {
     #region 컨트롤러가 사용할 Unity 객체를 정의합니다.
     /// <summary>
-    /// 
+    /// 착지할 수 있는 유닛입니다.
     /// </summary>
     Groundable _groundable;
 
@@ -201,10 +201,10 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 위치를 전환하는 중이라면 참입니다.
     /// </summary>
-    bool Hopping
+    public bool Hopping
     {
         get { return _hopping; }
-        set { _Animator.SetBool("Hopping", _hopping = value); }
+        private set { _Animator.SetBool("Hopping", _hopping = value); }
     }
     /// <summary>
     /// 팀원을 호출하는 중이라면 참입니다.
@@ -459,8 +459,8 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// </summary>
     void Jump()
     {
-        _groundable.Jump();
-        SoundEffects[2].Play();
+        /// _groundable.Jump();
+        _groundable.Jumping = true;
     }
     /// <summary>
     /// 낙하합니다.
@@ -875,66 +875,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     public int _previousPositionIndex = 0;
     public int _currentPositionIndex = 0;
 
-    /// <summary>
-    /// 막기1 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterGuard1()
-    {
-        // 
-        int[] nextHopPositionArray = GetNextHopPositionArray();
-        int newPositionIndex = nextHopPositionArray
-            [Random.Range(0, nextHopPositionArray.Length)];
 
-        // 
-        _previousPositionIndex = _currentPositionIndex;
-        _currentPositionIndex = newPositionIndex;
-
-        // 
-        Transform newPosition = _positions[newPositionIndex];
-        HopTo(newPosition);
-    }
-    /// <summary>
-    /// 공격 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterAttack()
-    {
-        Guard1();
-    }
-    /// <summary>
-    /// 위치 전환 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterHop()
-    {
-        if (_phase == 0)
-        {
-            EnemyUnit enemy = _team[Random.Range(0, 2)];
-            CallTeamUnit(enemy);
-        }
-        else if (_phase == 1)
-        {
-            EnemyUnit enemy = _team[Random.Range(2, 4)];
-            CallTeamUnit(enemy);
-        }
-        else
-        {
-            EnemyUnit enemy = _team[Random.Range(4, 6)];
-            CallTeamUnit(enemy);
-        }
-    }
-    /// <summary>
-    /// 팀 호출 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterCall()
-    {
-        Guard2();
-    }
-    /// <summary>
-    /// 막기2 행동 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterGuard2()
-    {
-        Attack();
-    }
 
     #endregion
 
@@ -1012,7 +953,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
         // 공격을 끝냅니다.
         Attacking = false;
-        PerformActionAfterAttack();
+        ///PerformActionAfterAttack();
         _coroutineAttack = null;
         yield break;
     }
@@ -1030,7 +971,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
         // 막기 상태를 끝냅니다.
         StopGuarding();
-        PerformActionAfterGuard1();
+        ///PerformActionAfterGuard1();
         _coroutineGuard = null;
         yield break;
     }
@@ -1048,7 +989,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
         // 막기 상태를 끝냅니다.
         StopGuarding();
-        PerformActionAfterGuard2();
+        ///PerformActionAfterGuard2();
         _coroutineGuard = null;
         yield break;
     }
@@ -1066,6 +1007,13 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
         // 
         ///float posY = transform.position.y;
+
+        // 
+        while (IsAnimatorInState("JumpBeg1"))
+        {
+            yield return false;
+        }
+        SoundEffects[2].Play();
 
         // 점프 하고 있는 중에는 코루틴을 그냥 진행합니다.
         while (Hopping)
@@ -1113,7 +1061,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         // 
         ///StopFalling();
         StopHopping();
-        PerformActionAfterHop();
+        ///PerformActionAfterHop();
         _coroutineHop = null;
         yield break;
     }
@@ -1157,7 +1105,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
         // 팀원 호출 상태를 끝냅니다.
         StopCallingTeamUnit();
-        PerformActionAfterCall();
+        ///PerformActionAfterCall();
         _coroutineCallTeamUnit = null;
         yield break;
     }
@@ -1283,6 +1231,71 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+    /// <summary>
+    /// 막기1 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterGuard1()
+    {
+        // 
+        int[] nextHopPositionArray = GetNextHopPositionArray();
+        int newPositionIndex = nextHopPositionArray
+            [Random.Range(0, nextHopPositionArray.Length)];
+
+        // 
+        _previousPositionIndex = _currentPositionIndex;
+        _currentPositionIndex = newPositionIndex;
+
+        // 
+        Transform newPosition = _positions[newPositionIndex];
+        HopTo(newPosition);
+    }
+    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+    /// <summary>
+    /// 공격 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterAttack()
+    {
+        Guard1();
+    }
+    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+    /// <summary>
+    /// 위치 전환 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterHop()
+    {
+        if (_phase == 0)
+        {
+            EnemyUnit enemy = _team[Random.Range(0, 2)];
+            CallTeamUnit(enemy);
+        }
+        else if (_phase == 1)
+        {
+            EnemyUnit enemy = _team[Random.Range(2, 4)];
+            CallTeamUnit(enemy);
+        }
+        else
+        {
+            EnemyUnit enemy = _team[Random.Range(4, 6)];
+            CallTeamUnit(enemy);
+        }
+    }
+    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+    /// <summary>
+    /// 팀 호출 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterCall()
+    {
+        Guard2();
+    }
+    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+    /// <summary>
+    /// 막기2 행동 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterGuard2()
+    {
+        Attack();
+    }
 
     #endregion
 }

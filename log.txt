@@ -1,4 +1,24 @@
-﻿BBP v1.4.6.0
+﻿BBP v1.4.6.1
+----
+
+- 아타호 동작 개선.
+
+- BattleManager에 패턴을 넣고 Unit에 행동을 넣는 중.
+  아직까지는 괜찮은 거 같다.
+
+- 아타호 점프 동작이 수구리기(JumpBeg1)->점프시작(JumpBeg2)인데,
+  점프 소리가 JumpBeg1과 JumpBeg2 사이에 들어가야 하니까
+  _groundable.Jump()를 안 쓰고 _groundable.Jumping = true;를 바로 썼음.
+  소리 재생은 코루틴으로 옮김.
+
+! BossDeadEffectScript 개선해야 함.
+> 옛날엔 BossBattleManager를 썼는데 이젠 BattleManager를 쓰니까.
+
+
+end.
+
+
+BBP v1.4.6.0
 ----
 
 - BossBattleManager 삭제.

@@ -182,9 +182,9 @@ public class XController : PlayerController
     }
     
     /// <summary>
-    /// 현재 무기 상태입니다. 0은 기본입니다.
+    /// 현재 무기 상태입니다. 기본은 4입니다.
     /// </summary>
-    public int _weaponState = 0;
+    public int _weaponState = 4;
 
     #endregion
 
@@ -1001,7 +1001,8 @@ public class XController : PlayerController
                     _CurrentPalette = palette;
                     */
 
-                    _PaletteUser.UpdatePaletteIndex(3);
+                    int chargeColorIndex = (_chargeTime < CHARGE_LEVEL[2]) ? 2 : 3;
+                    _PaletteUser.UpdatePaletteIndex(chargeColorIndex);
                 }
                 else
                 {
@@ -1508,6 +1509,7 @@ public class XController : PlayerController
     /// <param name="weaponIndex"></param>
     void ChangeWeapon(int weaponIndex)
     {
+        /*
         Color[] targetPalette;
         switch (weaponIndex)
         {
@@ -1531,9 +1533,11 @@ public class XController : PlayerController
                 targetPalette = null; // XColorPalette.XDefaultPalette;
                 break;
         }
-
-        _weaponState = weaponIndex;
         _CurrentPalette = targetPalette;
+        */
+
+        _weaponState = 4 + weaponIndex;
+        _PaletteUser.UpdatePaletteIndex(_weaponState);
     }
 
 
@@ -1553,18 +1557,21 @@ public class XController : PlayerController
         // 플레이어가 차지 중이라면 색을 업데이트합니다.
         if (_chargeTime > CHARGE_LEVEL[0])
         {
-            /*
             // 차지 효과 색상을 업데이트 합니다.
             if (_chargeEffect2 != null)
             {
-                UpdateChargeEffectColor(_chargeEffect2, XColorPalette.XNormalChargeEffectColorPalette2);
-                UpdateChargeEffectColor(_chargeEffect1, XColorPalette.XNormalChargeEffectColorPalette2);
+                ///UpdateChargeEffectColor(_chargeEffect2, XColorPalette.XNormalChargeEffectColorPalette2);
+                ///UpdateChargeEffectColor(_chargeEffect1, XColorPalette.XNormalChargeEffectColorPalette2);
+                
+                _chargeEffect2.GetComponent<PaletteUser>().UpdatePaletteIndex(2);
+                _chargeEffect1.GetComponent<PaletteUser>().UpdatePaletteIndex(2);
             }
             else if (_chargeEffect1 != null)
             {
-                UpdateChargeEffectColor(_chargeEffect1, XColorPalette.XNormalChargeEffectColorPalette1);
+                ///UpdateChargeEffectColor(_chargeEffect1, XColorPalette.XNormalChargeEffectColorPalette1);
+
+                _chargeEffect1.GetComponent<PaletteUser>().UpdatePaletteIndex(1);
             }
-            */
         }
         else
         {

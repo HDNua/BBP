@@ -41,18 +41,21 @@ public class EffectMultipleExplosionScript : EffectScript
 
 
 
+
+
     #region MonoBehaviour 기본 메서드를 재정의합니다.
     /// <summary>
     /// MonoBehaviour 객체를 초기화합니다.
     /// </summary>
-    void Start()
+    protected override void Start()
     {
+        //
         StartCoroutine(CoroutineExplosion());
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트합니다.
     /// </summary>
-    void Update()
+    protected override void Update()
     {
         if (DestroyRequested)
         {
@@ -61,6 +64,8 @@ public class EffectMultipleExplosionScript : EffectScript
     }
 
     #endregion
+
+
 
 
 

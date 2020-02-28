@@ -2088,17 +2088,17 @@ public abstract class PlayerController : MonoBehaviour
 
             if (invencibleColorState)
             {
-                TESTEST1();
+                _PaletteUser.UpdatePaletteIndex(4);
             }
             else
             {
-                TESTEST2();
+                _PaletteUser.UpdatePaletteIndex(1);
             }
             invencibleColorState = !invencibleColorState;
             yield return new WaitForSeconds(TIME_30FPS);
         }
         Invencible = false;
-        TESTEST3();
+        _PaletteUser.UpdatePaletteIndex(4);
         yield break;
     }
     
@@ -2205,9 +2205,6 @@ public abstract class PlayerController : MonoBehaviour
     protected virtual void UpdateColor()
     {
         _PaletteUser.UpdateColor();
-
-
-
 
         /*
         // 웨폰을 장착한 상태라면
@@ -2407,19 +2404,6 @@ public abstract class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 테스트 메서드입니다. 주의: 지우지 마십시오! 하위 형식에서 오버라이딩합니다.
-    /// </summary>
-    protected abstract void TESTEST1();
-    /// <summary>
-    /// 테스트 메서드입니다. 주의: 지우지 마십시오! 하위 형식에서 오버라이딩합니다.
-    /// </summary>
-    protected abstract void TESTEST2();
-    /// <summary>
-    /// 테스트 메서드입니다. 주의: 지우지 마십시오! 하위 형식에서 오버라이딩합니다.
-    /// </summary>
-    protected abstract void TESTEST3();
-
     #endregion
 
 
@@ -2427,180 +2411,21 @@ public abstract class PlayerController : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-
-    /*
-     * 다음 커밋에서 발견하는 즉시 삭제하십시오.
-     * 
-    public string _spriteSheetName;
-    public string _loadedSpriteSheetName;
-
-    public int _state = 0;
-    public Sprite _sprite0;
-    public Sprite _sprite1;
-    private Dictionary<string, Sprite> _spriteSheet;
-    Dictionary<string, Sprite[]> _spriteDict;
-
+    [Obsolete("이젠 안 씁니다.")]
     /// <summary>
-    /// 
+    /// 테스트 메서드입니다. 주의: 지우지 마십시오! 하위 형식에서 오버라이딩합니다.
     /// </summary>
-    void InitSpriteSheet()
-    {
-        Sprite[] sprites0 = Resources.LoadAll<Sprite>("img\\sprite\\X\\Sprites\\PlayerX.png");
-        Sprite[] sprites1 = Resources.LoadAll<Sprite>("img\\sprite\\X\\Sprites\\PlayerX_Tmp.png");
-
-        //
-        _spriteDict = new Dictionary<string, Sprite[]>
-        {
-            { "PlayerX", sprites0 },
-            { "PlayerX_Tmp", sprites1 }
-        };
-
-        //
-        var sprites = _spriteDict[_spriteSheetName];
-        _spriteSheet = sprites.ToDictionary(x => x.name, x => x);
-    }
-
+    protected virtual void TESTEST1() { }
+    [Obsolete("이젠 안 씁니다.")]
     /// <summary>
-    /// 
+    /// 테스트 메서드입니다. 주의: 지우지 마십시오! 하위 형식에서 오버라이딩합니다.
     /// </summary>
-    void LoadSpriteSheet()
-    {
-        // Load the sprites from a sprite sheet file(png).
-        // Note: The file specified must exist in a folder named Resources
-        var sprites = _spriteDict[_spriteSheetName];
-        _spriteSheet = sprites.ToDictionary(x => x.name, x => x);
-
-        // Remember the name of the sprite sheet in case it is changed later
-        _loadedSpriteSheetName = _spriteSheetName;
-    }
-    */
-
-    [Obsolete("PaletteUser로 대체되었습니다.")]
+    protected virtual void TESTEST2() { }
+    [Obsolete("이젠 안 씁니다.")]
     /// <summary>
-    /// 현재 색상 팔레트입니다.
+    /// 테스트 메서드입니다. 주의: 지우지 마십시오! 하위 형식에서 오버라이딩합니다.
     /// </summary>
-    Color[] _currentPalette;
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    protected Color[] _CurrentPalette { set { _currentPalette = value; } }
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    Color[] _defaultPalette = XColorPalette.DefaultPalette;
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    protected Color[] _DefaultPalette { set { _defaultPalette = value; } }
-
-
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 색상을 주어진 팔레트로 업데이트합니다.
-    /// </summary>
-    /// <param name="_currentPalette">현재 팔레트입니다.</param>
-    protected void UpdateBodyColor(Color[] currentPalette)
-    {
-        Sprite sprite = _Renderer.sprite;
-        Texture2D texture = sprite.texture;
-        Texture2D cloneTexture = null;
-        int textureID = sprite.GetInstanceID();
-
-        // 
-        if (currentPalette == null)
-        {
-            cloneTexture = texture;
-        }
-        // 현재 팔레트에 대한 텍스쳐 ID가 준비되어있다면
-        else if (IsTexturePrepared(textureID, currentPalette))
-        {
-            cloneTexture = GetPreparedTexture(textureID, currentPalette);
-        }
-        else
-        {
-            Color[] colors = texture.GetPixels();
-            Color[] pixels = new Color[colors.Length];
-
-            // 모든 픽셀을 돌면서 색상을 업데이트합니다.
-            for (int pixelIndex = 0, pixelCount = colors.Length; pixelIndex < pixelCount; ++pixelIndex)
-            {
-                Color color = colors[pixelIndex];
-                if (color.a == 1)
-                {
-                    for (int targetIndex = 0, targetPixelCount = _defaultPalette.Length; targetIndex < targetPixelCount; ++targetIndex)
-                    {
-                        Color colorDst = _defaultPalette[targetIndex];
-                        if (Mathf.Approximately(color.r, colorDst.r) &&
-                            Mathf.Approximately(color.g, colorDst.g) &&
-                            Mathf.Approximately(color.b, colorDst.b) &&
-                            Mathf.Approximately(color.a, colorDst.a))
-                        {
-                            pixels[pixelIndex] = currentPalette[targetIndex];
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    pixels[pixelIndex] = color;
-                }
-            }
-
-            // 텍스쳐를 복제하고 새 픽셀 팔레트로 덮어씌웁니다.
-            cloneTexture = new Texture2D(texture.width, texture.height);
-            cloneTexture.filterMode = FilterMode.Point;
-            cloneTexture.SetPixels(pixels);
-            cloneTexture.Apply();
-
-            // 
-            AddTextureToSet(textureID, cloneTexture, currentPalette);
-        }
-
-        // 새 텍스쳐를 렌더러에 반영합니다.
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        block.SetTexture("_MainTex", cloneTexture);
-        _Renderer.SetPropertyBlock(block);
-    }
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 텍스쳐가 준비되었는지 확인합니다.
-    /// </summary>
-    /// <param name="textureID">확인할 텍스쳐의 식별자입니다.</param>
-    /// <param name="colorPalette">확인할 팔레트입니다.</param>
-    /// <returns>텍스쳐가 준비되었다면 참입니다.</returns>
-    protected abstract bool IsTexturePrepared(int textureID, Color[] currentPalette);
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 준비된 텍스쳐를 가져옵니다.
-    /// </summary>
-    /// <param name="textureID">가져올 텍스쳐의 식별자입니다.</param>
-    /// <param name="currentPalette">가져올 팔레트입니다.</param>
-    /// <returns>준비된 텍스쳐를 반환합니다.</returns>
-    protected abstract Texture2D GetPreparedTexture(int textureID, Color[] currentPalette);
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 컬러 팔레트를 이용하여 생성된 새 텍스쳐를 집합에 넣습니다.
-    /// </summary>
-    /// <param name="textureID">텍스쳐 식별자입니다.</param>
-    /// <param name="cloneTexture">생성한 텍스쳐입니다.</param>
-    /// <param name="colorPalette">텍스쳐를 생성하기 위해 사용한 팔레트입니다.</param>
-    protected abstract void AddTextureToSet(int textureID, Texture2D cloneTexture, Color[] colorPalette);
-
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 효과 개체의 색을 색상표를 바탕으로 업데이트합니다.
-    /// </summary>
-    /// <param name="effectObject">대상 효과 개체입니다.</param>
-    /// <param name="defaultPalette">기본 효과 색상표입니다.</param>
-    /// <param name="targetPalette">대상 효과 색상표입니다.</param>
-    public static void UpdateEffectColor(GameObject effectObject, Color[] defaultPalette, Color[] targetPalette)
-    {
-        EffectScript effectScript = effectObject.GetComponent<EffectScript>();
-        effectScript.RequestUpdateTexture(defaultPalette, targetPalette);
-    }
+    protected virtual void TESTEST3() { }
 
     #endregion
 }

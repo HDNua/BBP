@@ -103,34 +103,25 @@ public class Debugger : MonoBehaviour
 
         Color[][] playerXPalettes =
         {
-            XColorPalette.DefaultPalette,
-            XColorPalette.InvenciblePalette,
-            XColorPalette.DashEffectColorPalette,
-            XColorPalette.XCharge1Palette,
-            XColorPalette.XCharge2Palette,
-            XColorPalette.XDefaultChargeEffectColorPalette,
-            XColorPalette.XNormalChargeEffectColorPalette1,
-            XColorPalette.XNormalChargeEffectColorPalette2,
-            XColorPalette.XWeapon1Palette,
-            XColorPalette.XWeapon2Palette,
-            XColorPalette.XWeapon3Palette,
-            XColorPalette.XWeapon4Palette
+            ZColorPalette.DefaultPalette,
+            ZColorPalette.InvenciblePalette,
+            ZColorPalette.DashEffectColorPalette,
         };
         Color[][] enemyPalettes =
         {
-            EnemyColorPalette.EnemyRinshanPalette,
+            //EnemyColorPalette.EnemyRinshanPalette,
         };
 
         // 
         for (int i = 0; i < playerXPalettes.Length; ++i)
         {
-            string filename = string.Format("playerXPalettes{0:D2}.png", i);
+            string filename = string.Format("PlayerZPalettes{0:D2}.png", i);
             SavePalette(playerXPalettes[i], filename);
         }
         // 
         for (int i = 0; i < enemyPalettes.Length; ++i)
         {
-            string filename = string.Format("enemyPalettes{0:D2}.png", i);
+            string filename = string.Format("EnemyPalettes{0:D2}.png", i);
             SavePalette(enemyPalettes[i], filename);
         }
     }

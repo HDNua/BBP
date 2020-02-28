@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+
+
 
 [RequireComponent(typeof(Groundable))]
 /// <summary>
@@ -100,7 +101,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 캐릭터가 공격 중이라면 참입니다.
     /// </summary>
-    bool _attacking = false;
+    bool _doingHokyokkwon = false;
     /// <summary>
     /// 방패를 들어 막는 중이라면 참입니다.
     /// </summary>
@@ -145,20 +146,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
     #region 캐릭터의 상태 필드 및 프로퍼티를 정의합니다.
     /// <summary>
-    /// 등장이 끝났다면 참입니다.
-    /// </summary>
-    bool _appearEnded = false;
-    /// <summary>
-    /// 등장이 끝났다면 참입니다.
-    /// </summary>
-    public bool AppearEnded
-    {
-        get { return _appearEnded; }
-        protected set { _appearEnded = value; }
-    }
-
-    /// <summary>
-    /// 
+    /// 지상에 있다면 참입니다.
     /// </summary>
     bool Landed
     {
@@ -166,7 +154,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         set { _groundable.Landed = value; }
     }
     /// <summary>
-    /// 
+    /// 점프하고 있다면 참입니다.
     /// </summary>
     bool Jumping
     {
@@ -174,7 +162,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         set { _groundable.Jumping = value; }
     }
     /// <summary>
-    /// 
+    /// 떨어지고 있다면 참입니다.
     /// </summary>
     bool Falling
     {
@@ -185,10 +173,10 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 캐릭터가 공격 중이라면 참입니다.
     /// </summary>
-    bool Attacking
+    bool DoingHokyokkwon
     {
-        get { return _attacking; }
-        set { _Animator.SetBool("Attacking", _attacking = value); }
+        get { return _doingHokyokkwon; }
+        set { _Animator.SetBool("DoingHokyokkwon", _doingHokyokkwon = value); }
     }
     /// <summary>
     /// 방패를 들어 막는 중이라면 참입니다.
@@ -336,41 +324,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
 
-    #region Collider2D의 기본 메서드를 재정의합니다.
-    /// <summary>
-    /// 충돌체가 여전히 트리거 내부에 있습니다.
-    /// </summary>
-    /// <param name="other">자신이 아닌 충돌체 개체입니다.</param>
-    protected override void OnTriggerStay2D(Collider2D other)
-    {
-        // 트리거가 발동한 상대 충돌체가 플레이어라면 대미지를 입힙니다.
-        if (other.CompareTag("Player"))
-        {
-            GameObject pObject = other.gameObject;
-            PlayerController player = pObject.GetComponent<PlayerController>();
-
-
-            // 플레이어가 무적 상태이거나 죽었다면
-            if (player.Invencible || player.IsDead)
-            {
-                // 아무 것도 하지 않습니다.
-
-            }
-            // 그 외의 경우
-            else
-            {
-                // 플레이어에게 대미지를 입힙니다.
-                player.Hurt(Damage);
-            }
-        }
-    }
-
-    #endregion
-
-
-
-
-
     #region EnemyScript의 메서드를 오버라이드합니다.
     /// <summary>
     /// 캐릭터가 사망합니다.
@@ -434,17 +387,15 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
 
-    #region EnemyBossScript의 메서드를 오버라이드합니다.
-    /// <summary>
-    /// 등장 액션입니다.
-    /// </summary>
-    public override void Appear()
-    {
-        Fall();
+    #region 공용 메서드를 정의합니다.
 
-        // 
-        StartCoroutine(CoroutineAppear());
-    }
+    #endregion
+
+
+
+
+
+    #region Groundable을 재정의합니다.
     /// <summary>
     /// 지상에 착륙합니다.
     /// </summary>
@@ -468,61 +419,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     {
         _groundable.Fall();
     }
-
-    #endregion
-
-
-
-
-
-    #region 행동 메서드를 정의합니다.
-    /// <summary>
-    /// 왼쪽으로 이동합니다.
-    /// </summary>
-    void MoveLeft()
-    {
-        if (FacingRight)
-            Flip();
-
-        _groundable.Moving = true;
-        _Rigidbody.velocity = new Vector2(-_movingSpeedX, _Rigidbody.velocity.y);
-    }
-    /// <summary>
-    /// 오른쪽으로 이동합니다.
-    /// </summary>
-    void MoveRight()
-    {
-        if (FacingRight == false)
-            Flip();
-
-        // 상태를 정의합니다.
-        _groundable.Moving = true;
-
-        // 내용을 정의합니다.
-        _Rigidbody.velocity = new Vector2(_movingSpeedX, _Rigidbody.velocity.y);
-    }
-    /// <summary>
-    /// 위쪽으로 이동합니다.
-    /// </summary>
-    void MoveUp()
-    {
-        // 상태를 정의합니다.
-        _groundable.Moving = true;
-
-        // 내용을 정의합니다.
-        _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, _movingSpeedY);
-    }
-    /// <summary>
-    /// 아래쪽으로 이동합니다.
-    /// </summary>
-    void MoveDown()
-    {
-        // 상태를 정의합니다.
-        _groundable.Moving = true;
-
-        // 내용을 정의합니다.
-        _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, -_movingSpeedY);
-    }
     /// <summary>
     /// 이동을 중지합니다.
     /// </summary>
@@ -534,53 +430,50 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         _groundable.Moving = false;
     }
 
-    /// <summary>
-    /// 공격합니다.
-    /// </summary>
-    void Attack()
-    {
-        Attacking = true;
+    #endregion
 
-        // 공격 코루틴을 시작합니다.
-        _coroutineAttack = StartCoroutine(CoroutineAttack());
+
+
+
+
+    #region "등장" 행동을 정의합니다.
+    /// <summary>
+    /// 등장 액션입니다.
+    /// </summary>
+    public override void Appear()
+    {
+        Fall();
+
+        // 
+        StartAction();
+        StartCoroutine(CoroutineAppear());
     }
     /// <summary>
-    /// 공격을 중지합니다.
+    /// 등장 코루틴입니다.
     /// </summary>
-    void StopAttack()
+    IEnumerator CoroutineAppear()
     {
-        Attacking = false;
+        // 지상에 떨어질 때까지 대기합니다.
+        while (Landed == false)
+        {
+            yield return false;
+            IsActionStarted = false;
+            IsActionRunning = true;
+        }
+        StopMoving();
+
+        // 등장을 마칩니다.
+        EndAction();
+        yield break;
     }
 
-    /// <summary>
-    /// 막기 1 행동입니다.
-    /// </summary>
-    void Guard1()
-    {
-        Guarding = true;
-
-        // 막기 코루틴을 시작합니다.
-        _coroutineGuard = StartCoroutine(CoroutineGuard1());
-    }
-    /// <summary>
-    /// 막기 2 행동입니다.
-    /// </summary>
-    void Guard2()
-    {
-        Guarding = true;
-
-        // 막기 코루틴을 시작합니다.
-        _coroutineGuard = StartCoroutine(CoroutineGuard2());
-    }
-    /// <summary>
-    /// 막기를 중지합니다.
-    /// </summary>
-    void StopGuarding()
-    {
-        Guarding = false;
-    }
+    #endregion
 
 
+
+
+
+    #region "Hop" 행동을 정의합니다.
     /// <summary>
     /// 현재 위치 좌표입니다.
     /// </summary>
@@ -590,6 +483,11 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// </summary>
     Vector3 _absHopEndPoint;
     /// <summary>
+    /// 위치 전환 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineHop;
+
+    /// <summary>
     /// 위치를 바꿉니다.
     /// </summary>
     /// <param name="newPosition">새 위치입니다.</param>
@@ -597,7 +495,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     {
         Hopping = true;
 
-        // 
+        // 포물선 형태로 이동하기 위해 점프의 시작과 끝 지점을 구합니다.
         _absHopStartPoint = transform.position + transform.parent.transform.position;
         _absHopEndPoint = newPosition.position + newPosition.parent.transform.position;
 
@@ -611,8 +509,184 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     {
         // 상태를 정의합니다.
         Hopping = false;
+
+        // 코루틴 참조를 갱신합니다.
+        if (_coroutineHop != null)
+        {
+            StopCoroutine(_coroutineHop);
+            _coroutineHop = null;
+        }
     }
 
+    /// <summary>
+    /// 위치 전환 코루틴입니다.
+    /// http://luminaryapps.com/blog/arcing-projectiles-in-unity/
+    /// </summary>
+    IEnumerator CoroutineHop()
+    {
+        Jump();
+        LandBlocked = true;
+        float x0 = _absHopStartPoint.x;
+        float x1 = _absHopEndPoint.x;
+        yield return false;
+
+        // 
+        while (IsAnimatorInState("JumpBeg1"))
+        {
+            yield return false;
+        }
+        SoundEffects[2].Play();
+
+        // 점프 하고 있는 중에는 코루틴을 그냥 진행합니다.
+        while (Hopping)
+        {
+            float deltaTime = Time.deltaTime;
+
+            // Compute the next position, with arc added in
+            float dist = x1 - x0;
+            float vx = Mathf.Abs(dist / _hopTime);
+
+            float nextX = Mathf.MoveTowards(transform.position.x, x1, vx * deltaTime);
+            float baseY = Mathf.Lerp(_absHopStartPoint.y, _absHopEndPoint.y, (nextX - x0) / dist);
+            float arc = _arcHeight * (nextX - x0) * (nextX - x1) / (-0.25f * dist * dist);
+            Vector3 nextPos = new Vector3(nextX, baseY + arc, transform.position.z);
+
+            // Rotate to face the next position, and then move there
+            if (transform.position.y > nextPos.y)
+            {
+                Fall();
+            }
+            transform.position = nextPos;
+
+            // Do something when we reach the target
+            if (nextPos == _absHopEndPoint)
+            {
+                LandBlocked = false;
+                Land();
+                break;
+            }
+            else if (nextPos.x == _absHopEndPoint.x)
+            {
+                LandBlocked = false;
+                break;
+            }
+
+            //
+            yield return false;
+        }
+
+        // 
+        StopHopping();
+        _coroutineHop = null;
+        yield break;
+    }
+
+    #endregion
+
+
+
+
+
+    #region "호격권" 행동을 정의합니다.
+    /// <summary>
+    /// 호격권을 사용합니다.
+    /// </summary>
+    public void DoHokyokkwon()
+    {
+        DoingHokyokkwon = true;
+
+        // 공격 코루틴을 시작합니다.
+        _coroutineHokyokkwon = StartCoroutine(CoroutineHokyokkwon());
+    }
+    /// <summary>
+    /// 호격권을 중지합니다.
+    /// </summary>
+    public void StopDoingHokyokkwon()
+    {
+        DoingHokyokkwon = false;
+    }
+
+    /// <summary>
+    /// 호격권 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineHokyokkwon;
+    /// <summary>
+    /// 호격권 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineHokyokkwon()
+    {
+        // 움직임을 멈춥니다.
+        StopMoving();
+
+        // 탄환을 발사합니다.
+        while (IsAnimatorInState("HokyokkwonBeg") == false)
+        {
+            yield return false;
+        }
+        ShotToPlayer();
+
+        // 공격을 끝냅니다.
+        DoingHokyokkwon = false;
+        _coroutineHokyokkwon = null;
+        yield break;
+    }
+
+    #endregion
+
+
+
+
+
+    #region "방어" 행동을 정의합니다.
+    /// <summary>
+    /// 방어 행동입니다.
+    /// </summary>
+    public void Guard()
+    {
+        Guarding = true;
+
+        // 막기 코루틴을 시작합니다.
+        StartAction();
+        _coroutineGuard = StartCoroutine(CoroutineGuard());
+    }
+    /// <summary>
+    /// 방어를 중지합니다.
+    /// </summary>
+    public void StopGuarding()
+    {
+        Guarding = false;
+        EndAction();
+    }
+
+    /// <summary>
+    /// 방어 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineGuard;
+    /// <summary>
+    /// 방어 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineGuard()
+    {
+        float time = 0;
+        while (time < _guardTime)
+        {
+            time += Time.deltaTime;
+            yield return false;
+        }
+
+        // 막기 상태를 끝냅니다.
+        StopGuarding();
+        _coroutineGuard = null;
+        yield break;
+    }
+
+    #endregion
+
+
+
+
+
+    #region "팀원 호출" 행동을 정의합니다.
     /// <summary>
     /// 팀원을 호출합니다.
     /// </summary>
@@ -634,40 +708,40 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     }
 
     /// <summary>
-    /// 궁극기를 준비합니다.
+    /// 호출 코루틴입니다.
     /// </summary>
-    void ReadyUltimate()
-    {
-        StartCoroutine(CoroutineReadyUltimate());
-    }
+    Coroutine _coroutineCallTeamUnit;
     /// <summary>
-    /// 궁극기 1을 시전합니다.
+    /// 팀원 호출 코루틴입니다.
     /// </summary>
-    void Ultimate1()
+    IEnumerator CoroutineCallTeamUnit()
     {
-        Guarding = false;
+        // 팀원 호출 AnimatorState로 진입할 수 있게 해주는 강제 대기 시간입니다.
+        // (이 시간이 없으면 상태 천이 이전에 새 유닛이 생성될 수 있습니다.)
+        float time = 0;
+        while (time < _callReadyTime)
+        {
+            time += Time.deltaTime;
+            yield return false;
+        }
 
-        // 내용을 정의합니다.
-        StartCoroutine(CoroutineUltimate1());
-    }
-    /// <summary>
-    /// 궁극기 2를 시전합니다.
-    /// </summary>
-    void Ultimate2()
-    {
-        // 내용을 정의합니다.
-        StartCoroutine(CoroutineUltimate2());
-    }
+        // 아타호가 팀원을 호출하는 준비 동작입니다.
+        while (IsAnimatorInState("CallBeg"))
+        {
+            yield return false;
+        }
 
-    /// <summary>
-    /// 전투 시작 액션입니다.
-    /// </summary>
-    void Fight()
-    {
-        // base.Fight();
+        // 아타호가 팀원을 호출하는 동작입니다.
+        while (time < _callTime)
+        {
+            time += Time.deltaTime;
+            yield return false;
+        }
 
-        // 
-        Attack();
+        // 팀원 호출 상태를 끝냅니다.
+        StopCallingTeamUnit();
+        _coroutineCallTeamUnit = null;
+        yield break;
     }
 
     #endregion
@@ -677,62 +751,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
     #region 보조 메서드를 정의합니다.
-    /// <summary>
-    /// 특정 지점으로 이동합니다.
-    /// </summary>
-    /// <param name="t">이동할 지점입니다.</param>
-    void MoveTo(Transform t)
-    {
-        // 사용할 변수를 선언합니다.
-        Vector2 relativePos = t.position - transform.position;
-
-        // 플레이어를 향해 수평 방향 전환합니다.
-        if (relativePos.x < 0)
-        {
-            MoveLeft();
-        }
-        else if (relativePos.x > 0)
-        {
-            MoveRight();
-        }
-        // 플레이어를 향해 수직 방향 전환합니다.
-        if (relativePos.y > 0)
-        {
-            MoveUp();
-        }
-        else if (relativePos.y < 0)
-        {
-            MoveDown();
-        }
-    }
-    /// <summary>
-    /// 플레이어를 향해 이동합니다.
-    /// </summary>
-    private void MoveToPlayer()
-    {
-        // 사용할 변수를 선언합니다.
-        Vector3 playerPos = _StageManager.GetCurrentPlayerPosition();
-        Vector2 relativePos = playerPos - transform.position;
-
-        // 플레이어를 향해 수평 방향 전환합니다.
-        if (relativePos.x < 0)
-        {
-            MoveLeft();
-        }
-        else if (relativePos.x > 0)
-        {
-            MoveRight();
-        }
-        // 플레이어를 향해 수직 방향 전환합니다.
-        if (relativePos.y > 0)
-        {
-            MoveUp();
-        }
-        else if (relativePos.y < 0)
-        {
-            MoveDown();
-        }
-    }
     /// <summary>
     /// 탄환을 발사합니다.
     /// </summary>
@@ -810,8 +828,82 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         Shot(_shotPosition[1]);
     }
 
+    #endregion
 
 
+
+
+
+    #region 구형 정의를 보관합니다.
+    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+    /// <summary>
+    /// 막기1 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterGuard1()
+    {
+        // 
+        int[] nextHopPositionArray = GetNextHopPositionArray();
+        int newPositionIndex = nextHopPositionArray
+            [Random.Range(0, nextHopPositionArray.Length)];
+
+        // 
+        _previousPositionIndex = _currentPositionIndex;
+        _currentPositionIndex = newPositionIndex;
+
+        // 
+        Transform newPosition = _positions[newPositionIndex];
+        HopTo(newPosition);
+    }
+    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+    /// <summary>
+    /// 공격 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterAttack()
+    {
+        Guard();
+    }
+    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+    /// <summary>
+    /// 위치 전환 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterHop()
+    {
+        if (_phase == 0)
+        {
+            EnemyUnit enemy = _team[Random.Range(0, 2)];
+            CallTeamUnit(enemy);
+        }
+        else if (_phase == 1)
+        {
+            EnemyUnit enemy = _team[Random.Range(2, 4)];
+            CallTeamUnit(enemy);
+        }
+        else
+        {
+            EnemyUnit enemy = _team[Random.Range(4, 6)];
+            CallTeamUnit(enemy);
+        }
+    }
+    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+    /// <summary>
+    /// 팀 호출 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterCall()
+    {
+        Guard();
+    }
+    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+    /// <summary>
+    /// 막기2 행동 다음 액션을 수행합니다.
+    /// </summary>
+    void PerformActionAfterGuard2()
+    {
+        DoHokyokkwon();
+    }
+
+
+
+    [Obsolete("전투 관리자로 대체되었습니다.")]
     /// <summary>
     /// 다음 뛸 지점의 집합을 반환합니다.
     /// </summary>
@@ -871,244 +963,64 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         return hopPositionArray;
     }
 
+    [Obsolete("전투 관리자로 대체되었습니다.")]
     public int _previousPositionIndex = 0;
+    [Obsolete("전투 관리자로 대체되었습니다.")]
     public int _currentPositionIndex = 0;
 
 
-
-    #endregion
-
-
-
-
-
-    #region 코루틴 메서드를 정의합니다.
+    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
     /// <summary>
-    /// 공격 코루틴입니다.
+    /// 왼쪽으로 이동합니다.
     /// </summary>
-    Coroutine _coroutineAttack;
-    /// <summary>
-    /// 방어 코루틴입니다.
-    /// </summary>
-    Coroutine _coroutineGuard;
-    /// <summary>
-    /// 위치 전환 코루틴입니다.
-    /// </summary>
-    Coroutine _coroutineHop;
-    /// <summary>
-    /// 호출 코루틴입니다.
-    /// </summary>
-    Coroutine _coroutineCallTeamUnit;
-
-    /// <summary>
-    /// 등장 코루틴입니다.
-    /// </summary>
-    IEnumerator CoroutineAppear()
+    void MoveLeft()
     {
-        // 지상에 떨어질 때까지 대기합니다.
-        while (Landed == false)
-        {
-            yield return false;
-        }
-        StopMoving();
+        if (FacingRight)
+            Flip();
 
-        // 등장을 마칩니다.
-        AppearEnded = true;
-        yield break;
+        _groundable.Moving = true;
+        _Rigidbody.velocity = new Vector2(-_movingSpeedX, _Rigidbody.velocity.y);
     }
+    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
     /// <summary>
-    /// 공격 코루틴입니다.
+    /// 오른쪽으로 이동합니다.
     /// </summary>
-    IEnumerator CoroutineAttack()
+    void MoveRight()
     {
-        // 움직임을 멈춥니다.
-        StopMoving();
+        if (FacingRight == false)
+            Flip();
 
-        // 탄환을 발사합니다.
-        if (_phase == 0)
-        {
-            while (IsAnimatorInState("P1_02_HokyukkwonRun") == false)
-            {
-                yield return false;
-            }
-            ShotToPlayer();
-        }
-        else if (_phase == 1)
-        {
-            while (IsAnimatorInState("P2_02_HopokwonRun") == false)
-            {
-                yield return false;
-            }
-            ShotToPlayer();
-        }
-        else
-        {
-            while (IsAnimatorInState("BossAtahoShot") == false)
-            {
-                yield return false;
-            }
-            ShotToPlayer();
-        }
+        // 상태를 정의합니다.
+        _groundable.Moving = true;
 
-        // 공격을 끝냅니다.
-        Attacking = false;
-        ///PerformActionAfterAttack();
-        _coroutineAttack = null;
-        yield break;
+        // 내용을 정의합니다.
+        _Rigidbody.velocity = new Vector2(_movingSpeedX, _Rigidbody.velocity.y);
     }
+    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
     /// <summary>
-    /// 막기1 코루틴입니다.
+    /// 위쪽으로 이동합니다.
     /// </summary>
-    IEnumerator CoroutineGuard1()
+    void MoveUp()
     {
-        float time = 0;
-        while (time < _guardTime)
-        {
-            time += Time.deltaTime;
-            yield return false;
-        }
+        // 상태를 정의합니다.
+        _groundable.Moving = true;
 
-        // 막기 상태를 끝냅니다.
-        StopGuarding();
-        ///PerformActionAfterGuard1();
-        _coroutineGuard = null;
-        yield break;
+        // 내용을 정의합니다.
+        _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, _movingSpeedY);
     }
+    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
     /// <summary>
-    /// 막기2 코루틴입니다.
+    /// 아래쪽으로 이동합니다.
     /// </summary>
-    IEnumerator CoroutineGuard2()
+    void MoveDown()
     {
-        float time = 0;
-        while (time < _guardTime)
-        {
-            yield return false;
-            time += Time.deltaTime;
-        }
+        // 상태를 정의합니다.
+        _groundable.Moving = true;
 
-        // 막기 상태를 끝냅니다.
-        StopGuarding();
-        ///PerformActionAfterGuard2();
-        _coroutineGuard = null;
-        yield break;
+        // 내용을 정의합니다.
+        _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, -_movingSpeedY);
     }
-    /// <summary>
-    /// 위치 전환 코루틴입니다.
-    /// http://luminaryapps.com/blog/arcing-projectiles-in-unity/
-    /// </summary>
-    IEnumerator CoroutineHop()
-    {
-        Jump();
-        LandBlocked = true;
-        float x0 = _absHopStartPoint.x;
-        float x1 = _absHopEndPoint.x;
-        yield return false;
-
-        // 
-        ///float posY = transform.position.y;
-
-        // 
-        while (IsAnimatorInState("JumpBeg1"))
-        {
-            yield return false;
-        }
-        SoundEffects[2].Play();
-
-        // 점프 하고 있는 중에는 코루틴을 그냥 진행합니다.
-        while (Hopping)
-        {
-            float deltaTime = Time.deltaTime;
-
-            // Compute the next position, with arc added in
-            float dist = x1 - x0;
-            float vx = Mathf.Abs(dist / _hopTime);
-
-            float nextX = Mathf.MoveTowards(transform.position.x, x1, vx * deltaTime);
-            float baseY = Mathf.Lerp(_absHopStartPoint.y, _absHopEndPoint.y, (nextX - x0) / dist);
-            float arc = _arcHeight * (nextX - x0) * (nextX - x1) / (-0.25f * dist * dist);
-            Vector3 nextPos = new Vector3(nextX, baseY + arc, transform.position.z);
-
-            // 
-            ///float diffX = nextX - transform.position.x;
-            ///float diffY = baseY + arc - transform.position.y;
-
-            // Rotate to face the next position, and then move there
-            ///_Velocity = new Vector2(diffX / deltaTime, diffY / deltaTime);
-            if (transform.position.y > nextPos.y)
-            {
-                Fall();
-            }
-            transform.position = nextPos;
-
-            // Do something when we reach the target
-            if (nextPos == _absHopEndPoint)
-            {
-                LandBlocked = false;
-                Land();
-                break;
-            }
-            else if (nextPos.x == _absHopEndPoint.x)
-            {
-                LandBlocked = false;
-                break;
-            }
-
-            //
-            yield return false;
-        }
-
-        // 
-        ///StopFalling();
-        StopHopping();
-        ///PerformActionAfterHop();
-        _coroutineHop = null;
-        yield break;
-    }
-    /// <summary>
-    /// 팀원 호출 코루틴입니다.
-    /// </summary>
-    IEnumerator CoroutineCallTeamUnit()
-    {
-        // 팀원 호출 AnimatorState로 진입할 수 있게 해주는 강제 대기 시간입니다.
-        // (이 시간이 없으면 상태 천이 이전에 새 유닛이 생성될 수 있습니다.)
-        float time = 0;
-        while (time < _callReadyTime)
-        {
-            time += Time.deltaTime;
-            yield return false;
-        }
-
-        // 아타호가 팀원을 호출하는 준비 동작입니다.
-        while (IsAnimatorInState("P1_06_CallBeg"))
-        {
-            yield return false;
-        }
-
-        // 새 유닛을 생성합니다.
-        int newUnitPositionIndex = _previousPositionIndex;
-        Transform newUnitPosition = _positions[newUnitPositionIndex];
-        EnemyUnit newUnit = Instantiate(
-            _team[1],
-            newUnitPosition.position,
-            newUnitPosition.rotation,
-            _StageManager._enemyParent.transform
-            );
-        newUnit.gameObject.SetActive(true);
-
-        // 아타호가 팀원을 호출하는 동작입니다.
-        while (time < _callTime)
-        {
-            time += Time.deltaTime;
-            yield return false;
-        }
-
-        // 팀원 호출 상태를 끝냅니다.
-        StopCallingTeamUnit();
-        ///PerformActionAfterCall();
-        _coroutineCallTeamUnit = null;
-        yield break;
-    }
-
+    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
     /// <summary>
     /// 궁극기를 준비합니다.
     /// </summary>
@@ -1157,6 +1069,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         Ultimate1();
         yield break;
     }
+    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
     /// <summary>
     /// 궁극기 1을 시전합니다.
     /// </summary>
@@ -1195,6 +1108,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         Ultimate2();
         yield break;
     }
+    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
     /// <summary>
     /// 궁극기 2를 시전합니다.
     /// </summary>
@@ -1223,77 +1137,104 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         yield break;
     }
 
-    #endregion
-
-
-
-
-
-    #region 구형 정의를 보관합니다.
-    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
     /// <summary>
-    /// 막기1 다음 액션을 수행합니다.
+    /// 특정 지점으로 이동합니다.
     /// </summary>
-    void PerformActionAfterGuard1()
+    /// <param name="t">이동할 지점입니다.</param>
+    void MoveTo(Transform t)
     {
-        // 
-        int[] nextHopPositionArray = GetNextHopPositionArray();
-        int newPositionIndex = nextHopPositionArray
-            [Random.Range(0, nextHopPositionArray.Length)];
+        // 사용할 변수를 선언합니다.
+        Vector2 relativePos = t.position - transform.position;
 
-        // 
-        _previousPositionIndex = _currentPositionIndex;
-        _currentPositionIndex = newPositionIndex;
-
-        // 
-        Transform newPosition = _positions[newPositionIndex];
-        HopTo(newPosition);
-    }
-    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
-    /// <summary>
-    /// 공격 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterAttack()
-    {
-        Guard1();
-    }
-    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
-    /// <summary>
-    /// 위치 전환 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterHop()
-    {
-        if (_phase == 0)
+        // 플레이어를 향해 수평 방향 전환합니다.
+        if (relativePos.x < 0)
         {
-            EnemyUnit enemy = _team[Random.Range(0, 2)];
-            CallTeamUnit(enemy);
+            MoveLeft();
         }
-        else if (_phase == 1)
+        else if (relativePos.x > 0)
         {
-            EnemyUnit enemy = _team[Random.Range(2, 4)];
-            CallTeamUnit(enemy);
+            MoveRight();
         }
-        else
+        // 플레이어를 향해 수직 방향 전환합니다.
+        if (relativePos.y > 0)
         {
-            EnemyUnit enemy = _team[Random.Range(4, 6)];
-            CallTeamUnit(enemy);
+            MoveUp();
+        }
+        else if (relativePos.y < 0)
+        {
+            MoveDown();
         }
     }
-    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
     /// <summary>
-    /// 팀 호출 다음 액션을 수행합니다.
+    /// 플레이어를 향해 이동합니다.
     /// </summary>
-    void PerformActionAfterCall()
+    private void MoveToPlayer()
     {
-        Guard2();
+        // 사용할 변수를 선언합니다.
+        Vector3 playerPos = _StageManager.GetCurrentPlayerPosition();
+        Vector2 relativePos = playerPos - transform.position;
+
+        // 플레이어를 향해 수평 방향 전환합니다.
+        if (relativePos.x < 0)
+        {
+            MoveLeft();
+        }
+        else if (relativePos.x > 0)
+        {
+            MoveRight();
+        }
+        // 플레이어를 향해 수직 방향 전환합니다.
+        if (relativePos.y > 0)
+        {
+            MoveUp();
+        }
+        else if (relativePos.y < 0)
+        {
+            MoveDown();
+        }
     }
-    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
+
+    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
     /// <summary>
-    /// 막기2 행동 다음 액션을 수행합니다.
+    /// 궁극기를 준비합니다.
     /// </summary>
-    void PerformActionAfterGuard2()
+    void ReadyUltimate()
     {
-        Attack();
+        StartCoroutine(CoroutineReadyUltimate());
+    }
+    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
+    /// <summary>
+    /// 궁극기 1을 시전합니다.
+    /// </summary>
+    void Ultimate1()
+    {
+        Guarding = false;
+
+        // 내용을 정의합니다.
+        StartCoroutine(CoroutineUltimate1());
+    }
+    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
+    /// <summary>
+    /// 궁극기 2를 시전합니다.
+    /// </summary>
+    void Ultimate2()
+    {
+        // 내용을 정의합니다.
+        StartCoroutine(CoroutineUltimate2());
+    }
+
+    [Obsolete("이 행동은 전투 관리자에서 정의해야 합니다.")]
+    /// <summary>
+    /// 전투 시작 액션입니다.
+    /// </summary>
+    void Fight()
+    {
+        // base.Fight();
+
+        // 
+        DoHokyokkwon();
     }
 
     #endregion

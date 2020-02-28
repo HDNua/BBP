@@ -140,9 +140,14 @@ public class XController : PlayerController
             _Animator.SetFloat("ShotTime", _shotTime2 = value);
         }
     }
-    
+
+    /// <summary>
+    /// 차지 단계입니다.
+    /// </summary>
+    public int _chargeStep = 0;
+
     #endregion
-    
+
 
 
 
@@ -224,9 +229,6 @@ public class XController : PlayerController
     protected override void Awake()
     {
         base.Awake();
-
-        // 
-        _DefaultPalette = XColorPalette.DefaultPalette;
     }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다. (생성될 때마다)
@@ -269,9 +271,6 @@ public class XController : PlayerController
                 daiRenderer.sprite = _Renderer.sprite;
                 dashAfterImage.SetActive(true);
                 DashAfterImageTime = 0;
-
-                // 
-                ///UpdateEffectColor(dashAfterImage, XColorPalette.DefaultPalette, XColorPalette.DashEffectColorPalette);
             }
         }
         
@@ -1509,44 +1508,11 @@ public class XController : PlayerController
     /// <param name="weaponIndex"></param>
     void ChangeWeapon(int weaponIndex)
     {
-        /*
-        Color[] targetPalette;
-        switch (weaponIndex)
-        {
-            case 1:
-                targetPalette = XColorPalette.XWeapon1Palette;
-                break;
-
-            case 2:
-                targetPalette = XColorPalette.XWeapon2Palette;
-                break;
-
-            case 3:
-                targetPalette = XColorPalette.XWeapon3Palette;
-                break;
-
-            case 4:
-                targetPalette = XColorPalette.XWeapon4Palette;
-                break;
-
-            default:
-                targetPalette = null; // XColorPalette.XDefaultPalette;
-                break;
-        }
-        _CurrentPalette = targetPalette;
-        */
-
         _weaponState = 4 + weaponIndex;
         _PaletteUser.UpdatePaletteIndex(_weaponState);
     }
 
 
-    /// <summary>
-    /// 차지 단계입니다.
-    /// </summary>
-    public int _chargeStep = 0;
-
-    
     /// <summary>
     /// 엑스의 색상을 업데이트합니다.
     /// </summary>
@@ -1560,16 +1526,11 @@ public class XController : PlayerController
             // 차지 효과 색상을 업데이트 합니다.
             if (_chargeEffect2 != null)
             {
-                ///UpdateChargeEffectColor(_chargeEffect2, XColorPalette.XNormalChargeEffectColorPalette2);
-                ///UpdateChargeEffectColor(_chargeEffect1, XColorPalette.XNormalChargeEffectColorPalette2);
-                
                 _chargeEffect2.GetComponent<PaletteUser>().UpdatePaletteIndex(2);
                 _chargeEffect1.GetComponent<PaletteUser>().UpdatePaletteIndex(2);
             }
             else if (_chargeEffect1 != null)
             {
-                ///UpdateChargeEffectColor(_chargeEffect1, XColorPalette.XNormalChargeEffectColorPalette1);
-
                 _chargeEffect1.GetComponent<PaletteUser>().UpdatePaletteIndex(1);
             }
         }
@@ -1579,29 +1540,10 @@ public class XController : PlayerController
         }
     }
     /// <summary>
-    /// 차지 효과 개체의 색상표를 업데이트합니다.
-    /// </summary>
-    /// <param name="chargeEffect">차지 효과 개체입니다.</param>
-    /// <param name="colorPalette">차지 효과 개체의 새 색상표입니다.</param>
-    void UpdateChargeEffectColor(GameObject chargeEffect, Color[] colorPalette)
-    {
-        // 차지 효과 개체를 획득합니다.
-        EffectScript effect = chargeEffect.GetComponent<EffectScript>();
-
-        // 색상표를 획득합니다.
-        Color[] palette = (_chargeTime < CHARGE_LEVEL[2]) ?
-            XColorPalette.XNormalChargeEffectColorPalette1 : XColorPalette.XNormalChargeEffectColorPalette2;
-
-        // 텍스쳐를 업데이트합니다.
-        effect.RequestUpdateTexture(XColorPalette.XDefaultChargeEffectColorPalette, palette);
-    }
-    /// <summary>
     /// 엑스의 바디 색상표를 현재 웨폰 상태로 되돌립니다.
     /// </summary>
     void ResetBodyColor()
     {
-        ///_CurrentPalette = GetPalette(_weaponState);
-
         //
         _PaletteUser.UpdatePaletteIndex(_weaponState);
     }
@@ -1623,208 +1565,6 @@ public class XController : PlayerController
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    Dictionary<int, Texture2D> _hit_textures = new Dictionary<int, Texture2D>();
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    Dictionary<int, Texture2D> _charge1_textures = new Dictionary<int, Texture2D>();
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    Dictionary<int, Texture2D> _charge2_textures = new Dictionary<int, Texture2D>();
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    Dictionary<int, Texture2D> _weapon1_textures = new Dictionary<int, Texture2D>();
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    Dictionary<int, Texture2D> _weapon2_textures = new Dictionary<int, Texture2D>();
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    Dictionary<int, Texture2D> _weapon3_textures = new Dictionary<int, Texture2D>();
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    Dictionary<int, Texture2D> _weapon4_textures = new Dictionary<int, Texture2D>();
-
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 텍스쳐가 준비되었는지 확인합니다.
-    /// </summary>
-    /// <param name="textureID">확인할 텍스쳐의 식별자입니다.</param>
-    /// <param name="colorPalette">확인할 팔레트입니다.</param>
-    /// <returns>텍스쳐가 준비되었다면 참입니다.</returns>
-    protected override bool IsTexturePrepared(int textureID, Color[] colorPalette)
-    {
-        if (colorPalette == XColorPalette.InvenciblePalette)
-        {
-            return _hit_textures.ContainsKey(textureID);
-        }
-        else if (colorPalette == XColorPalette.XCharge1Palette)
-        {
-            return _charge1_textures.ContainsKey(textureID);
-        }
-        else if (colorPalette == XColorPalette.XCharge2Palette)
-        {
-            return _charge2_textures.ContainsKey(textureID);
-        }
-        else if (colorPalette == XColorPalette.XWeapon1Palette)
-        {
-            return _weapon1_textures.ContainsKey(textureID);
-        }
-        else if (colorPalette == XColorPalette.XWeapon2Palette)
-        {
-            return _weapon2_textures.ContainsKey(textureID);
-        }
-        else if (colorPalette == XColorPalette.XWeapon3Palette)
-        {
-            return _weapon3_textures.ContainsKey(textureID);
-        }
-        else if (colorPalette == XColorPalette.XWeapon4Palette)
-        {
-            return _weapon4_textures.ContainsKey(textureID);
-        }
-
-        // 
-        return false;
-    }
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 준비된 텍스쳐를 가져옵니다.
-    /// </summary>
-    /// <param name="textureID">가져올 텍스쳐의 식별자입니다.</param>
-    /// <param name="currentPalette">가져올 팔레트입니다.</param>
-    /// <returns>준비된 텍스쳐를 반환합니다.</returns>
-    protected override Texture2D GetPreparedTexture(int textureID, Color[] currentPalette)
-    {
-        Texture2D cloneTexture = null;
-        if (currentPalette == XColorPalette.InvenciblePalette)
-        {
-            cloneTexture = _hit_textures[textureID];
-        }
-        else if (currentPalette == XColorPalette.XCharge1Palette) // (CHARGE_LEVEL[0] < _chargeTime && _chargeTime < CHARGE_LEVEL[2])
-        {
-            cloneTexture = _charge1_textures[textureID];
-        }
-        else if (currentPalette == XColorPalette.XCharge2Palette) // (CHARGE_LEVEL[2] < _chargeTime)
-        {
-            cloneTexture = _charge2_textures[textureID];
-        }
-        else if (currentPalette == XColorPalette.XWeapon1Palette) // (_weaponState == 1)
-        {
-            cloneTexture = _weapon1_textures[textureID];
-        }
-        else if (currentPalette == XColorPalette.XWeapon2Palette) // (_weaponState == 2)
-        {
-            cloneTexture = _weapon2_textures[textureID];
-        }
-        else if (currentPalette == XColorPalette.XWeapon3Palette) // (_weaponState == 3)
-        {
-            cloneTexture = _weapon3_textures[textureID];
-        }
-        else if (currentPalette == XColorPalette.XWeapon4Palette) // (_weaponState == 4)
-        {
-            cloneTexture = _weapon4_textures[textureID];
-        }
-        else
-        {
-            throw new Exception("예기치 못한 오류");
-        }
-
-        return cloneTexture;
-    }
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 컬러 팔레트를 이용하여 생성된 새 텍스쳐를 집합에 넣습니다.
-    /// </summary>
-    /// <param name="textureID">텍스쳐 식별자입니다.</param>
-    /// <param name="cloneTexture">생성한 텍스쳐입니다.</param>
-    /// <param name="colorPalette">텍스쳐를 생성하기 위해 사용한 팔레트입니다.</param>
-    protected override void AddTextureToSet(int textureID, Texture2D cloneTexture, Color[] colorPalette)
-    {
-        if (colorPalette == XColorPalette.InvenciblePalette)
-        {
-            _hit_textures.Add(textureID, cloneTexture);
-        }
-        else if (colorPalette == XColorPalette.XCharge1Palette)
-        {
-            _charge1_textures.Add(textureID, cloneTexture);
-        }
-        else if (colorPalette == XColorPalette.XCharge2Palette)
-        {
-            _charge2_textures.Add(textureID, cloneTexture);
-        }
-        else if (colorPalette == XColorPalette.XWeapon1Palette)
-        {
-            _weapon1_textures.Add(textureID, cloneTexture);
-        }
-        else if (colorPalette == XColorPalette.XWeapon2Palette)
-        {
-            _weapon2_textures.Add(textureID, cloneTexture);
-        }
-        else if (colorPalette == XColorPalette.XWeapon3Palette)
-        {
-            _weapon3_textures.Add(textureID, cloneTexture);
-        }
-        else if (colorPalette == XColorPalette.XWeapon4Palette)
-        {
-            _weapon4_textures.Add(textureID, cloneTexture);
-        }
-        else
-        {
-            throw new Exception("예기치 못한 추가 오류");
-        }
-    }
-
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    protected override void TESTEST1()
-    {
-        _CurrentPalette = XColorPalette.InvenciblePalette;
-    }
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    protected override void TESTEST2()
-    {
-        ResetBodyColor();
-    }
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    protected override void TESTEST3()
-    {
-        ResetBodyColor();
-    }
-
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 현재 웨폰 상태에 해당하는 팔레트를 가져옵니다.
-    /// </summary>
-    /// <param name="weaponState">현재 웨폰 상태입니다.</param>
-    /// <returns>현재 웨폰 상태에 해당하는 팔레트를 가져옵니다.</returns>
-    static Color[] GetPalette(int weaponState)
-    {
-        Color[] palette;
-        switch (weaponState)
-        {
-            case 1:
-                palette = XColorPalette.XWeapon1Palette;
-                break;
-
-            case 2:
-                palette = XColorPalette.XWeapon2Palette;
-                break;
-
-            case 3:
-                palette = XColorPalette.XWeapon3Palette;
-                break;
-
-            case 4:
-                palette = XColorPalette.XWeapon4Palette;
-                break;
-
-            default:
-                palette = null;
-                break;
-        }
-        return palette;
-    }
 
     #endregion
 }

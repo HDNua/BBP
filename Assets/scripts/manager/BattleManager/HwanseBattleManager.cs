@@ -21,6 +21,27 @@ public class HwanseBattleManager : BattleManager
 
 
 
+    #region 필드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    int _previousPositionIndex = 0;
+    /// <summary>
+    /// 
+    /// </summary>
+    int _currentPositionIndex = 0;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Direction _direction;
+
+    #endregion
+
+
+
+
+
     #region MonoBehaviour 기본 메서드를 재정의합니다.
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다. (최초 1회만 수행)
@@ -48,7 +69,7 @@ public class HwanseBattleManager : BattleManager
         // 모든 보스를 등장시킵니다.
         _atahoUnit.gameObject.SetActive(true);
         _atahoUnit.Appear();
-        while (_atahoUnit.AppearEnded == false)
+        while (_atahoUnit.IsActionEnded == false)
         {
             yield return false;
         }
@@ -257,19 +278,21 @@ public class HwanseBattleManager : BattleManager
 
     #region 유닛 패턴 메서드를 정의합니다.
     /// <summary>
-    /// 
+    /// 패턴 코루틴입니다.
     /// </summary>
     Coroutine _coroutinePattern;
     /// <summary>
-    /// 
+    /// 행동 코루틴입니다.
     /// </summary>
     Coroutine _subcoroutineAction;
 
     /// <summary>
-    /// 
+    /// 1번 패턴입니다.
     /// </summary>
     IEnumerator CoroutinePattern1()
     {
+        //////////////////////////////////////////////////////////
+        // 
         _subcoroutineAction = StartCoroutine(SubcoroutineHop());
         while (_subcoroutineAction != null)
         {
@@ -280,15 +303,56 @@ public class HwanseBattleManager : BattleManager
             yield return false;
         }
 
-        // 
+        // 1초 기다립니다.
         yield return new WaitForSeconds(1f);
+
+        //////////////////////////////////////////////////////////
+        // 
+        PlayerController player = _stageManager.MainPlayer;
+        _direction = GetDirectionToTarget(_atahoUnit.transform, player.transform);
+        switch (_direction)
+        {
+            case Direction.LU:
+                PerformActionLU(_atahoUnit, player);
+                break;
+            case Direction.U:
+                PerformActionU(_atahoUnit, player);
+                break;
+            case Direction.RU:
+                PerformActionRU(_atahoUnit, player);
+                break;
+            case Direction.L:
+                PerformActionL(_atahoUnit, player);
+                break;
+            case Direction.R:
+                PerformActionR(_atahoUnit, player);
+                break;
+            case Direction.LD:
+                PerformActionLD(_atahoUnit, player);
+                break;
+            case Direction.D:
+                PerformActionD(_atahoUnit, player);
+                break;
+            case Direction.RD:
+                PerformActionRD(_atahoUnit, player);
+                break;
+            default:
+                PerformActionM(_atahoUnit, player);
+                break;
+        }
+
+        // 
+        while (_atahoUnit.IsActionEnded == false)
+        {
+            yield return false;
+        }
 
         // 
         _coroutinePattern = null;
         yield break;
     }
     /// <summary>
-    /// 
+    /// Hop 서브 코루틴입니다.
     /// </summary>
     IEnumerator SubcoroutineHop()
     {
@@ -298,8 +362,8 @@ public class HwanseBattleManager : BattleManager
             [Random.Range(0, nextHopPositionArray.Length)];
 
         // 
-        ///_previousPositionIndex = _currentPositionIndex;
-        ///_currentPositionIndex = newPositionIndex;
+        _previousPositionIndex = _currentPositionIndex;
+        _currentPositionIndex = newPositionIndex;
 
         // 
         Transform newPosition = _positions[newPositionIndex];
@@ -323,7 +387,272 @@ public class HwanseBattleManager : BattleManager
 
 
     #region 유닛 전략 메서드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="atahoUnit"></param>
+    /// <param name="player"></param>
+    void PerformActionLU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (IsNear(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="atahoUnit"></param>
+    /// <param name="player"></param>
+    void PerformActionU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (IsNear(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="atahoUnit"></param>
+    /// <param name="player"></param>
+    void PerformActionRU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (IsNear(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="atahoUnit"></param>
+    /// <param name="player"></param>
+    void PerformActionL(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (IsNear(atahoUnit.transform, player.transform))
+        {
+            atahoUnit.DoHokyokkwon();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            atahoUnit.DoHokyokkwon();
+        }
+        else
+        {
+            atahoUnit.DoHokyokkwon();
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="atahoUnit"></param>
+    /// <param name="player"></param>
+    void PerformActionM(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (IsNear(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="atahoUnit"></param>
+    /// <param name="player"></param>
+    void PerformActionR(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (IsNear(atahoUnit.transform, player.transform))
+        {
+            atahoUnit.DoHokyokkwon();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            atahoUnit.DoHokyokkwon();
+        }
+        else
+        {
+            atahoUnit.DoHokyokkwon();
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="atahoUnit"></param>
+    /// <param name="player"></param>
+    void PerformActionLD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (IsNear(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="atahoUnit"></param>
+    /// <param name="player"></param>
+    void PerformActionD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (IsNear(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="atahoUnit"></param>
+    /// <param name="player"></param>
+    void PerformActionRD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (IsNear(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
 
+    #endregion
+
+
+
+
+
+    #region 유닛 전략 구성에 사용되는 행동 메서드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    public void CallUnit(EnemyUnit unit)
+    {
+        // 새 유닛을 생성합니다.
+        int newUnitPositionIndex = _previousPositionIndex;
+        Transform newUnitPosition = _positions[newUnitPositionIndex];
+        Unit newUnit = Instantiate(
+            _units[1],
+            newUnitPosition.position,
+            newUnitPosition.rotation,
+            _stageManager._enemyParent.transform
+            );
+        newUnit.gameObject.SetActive(true);
+    }
+
+    #endregion
+
+
+
+
+
+    #region 유닛 전략 구성을 위한 보조 메서드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    Direction GetDirectionToTarget(Transform st, Transform dt)
+    {
+        Vector3 dv = dt.position - st.position;
+        float dx = dv.x;
+        float dy = dv.y;
+        Direction direction = Direction.M;
+
+        //
+        if (dx > 0 && dy > 0)
+        {
+            direction = Direction.RU;
+        }
+        else if (dx > 0 && dy < 0)
+        {
+            direction = Direction.RD;
+        }
+        else if (dx < 0 && dy > 0)
+        {
+            direction = Direction.LU;
+        }
+        else if (dx < 0 && dy < 0)
+        {
+            direction = Direction.LD;
+        }
+
+        //
+        return direction;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    bool IsNear(Transform st, Transform dt)
+    {
+
+
+
+        return true;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    bool IsFar(Transform st, Transform dt)
+    {
+
+
+
+        return true;
+    }
 
     #endregion
 }

@@ -70,6 +70,64 @@ public class EnemyBossUnit : EnemyUnit
         return (Health == MaxHealth);
     }
 
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    bool _isActionStarted = false;
+    /// <summary>
+    /// 
+    /// </summary>
+    bool _isActionRunning = false;
+    /// <summary>
+    /// 
+    /// </summary>
+    bool _isActionEnded = false;
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool IsActionStarted
+    {
+        get { return _isActionStarted; }
+        protected set { _isActionStarted = value; }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool IsActionRunning
+    {
+        get { return _isActionRunning; }
+        protected set { _isActionRunning = value; }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool IsActionEnded
+    {
+        get { return _isActionEnded; }
+        protected set { _isActionEnded = value; }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    protected void StartAction()
+    {
+        IsActionStarted = true;
+        IsActionRunning = false;
+        IsActionEnded = false;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    protected void EndAction()
+    {
+        IsActionStarted = false;
+        IsActionRunning = false;
+        IsActionEnded = true;
+    }
+
     #endregion
 
 

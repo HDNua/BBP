@@ -226,9 +226,6 @@ public class ZController : PlayerController
     protected override void Awake()
     {
         base.Awake(); // Initialize();
-
-        // 
-        _DefaultPalette = ZColorPalette.DefaultPalette;
     }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다.
@@ -271,9 +268,6 @@ public class ZController : PlayerController
                 daiRenderer.sprite = _Renderer.sprite;
                 dashAfterImage.SetActive(true);
                 DashAfterImageTime = 0;
-                
-                // 
-                UpdateEffectColor(dashAfterImage, ZColorPalette.DefaultPalette, ZColorPalette.DashEffectColorPalette);
             }
         }
 
@@ -1603,86 +1597,6 @@ public class ZController : PlayerController
 
 
     #region 색상 보조 메서드를 정의합니다.
-    /// <summary>
-    /// 
-    /// </summary>
-    Dictionary<int, Texture2D> _hit_textures = new Dictionary<int, Texture2D>();
-
-    /// <summary>
-    /// 텍스쳐가 준비되었는지 확인합니다.
-    /// </summary>
-    /// <param name="textureID">확인할 텍스쳐의 식별자입니다.</param>
-    /// <param name="colorPalette">확인할 팔레트입니다.</param>
-    /// <returns>텍스쳐가 준비되었다면 참입니다.</returns>
-    protected override bool IsTexturePrepared(int textureID, Color[] colorPalette)
-    {
-        if (colorPalette == ZColorPalette.InvenciblePalette)
-        {
-            return _hit_textures.ContainsKey(textureID);
-        }
-
-        // 
-        return false;
-    }
-    /// <summary>
-    /// 준비된 텍스쳐를 가져옵니다.
-    /// </summary>
-    /// <param name="textureID">가져올 텍스쳐의 식별자입니다.</param>
-    /// <param name="currentPalette">가져올 팔레트입니다.</param>
-    /// <returns>준비된 텍스쳐를 반환합니다.</returns>
-    protected override Texture2D GetPreparedTexture(int textureID, Color[] currentPalette)
-    {
-        Texture2D cloneTexture = null;
-        if (currentPalette == ZColorPalette.InvenciblePalette)
-        {
-            cloneTexture = _hit_textures[textureID];
-        }
-        else
-        {
-            throw new Exception("예기치 못한 오류");
-        }
-
-        return cloneTexture;
-    }
-    /// <summary>
-    /// 컬러 팔레트를 이용하여 생성된 새 텍스쳐를 집합에 넣습니다.
-    /// </summary>
-    /// <param name="textureID">텍스쳐 식별자입니다.</param>
-    /// <param name="cloneTexture">생성한 텍스쳐입니다.</param>
-    /// <param name="colorPalette">텍스쳐를 생성하기 위해 사용한 팔레트입니다.</param>
-    protected override void AddTextureToSet(int textureID, Texture2D cloneTexture, Color[] colorPalette)
-    {
-        if (colorPalette == ZColorPalette.InvenciblePalette)
-        {
-            _hit_textures.Add(textureID, cloneTexture);
-        }
-        else
-        {
-            throw new Exception("예기치 못한 추가 오류");
-        }
-    }
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    protected override void TESTEST1()
-    {
-        _CurrentPalette = ZColorPalette.InvenciblePalette;
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    protected override void TESTEST2()
-    {
-        _CurrentPalette = null;
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    protected override void TESTEST3()
-    {
-        _CurrentPalette = null;
-    }
 
     #endregion
 

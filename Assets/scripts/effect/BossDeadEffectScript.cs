@@ -93,15 +93,16 @@ public class BossDeadEffectScript : EffectScript
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다. (최초 1회 수행)
     /// </summary>
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _battleManager = BattleManager.Instance;
         _stageManager = StageManager.Instance;
     }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다.
     /// </summary>
-    void Start()
+    protected override void Start()
     {
         if (_battleManager.DoesBattleEnd())
         {
@@ -111,37 +112,11 @@ public class BossDeadEffectScript : EffectScript
         {
             StartCoroutine(CoroutineDead());
         }
-
-        /*
-         * 다음 커밋에서 이 부분을 발견하면 바로 삭제하십시오.
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        Sprite sprite = renderer.sprite;
-        _originalTexture = sprite.texture;
-        _blinkingTexture = GetColorUpdatedTexture(
-            sprite.texture,
-            _boss.DefaultPalette,
-            EnemyColorPalette.InvenciblePalette);
-        */
-
-        /*
-         * 다음 커밋에서 이 부분을 발견하면 바로 삭제하십시오.
-         * 
-        _defaultBossPalette = _boss.DefaultPalette;
-
-        // 
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        Sprite sprite = renderer.sprite;
-        _originalTexture = sprite.texture;
-        _blinkingTexture = GetColorUpdatedTexture(
-            sprite.texture,
-            _boss.DefaultPalette,
-            EnemyColorPalette.InvenciblePalette);
-        */
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트합니다.
     /// </summary>
-    void Update()
+    protected override void Update()
     {
         _time += Time.deltaTime;
     }
@@ -149,25 +124,9 @@ public class BossDeadEffectScript : EffectScript
     /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.
     /// 주로 오브젝트를 따라가게 설정한 카메라는 LastUpdate를 사용합니다.
     /// </summary>
-    void LateUpdate()
+    protected override void LateUpdate()
     {
         _paletteUser.UpdateColor();
-
-        // * 다음 커밋에서 이 부분을 발견하면 바로 삭제하십시오.
-        //_boss.UpdatePaletteIndex(_highlighted ? 0 : 1);
-
-        /*
-         * 다음 커밋에서 이 부분을 발견하면 바로 삭제하십시오.
-         * 
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        Sprite sprite = renderer.sprite;
-        Texture2D texture = _highlighted ? _originalTexture : _blinkingTexture;
-
-        // 새 텍스쳐를 렌더러에 반영합니다.
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        block.SetTexture("_MainTex", texture);
-        renderer.SetPropertyBlock(block);
-        */
     }
 
     #endregion
@@ -335,16 +294,6 @@ public class BossDeadEffectScript : EffectScript
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("EnemyBossUnit으로 대체되었습니다.")]
-    /// <summary>
-    /// 보스 캐릭터입니다.
-    /// </summary>
-    public EnemyBossScript _bossScript;
-    [Obsolete("PaletteUser로 대체되었습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    public Color[] _defaultBossPalette;
 
     #endregion
 }

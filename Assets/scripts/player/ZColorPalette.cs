@@ -4,6 +4,7 @@ using System;
 
 
 
+[Obsolete("PaletteUser로 대체되었습니다.")]
 /// <summary>
 /// 제로 캐릭터의 바디 색상을 관리합니다.
 /// </summary>

@@ -4,18 +4,23 @@ using UnityEngine;
 
 
 
+#region 상수 및 형식을 정의합니다.
+public enum Direction
+{
+    LU, U, RU,
+    L, M, R,
+    LD, D, RD
+}
+
+#endregion
+
+
+
 /// <summary>
 /// 
 /// </summary>
 public abstract class BattleManager : MonoBehaviour
 {
-    #region 상수 및 형식을 정의합니다.
-
-
-    #endregion
-
-
-
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
     /// <summary>
     /// 전투 유닛입니다.
@@ -46,11 +51,11 @@ public abstract class BattleManager : MonoBehaviour
     /// <summary>
     /// 스테이지 관리자입니다.
     /// </summary>
-    StageManager _stageManager;
+    protected StageManager _stageManager;
     /// <summary>
     /// 사용자 인터페이스 관리자입니다.
     /// </summary>
-    UIManager _uiManager;
+    protected UIManager _uiManager;
 
     #endregion
 

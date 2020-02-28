@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 
@@ -59,23 +60,30 @@ public class EffectBossExplosionScript : EffectScript
 
 
 
+
+
     #region MonoBehaviour 기본 메서드를 재정의합니다.
     /// <summary>
     /// MonoBehaviour 객체를 초기화합니다.
     /// </summary>
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
+        // 
         StartCoroutine(CoroutineExplosion());
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트합니다.
     /// </summary>
-    void Update()
+    protected override void Update()
     {
-
+        base.Update();
     }
 
     #endregion
+
+
 
 
 
@@ -88,8 +96,8 @@ public class EffectBossExplosionScript : EffectScript
         // 
         for (int i = 0; i < _explosionCount; ++i)
         {
-            float distortionX = UnityEngine.Random.Range(_minDistortionX, _maxDistortionX);
-            float distortionY = UnityEngine.Random.Range(_minDistortionY, _maxDistortionY);
+            float distortionX = Random.Range(_minDistortionX, _maxDistortionX);
+            float distortionY = Random.Range(_minDistortionY, _maxDistortionY);
 
             // 
             Vector3 position = transform.position + new Vector3(distortionX, distortionY);
@@ -117,7 +125,7 @@ public class EffectBossExplosionScript : EffectScript
     void CreateExplosion(Vector3 position)
     {
         EffectScript effect = DataBase.Instance.Explosion1Effect;
-        switch (UnityEngine.Random.Range(0, 3))
+        switch (Random.Range(0, 3))
         {
             case 0:
                 effect = DataBase.Instance.Explosion1Effect;
@@ -137,13 +145,13 @@ public class EffectBossExplosionScript : EffectScript
     }
 
     /// <summary>
-    /// 
+    /// 노랑 선을 만듭니다.
     /// </summary>
     void CreateYellowRay()
     {
         SpriteRenderer sr = Instantiate(_yellowRay, transform.position, transform.rotation);
         sr.transform.RotateAround
-            (transform.position, Vector3.right, UnityEngine.Random.Range(0, 360f));
+            (transform.position, Vector3.right, Random.Range(0, 360f));
 
         StartCoroutine(CoroutineYellowRay(sr));
     }

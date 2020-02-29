@@ -218,7 +218,7 @@ public class HwanseBattleHUD : BattleHUD
                 // 다른 바와 달리, 마나 대미지 바를 업데이트 합니다.
                 Vector3 manaScale = _manaDamageBar.transform.localScale;
                 Vector3 damageScale = _manaBar.transform.localScale;
-                float value = (float)_atahoUnit._mana / _atahoUnit._maxExp;
+                float value = (float)_atahoUnit._mana / _atahoUnit._maxMana;
                 manaScale.x = value;
                 _manaDamageBar.transform.localScale = manaScale;
 

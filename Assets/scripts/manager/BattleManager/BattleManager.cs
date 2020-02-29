@@ -6,6 +6,9 @@ using UnityEngine;
 
 
 #region 상수 및 형식을 정의합니다.
+/// <summary>
+/// 
+/// </summary>
 public enum Direction
 {
     LU, U, RU,
@@ -401,14 +404,6 @@ public abstract class BattleManager : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("BattleHUD로 대체되었습니다.")]
-    /// <summary>
-    /// 보스 캐릭터 체력 바를 표시합니다.
-    /// </summary>
-    protected virtual void ActivateBossHUD()
-    {
-        UIManager.Instance.ActivateBossHUD();
-    }
 
     #endregion
 }

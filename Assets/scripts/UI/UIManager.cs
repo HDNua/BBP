@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour
     public HUDScript _subHUD;
 
     /// <summary>
-    /// 
+    /// 전투 HUD 집합입니다.
     /// </summary>
     public BattleHUD[] _battleHudArray;
 
@@ -145,70 +145,6 @@ public class UIManager : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("BattleHUD로 대체되었습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    public BossHUDScript[] _bossHudArray;
-    [Obsolete("BattleHUD로 대체되었습니다.")]
-    /// <summary>
-    /// 보스의 체력 잔량을 업데이트합니다.
-    /// </summary>
-    public void UpdateBossHealthText()
-    {
-        ///_bossBattleManager.UpdateBossHealthText();
-
-        /*
-        EnemyBossScript[] bosses = _bossBattleManager.Bosses;
-        for (int i = 0, len = bosses.Length; i < len; ++i)
-        {
-            EnemyBossScript boss = bosses[i];
-            _bossHudArray[i]._healthText.text = boss.Health.ToString();
-        }
-        */
-    }
-    [Obsolete("BattleHUD로 대체되었습니다.")]
-    /// <summary>
-    /// 보스 HUD를 활성화합니다.
-    /// </summary>
-    public void ActivateBossHUD()
-    {
-        /// _bossHUD.gameObject.SetActive(true);
-        /*
-        foreach (BossHUDScript hud in _bossHudArray)
-        {
-            hud.gameObject.SetActive(true);
-        }
-        */
-
-        // 
-        EnemyBossUnit[] bosses = (from unit in BattleManager.Instance._units
-                                  where unit is EnemyBossUnit
-                                  select unit as EnemyBossUnit).ToArray();
-
-        //
-        for (int i = 0; i < _bossHudArray.Length; ++i)
-        {
-            EnemyBossUnit boss = bosses[i];
-            BossHUDScript hud = _bossHudArray[i];
-
-            // 
-            hud.gameObject.SetActive(true);
-            hud.RequestSetUnit(boss);
-        }
-    }
-    [Obsolete("BattleHUD로 대체되었습니다.")]
-    /// <summary>
-    /// 보스 HUD를 비활성화합니다.
-    /// </summary>
-    public void DeactivateBossHUD()
-    {
-        /// _bossHUD.gameObject.SetActive(false);
-        foreach (BossHUDScript hud in _bossHudArray)
-        {
-            hud.gameObject.SetActive(false);
-        }
-    }
 
     #endregion
 }

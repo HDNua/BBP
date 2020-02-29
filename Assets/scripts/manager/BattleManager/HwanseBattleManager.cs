@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
+
 /// <summary>
-/// 
+/// 환세 스테이지의 전투 관리자입니다.
 /// </summary>
 public class HwanseBattleManager : BattleManager
 {
     #region 컨트롤러가 사용할 Unity 개체에 대한 참조를 보관합니다.
     /// <summary>
-    /// 
+    /// 아타호 적 보스 유닛입니다.
     /// </summary>
     EnemyBossAtahoUnit _atahoUnit;
 
@@ -35,6 +37,15 @@ public class HwanseBattleManager : BattleManager
     /// 
     /// </summary>
     public Direction _direction;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public float _a = 7;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float _b = 4;
 
     #endregion
 
@@ -320,8 +331,8 @@ public class HwanseBattleManager : BattleManager
             yield break;
         }
 
-        _direction = GetDirectionToTarget(_atahoUnit.transform, player.transform);
-        _distance = Vector3.Distance(_atahoUnit.transform.position, player.transform.position);
+        // 
+        UpdateCondition(_atahoUnit, player);
         switch (_direction)
         {
             case Direction.LU:
@@ -659,18 +670,22 @@ public class HwanseBattleManager : BattleManager
 
 
     #region 유닛 전략 구성을 위한 보조 메서드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
     public Vector3 _dv;
-
-
+    /// <summary>
+    /// 
+    /// </summary>
     public float _angle;
-    public float _angle_r = 45 / 360;
-    public float _angle_ru;
-    public float _angle_u;
-    public float _angle_lu;
-    public float _angle_l;
-    public float _angle_ld;
-    public float _angle_d;
-    public float _angle_rd;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float _distance;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float _ellipseR;
 
 
     /// <summary>
@@ -726,25 +741,62 @@ public class HwanseBattleManager : BattleManager
         return direction;
     }
     /// <summary>
-    /// 
+    /// 플레이어와의 거리가 가까운지를 확인합니다.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>플레이어와의 거리가 가깝다면 참입니다.</returns>
     bool IsNear(Transform st, Transform dt)
     {
-        return (_distance < 5.0f);
+        return (_distance < _ellipseR);
     }
     /// <summary>
-    /// 
+    /// 플레이어와의 거리가 먼지를 확인합니다.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>플레이어와의 거리가 멀다면 참입니다.</returns>
     bool IsFar(Transform st, Transform dt)
     {
-        return (_distance >= 5.0f);
+        return (_distance >= _ellipseR);
+    }
+
+
+    /// <summary>
+    /// 패턴 수행을 위한 조건들을 초기화합니다.
+    /// </summary>
+    /// <param name="unit">유닛입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void UpdateCondition(Unit unit, PlayerController player)
+    {
+        _direction = GetDirectionToTarget(unit.transform, player.transform);
+        _distance = Vector3.Distance(unit.transform.position, player.transform.position);
+
+        // 
+        float a = _a;
+        float b = _b;
+        float sin_t = Mathf.Sin(_angle * Mathf.Deg2Rad);
+        float cos_t = Mathf.Cos(_angle * Mathf.Deg2Rad);
+        _ellipseR = Mathf.Sqrt(a * a * cos_t * cos_t + b * b * sin_t * sin_t);
     }
     /// <summary>
     /// 
     /// </summary>
-    public float _distance;
+    public override void LateUpdate()
+    {
+        if (_atahoUnit)
+        {
+            PlayerController player = _stageManager.MainPlayer;
+            UpdateCondition(_atahoUnit, player);
+
+            //
+            Transform st = _atahoUnit.transform;
+            Transform dt = player.transform;
+            Vector3 direction = (dt.position - st.position).normalized;
+
+            Debug.DrawRay(st.position, direction, Color.yellow);
+
+            // 
+            Vector3 dstVector = new Vector3(Mathf.Cos(_angle * Mathf.Deg2Rad), Mathf.Sin(_angle * Mathf.Deg2Rad)) * _ellipseR;
+            Debug.DrawRay(st.position, dstVector, Color.red);
+        }
+    }
 
     #endregion
 
@@ -753,22 +805,6 @@ public class HwanseBattleManager : BattleManager
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("BattleHUD로 대체되었습니다.")]
-    /// <summary>
-    /// 보스 캐릭터 체력 바를 표시합니다.
-    /// </summary>
-    protected override void ActivateBossHUD()
-    {
-        base.ActivateBossHUD();
-    }
-    [Obsolete("BattleHUD로 대체되었습니다.")]
-    /// <summary>
-    /// 보스 체력 재생을 요청합니다.
-    /// </summary>
-    protected override void RequestFillHealth()
-    {
-        base.RequestFillHealth();
-    }
 
     #endregion
 }

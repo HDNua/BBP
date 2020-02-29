@@ -279,7 +279,7 @@ public class Unit : MonoBehaviour
 
     #region MonoBehaviour 기본 메서드를 재정의 합니다.
     /// <summary>
-    /// MonoBehaviour 객체를 초기화합니다.
+    /// MonoBehaviour 개체를 초기화합니다. (최초 1회만 수행)
     /// </summary>
     protected virtual void Awake()
     {
@@ -291,7 +291,7 @@ public class Unit : MonoBehaviour
         }
     }
     /// <summary>
-    /// MonoBehaviour 객체를 초기화합니다.
+    /// MonoBehaviour 개체를 초기화합니다.
     /// </summary>
     protected virtual void Start()
     {

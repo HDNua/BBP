@@ -4,6 +4,7 @@ using System.Collections;
 
 
 
+[Obsolete("BattleHUD로 대체되었습니다.")]
 /// <summary>
 /// 보스 HUD 스크립트입니다.
 /// </summary>
@@ -46,6 +47,9 @@ public class BossHUDScript : MonoBehaviour
     /// 대미지 바가 체력 바를 따라가는 속도입니다.
     /// </summary>
     public float _followTime = 0.5f;
+    /// <summary>
+    /// 대미지 바가 체력 바를 쫓아가기 위해 보관하는 현재 시간입니다.
+    /// </summary>
     public float _nowTime = 0;
 
     #endregion
@@ -54,9 +58,9 @@ public class BossHUDScript : MonoBehaviour
 
     #region Unity 개체에 대한 참조를 보관합니다.
     /// <summary>
-    /// 
+    /// 전투 관리자입니다.
     /// </summary>
-    BattleManager _battleManager;
+    protected BattleManager _battleManager;
 
     #endregion
 

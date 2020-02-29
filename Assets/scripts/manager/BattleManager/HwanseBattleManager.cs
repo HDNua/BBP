@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// 
@@ -101,7 +101,7 @@ public class HwanseBattleManager : BattleManager
     protected override IEnumerator CoroutineSetupBattle()
     {
         // 보스 캐릭터 체력 바를 표시합니다.
-        ActivateBossHUD();
+        ActivateBattleHUD();
 
         // 보스 체력 재생을 요청합니다.
         RequestFillHealth();
@@ -111,6 +111,7 @@ public class HwanseBattleManager : BattleManager
         }
 
         // 전투를 시작합니다.
+        ActivateBattleDamageHUD();
         Fight();
         yield break;
     }
@@ -167,6 +168,26 @@ public class HwanseBattleManager : BattleManager
 
 
 
+    #region 요청 메서드를 정의합니다.
+    /// <summary>
+    /// 대미지 바를 활성화 합니다.
+    /// </summary>
+    public void ActivateBattleDamageHUD()
+    {
+        foreach (HwanseBattleHUD hud in _uiManager._battleHudArray)
+        {
+            hud._damageBar.SetActive(true);
+            hud._manaDamageBar.SetActive(true);
+            hud._expDamageBar.SetActive(true);
+        }
+    }
+    
+    #endregion
+
+
+
+
+
     #region 기타 재정의할 메서드입니다.
     /// <summary>
     /// 전투 종료 코루틴입니다.
@@ -182,21 +203,6 @@ public class HwanseBattleManager : BattleManager
     public override bool DoesBattleEnd()
     {
         return base.DoesBattleEnd();
-    }
-
-    /// <summary>
-    /// 보스 캐릭터 체력 바를 표시합니다.
-    /// </summary>
-    protected override void ActivateBossHUD()
-    {
-        base.ActivateBossHUD();
-    }
-    /// <summary>
-    /// 보스 체력 재생을 요청합니다.
-    /// </summary>
-    protected override void RequestFillHealth()
-    {
-        base.RequestFillHealth();
     }
 
     #endregion
@@ -655,6 +661,30 @@ public class HwanseBattleManager : BattleManager
         return true;
     }
     public float _distance;
+
+    #endregion
+
+
+
+
+
+    #region 구형 정의를 보관합니다.
+    [Obsolete("BattleHUD로 대체되었습니다.")]
+    /// <summary>
+    /// 보스 캐릭터 체력 바를 표시합니다.
+    /// </summary>
+    protected override void ActivateBossHUD()
+    {
+        base.ActivateBossHUD();
+    }
+    [Obsolete("BattleHUD로 대체되었습니다.")]
+    /// <summary>
+    /// 보스 체력 재생을 요청합니다.
+    /// </summary>
+    protected override void RequestFillHealth()
+    {
+        base.RequestFillHealth();
+    }
 
     #endregion
 }

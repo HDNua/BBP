@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -314,8 +315,8 @@ public abstract class BattleManager : MonoBehaviour
     /// </summary>
     protected virtual IEnumerator CoroutineSetupBattle()
     {
-        // 보스 캐릭터 체력 바를 표시합니다.
-        ActivateBossHUD();
+        // 전투 HUD를 활성화합니다.
+        ActivateBattleHUD();
 
         // 보스 체력 재생을 요청합니다.
         RequestFillHealth();
@@ -361,11 +362,11 @@ public abstract class BattleManager : MonoBehaviour
 
     #region 보조 메서드를 정의합니다.
     /// <summary>
-    /// 보스 캐릭터 체력 바를 표시합니다.
+    /// 전투 HUD를 활성화합니다.
     /// </summary>
-    protected virtual void ActivateBossHUD()
+    protected virtual void ActivateBattleHUD()
     {
-        UIManager.Instance.ActivateBossHUD();
+        UIManager.Instance.ActivateBattleHUD();
     }
     /// <summary>
     /// 보스 체력 재생을 요청합니다.
@@ -400,6 +401,14 @@ public abstract class BattleManager : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("BattleHUD로 대체되었습니다.")]
+    /// <summary>
+    /// 보스 캐릭터 체력 바를 표시합니다.
+    /// </summary>
+    protected virtual void ActivateBossHUD()
+    {
+        UIManager.Instance.ActivateBossHUD();
+    }
 
     #endregion
 }

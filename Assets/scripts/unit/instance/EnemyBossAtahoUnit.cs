@@ -23,11 +23,28 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
 
-    #region Unity에서 접근 가능한 공용 객체를 정의합니다.
+    #region Unity에서 접근 가능한 공용 필드를 정의합니다.
     /// <summary>
     /// 팀원 리스트입니다. 아타호의 경우 린샹과 스마슈가 됩니다.
     /// </summary>
     public EnemyUnit[] _team;
+
+    /// <summary>
+    /// 플레이어의 마나를 확인합니다.
+    /// </summary>
+    public int _mana = 40;
+    /// <summary>
+    /// 플레이어의 최대 마나를 확인합니다.
+    /// </summary>
+    public int _maxMana = 40;
+    /// <summary>
+    /// 플레이어의 경험치를 확인합니다.
+    /// </summary>
+    public int _exp = 0;
+    /// <summary>
+    /// 플레이어의 최대 경험치를 확인합니다.
+    /// </summary>
+    public int _maxExp = 40;
 
     /// <summary>
     /// 이동할 위치 집합입니다.
@@ -216,6 +233,23 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         set { _landBlocked = value; }
     }
 
+    /// <summary>
+    /// 플레이어의 마나가 가득 찼는지 확인합니다.
+    /// </summary>
+    /// <returns>마나가 가득 찼다면 true입니다.</returns>
+    public bool IsManaFull()
+    {
+        return (_mana == _maxMana);
+    }
+    /// <summary>
+    /// 플레이어의 경험치가 가득 찼는지 확인합니다.
+    /// </summary>
+    /// <returns>경험치가 가득 찼다면 true입니다.</returns>
+    public bool IsExpFull()
+    {
+        return (_exp == _maxExp);
+    }
+
     #endregion
 
 
@@ -324,7 +358,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
 
-    #region EnemyScript의 메서드를 오버라이드합니다.
+    #region EnemyUnit의 메서드를 오버라이드합니다.
     /// <summary>
     /// 캐릭터가 사망합니다.
     /// </summary>
@@ -379,6 +413,17 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
         // 개체 자신을 제거합니다.
         Destroy(gameObject);
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="damage"></param>
+    public override void Hurt(int damage)
+    {
+        base.Hurt(damage);
+
+        // 
+        _exp += damage;
     }
 
     #endregion
@@ -461,6 +506,16 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
             IsActionRunning = true;
         }
         StopMoving();
+
+        // 
+        while (IsAnimatorInState("Ready"))
+        {
+            yield return false;
+        }
+        while (IsAnimatorInState("ReadyEnd"))
+        {
+            yield return false;
+        }
 
         // 등장을 마칩니다.
         EndAction();
@@ -815,12 +870,10 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         // 플레이어를 향해 수평 방향 전환합니다.
         if (relativePos.x < 0 && FacingRight)
         {
-            /// MoveLeft();
             Flip();
         }
         else if (relativePos.x > 0 && FacingRight == false)
         {
-            /// MoveRight();
             Flip();
         }
 
@@ -835,407 +888,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
-    /// <summary>
-    /// 막기1 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterGuard1()
-    {
-        // 
-        int[] nextHopPositionArray = GetNextHopPositionArray();
-        int newPositionIndex = nextHopPositionArray
-            [Random.Range(0, nextHopPositionArray.Length)];
-
-        // 
-        _previousPositionIndex = _currentPositionIndex;
-        _currentPositionIndex = newPositionIndex;
-
-        // 
-        Transform newPosition = _positions[newPositionIndex];
-        HopTo(newPosition);
-    }
-    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
-    /// <summary>
-    /// 공격 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterAttack()
-    {
-        Guard();
-    }
-    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
-    /// <summary>
-    /// 위치 전환 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterHop()
-    {
-        if (_phase == 0)
-        {
-            EnemyUnit enemy = _team[Random.Range(0, 2)];
-            CallTeamUnit(enemy);
-        }
-        else if (_phase == 1)
-        {
-            EnemyUnit enemy = _team[Random.Range(2, 4)];
-            CallTeamUnit(enemy);
-        }
-        else
-        {
-            EnemyUnit enemy = _team[Random.Range(4, 6)];
-            CallTeamUnit(enemy);
-        }
-    }
-    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
-    /// <summary>
-    /// 팀 호출 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterCall()
-    {
-        Guard();
-    }
-    [Obsolete("행동 이후의 행동은 행동의 끝에서 정의하는 게 아니라 패턴에서 정의해야 합니다.")]
-    /// <summary>
-    /// 막기2 행동 다음 액션을 수행합니다.
-    /// </summary>
-    void PerformActionAfterGuard2()
-    {
-        DoHokyokkwon();
-    }
-
-
-
-    [Obsolete("전투 관리자로 대체되었습니다.")]
-    /// <summary>
-    /// 다음 뛸 지점의 집합을 반환합니다.
-    /// </summary>
-    /// <returns>다음 뛸 지점의 집합을 반환합니다.</returns>
-    int[] GetNextHopPositionArray()
-    {
-        float[] diffs =
-        {
-            Vector3.Distance(transform.position, _positions[0].position),
-            Vector3.Distance(transform.position, _positions[1].position),
-            Vector3.Distance(transform.position, _positions[2].position),
-            Vector3.Distance(transform.position, _positions[3].position),
-            Vector3.Distance(transform.position, _positions[4].position),
-            Vector3.Distance(transform.position, _positions[5].position),
-            Vector3.Distance(transform.position, _positions[6].position),
-        };
-
-        // 
-        float minDist = Mathf.Min(diffs);
-
-        // 
-        int[] hopPositionArray;
-        if (minDist == diffs[0])
-        {
-            hopPositionArray = new int[] { 1, 2 };
-        }
-        else if (minDist == diffs[1])
-        {
-            hopPositionArray = new int[] { 0, 3 };
-        }
-        else if (minDist == diffs[2])
-        {
-            hopPositionArray = new int[] { 0, 3, 4 };
-        }
-        else if (minDist == diffs[3])
-        {
-            hopPositionArray = new int[] { 1, 2, 4, 5 };
-        }
-        else if (minDist == diffs[4])
-        {
-            hopPositionArray = new int[] { 2, 3, 6 };
-        }
-        else if (minDist == diffs[5])
-        {
-            hopPositionArray = new int[] { 3, 6 };
-        }
-        else if (minDist == diffs[6])
-        {
-            hopPositionArray = new int[] { 4, 5 };
-        }
-        else
-        {
-            hopPositionArray = new int[] { 1, 2 };
-        }
-
-        // 
-        return hopPositionArray;
-    }
-
-    [Obsolete("전투 관리자로 대체되었습니다.")]
-    public int _previousPositionIndex = 0;
-    [Obsolete("전투 관리자로 대체되었습니다.")]
-    public int _currentPositionIndex = 0;
-
-
-    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
-    /// <summary>
-    /// 왼쪽으로 이동합니다.
-    /// </summary>
-    void MoveLeft()
-    {
-        if (FacingRight)
-            Flip();
-
-        _groundable.Moving = true;
-        _Rigidbody.velocity = new Vector2(-_movingSpeedX, _Rigidbody.velocity.y);
-    }
-    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
-    /// <summary>
-    /// 오른쪽으로 이동합니다.
-    /// </summary>
-    void MoveRight()
-    {
-        if (FacingRight == false)
-            Flip();
-
-        // 상태를 정의합니다.
-        _groundable.Moving = true;
-
-        // 내용을 정의합니다.
-        _Rigidbody.velocity = new Vector2(_movingSpeedX, _Rigidbody.velocity.y);
-    }
-    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
-    /// <summary>
-    /// 위쪽으로 이동합니다.
-    /// </summary>
-    void MoveUp()
-    {
-        // 상태를 정의합니다.
-        _groundable.Moving = true;
-
-        // 내용을 정의합니다.
-        _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, _movingSpeedY);
-    }
-    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
-    /// <summary>
-    /// 아래쪽으로 이동합니다.
-    /// </summary>
-    void MoveDown()
-    {
-        // 상태를 정의합니다.
-        _groundable.Moving = true;
-
-        // 내용을 정의합니다.
-        _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, -_movingSpeedY);
-    }
-    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
-    /// <summary>
-    /// 궁극기를 준비합니다.
-    /// </summary>
-    IEnumerator CoroutineReadyUltimate()
-    {
-        float originalSpeedX = _movingSpeedX;
-        float originalSpeedY = _movingSpeedY;
-
-        _movingSpeedX = _ultimateSpeedX1;
-        _movingSpeedY = _ultimateSpeedY1;
-
-        // 
-        int newPositionIndex = Random.Range(0, _positions.Length);
-        Transform newPosition = _positions[newPositionIndex];
-
-        // 
-        MoveTo(newPosition);
-        while (true)
-        {
-            // 
-            Vector3 newPos = transform.position;
-            Vector3 dstPos = newPosition.position;
-
-            // 
-            if (newPos.x > dstPos.x)
-                newPos.x = dstPos.x;
-            if (newPos.y < dstPos.y)
-                newPos.y = dstPos.y;
-            transform.position = newPos;
-
-            // 
-            if (Vector3.Distance(newPos, dstPos) < 0.1f)
-            {
-                break;
-            }
-
-            // 
-            yield return false;
-        }
-        StopMoving();
-        StopGuarding();
-
-        // 
-        _movingSpeedX = originalSpeedX;
-        _movingSpeedY = originalSpeedY;
-        Ultimate1();
-        yield break;
-    }
-    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
-    /// <summary>
-    /// 궁극기 1을 시전합니다.
-    /// </summary>
-    private IEnumerator CoroutineUltimate1()
-    {
-        float originalSpeedX = _movingSpeedX;
-        float originalSpeedY = _movingSpeedY;
-
-        // 
-        _movingSpeedX = _ultimateSpeedX1;
-        _movingSpeedY = _ultimateSpeedY1;
-        if (FacingRight)
-            Flip();
-
-        // 
-        MoveUp();
-        for (int i = 0; i < _shotCount_1_1; ++i)
-        {
-            Shot(_shotPosition[1], transform.position - new Vector3(100, 100));
-            yield return new WaitForSeconds(_ultimateInterval1);
-        }
-        StopMoving();
-
-        // 
-        MoveLeft();
-        for (int i = 0; i < _shotCount_1_2; ++i)
-        {
-            Shot(_shotPosition[1], transform.position - new Vector3(100, 100));
-            yield return new WaitForSeconds(_ultimateInterval1);
-        }
-        StopMoving();
-
-        // 궁극기를 끝냅니다.
-        _movingSpeedX = originalSpeedX;
-        _movingSpeedY = originalSpeedY;
-        Ultimate2();
-        yield break;
-    }
-    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
-    /// <summary>
-    /// 궁극기 2를 시전합니다.
-    /// </summary>
-    private IEnumerator CoroutineUltimate2()
-    {
-        float originalSpeedX = _movingSpeedX;
-        float originalSpeedY = _movingSpeedY;
-
-        // 
-        _movingSpeedX = _ultimateSpeedX1;
-        _movingSpeedY = _ultimateSpeedY1;
-
-        Flip();
-        MoveDown();
-        for (int i = 0; i < _shotCount_2_1; ++i)
-        {
-            Shot(_shotPosition[1], transform.position + new Vector3(100, 0));
-            yield return new WaitForSeconds(_ultimateInterval1);
-        }
-        StopMoving();
-
-        // 궁극기를 끝냅니다.
-        _movingSpeedX = originalSpeedX;
-        _movingSpeedY = originalSpeedY;
-        //PerformActionAfterUltimate();
-        yield break;
-    }
-
-    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
-    /// <summary>
-    /// 특정 지점으로 이동합니다.
-    /// </summary>
-    /// <param name="t">이동할 지점입니다.</param>
-    void MoveTo(Transform t)
-    {
-        // 사용할 변수를 선언합니다.
-        Vector2 relativePos = t.position - transform.position;
-
-        // 플레이어를 향해 수평 방향 전환합니다.
-        if (relativePos.x < 0)
-        {
-            MoveLeft();
-        }
-        else if (relativePos.x > 0)
-        {
-            MoveRight();
-        }
-        // 플레이어를 향해 수직 방향 전환합니다.
-        if (relativePos.y > 0)
-        {
-            MoveUp();
-        }
-        else if (relativePos.y < 0)
-        {
-            MoveDown();
-        }
-    }
-    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
-    /// <summary>
-    /// 플레이어를 향해 이동합니다.
-    /// </summary>
-    private void MoveToPlayer()
-    {
-        // 사용할 변수를 선언합니다.
-        Vector3 playerPos = _StageManager.GetCurrentPlayerPosition();
-        Vector2 relativePos = playerPos - transform.position;
-
-        // 플레이어를 향해 수평 방향 전환합니다.
-        if (relativePos.x < 0)
-        {
-            MoveLeft();
-        }
-        else if (relativePos.x > 0)
-        {
-            MoveRight();
-        }
-        // 플레이어를 향해 수직 방향 전환합니다.
-        if (relativePos.y > 0)
-        {
-            MoveUp();
-        }
-        else if (relativePos.y < 0)
-        {
-            MoveDown();
-        }
-    }
-
-    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
-    /// <summary>
-    /// 궁극기를 준비합니다.
-    /// </summary>
-    void ReadyUltimate()
-    {
-        StartCoroutine(CoroutineReadyUltimate());
-    }
-    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
-    /// <summary>
-    /// 궁극기 1을 시전합니다.
-    /// </summary>
-    void Ultimate1()
-    {
-        Guarding = false;
-
-        // 내용을 정의합니다.
-        StartCoroutine(CoroutineUltimate1());
-    }
-    [Obsolete("아타호는 이 메서드를 사용하지 않습니다.")]
-    /// <summary>
-    /// 궁극기 2를 시전합니다.
-    /// </summary>
-    void Ultimate2()
-    {
-        // 내용을 정의합니다.
-        StartCoroutine(CoroutineUltimate2());
-    }
-
-    [Obsolete("이 행동은 전투 관리자에서 정의해야 합니다.")]
-    /// <summary>
-    /// 전투 시작 액션입니다.
-    /// </summary>
-    void Fight()
-    {
-        // base.Fight();
-
-        // 
-        DoHokyokkwon();
-    }
 
     #endregion
 }

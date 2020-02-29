@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public BossHUDScript[] _bossHudArray;
+    public BattleHUD[] _battleHudArray;
 
     #endregion
 
@@ -107,6 +107,51 @@ public class UIManager : MonoBehaviour
         _HUD.UpdateStatusText();
     }
     /// <summary>
+    /// 전투 HUD를 활성화합니다.
+    /// </summary>
+    public void ActivateBattleHUD()
+    {
+        // 
+        EnemyBossUnit[] bosses = (from unit in BattleManager.Instance._units
+                                  where unit is EnemyBossUnit
+                                  select unit as EnemyBossUnit).ToArray();
+
+        //
+        for (int i = 0; i < _battleHudArray.Length; ++i)
+        {
+            EnemyBossUnit boss = bosses[i];
+            BattleHUD hud = _battleHudArray[i];
+
+            // 
+            hud.gameObject.SetActive(true);
+            hud.RequestSetUnit(boss);
+        }
+    }
+    /// <summary>
+    /// 전투 HUD를 비활성화합니다.
+    /// </summary>
+    public void DeactivateBattleHUD()
+    {
+        foreach (BattleHUD hud in _battleHudArray)
+        {
+            hud.gameObject.SetActive(false);
+        }
+    }
+
+    #endregion
+
+
+
+
+
+    #region 구형 정의를 보관합니다.
+    [Obsolete("BattleHUD로 대체되었습니다.")]
+    /// <summary>
+    /// 
+    /// </summary>
+    public BossHUDScript[] _bossHudArray;
+    [Obsolete("BattleHUD로 대체되었습니다.")]
+    /// <summary>
     /// 보스의 체력 잔량을 업데이트합니다.
     /// </summary>
     public void UpdateBossHealthText()
@@ -122,7 +167,7 @@ public class UIManager : MonoBehaviour
         }
         */
     }
-
+    [Obsolete("BattleHUD로 대체되었습니다.")]
     /// <summary>
     /// 보스 HUD를 활성화합니다.
     /// </summary>
@@ -151,8 +196,8 @@ public class UIManager : MonoBehaviour
             hud.gameObject.SetActive(true);
             hud.RequestSetUnit(boss);
         }
-
     }
+    [Obsolete("BattleHUD로 대체되었습니다.")]
     /// <summary>
     /// 보스 HUD를 비활성화합니다.
     /// </summary>
@@ -164,14 +209,6 @@ public class UIManager : MonoBehaviour
             hud.gameObject.SetActive(false);
         }
     }
-
-    #endregion
-
-
-
-
-
-    #region 구형 정의를 보관합니다.
 
     #endregion
 }

@@ -191,6 +191,9 @@ public class HwanseBattleHUD : BattleHUD
     /// </summary>
     void UpdateManaBar()
     {
+        _manaDamageBar.GetComponent<UnityEngine.UI.Image>().color = Color.white;
+
+        // 
         if (_battleManager.DoesBattleEnd())
         {
             // 마나 바를 업데이트 합니다.
@@ -207,34 +210,81 @@ public class HwanseBattleHUD : BattleHUD
         }
         else if (_atahoUnit != null)
         {
-            // 마나 바를 업데이트 합니다.
-            Vector3 manaScale = _manaBar.transform.localScale;
-            Vector3 damageScale = _manaDamageBar.transform.localScale;
-            float value = (float)_atahoUnit._mana / _atahoUnit._maxMana;
-            manaScale.x = value;
-            _manaBar.transform.localScale = manaScale;
-
-            // 대미지 바가 마나 바를 추적합니다.
-            if (false)
+            // 마나를 회복하는 경우의 처리입니다.
+            if (_atahoUnit._manaFilling)
             {
-                _mpTargetTime = 0;
+                _manaDamageBar.GetComponent<UnityEngine.UI.Image>().color = Color.clear;
+
+                // 다른 바와 달리, 마나 대미지 바를 업데이트 합니다.
+                Vector3 manaScale = _manaDamageBar.transform.localScale;
+                Vector3 damageScale = _manaBar.transform.localScale;
+                float value = (float)_atahoUnit._mana / _atahoUnit._maxExp;
+                manaScale.x = value;
+                _manaDamageBar.transform.localScale = manaScale;
+
+                // 마나 바가 대미지 바를 추적합니다.
+                if (_atahoUnit._manaFillRequest)
+                {
+                    _mpTargetTime = 0;
+                    _atahoUnit.SetManaFillRequest(false);
+                }
+                else
+                {
+                    Vector3 newScale = damageScale;
+                    float manaScaleValue;
+                    float damageScaleValue;
+
+                    // 
+                    manaScaleValue = manaScale.x;
+                    damageScaleValue = damageScale.x;
+
+                    //
+                    float newScaleValue = Mathf.Lerp(manaScaleValue, damageScaleValue, 1 - _mpTargetTime / _mpFollowTime);
+                    newScale.x = newScaleValue;
+
+                    // 
+                    _manaBar.transform.localScale = newScale;
+
+                    // 회복이 완료되었다면 마나 회복 상태를 종료합니다.
+                    if (_mpTargetTime == _mpFollowTime)
+                    {
+                        _atahoUnit.EndFillMana();
+                    }
+                }
             }
+            // 일반 및 마나를 사용하는 경우의 처리입니다.
             else
             {
-                Vector3 newScale = damageScale;
-                float manaScaleValue;
-                float damageScaleValue;
+                // 마나 바를 업데이트 합니다.
+                Vector3 manaScale = _manaBar.transform.localScale;
+                Vector3 damageScale = _manaDamageBar.transform.localScale;
+                float value = (float)_atahoUnit._mana / _atahoUnit._maxMana;
+                manaScale.x = value;
+                _manaBar.transform.localScale = manaScale;
 
-                // 
-                manaScaleValue = manaScale.x;
-                damageScaleValue = damageScale.x;
+                // 대미지 바가 마나 바를 추적합니다.
+                if (_atahoUnit._manaUseRequest)
+                {
+                    _mpTargetTime = 0;
+                    _atahoUnit.SetManaUseRequest(false);
+                }
+                else
+                {
+                    Vector3 newScale = damageScale;
+                    float manaScaleValue;
+                    float damageScaleValue;
 
-                //
-                float newScaleValue = Mathf.Lerp(manaScaleValue, damageScaleValue, 1 - _mpTargetTime / _mpFollowTime);
-                newScale.x = newScaleValue;
+                    // 
+                    manaScaleValue = manaScale.x;
+                    damageScaleValue = damageScale.x;
 
-                // 
-                _manaDamageBar.transform.localScale = newScale;
+                    //
+                    float newScaleValue = Mathf.Lerp(manaScaleValue, damageScaleValue, 1 - _mpTargetTime / _mpFollowTime);
+                    newScale.x = newScaleValue;
+
+                    // 
+                    _manaDamageBar.transform.localScale = newScale;
+                }
             }
         }
         else
@@ -255,31 +305,32 @@ public class HwanseBattleHUD : BattleHUD
     {
         if (_battleManager.DoesBattleEnd())
         {
-            // 경험치 바를 업데이트 합니다.
-            Vector3 expScale = _expBar.transform.localScale;
+            // 다른 바와 달리, 경험치 대미지 바를 업데이트 합니다.
+            Vector3 expScale = _expDamageBar.transform.localScale;
             expScale.x = 0;
-            _expBar.transform.localScale = expScale;
+            _expDamageBar.transform.localScale = expScale;
 
-            // 대미지 바를 업데이트 합니다.
-            Vector3 damageScale = _expDamageBar.transform.localScale;
+            // 경험치 바를 업데이트 합니다.
+            Vector3 damageScale = _expBar.transform.localScale;
             Vector3 newScale = damageScale;
             float newScaleValue = Mathf.Lerp(expScale.x, damageScale.x, 1 - _hpTargetTime / _hpFollowTime);
             newScale.x = newScaleValue;
-            _expDamageBar.transform.localScale = newScale;
+            _expBar.transform.localScale = newScale;
         }
         else if (_atahoUnit != null)
         {
-            // 경험치 바를 업데이트 합니다.
-            Vector3 expScale = _expBar.transform.localScale;
-            Vector3 damageScale = _expDamageBar.transform.localScale;
-            float value = (float)_atahoUnit._exp / _atahoUnit._maxExp;
+            // 다른 바와 달리, 경험치 대미지 바를 업데이트 합니다.
+            Vector3 expScale = _expDamageBar.transform.localScale;
+            Vector3 damageScale = _expBar.transform.localScale;
+            float value = (float)(_atahoUnit._exp % _atahoUnit._maxExp) / _atahoUnit._maxExp;
             expScale.x = value;
-            _expBar.transform.localScale = expScale;
+            _expDamageBar.transform.localScale = expScale;
 
-            // 대미지 바가 경험치 바를 추적합니다.
-            if (false)
+            // 경험치 바가 대미지 바를 추적합니다.
+            if (_atahoUnit._expUpdateRequest)
             {
                 _expTargetTime = 0;
+                _atahoUnit.SetExpUpdateRequest(false);
             }
             else
             {
@@ -296,15 +347,15 @@ public class HwanseBattleHUD : BattleHUD
                 newScale.x = newScaleValue;
 
                 // 
-                _expDamageBar.transform.localScale = newScale;
+                _expBar.transform.localScale = newScale;
             }
         }
         else
         {
-            Vector3 expScale = _expBar.transform.localScale;
+            Vector3 expScale = _expDamageBar.transform.localScale;
             expScale.x = 0;
-            _expBar.transform.localScale = expScale;
             _expDamageBar.transform.localScale = expScale;
+            _expBar.transform.localScale = expScale;
         }
 
         // 
@@ -340,27 +391,6 @@ public class HwanseBattleHUD : BattleHUD
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("안 씁니다. 다음 커밋에서 발견하면 즉시 제거하십시오.")]
-    /// <summary>
-    /// 체력 바 보드의 머리 부분입니다.
-    /// </summary>
-    public GameObject _healthBoardHead;
-    [Obsolete("안 씁니다. 다음 커밋에서 발견하면 즉시 제거하십시오.")]
-    /// <summary>
-    /// 체력 바 보드의 몸통 부분입니다.
-    /// </summary>
-    public GameObject _healthBoardBody;
-
-    [Obsolete("안 씁니다. 다음 커밋에서 발견하면 즉시 제거하십시오.")]
-    /// <summary>
-    /// 체력 텍스트 보드입니다.
-    /// </summary>
-    public GameObject _healthTextBoard;
-    [Obsolete("안 씁니다. 다음 커밋에서 발견하면 즉시 제거하십시오.")]
-    /// <summary>
-    /// 체력 텍스트입니다.
-    /// </summary>
-    public UnityEngine.UI.Text _healthText;
 
     #endregion
 }

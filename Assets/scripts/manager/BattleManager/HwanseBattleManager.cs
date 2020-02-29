@@ -321,6 +321,7 @@ public class HwanseBattleManager : BattleManager
         }
 
         _direction = GetDirectionToTarget(_atahoUnit.transform, player.transform);
+        _distance = Vector3.Distance(_atahoUnit.transform.position, player.transform.position);
         switch (_direction)
         {
             case Direction.LU:
@@ -353,6 +354,14 @@ public class HwanseBattleManager : BattleManager
         }
 
         // 행동이 종료될 때까지 대기합니다.
+        while (_atahoUnit.IsActionStarted == false)
+        {
+            yield return false;
+        }
+        while (_atahoUnit.IsActionRunning)
+        {
+            yield return false;
+        }
         while (_atahoUnit.IsActionEnded == false)
         {
             yield return false;
@@ -409,7 +418,7 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            _atahoUnit.Guard();
+            atahoUnit.DrinkMana();
         }
         else
         {
@@ -425,11 +434,11 @@ public class HwanseBattleManager : BattleManager
     {
         if (IsNear(atahoUnit.transform, player.transform))
         {
-            _atahoUnit.Guard();
+            atahoUnit.Guard();
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            _atahoUnit.Guard();
+            atahoUnit.DrinkMana();
         }
         else
         {
@@ -449,7 +458,7 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            _atahoUnit.Guard();
+            atahoUnit.DrinkMana();
         }
         else
         {
@@ -465,15 +474,36 @@ public class HwanseBattleManager : BattleManager
     {
         if (IsNear(atahoUnit.transform, player.transform))
         {
-            atahoUnit.DoHokyokkwon();
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYOKKWON)
+            {
+                atahoUnit.DoHokyokkwon();
+            }
+            else
+            {
+                atahoUnit.Guard();
+            }
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            atahoUnit.DoHokyokkwon();
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYOKKWON)
+            {
+                atahoUnit.DoHokyokkwon();
+            }
+            else
+            {
+                atahoUnit.Guard();
+            }
         }
         else
         {
-            atahoUnit.DoHokyokkwon();
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYOKKWON)
+            {
+                atahoUnit.DoHokyokkwon();
+            }
+            else
+            {
+                atahoUnit.Guard();
+            }
         }
     }
     /// <summary>
@@ -505,15 +535,36 @@ public class HwanseBattleManager : BattleManager
     {
         if (IsNear(atahoUnit.transform, player.transform))
         {
-            atahoUnit.DoHokyokkwon();
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYOKKWON)
+            {
+                atahoUnit.DoHokyokkwon();
+            }
+            else
+            {
+                atahoUnit.Guard();
+            }
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            atahoUnit.DoHokyokkwon();
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYOKKWON)
+            {
+                atahoUnit.DoHokyokkwon();
+            }
+            else
+            {
+                atahoUnit.Guard();
+            }
         }
         else
         {
-            atahoUnit.DoHokyokkwon();
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYOKKWON)
+            {
+                atahoUnit.DoHokyokkwon();
+            }
+            else
+            {
+                atahoUnit.Guard();
+            }
         }
     }
     /// <summary>
@@ -529,7 +580,7 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            _atahoUnit.Guard();
+            atahoUnit.DrinkMana();
         }
         else
         {
@@ -549,7 +600,7 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            _atahoUnit.Guard();
+            atahoUnit.DrinkMana();
         }
         else
         {
@@ -569,7 +620,7 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            _atahoUnit.Guard();
+            atahoUnit.DrinkMana();
         }
         else
         {
@@ -608,33 +659,67 @@ public class HwanseBattleManager : BattleManager
 
 
     #region 유닛 전략 구성을 위한 보조 메서드를 정의합니다.
+    public Vector3 _dv;
+
+
+    public float _angle;
+    public float _angle_r = 45 / 360;
+    public float _angle_ru;
+    public float _angle_u;
+    public float _angle_lu;
+    public float _angle_l;
+    public float _angle_ld;
+    public float _angle_d;
+    public float _angle_rd;
+
+
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
     Direction GetDirectionToTarget(Transform st, Transform dt)
     {
-        Vector3 dv = dt.position - st.position;
-        float dx = dv.x;
-        float dy = dv.y;
+        _dv = dt.position - st.position;
+        float dx = _dv.x;
+        float dy = _dv.y;
         Direction direction = Direction.M;
 
-        //
-        if (dx > 0 && dy > 0)
+        _angle = Vector3.SignedAngle(Vector3.right, _dv.normalized, Vector3.forward);
+        if (0 - 22.5 <= _angle && _angle < 0 + 22.5)
+        {
+            direction = Direction.R;
+        }
+        else if (45 - 22.5 <= _angle && _angle < 45 + 22.5)
         {
             direction = Direction.RU;
         }
-        else if (dx > 0 && dy < 0)
+        else if (90 - 22.5 <= _angle && _angle < 90 + 22.5)
         {
-            direction = Direction.RD;
+            direction = Direction.U;
         }
-        else if (dx < 0 && dy > 0)
+        else if (135 - 22.5 <= _angle && _angle < 135 + 22.5)
         {
             direction = Direction.LU;
         }
-        else if (dx < 0 && dy < 0)
+        else if (180 - 22.5 <= _angle || _angle < -180 + 22.5)
+        {
+            direction = Direction.L;
+        }
+        else if (-135 - 22.5 <= _angle && _angle < -135 + 22.5)
         {
             direction = Direction.LD;
+        }
+        else if (-90 - 22.5 <= _angle && _angle < -90 + 22.5)
+        {
+            direction = Direction.D;
+        }
+        else if (-45 - 22.5 <= _angle && _angle < -45 + 22.5)
+        {
+            direction = Direction.RD;
+        }
+        else
+        {
+            direction = Direction.M;
         }
 
         //
@@ -646,9 +731,7 @@ public class HwanseBattleManager : BattleManager
     /// <returns></returns>
     bool IsNear(Transform st, Transform dt)
     {
-
-
-        return true;
+        return (_distance < 5.0f);
     }
     /// <summary>
     /// 
@@ -656,10 +739,11 @@ public class HwanseBattleManager : BattleManager
     /// <returns></returns>
     bool IsFar(Transform st, Transform dt)
     {
-
-
-        return true;
+        return (_distance >= 5.0f);
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public float _distance;
 
     #endregion

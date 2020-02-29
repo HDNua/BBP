@@ -11,6 +11,25 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class EnemyBossAtahoUnit : EnemyBossUnit
 {
+    #region 상수를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    public int MANA_HOKYOKKWON = 10;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public float TIME_SWING_ARM = 0.12f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float TIME_HOKYOKKWON_RUN = 1f;
+
+    #endregion
+
+
+
     #region 컨트롤러가 사용할 Unity 객체를 정의합니다.
     /// <summary>
     /// 착지할 수 있는 유닛입니다.
@@ -127,10 +146,19 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// 위치를 변경하는 중이라면 참입니다.
     /// </summary>
     bool _hopping = false;
+
+
+
+    /// <summary>
+    /// 마나를 회복하는 중이라면 참입니다.
+    /// </summary>
+    bool _drinkingMana = false;
     /// <summary>
     /// 팀원을 호출하는 중이라면 참입니다.
     /// </summary>
     bool _calling = false;
+
+
 
     /// <summary>
     /// 위치 전환 시에 얼마나 오랫동안 공중에 있을지를 나타냅니다.
@@ -211,6 +239,17 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         get { return _hopping; }
         private set { _Animator.SetBool("Hopping", _hopping = value); }
     }
+
+
+
+    /// <summary>
+    /// 마나를 회복하고 있다면 참입니다.
+    /// </summary>
+    bool DrinkingMana
+    {
+        get { return _drinkingMana; }
+        set { _Animator.SetBool("DrinkingMana", _drinkingMana = value); }
+    }
     /// <summary>
     /// 팀원을 호출하는 중이라면 참입니다.
     /// </summary>
@@ -219,6 +258,8 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         get { return _calling; }
         set { _Animator.SetBool("Calling", _calling = value); }
     }
+
+
 
     /// <summary>
     /// 궁극기가 활성화되었다면 참입니다.
@@ -423,7 +464,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         base.Hurt(damage);
 
         // 
-        _exp += damage;
+        UpdateExp(damage);
     }
 
     #endregion
@@ -433,6 +474,98 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
     #region 공용 메서드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool _manaFillRequest = false;
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool _manaFilling = false;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="mana"></param>
+    public void FillMana(int mana)
+    {
+        _manaFillRequest = true;
+        _manaFilling = true;
+
+        //
+        _mana = Mathf.Clamp(_mana + mana, 0, _maxMana);
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public void EndFillMana()
+    {
+        _manaFilling = false;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetManaFillRequest(bool value)
+    {
+        _manaFillRequest = value;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool _manaUseRequest = false;
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="mana"></param>
+    public void UseMana(int mana)
+    {
+        _manaUseRequest = true;
+
+        //
+        _mana = Mathf.Clamp(_mana - mana, 0, _maxMana);
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetManaUseRequest(bool value)
+    {
+        _manaUseRequest = value;
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool _expUpdateRequest = false;
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name=""></param>
+    public void UpdateExp(int damage)
+    {
+        _expUpdateRequest = true;
+
+        // 페이즈 업데이트 시엔 마나를 모두 회복합니다.
+        if (_exp + damage - _phase * _maxExp >= _maxExp)
+        {
+            FillMana(_maxMana);
+        }
+
+        // 환세 전투에서 페이즈는 아타호의 경험치와 관계되어 있습니다.
+        _exp = _exp + damage;
+        _phase = _exp / _maxExp;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetExpUpdateRequest(bool value)
+    {
+        _expUpdateRequest = value;
+    }
 
     #endregion
 
@@ -555,6 +688,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         _absHopEndPoint = newPosition.position + newPosition.parent.transform.position;
 
         // 위치 전환 코루틴을 시작합니다.
+        StartAction();
         _coroutineHop = StartCoroutine(CoroutineHop());
     }
     /// <summary>
@@ -571,6 +705,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
             StopCoroutine(_coroutineHop);
             _coroutineHop = null;
         }
+        EndAction();
     }
 
     /// <summary>
@@ -584,6 +719,24 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         float x0 = _absHopStartPoint.x;
         float x1 = _absHopEndPoint.x;
         yield return false;
+        IsActionStarted = false;
+        IsActionRunning = true;
+
+        // 방향을 맞춥니다.
+        if (x0 < x1)
+        {
+            if (FacingRight == false)
+            {
+                Flip();
+            }
+        }
+        else
+        {
+            if (FacingRight)
+            {
+                Flip();
+            }
+        }
 
         // 
         while (IsAnimatorInState("JumpBeg1"))
@@ -651,6 +804,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         DoingHokyokkwon = true;
 
         // 공격 코루틴을 시작합니다.
+        StartAction();
         _coroutineHokyokkwon = StartCoroutine(CoroutineHokyokkwon());
     }
     /// <summary>
@@ -659,6 +813,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     public void StopDoingHokyokkwon()
     {
         DoingHokyokkwon = false;
+        EndAction();
     }
 
     /// <summary>
@@ -672,16 +827,43 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     {
         // 움직임을 멈춥니다.
         StopMoving();
+        yield return false;
+
+        // 
+        float time = 0;
 
         // 탄환을 발사합니다.
-        while (IsAnimatorInState("HokyokkwonBeg") == false)
+        while (IsAnimatorInState("HokyokkwonBeg"))
         {
             yield return false;
+            IsActionStarted = false;
+            IsActionRunning = true;
+            time += Time.deltaTime;
+
+            if (time > TIME_SWING_ARM)
+            {
+                SoundEffects[3].Play();
+                time = 0;
+            }
         }
+
+        // 
+        time = 0;
+        UseMana(MANA_HOKYOKKWON);
         ShotToPlayer();
+        while (IsAnimatorInState("HokyokkwonRun"))
+        {
+            yield return false;
+            time += Time.deltaTime;
+
+            if (time >= TIME_HOKYOKKWON_RUN)
+            {
+                break;
+            }
+        }
 
         // 공격을 끝냅니다.
-        DoingHokyokkwon = false;
+        StopDoingHokyokkwon();
         _coroutineHokyokkwon = null;
         yield break;
     }
@@ -732,6 +914,69 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         // 막기 상태를 끝냅니다.
         StopGuarding();
         _coroutineGuard = null;
+        yield break;
+    }
+
+    #endregion
+
+
+
+
+    #region "마나 드링크" 행동을 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    public void DrinkMana()
+    {
+        DrinkingMana = true;
+
+        // 
+        StartAction();
+        _coroutineDrinkMana = StartCoroutine(CoroutineDrinkMana());
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public void StopDrinkingMana()
+    {
+        DrinkingMana = false;
+
+        // 
+        EndAction();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    Coroutine _coroutineDrinkMana;
+    /// <summary>
+    /// 
+    /// </summary>
+    IEnumerator CoroutineDrinkMana()
+    {
+        StopMoving();
+        yield return false;
+        IsActionStarted = false;
+        IsActionRunning = true;
+
+        // 
+        int manaFillStep = _maxMana / 3;
+
+        // 
+        yield return new WaitForSeconds(TIME_SWING_ARM);
+        SoundEffects[4].Play();
+        FillMana(manaFillStep);
+        yield return new WaitForSeconds(TIME_SWING_ARM);
+        SoundEffects[4].Play();
+        FillMana(manaFillStep);
+        yield return new WaitForSeconds(TIME_SWING_ARM);
+        SoundEffects[4].Play();
+        FillMana(manaFillStep);
+        yield return new WaitForSeconds(TIME_SWING_ARM);
+
+        //
+        StopDrinkingMana();
+        _coroutineDrinkMana = null;
         yield break;
     }
 

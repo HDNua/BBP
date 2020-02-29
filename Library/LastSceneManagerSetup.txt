@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scenes/project/bbp/03_Hwanse.unity
+- path: Assets/Scenes/project/bbp/03_Hwanse.unity
   isLoaded: 1
   isActive: 1

@@ -309,6 +309,11 @@ public class HwanseBattleManager : BattleManager
         //////////////////////////////////////////////////////////
         // 
         PlayerController player = _stageManager.MainPlayer;
+        if (player == null || _atahoUnit.IsDead)
+        {
+            yield break;
+        }
+
         _direction = GetDirectionToTarget(_atahoUnit.transform, player.transform);
         switch (_direction)
         {
@@ -341,13 +346,11 @@ public class HwanseBattleManager : BattleManager
                 break;
         }
 
-        // 
+        // 행동이 종료될 때까지 대기합니다.
         while (_atahoUnit.IsActionEnded == false)
         {
             yield return false;
         }
-
-        // 
         _coroutinePattern = null;
         yield break;
     }
@@ -639,7 +642,6 @@ public class HwanseBattleManager : BattleManager
     {
 
 
-
         return true;
     }
     /// <summary>
@@ -650,9 +652,9 @@ public class HwanseBattleManager : BattleManager
     {
 
 
-
         return true;
     }
+    public float _distance;
 
     #endregion
 }

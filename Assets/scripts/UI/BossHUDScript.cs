@@ -15,6 +15,11 @@ public class BossHUDScript : MonoBehaviour
     /// </summary>
     public GameObject _healthBar;
     /// <summary>
+    /// 대미지 바입니다.
+    /// </summary>
+    public GameObject _damageBar;
+
+    /// <summary>
     /// 체력 바 보드의 머리 부분입니다.
     /// </summary>
     public GameObject _healthBoardHead;
@@ -36,6 +41,12 @@ public class BossHUDScript : MonoBehaviour
     /// 체력 바가 수평인지를 표시합니다.
     /// </summary>
     public bool _isHorizontal = false;
+
+    /// <summary>
+    /// 대미지 바가 체력 바를 따라가는 속도입니다.
+    /// </summary>
+    public float _followTime = 0.5f;
+    public float _nowTime = 0;
 
     #endregion
 
@@ -74,12 +85,18 @@ public class BossHUDScript : MonoBehaviour
     /// </summary>
     void Update()
     {
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    void LateUpdate()
+    {
         if (_unit != null)
         {
-            // 체력을 업데이트 합니다.
+            // 체력 바를 업데이트 합니다.
             Vector3 healthScale = _healthBar.transform.localScale;
+            Vector3 damageScale = _damageBar.transform.localScale;
             float value = (float)_unit.Health / _unit.MaxHealth;
-
             if (_isHorizontal)
             {
                 healthScale.x = value;
@@ -89,6 +106,49 @@ public class BossHUDScript : MonoBehaviour
                 healthScale.y = value;
             }
             _healthBar.transform.localScale = healthScale;
+
+            // 대미지 바가 체력 바를 추적합니다.
+            if (_unit.IsDamaged)
+            {
+                _nowTime = 0;
+            }
+            else
+            {
+                Vector3 newScale = damageScale;
+                float healthScaleValue;
+                float damageScaleValue;
+                if (_isHorizontal)
+                {
+                    healthScaleValue = healthScale.x;
+                    damageScaleValue = damageScale.x;
+
+                    //
+                    float newScaleValue = Mathf.Lerp(healthScaleValue, damageScaleValue, 1 - _nowTime / _followTime);
+                    newScale.x = newScaleValue;
+                }
+                else
+                {
+                    healthScaleValue = healthScale.y;
+                    damageScaleValue = damageScale.y;
+
+                    //
+                    float newScaleValue = Mathf.Lerp(healthScaleValue, damageScaleValue, _nowTime / _followTime);
+                    newScale.y = newScaleValue;
+                }
+
+                // 
+                _damageBar.transform.localScale = newScale;
+            }
+
+            // 
+            _nowTime = (_nowTime >= _followTime) ? (_followTime) : _nowTime + Time.deltaTime;
+        }
+        else
+        {
+            Vector3 healthScale = _healthBar.transform.localScale;
+            healthScale.x = 0;
+            _healthBar.transform.localScale = healthScale;
+            _damageBar.transform.localScale = healthScale;
         }
     }
 

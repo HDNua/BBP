@@ -17,7 +17,7 @@ public enum Direction
 
 
 /// <summary>
-/// 
+/// 전투 관리자입니다.
 /// </summary>
 public abstract class BattleManager : MonoBehaviour
 {
@@ -32,12 +32,12 @@ public abstract class BattleManager : MonoBehaviour
     public int _healStep = 10;
 
     /// <summary>
-    /// 
+    /// 전투 페이즈입니다.
     /// </summary>
     public int _phase;
 
     /// <summary>
-    /// 
+    /// 보스 사망 효과입니다.
     /// </summary>
     public BossDeadEffectScript[] _bossDeadEffects;
 
@@ -247,10 +247,6 @@ public abstract class BattleManager : MonoBehaviour
         _readying = false;
         _fighting = true;
 
-        // 
-        ///_bossBattlePattern.Fight();
-
-
         // 전투를 위해 입력 요청을 푸는 등의 정리를 합니다.
         _stageManager.RequestUnblockMoving();
         GetComponent<AudioSource>().Play();
@@ -390,7 +386,7 @@ public abstract class BattleManager : MonoBehaviour
 
     #region 요청 메서드를 정의합니다.
     /// <summary>
-    /// 
+    /// 시나리오를 시작합니다.
     /// </summary>
     public void RequestStart()
     {

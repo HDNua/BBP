@@ -196,7 +196,6 @@ public class XBusterScript : AttackScript
 
     #region 보조 메서드를 정의합니다.
 
-
     #endregion
 
 
@@ -204,32 +203,6 @@ public class XBusterScript : AttackScript
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("[v6.0.3] 다음 커밋에서 삭제할 예정입니다.")]
-    /// <summary>
-    /// 피격 효과 객체를 생성합니다.
-    /// </summary>
-    /// <returns>피격 효과 객체입니다.</returns>
-    protected GameObject MakeHitParticle_dep()
-    {
-        GameObject hitParticle = Instantiate
-            (effects[0], transform.position, transform.rotation)
-            as GameObject;
-
-        // 버스터 속도의 반대쪽으로 적절히 x 반전합니다.
-        if (_rigidbody.velocity.x < 0)
-        {
-            Vector3 newScale = hitParticle.transform.localScale;
-            newScale.x *= -1;
-            hitParticle.transform.localScale = newScale;
-        }
-
-        // 효과음을 재생합니다.
-        EffectScript hitEffect = hitParticle.GetComponent<EffectScript>();
-        hitEffect.PlayEffectSound(SoundEffects[0].clip);
-
-        // 생성한 효과 객체를 반환합니다.
-        return hitParticle;
-    }
 
     #endregion
 }

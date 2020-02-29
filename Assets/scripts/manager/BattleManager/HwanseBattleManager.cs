@@ -11,6 +11,16 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class HwanseBattleManager : BattleManager
 {
+    #region 상수를 정의합니다.
+    /// <summary>
+    /// 패턴 1에서 Hop 행동 후 잠깐 쉬는 시간입니다.
+    /// </summary>
+    public float TIME_WAIT_PATTERN1 = 0.4f;
+
+    #endregion
+
+
+
     #region 컨트롤러가 사용할 Unity 개체에 대한 참조를 보관합니다.
     /// <summary>
     /// 아타호 적 보스 유닛입니다.
@@ -32,6 +42,11 @@ public class HwanseBattleManager : BattleManager
     /// 
     /// </summary>
     int _currentPositionIndex = 0;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Transform _spawnPosition;
 
     /// <summary>
     /// 
@@ -77,6 +92,9 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     protected override IEnumerator CoroutineAppear()
     {
+        // 
+        _atahoUnit.transform.position = _spawnPosition.position;
+
         // 모든 보스를 등장시킵니다.
         _atahoUnit.gameObject.SetActive(true);
         _atahoUnit.Appear();
@@ -309,6 +327,31 @@ public class HwanseBattleManager : BattleManager
     IEnumerator CoroutinePattern1()
     {
         //////////////////////////////////////////////////////////
+        // 아타호의 남은 마력이 없다면
+        // 기술 사용을 위해 마나 회복을 최우선으로 진행해야 합니다.
+        // 게임 시작 시에 반드시 아타호의 마력이 0인 상태이므로
+        // 플레이어는 아타호의 마력 회복 행동을 통해
+        // 아타호가 마력이 부족할 때 마나 회복을 할 것이라고 예상할 수 있습니다.
+        if (_atahoUnit._mana == 0)
+        {
+            _atahoUnit.DrinkMana();
+
+            // 행동이 종료될 때까지 대기합니다.
+            while (_atahoUnit.IsActionStarted == false)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionRunning)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionEnded == false)
+            {
+                yield return false;
+            }
+        }
+
+        //////////////////////////////////////////////////////////
         // 
         _subcoroutineAction = StartCoroutine(SubcoroutineHop());
         while (_subcoroutineAction != null)
@@ -320,8 +363,8 @@ public class HwanseBattleManager : BattleManager
             yield return false;
         }
 
-        // 1초 기다립니다.
-        yield return new WaitForSeconds(1f);
+        // 약간 기다립니다.
+        yield return new WaitForSeconds(TIME_WAIT_PATTERN1);
 
         //////////////////////////////////////////////////////////
         // 
@@ -429,7 +472,14 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            atahoUnit.DrinkMana();
+            if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
         }
         else
         {
@@ -469,7 +519,14 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            atahoUnit.DrinkMana();
+            if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
         }
         else
         {
@@ -502,7 +559,7 @@ public class HwanseBattleManager : BattleManager
             }
             else
             {
-                atahoUnit.Guard();
+                atahoUnit.DrinkMana();
             }
         }
         else
@@ -530,7 +587,7 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            _atahoUnit.Guard();
+            _atahoUnit.DrinkMana();
         }
         else
         {
@@ -563,7 +620,7 @@ public class HwanseBattleManager : BattleManager
             }
             else
             {
-                atahoUnit.Guard();
+                atahoUnit.DrinkMana();
             }
         }
         else
@@ -591,7 +648,14 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            atahoUnit.DrinkMana();
+            if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
         }
         else
         {
@@ -611,7 +675,14 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            atahoUnit.DrinkMana();
+            if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
         }
         else
         {
@@ -631,7 +702,14 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            atahoUnit.DrinkMana();
+            if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
         }
         else
         {

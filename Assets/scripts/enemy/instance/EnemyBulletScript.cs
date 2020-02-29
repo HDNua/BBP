@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 
+[Obsolete("언젠가는 BulletUnit으로 변경될 것입니다... 그전까지는 역할을 수행하겠죠.")]
 /// <summary>
 /// 탄환을 정의합니다.
 /// </summary>

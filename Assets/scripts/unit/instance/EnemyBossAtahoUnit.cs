@@ -50,7 +50,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 팀원을 호출하는 데 걸리는 시간입니다.
     /// </summary>
-    public float TIME_CALL_TEAM = 5f;
+    public float TIME_CALL_TEAM = 1.2f;
 
     #endregion
 
@@ -73,7 +73,9 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         Runaway,
         Door,
         Stab,
+        Anger,
         Panpare,
+        _쉬쉭,
         _기절,
         _청천벽력,
         Cancel,
@@ -83,7 +85,8 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         Hit2,
         _팅,
         Accept,
-        Miss
+        Miss,
+        GigadeathFire,
     }
     /// <summary>
     /// 
@@ -104,6 +107,10 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// 착지할 수 있는 유닛입니다.
     /// </summary>
     Groundable _groundable;
+    /// <summary>
+    /// 
+    /// </summary>
+    HwanseBattleManager _battleManager;
 
     #endregion
 
@@ -331,6 +338,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
         // 
         _groundable = GetComponent<Groundable>();
+        _battleManager = (HwanseBattleManager)BattleManager.Instance;
     }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다. (생성될 때마다)
@@ -685,6 +693,44 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
 
+    #region 무시 행동을 정의합니다.
+    /// <summary>
+    /// 무시 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineSkip;
+
+    /// <summary>
+    /// 할 행동이 없습니다. 행동 상태를 초기화하고 다음 행동을 진행합니다.
+    /// </summary>
+    public void SkipAction()
+    {
+        StartAction();
+        _coroutineSkip = StartCoroutine(CoroutineSkip());
+    }
+
+    /// <summary>
+    /// 무시 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineSkip()
+    {
+        yield return false;
+        IsActionStarted = false;
+        IsActionRunning = true;
+
+        // 
+        yield return false;
+
+        // 
+        EndAction();
+        yield break;
+    }
+
+    #endregion
+
+
+
+
+
     #region "Hop" 행동을 정의합니다.
     /// <summary>
     /// 현재 위치 좌표입니다.
@@ -876,9 +922,15 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         UseMana(MANA_HOKYOKKWON);
 
         // 
+        Transform shotPosition = _shotPosition[1];
         Vector3 destination = _StageManager.GetCurrentPlayerPosition();
-        destination.y = transform.position.y;
-        Shot(_shotPosition[0], destination, Bullet.Hokyokkwon, 1, SoundEffect.TigerCry);
+        _hokyokkwon_playerPos = destination;
+        _hokyokkwon_atahoPos = transform.position;
+
+        destination.y = shotPosition.position.y; // transform.position.y;
+        _hokyokkwon_destination = destination;
+
+        Shot(shotPosition, destination, Bullet.Hokyokkwon, 1, SoundEffect.TigerCry);
         while (IsAnimatorInState("HokyokkwonRun"))
         {
             yield return false;
@@ -895,6 +947,12 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         _coroutineHokyokkwon = null;
         yield break;
     }
+
+    public Vector3 _hokyokkwon_playerPos;
+    public Vector3 _hokyokkwon_atahoPos;
+    public Vector3 _hokyokkwon_destination;
+    public EnemyBulletScript _bullet;
+
 
     #endregion
 
@@ -949,7 +1007,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         float time = 0;
         UseMana(MANA_HOPOKWON);
         Vector3 destination = _StageManager.GetCurrentPlayerPosition();
-        Shot(_shotPosition[0], destination, Bullet.Hopokwon, 1, SoundEffect.TigerCry);
+        Shot(_shotPosition[1], destination, Bullet.Hopokwon, 1, SoundEffect.GigadeathFire);
         while (IsAnimatorInState("HopokwonRun"))
         {
             yield return false;
@@ -1008,6 +1066,10 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// </summary>
     IEnumerator CoroutineGuard()
     {
+        yield return false;
+        IsActionStarted = false;
+        IsActionRunning = true;
+
         // 
         float time = 0;
         while (time < TIME_GUARD)
@@ -1098,14 +1160,16 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 팀원을 호출합니다.
     /// </summary>
-    /// <param name="_enemy">호출할 팀원입니다.</param>
-    void CallTeamUnit(EnemyUnit _enemy)
+    /// <param name="unitIndex">호출할 유닛의 인덱스입니다.</param>
+    /// <param name="newUnitPosition">유닛을 생성할 위치입니다.</param>
+    void CallTeamUnit(int unitIndex, Transform newUnitPosition)
     {
         // 상태를 정의합니다.
         Calling = true;
 
-        // 내용을 정의합니다.
-        _coroutineCallTeamUnit = StartCoroutine(CoroutineCallTeamUnit());
+        // 행동을 시작합니다.
+        StartAction();
+        _coroutineCallTeamUnit = StartCoroutine(CoroutineCallTeamUnit(unitIndex, newUnitPosition));
     }
     /// <summary>
     /// 팀원 호출을 중지합니다.
@@ -1113,17 +1177,26 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     void StopCallingTeamUnit()
     {
         Calling = false;
+
+        // 행동을 중단합니다.
+        EndAction();
     }
 
     /// <summary>
-    /// 호출 코루틴입니다.
+    /// 팀원 호출 코루틴입니다.
     /// </summary>
     Coroutine _coroutineCallTeamUnit;
     /// <summary>
     /// 팀원 호출 코루틴입니다.
     /// </summary>
-    IEnumerator CoroutineCallTeamUnit()
+    /// <param name="unitIndex">호출할 유닛의 인덱스입니다.</param>
+    /// <param name="newUnitPosition">유닛을 생성할 위치입니다.</param>
+    IEnumerator CoroutineCallTeamUnit(int unitIndex, Transform newUnitPosition)
     {
+        yield return false;
+        IsActionStarted = false;
+        IsActionRunning = true;
+
         // 팀원 호출 AnimatorState로 진입할 수 있게 해주는 강제 대기 시간입니다.
         // (이 시간이 없으면 상태 천이 이전에 새 유닛이 생성될 수 있습니다.)
         float time = 0;
@@ -1139,17 +1212,51 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
             yield return false;
         }
 
+        // 
+        EnemyUnit newUnit = Instantiate(
+            _team[unitIndex],
+            newUnitPosition.position,
+            newUnitPosition.rotation,
+            _StageManager._enemyParent.transform
+            );
+        newUnit.gameObject.SetActive(true);
+        _battleManager.UpdateTeam(newUnit, unitIndex % 2);
+
         // 아타호가 팀원을 호출하는 동작입니다.
-        while (time < TIME_CALL_TEAM)
+        time = 0;
+        while (IsAnimatorInState("CallTeam"))
         {
-            time += Time.deltaTime;
             yield return false;
+            time += Time.deltaTime;
+            if (time < TIME_CALL_TEAM)
+            {
+                break;
+            }
         }
 
         // 팀원 호출 상태를 끝냅니다.
         StopCallingTeamUnit();
         _coroutineCallTeamUnit = null;
         yield break;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="newUnitPosIndex"></param>
+    public void CallRinshan(Transform newUnitPosition)
+    {
+        int rinshanIndex = 2 * _phase;
+        CallTeamUnit(rinshanIndex, newUnitPosition);
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="newUnitPosIndex"></param>
+    public void CallSmashu(Transform newUnitPosition)
+    {
+        int smashuIndex = 2 * _phase + 1;
+        CallTeamUnit(smashuIndex, newUnitPosition);
     }
 
     #endregion
@@ -1218,6 +1325,9 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         // 
         bullet.FacingRight = FacingRight;
         bullet.MoveTo(destination);
+
+        // 
+        _bullet = bullet;
     }
 
     #endregion
@@ -1227,135 +1337,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("Shot()을 새로 만들었습니다.")]
-    /// <summary>
-    /// 탄환을 발사합니다.
-    /// </summary>
-    /// <param name="shotPosition">탄환을 발사할 위치입니다.</param>
-    public void Shot_Old(Transform shotPosition)
-    {
-        SoundEffects[1].Play();
-        GameObject effect = Instantiate
-            (_effects[1], shotPosition.position, shotPosition.rotation);
-        if (FacingRight)
-        {
-            Vector3 scale = effect.transform.localScale;
-            effect.transform.localScale = new Vector3(-scale.x, scale.y);
-        }
-
-        // 
-        EnemyBulletScript bullet = Instantiate
-            (_bullets[0], shotPosition.position, shotPosition.rotation)
-            as EnemyBulletScript;
-        bullet.transform.parent = _StageManager._enemyParent.transform;
-
-        // 
-        bullet.FacingRight = FacingRight;
-        bullet.MoveTo(_StageManager.GetCurrentPlayerPosition());
-    }
-    [Obsolete("Shot()을 새로 만들었습니다.")]
-    /// <summary>
-    /// 탄환을 발사합니다.
-    /// </summary>
-    /// <param name="shotPosition">탄환을 발사할 위치입니다.</param>
-    /// <param name="destination">탄환의 목적지입니다.</param>
-    public void Shot_Old(Transform shotPosition, Vector3 destination)
-    {
-        SoundEffects[1].Play();
-        GameObject effect = Instantiate
-            (_effects[1], shotPosition.position, shotPosition.rotation);
-        if (FacingRight)
-        {
-            Vector3 scale = effect.transform.localScale;
-            effect.transform.localScale = new Vector3(-scale.x, scale.y);
-        }
-
-        // 
-        EnemyBulletScript bullet = Instantiate
-            (_bullets[0], shotPosition.position, shotPosition.rotation)
-            as EnemyBulletScript;
-        bullet.transform.parent = _StageManager._enemyParent.transform;
-
-        // 
-        bullet.FacingRight = FacingRight;
-        bullet.MoveTo(destination);
-    }
-    [Obsolete("Shot()을 새로 만들었습니다.")]
-    /// <summary>
-    /// 플레이어를 향해 탄환을 발사합니다.
-    /// </summary>
-    public void ShotToPlayer(int shotPositionIndex)
-    {
-        // 사용할 변수를 선언합니다.
-        Vector3 playerPos = _StageManager.GetCurrentPlayerPosition();
-        Vector2 relativePos = playerPos - transform.position;
-
-        // 플레이어를 향해 수평 방향 전환합니다.
-        if (relativePos.x < 0 && FacingRight)
-        {
-            Flip();
-        }
-        else if (relativePos.x > 0 && FacingRight == false)
-        {
-            Flip();
-        }
-
-        // 탄환을 발사합니다.
-        Shot_Old(_shotPosition[shotPositionIndex]);
-    }
-
-    [Obsolete("다음 커밋에서 발견 시 즉시 제거하십시오.")]
-    /// <summary>
-    /// X축 속력입니다.
-    /// </summary>
-    public float _movingSpeedX = 1;
-    [Obsolete("다음 커밋에서 발견 시 즉시 제거하십시오.")]
-    /// <summary>
-    /// Y축 속력입니다.
-    /// </summary>
-    public float _movingSpeedY = 2;
-    [Obsolete("다음 커밋에서 발견 시 즉시 제거하십시오.")]
-    /// <summary>
-    /// 궁극기 시전 시 X축 속력입니다.
-    /// </summary>
-    public float _ultimateSpeedX1 = 5;
-    [Obsolete("다음 커밋에서 발견 시 즉시 제거하십시오.")]
-    /// <summary>
-    /// 궁극기 시전 시 Y축 속력입니다.
-    /// </summary>
-    public float _ultimateSpeedY1 = 5;
-
-    [Obsolete("다음 커밋에서 발견 시 즉시 제거하십시오.")]
-    /// <summary>
-    /// 샷 간격입니다.
-    /// </summary>
-    public float _shotInterval = 2f;
-
-    [Obsolete("다음 커밋에서 발견 시 즉시 제거하십시오.")]
-    /// <summary>
-    /// 궁극기 1의 샷 발사 회수 1입니다.
-    /// </summary>
-    public int _shotCount_1_1 = 4;
-    [Obsolete("다음 커밋에서 발견 시 즉시 제거하십시오.")]
-    /// <summary>
-    /// 궁극기 1의 샷 발사 회수 2입니다.
-    /// </summary>
-    public int _shotCount_1_2 = 8;
-    [Obsolete("다음 커밋에서 발견 시 즉시 제거하십시오.")]
-    /// <summary>
-    /// 궁극기 2의 샷 발사 회수 1입니다.
-    /// </summary>
-    public int _shotCount_2_1 = 4;
-    [Obsolete("다음 커밋에서 발견 시 즉시 제거하십시오.")]
-    /// <summary>
-    /// 궁극기 1의 샷 발사 간격입니다.
-    /// </summary>
-    public float _ultimateInterval1 = 0.3f;
-    [Obsolete("다음 커밋에서 발견 시 즉시 제거하십시오.")]
-    /// <summary>
-    /// 궁극기 2의 샷 발사 간격입니다.
-    /// </summary>
-    public float _ultimateInterval2 = 0.3f;
 
     #endregion
 }

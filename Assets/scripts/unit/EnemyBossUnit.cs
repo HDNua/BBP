@@ -73,19 +73,19 @@ public class EnemyBossUnit : EnemyUnit
 
 
     /// <summary>
-    /// 
+    /// 행동을 시작했다면 참입니다.
     /// </summary>
-    bool _isActionStarted = false;
+    public bool _isActionStarted = false;
     /// <summary>
-    /// 
+    /// 행동을 진행중이라면 참입니다.
     /// </summary>
-    bool _isActionRunning = false;
+    public bool _isActionRunning = false;
     /// <summary>
-    /// 
+    /// 행동이 종료되었다면 참입니다.
     /// </summary>
-    bool _isActionEnded = false;
+    public bool _isActionEnded = false;
     /// <summary>
-    /// 
+    /// 행동을 시작했다면 참입니다.
     /// </summary>
     public bool IsActionStarted
     {
@@ -93,7 +93,7 @@ public class EnemyBossUnit : EnemyUnit
         protected set { _isActionStarted = value; }
     }
     /// <summary>
-    /// 
+    /// 행동을 진행중이라면 참입니다.
     /// </summary>
     public bool IsActionRunning
     {
@@ -101,7 +101,7 @@ public class EnemyBossUnit : EnemyUnit
         protected set { _isActionRunning = value; }
     }
     /// <summary>
-    /// 
+    /// 행동이 종료되었다면 참입니다.
     /// </summary>
     public bool IsActionEnded
     {
@@ -110,7 +110,7 @@ public class EnemyBossUnit : EnemyUnit
     }
 
     /// <summary>
-    /// 
+    /// 행동을 시작합니다.
     /// </summary>
     protected void StartAction()
     {
@@ -119,7 +119,7 @@ public class EnemyBossUnit : EnemyUnit
         IsActionEnded = false;
     }
     /// <summary>
-    /// 
+    /// 행동을 종료합니다.
     /// </summary>
     protected void EndAction()
     {

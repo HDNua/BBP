@@ -118,11 +118,11 @@ public class BossAtahoBulletScript1 : EnemyBulletScript
     /// <summary>
     /// 탄환 발사 방향을 지정합니다.
     /// </summary>
-    /// <param name="playerPos">현재 조작중인 플레이어의 위치입니다.</param>
-    public override void MoveTo(Vector3 playerPos)
+    /// <param name="destination">현재 조작중인 플레이어의 위치입니다.</param>
+    public override void MoveTo(Vector3 destination)
     {
         Vector3 bulletPos = transform.position;
-        Vector3 diff = playerPos - bulletPos;
+        Vector3 diff = destination - bulletPos;
 
         /*
         // 발사할 수 없는 방향이면 무시합니다.
@@ -139,6 +139,17 @@ public class BossAtahoBulletScript1 : EnemyBulletScript
         // 플레이어를 향해 발사합니다.
         _Rigidbody.velocity = diff.normalized * _movingSpeed;
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    protected override void LateUpdate()
+    {
+        base.LateUpdate();
+
+        // 
+        Debug.Log(_Rigidbody.velocity);
+    }
+
 
     #endregion
 

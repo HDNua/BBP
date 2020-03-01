@@ -183,8 +183,8 @@ public abstract class EnemyBulletScript : EnemyScript, IMovableEnemy
     /// <summary>
     /// 탄환 발사 방향을 지정합니다.
     /// </summary>
-    /// <param name="playerPos">현재 조작중인 플레이어의 위치입니다.</param>
-    public abstract void MoveTo(Vector3 playerPos);
+    /// <param name="destination">이동할 위치입니다.</param>
+    public abstract void MoveTo(Vector3 destination);
 
     #endregion
 

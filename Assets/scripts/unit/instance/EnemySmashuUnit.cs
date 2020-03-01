@@ -18,6 +18,13 @@ public class EnemySmashuUnit : EnemyUnit
     {
         get { return GetComponent<Groundable>(); }
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    HwanseBattleManager _BattleManager
+    {
+        get { return (HwanseBattleManager)BattleManager.Instance; }
+    }
 
     #endregion
 
@@ -343,6 +350,13 @@ public class EnemySmashuUnit : EnemyUnit
         // 
         _coroutineDisappear = StartCoroutine(CoroutineDisappear());
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    public void EndDisappear()
+    {
+        _BattleManager._smashuUnit = null;
+    }
 
     #endregion
 
@@ -472,7 +486,7 @@ public class EnemySmashuUnit : EnemyUnit
             if (_coroutinePattern != null) StopCoroutine(_coroutinePattern);
 
             // 
-            StopAllCoroutines();
+            ///StopAllCoroutines();
             _coroutineDead = StartCoroutine(CoroutineDead());
             _coroutineInvencible = StartCoroutine(CoroutineInvencible(999));
         }
@@ -703,6 +717,7 @@ public class EnemySmashuUnit : EnemyUnit
         _PaletteUser.DisableTexture();
 
         // 퇴장을 끝냅니다.
+        EndDisappear();
         Destroy(gameObject);
         yield break;
     }
@@ -774,6 +789,7 @@ public class EnemySmashuUnit : EnemyUnit
 
         // 등장을 끝냅니다.
         _coroutineDead = null;
+        EndDisappear();
         Destroy(gameObject);
         yield break;
     }

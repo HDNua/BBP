@@ -119,6 +119,9 @@ public class BossDeadEffectScript : EffectScript
     protected override void Update()
     {
         _time += Time.deltaTime;
+
+        // 
+        _stageManager.RequestBlockInput();
     }
     /// <summary>
     /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.

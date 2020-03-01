@@ -25,7 +25,15 @@ public class HwanseBattleManager : BattleManager
     /// <summary>
     /// 아타호 적 보스 유닛입니다.
     /// </summary>
-    EnemyBossAtahoUnit _atahoUnit;
+    public EnemyBossAtahoUnit _atahoUnit;
+    /// <summary>
+    /// 린샹 유닛입니다.
+    /// </summary>
+    public EnemyRinshanUnit _rinshanUnit;
+    /// <summary>
+    /// 스마슈 유닛입니다.
+    /// </summary>
+    public EnemySmashuUnit _smashuUnit;
 
     #endregion
 
@@ -35,30 +43,30 @@ public class HwanseBattleManager : BattleManager
 
     #region 필드를 정의합니다.
     /// <summary>
-    /// 
+    /// 아타호가 이전에 있던 위치의 인덱스입니다.
     /// </summary>
-    int _previousPositionIndex = 0;
+    public int _previousPositionIndex = 0;
     /// <summary>
-    /// 
+    /// 아타호가 현재 있는 위치의 인덱스입니다.
     /// </summary>
-    int _currentPositionIndex = 0;
+    public int _currentPositionIndex = 0;
 
     /// <summary>
-    /// 
+    /// 아타호를 생성할 위치입니다.
     /// </summary>
     public Transform _spawnPosition;
 
     /// <summary>
-    /// 
+    /// 아타호가 쳐다보는 플레이어의 방향입니다.
     /// </summary>
     public Direction _direction;
 
     /// <summary>
-    /// 
+    /// 거리 검사를 위한 타원의 가로 길이입니다.
     /// </summary>
     public float _a = 7;
     /// <summary>
-    /// 
+    /// 거리 검사를 위한 타원의 세로 길이입니다.
     /// </summary>
     public float _b = 4;
 
@@ -78,6 +86,29 @@ public class HwanseBattleManager : BattleManager
 
         // 
         _atahoUnit = (EnemyBossAtahoUnit)_units[0];
+    }
+    /// <summary>
+    /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.
+    /// 주로 오브젝트를 따라가게 설정한 카메라는 LastUpdate를 사용합니다.
+    /// </summary>
+    public override void LateUpdate()
+    {
+        if (_atahoUnit)
+        {
+            PlayerController player = _stageManager.MainPlayer;
+            UpdateCondition(_atahoUnit, player);
+
+            //
+            Transform st = _atahoUnit.transform;
+            Transform dt = player.transform;
+            Vector3 direction = (dt.position - st.position).normalized;
+
+            Debug.DrawRay(st.position, direction, Color.yellow);
+
+            // 
+            Vector3 dstVector = new Vector3(Mathf.Cos(_angle * Mathf.Deg2Rad), Mathf.Sin(_angle * Mathf.Deg2Rad)) * _ellipseR;
+            Debug.DrawRay(st.position, dstVector, Color.red);
+        }
     }
 
     #endregion
@@ -210,6 +241,22 @@ public class HwanseBattleManager : BattleManager
             hud._expDamageBar.SetActive(true);
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <param name="unitIndex"></param>
+    public void UpdateTeam(EnemyUnit unit, int unitIndex)
+    {
+        if (unitIndex == 0)
+        {
+            _rinshanUnit = (EnemyRinshanUnit)unit;
+        }
+        else
+        {
+            _smashuUnit = (EnemySmashuUnit)unit;
+        }
+    }
     
     #endregion
 
@@ -231,7 +278,7 @@ public class HwanseBattleManager : BattleManager
     /// <returns>관찰중인 모든 적 유닛이 죽었다면 참입니다.</returns>
     public override bool DoesBattleEnd()
     {
-        return base.DoesBattleEnd();
+        return _atahoUnit ? !_atahoUnit.IsAlive() : true;
     }
 
     #endregion
@@ -548,7 +595,8 @@ public class HwanseBattleManager : BattleManager
             }
             else
             {
-                atahoUnit.Guard();
+                // 차라리 빨리 도망을 칩시다.
+                atahoUnit.SkipAction();
             }
         }
         else if (IsFar(atahoUnit.transform, player.transform))
@@ -609,7 +657,8 @@ public class HwanseBattleManager : BattleManager
             }
             else
             {
-                atahoUnit.Guard();
+                // 차라리 빨리 도망을 칩시다.
+                atahoUnit.SkipAction();
             }
         }
         else if (IsFar(atahoUnit.transform, player.transform))
@@ -644,14 +693,27 @@ public class HwanseBattleManager : BattleManager
     {
         if (IsNear(atahoUnit.transform, player.transform))
         {
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 스마슈를 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            // 그러나 근거리에 있어 호출하는 것이 별로 이득을 보지 못한다고 판단되면
+            // 아타호는 현재 방어를 하는 것으로만 구현되었습니다.
+            // 사실 이 부분은 권법가로서의 정신에는 맞지 않기 때문에,
+            // 후에 근거리 공격에 적합한 다른 액션을 구현해볼까 합니다.
             _atahoUnit.Guard();
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            // 거리가 먼 경우에 스마슈를 호출할 수 있으므로, 그대로 진행합니다.
+            if (_smashuUnit == null)
+            {
+                _atahoUnit.CallSmashu(_positions[_previousPositionIndex]);
+            }
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
             {
                 atahoUnit.DoHopokwon();
             }
+            // 마나를 회복합니다.
             else
             {
                 atahoUnit.DrinkMana();
@@ -671,14 +733,27 @@ public class HwanseBattleManager : BattleManager
     {
         if (IsNear(atahoUnit.transform, player.transform))
         {
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 스마슈를 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            // 그러나 근거리에 있어 호출하는 것이 별로 이득을 보지 못한다고 판단되면
+            // 아타호는 현재 방어를 하는 것으로만 구현되었습니다.
+            // 사실 이 부분은 권법가로서의 정신에는 맞지 않기 때문에,
+            // 후에 근거리 공격에 적합한 다른 액션을 구현해볼까 합니다.
             _atahoUnit.Guard();
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            // 거리가 먼 경우에 스마슈를 호출할 수 있으므로, 그대로 진행합니다.
+            if (_smashuUnit == null)
+            {
+                _atahoUnit.CallSmashu(_positions[_previousPositionIndex]);
+            }
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
             {
                 atahoUnit.DoHopokwon();
             }
+            // 마나를 회복합니다.
             else
             {
                 atahoUnit.DrinkMana();
@@ -698,14 +773,27 @@ public class HwanseBattleManager : BattleManager
     {
         if (IsNear(atahoUnit.transform, player.transform))
         {
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 스마슈를 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            // 그러나 근거리에 있어 호출하는 것이 별로 이득을 보지 못한다고 판단되면
+            // 아타호는 현재 방어를 하는 것으로만 구현되었습니다.
+            // 사실 이 부분은 권법가로서의 정신에는 맞지 않기 때문에,
+            // 후에 근거리 공격에 적합한 다른 액션을 구현해볼까 합니다.
             _atahoUnit.Guard();
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            // 거리가 먼 경우에 스마슈를 호출할 수 있으므로, 그대로 진행합니다.
+            if (_smashuUnit == null)
+            {
+                _atahoUnit.CallSmashu(_positions[_previousPositionIndex]);
+            }
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
             {
                 atahoUnit.DoHopokwon();
             }
+            // 마나를 회복합니다.
             else
             {
                 atahoUnit.DrinkMana();
@@ -852,28 +940,6 @@ public class HwanseBattleManager : BattleManager
         float sin_t = Mathf.Sin(_angle * Mathf.Deg2Rad);
         float cos_t = Mathf.Cos(_angle * Mathf.Deg2Rad);
         _ellipseR = Mathf.Sqrt(a * a * cos_t * cos_t + b * b * sin_t * sin_t);
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    public override void LateUpdate()
-    {
-        if (_atahoUnit)
-        {
-            PlayerController player = _stageManager.MainPlayer;
-            UpdateCondition(_atahoUnit, player);
-
-            //
-            Transform st = _atahoUnit.transform;
-            Transform dt = player.transform;
-            Vector3 direction = (dt.position - st.position).normalized;
-
-            Debug.DrawRay(st.position, direction, Color.yellow);
-
-            // 
-            Vector3 dstVector = new Vector3(Mathf.Cos(_angle * Mathf.Deg2Rad), Mathf.Sin(_angle * Mathf.Deg2Rad)) * _ellipseR;
-            Debug.DrawRay(st.position, dstVector, Color.red);
-        }
     }
 
     #endregion

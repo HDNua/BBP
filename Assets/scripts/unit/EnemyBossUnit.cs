@@ -28,6 +28,11 @@ public class EnemyBossUnit : EnemyUnit
     public Transform[] _shotPosition;
 
     /// <summary>
+    /// 캐릭터와 충돌했을 때 플레이어가 입을 기본 대미지입니다.
+    /// </summary>
+    public int _defaultDamage;
+
+    /// <summary>
     /// 보스 페이즈 변수입니다.
     /// </summary>
     public int _phase = 0;
@@ -75,15 +80,15 @@ public class EnemyBossUnit : EnemyUnit
     /// <summary>
     /// 행동을 시작했다면 참입니다.
     /// </summary>
-    public bool _isActionStarted = false;
+    bool _isActionStarted = false;
     /// <summary>
     /// 행동을 진행중이라면 참입니다.
     /// </summary>
-    public bool _isActionRunning = false;
+    bool _isActionRunning = false;
     /// <summary>
     /// 행동이 종료되었다면 참입니다.
     /// </summary>
-    public bool _isActionEnded = false;
+    bool _isActionEnded = false;
     /// <summary>
     /// 행동을 시작했다면 참입니다.
     /// </summary>
@@ -108,9 +113,8 @@ public class EnemyBossUnit : EnemyUnit
         get { return _isActionEnded; }
         protected set { _isActionEnded = value; }
     }
-
     /// <summary>
-    /// 행동을 시작합니다.
+    /// 행동을 시작합니다. 모든 행동 함수에서 코루틴 시작 직전에 호출하십시오.
     /// </summary>
     protected void StartAction()
     {
@@ -119,7 +123,17 @@ public class EnemyBossUnit : EnemyUnit
         IsActionEnded = false;
     }
     /// <summary>
-    /// 행동을 종료합니다.
+    /// 행동을 진행 상태로 변경합니다.
+    /// 가장 먼저 발견되는 IEnumerator의 직후에 호출하십시오.
+    /// </summary>
+    protected void RunAction()
+    {
+        IsActionStarted = false;
+        IsActionRunning = true;
+        IsActionEnded = false;
+    }
+    /// <summary>
+    /// 행동을 종료합니다. 모든 행동 코루틴의 종료 직전에 호출하십시오.
     /// </summary>
     protected void EndAction()
     {
@@ -175,6 +189,32 @@ public class EnemyBossUnit : EnemyUnit
 
     #region Collider2D의 기본 메서드를 재정의합니다.
     /// <summary>
+    /// 충돌체가 트리거 내부로 진입했습니다.
+    /// </summary>
+    /// <param name="other">자신이 아닌 충돌체 개체입니다.</param>
+    protected virtual void OnTriggerEnter2D(Collider2D other)
+    {
+        // 트리거가 발동한 상대 충돌체가 플레이어라면 대미지를 입힙니다.
+        if (other.CompareTag("Player"))
+        {
+            GameObject pObject = other.gameObject;
+            PlayerController player = pObject.GetComponent<PlayerController>();
+
+            // 플레이어가 무적 상태이거나 죽었다면
+            if (player.Invencible || player.IsDead)
+            {
+                // 아무 것도 하지 않습니다.
+
+            }
+            // 그 외의 경우
+            else
+            {
+                // 플레이어에게 대미지를 입힙니다.
+                player.Hurt(Damage);
+            }
+        }
+    }
+    /// <summary>
     /// 충돌체가 여전히 트리거 내부에 있습니다.
     /// </summary>
     /// <param name="other">자신이 아닌 충돌체 개체입니다.</param>
@@ -186,6 +226,31 @@ public class EnemyBossUnit : EnemyUnit
             GameObject pObject = other.gameObject;
             PlayerController player = pObject.GetComponent<PlayerController>();
 
+            // 플레이어가 무적 상태이거나 죽었다면
+            if (player.Invencible || player.IsDead)
+            {
+                // 아무 것도 하지 않습니다.
+
+            }
+            // 그 외의 경우
+            else
+            {
+                // 플레이어에게 대미지를 입힙니다.
+                player.Hurt(Damage);
+            }
+        }
+    }
+    /// <summary>
+    /// 충돌체가 트리거 내부에서 나옵니다.
+    /// </summary>
+    /// <param name="other">자신이 아닌 충돌체 개체입니다.</param>
+    protected virtual void OnTriggerExit2D(Collider2D other)
+    {
+        // 트리거가 발동한 상대 충돌체가 플레이어라면 대미지를 입힙니다.
+        if (other.CompareTag("Player"))
+        {
+            GameObject pObject = other.gameObject;
+            PlayerController player = pObject.GetComponent<PlayerController>();
 
             // 플레이어가 무적 상태이거나 죽었다면
             if (player.Invencible || player.IsDead)
@@ -287,6 +352,20 @@ public class EnemyBossUnit : EnemyUnit
 
 
     #region 행동 메서드를 정의합니다.
+    /// <summary>
+    /// 플레이어를 공격할 수 있는 상태로 전환합니다.
+    /// </summary>
+    public void MakeAttackable()
+    {
+        _damage = _defaultDamage;
+    }
+    /// <summary>
+    /// 플레이어를 공격할 수 없는 상태로 전환합니다.
+    /// </summary>
+    public void MakeUnattackable()
+    {
+        _damage = 0;
+    }
 
     #endregion
 
@@ -295,14 +374,6 @@ public class EnemyBossUnit : EnemyUnit
 
 
     #region 보조 메서드를 정의합니다.
-
-    #endregion
-
-
-
-
-
-    #region 코루틴 메서드를 정의합니다.
 
     #endregion
 

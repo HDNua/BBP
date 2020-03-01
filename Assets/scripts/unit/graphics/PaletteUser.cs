@@ -42,6 +42,16 @@ public class PaletteUser : MonoBehaviour
     /// </summary>
     public float _commonAlpha = 1;
 
+    /// <summary>
+    /// 팔레트 리스트 인덱스입니다.
+    /// </summary>
+    public int _paletteIndex = 0;
+
+    /// <summary>
+    /// 팔레트 스왑 기능을 사용합니다.
+    /// </summary>
+    public bool _usePaletteSwap = true;
+
     #endregion
 
 
@@ -62,10 +72,6 @@ public class PaletteUser : MonoBehaviour
     /// 팔레트 리스트입니다.
     /// </summary>
     uint[][] _palettes;
-    /// <summary>
-    /// 팔레트 리스트 인덱스입니다.
-    /// </summary>
-    public int _paletteIndex = 0;
 
     #endregion
 
@@ -79,13 +85,16 @@ public class PaletteUser : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        // !!!!! IMPORTANT !!!!!
-        // SpriteRenderer를 이 시점에 가져오지 않으면 이후의 과정이 동작하지 않습니다!
-        _renderer = GetComponent<SpriteRenderer>();
+        if (_usePaletteSwap)
+        {
+            // !!!!! IMPORTANT !!!!!
+            // SpriteRenderer를 이 시점에 가져오지 않으면 이후의 과정이 동작하지 않습니다!
+            _renderer = GetComponent<SpriteRenderer>();
 
-        // 스왑 텍스쳐 및 팔레트를 초기화 합니다.
-        InitColorSwapTexture();
-        InitPalette();
+            // 스왑 텍스쳐 및 팔레트를 초기화 합니다.
+            InitColorSwapTexture();
+            InitPalette();
+        }
     }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다. (생성될 때마다)
@@ -100,9 +109,12 @@ public class PaletteUser : MonoBehaviour
     /// </summary>
     private void LateUpdate()
     {
-        if (_noController)
+        if (_usePaletteSwap)
         {
-            UpdateColor();
+            if (_noController)
+            {
+                UpdateColor();
+            }
         }
     }
 

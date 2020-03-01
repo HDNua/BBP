@@ -22,6 +22,11 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     public int MANA_HOPOKWON = 15;
 
     /// <summary>
+    /// 숨고르기 시간입니다.
+    /// </summary>
+    public float TIME_WAIT = 0.4f;
+
+    /// <summary>
     /// 팔을 한 번 돌릴 때 걸리는 시간입니다.
     /// </summary>
     public float TIME_SWING_ARM = 0.12f;
@@ -58,7 +63,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
     #region 효과음을 정의합니다.
     /// <summary>
-    /// 
+    /// 효과음 인덱스입니다.
     /// </summary>
     public enum SoundEffect
     {
@@ -89,7 +94,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         GigadeathFire,
     }
     /// <summary>
-    /// 
+    /// 탄환 타입입니다.
     /// </summary>
     public enum Bullet
     {
@@ -108,7 +113,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// </summary>
     Groundable _groundable;
     /// <summary>
-    /// 
+    /// 환세 전투 관리자입니다.
     /// </summary>
     HwanseBattleManager _battleManager;
 
@@ -237,6 +242,14 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         get { return _groundable.Falling; }
         set { _groundable.Falling = value; }
     }
+    /// <summary>
+    /// 착지가 불가능하다면 참입니다.
+    /// </summary>
+    bool LandBlocked
+    {
+        get { return _landBlocked; }
+        set { _landBlocked = value; }
+    }
 
     /// <summary>
     /// 캐릭터가 공격 중이라면 참입니다.
@@ -271,8 +284,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         set { _Animator.SetBool("DoingHopokwon", _doingHopokwon = value); }
     }
 
-
-
     /// <summary>
     /// 마나를 회복하고 있다면 참입니다.
     /// </summary>
@@ -288,21 +299,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     {
         get { return _calling; }
         set { _Animator.SetBool("Calling", _calling = value); }
-    }
-
-
-
-    /// <summary>
-    /// 궁극기가 활성화되었다면 참입니다.
-    /// </summary>
-    bool UltimateEnabled { get; set; }
-    /// <summary>
-    /// 착지가 불가능하다면 참입니다.
-    /// </summary>
-    bool LandBlocked
-    {
-        get { return _landBlocked; }
-        set { _landBlocked = value; }
     }
 
     /// <summary>
@@ -440,7 +436,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         BattleManager _battleManager = BattleManager.Instance;
         Transform enemyParent = _StageManager._enemyParent.transform;
 
-        // 
+        // 전투 상태를 확인합니다.
         bool isEveryBossesDead = _battleManager.DoesBattleEnd();
 
         // 모든 탄환을 제거합니다.
@@ -455,21 +451,15 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
         // 개체 대신 놓일 그림을 활성화합니다.
         Vector3 position = transform.position;
-
-        // 
-        /// BossDeadEffectScript effect = _bossBattleManager._bossDeadEffect;
         BossDeadEffectScript effect;
         if (isEveryBossesDead)
         {
-            ///effect = _bossBattleManager._lastBossDeadEffect;
             effect = _battleManager._bossDeadEffects[0];
         }
         else
         {
-            ///effect = _bossBattleManager._bossDeadEffect;
             effect = _battleManager._bossDeadEffects[1];
         }
-        // 
         Instantiate(effect, position, transform.rotation)
             .gameObject.SetActive(true);
         effect.transform.position = position;
@@ -488,14 +478,14 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         Destroy(gameObject);
     }
     /// <summary>
-    /// 
+    /// 캐릭터에게 대미지를 입힙니다.
     /// </summary>
-    /// <param name="damage"></param>
+    /// <param name="damage">입힐 대미지입니다.</param>
     public override void Hurt(int damage)
     {
         base.Hurt(damage);
 
-        // 
+        // 맞은 대미지만큼 경험치를 올립니다.
         UpdateExp(damage);
     }
 
@@ -591,9 +581,9 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         _phase = _exp / _maxExp;
     }
     /// <summary>
-    /// 
+    /// 경험치 업데이트 상태 플래그를 업데이트 합니다.
     /// </summary>
-    /// <param name="value"></param>
+    /// <param name="value">경험치 상태입니다.</param>
     public void SetExpUpdateRequest(bool value)
     {
         _expUpdateRequest = value;
@@ -667,8 +657,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         while (Landed == false)
         {
             yield return false;
-            IsActionStarted = false;
-            IsActionRunning = true;
+            RunAction();
         }
         StopMoving();
 
@@ -714,8 +703,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     IEnumerator CoroutineSkip()
     {
         yield return false;
-        IsActionStarted = false;
-        IsActionRunning = true;
+        RunAction();
 
         // 
         yield return false;
@@ -789,8 +777,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         float x0 = _absHopStartPoint.x;
         float x1 = _absHopEndPoint.x;
         yield return false;
-        IsActionStarted = false;
-        IsActionRunning = true;
+        RunAction();
 
         // 방향을 맞춥니다.
         if (x0 < x1)
@@ -898,6 +885,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         // 움직임을 멈춥니다.
         StopMoving();
         yield return false;
+        RunAction();
 
         // 
         float time = 0;
@@ -906,8 +894,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         while (IsAnimatorInState("HokyokkwonBeg"))
         {
             yield return false;
-            IsActionStarted = false;
-            IsActionRunning = true;
+            RunAction();
             time += Time.deltaTime;
 
             if (time > TIME_SWING_ARM)
@@ -924,12 +911,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         // 
         Transform shotPosition = _shotPosition[1];
         Vector3 destination = _StageManager.GetCurrentPlayerPosition();
-        _hokyokkwon_playerPos = destination;
-        _hokyokkwon_atahoPos = transform.position;
-
         destination.y = shotPosition.position.y; // transform.position.y;
-        _hokyokkwon_destination = destination;
-
         Shot(shotPosition, destination, Bullet.Hokyokkwon, 1, SoundEffect.TigerCry);
         while (IsAnimatorInState("HokyokkwonRun"))
         {
@@ -948,12 +930,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         yield break;
     }
 
-    public Vector3 _hokyokkwon_playerPos;
-    public Vector3 _hokyokkwon_atahoPos;
-    public Vector3 _hokyokkwon_destination;
-    public EnemyBulletScript _bullet;
-
-
     #endregion
 
 
@@ -961,6 +937,11 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
     #region "호포권" 행동을 정의합니다.
+    /// <summary>
+    /// 호포권 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineHopokwon;
+
     /// <summary>
     /// 호포권을 사용합니다.
     /// </summary>
@@ -984,10 +965,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 호포권 코루틴입니다.
     /// </summary>
-    Coroutine _coroutineHopokwon;
-    /// <summary>
-    /// 호포권 코루틴입니다.
-    /// </summary>
     IEnumerator CoroutineHopokwon()
     {
         // 움직임을 멈춥니다.
@@ -999,8 +976,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         while (IsAnimatorInState("HopokwonBeg"))
         {
             yield return false;
-            IsActionStarted = false;
-            IsActionRunning = true;
+            RunAction();
         }
 
         // 
@@ -1067,8 +1043,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     IEnumerator CoroutineGuard()
     {
         yield return false;
-        IsActionStarted = false;
-        IsActionRunning = true;
+        RunAction();
 
         // 
         float time = 0;
@@ -1124,8 +1099,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     {
         StopMoving();
         yield return false;
-        IsActionStarted = false;
-        IsActionRunning = true;
+        RunAction();
 
         // 마나를 회복하는 간격은 최대 마력의 3/5입니다.
         // 한 번에 전체를 다 회복하지 않도록 디자인하였습니다.
@@ -1157,6 +1131,25 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
     #region "팀원 호출" 행동을 정의합니다.
+    /// <summary>
+    /// 린샹을 호출합니다.
+    /// </summary>
+    /// <param name="newUnitPosIndex">린샹 인덱스입니다.</param>
+    public void CallRinshan(Transform newUnitPosition)
+    {
+        int rinshanIndex = 2 * _phase;
+        CallTeamUnit(rinshanIndex, newUnitPosition);
+    }
+    /// <summary>
+    /// 스마슈를 호출합니다.
+    /// </summary>
+    /// <param name="newUnitPosIndex">스마슈 인덱스입니다.</param>
+    public void CallSmashu(Transform newUnitPosition)
+    {
+        int smashuIndex = 2 * _phase + 1;
+        CallTeamUnit(smashuIndex, newUnitPosition);
+    }
+
     /// <summary>
     /// 팀원을 호출합니다.
     /// </summary>
@@ -1194,8 +1187,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     IEnumerator CoroutineCallTeamUnit(int unitIndex, Transform newUnitPosition)
     {
         yield return false;
-        IsActionStarted = false;
-        IsActionRunning = true;
+        RunAction();
 
         // 팀원 호출 AnimatorState로 진입할 수 있게 해주는 강제 대기 시간입니다.
         // (이 시간이 없으면 상태 천이 이전에 새 유닛이 생성될 수 있습니다.)
@@ -1234,29 +1226,13 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
             }
         }
 
+        // 
+        yield return new WaitForSeconds(TIME_WAIT);
+
         // 팀원 호출 상태를 끝냅니다.
         StopCallingTeamUnit();
         _coroutineCallTeamUnit = null;
         yield break;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="newUnitPosIndex"></param>
-    public void CallRinshan(Transform newUnitPosition)
-    {
-        int rinshanIndex = 2 * _phase;
-        CallTeamUnit(rinshanIndex, newUnitPosition);
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="newUnitPosIndex"></param>
-    public void CallSmashu(Transform newUnitPosition)
-    {
-        int smashuIndex = 2 * _phase + 1;
-        CallTeamUnit(smashuIndex, newUnitPosition);
     }
 
     #endregion
@@ -1267,31 +1243,12 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
     #region 보조 메서드를 정의합니다.
     /// <summary>
-    /// 
+    /// 효과음을 재생합니다.
     /// </summary>
-    /// <param name="seIndex"></param>
+    /// <param name="seIndex">재생할 효과음의 인덱스입니다.</param>
     public void PlaySoundEffect(SoundEffect seIndex)
     {
         SoundEffects[(int)seIndex].Play();
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    public void LookPlayer()
-    {
-        // 사용할 변수를 선언합니다.
-        Vector3 playerPos = _StageManager.GetCurrentPlayerPosition();
-        Vector2 relativePos = playerPos - transform.position;
-
-        // 플레이어를 향해 수평 방향 전환합니다.
-        if (relativePos.x < 0 && FacingRight)
-        {
-            Flip();
-        }
-        else if (relativePos.x > 0 && FacingRight == false)
-        {
-            Flip();
-        }
     }
     /// <summary>
     /// 
@@ -1325,9 +1282,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         // 
         bullet.FacingRight = FacingRight;
         bullet.MoveTo(destination);
-
-        // 
-        _bullet = bullet;
     }
 
     #endregion
@@ -1337,6 +1291,11 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("지금은 사용하지 않습니다.")]
+    /// <summary>
+    /// 궁극기가 활성화되었다면 참입니다.
+    /// </summary>
+    bool UltimateEnabled { get; set; }
 
     #endregion
 }

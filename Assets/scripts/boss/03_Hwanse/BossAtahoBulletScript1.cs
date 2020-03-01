@@ -145,9 +145,6 @@ public class BossAtahoBulletScript1 : EnemyBulletScript
     protected override void LateUpdate()
     {
         base.LateUpdate();
-
-        // 
-        Debug.Log(_Rigidbody.velocity);
     }
 
 

@@ -53,6 +53,15 @@ TextureImporter:
     21300096: GraySmashu 48
     21300098: GraySmashu 49
     21300100: GraySmashu 50
+    21300102: GraySmashu 51
+    21300104: GraySmashu 52
+    21300106: GraySmashu 53
+    21300108: GraySmashu 54
+    21300110: GraySmashu 55
+    21300112: GraySmashu 56
+    21300114: GraySmashu 57
+    21300116: GraySmashu 58
+    21300118: GraySmashu 59
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -595,8 +604,8 @@ TextureImporter:
       name: GraySmashu 33
       rect:
         serializedVersion: 2
-        x: 0
-        y: 768
+        x: 512
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -609,8 +618,8 @@ TextureImporter:
       name: GraySmashu 34
       rect:
         serializedVersion: 2
-        x: 256
-        y: 768
+        x: 512
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -623,8 +632,8 @@ TextureImporter:
       name: GraySmashu 35
       rect:
         serializedVersion: 2
-        x: 0
-        y: 768
+        x: 512
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -637,7 +646,7 @@ TextureImporter:
       name: GraySmashu 36
       rect:
         serializedVersion: 2
-        x: 768
+        x: 512
         y: 256
         width: 256
         height: 256
@@ -651,8 +660,8 @@ TextureImporter:
       name: GraySmashu 37
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 512
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -665,8 +674,8 @@ TextureImporter:
       name: GraySmashu 38
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 512
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -679,8 +688,8 @@ TextureImporter:
       name: GraySmashu 39
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 512
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -693,8 +702,8 @@ TextureImporter:
       name: GraySmashu 40
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
+        x: 512
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -707,8 +716,8 @@ TextureImporter:
       name: GraySmashu 41
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
+        x: 512
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -721,8 +730,8 @@ TextureImporter:
       name: GraySmashu 42
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
+        x: 0
+        y: 768
         width: 256
         height: 256
       alignment: 0
@@ -735,7 +744,7 @@ TextureImporter:
       name: GraySmashu 43
       rect:
         serializedVersion: 2
-        x: 0
+        x: 256
         y: 768
         width: 256
         height: 256
@@ -749,7 +758,7 @@ TextureImporter:
       name: GraySmashu 44
       rect:
         serializedVersion: 2
-        x: 256
+        x: 0
         y: 768
         width: 256
         height: 256
@@ -763,8 +772,8 @@ TextureImporter:
       name: GraySmashu 45
       rect:
         serializedVersion: 2
-        x: 0
-        y: 768
+        x: 768
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -777,7 +786,7 @@ TextureImporter:
       name: GraySmashu 46
       rect:
         serializedVersion: 2
-        x: 512
+        x: 0
         y: 0
         width: 256
         height: 256
@@ -791,7 +800,7 @@ TextureImporter:
       name: GraySmashu 47
       rect:
         serializedVersion: 2
-        x: 512
+        x: 0
         y: 0
         width: 256
         height: 256
@@ -805,7 +814,7 @@ TextureImporter:
       name: GraySmashu 48
       rect:
         serializedVersion: 2
-        x: 512
+        x: 0
         y: 0
         width: 256
         height: 256
@@ -819,6 +828,48 @@ TextureImporter:
       name: GraySmashu 49
       rect:
         serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GraySmashu 50
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GraySmashu 51
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GraySmashu 52
+      rect:
+        serializedVersion: 2
         x: 0
         y: 768
         width: 256
@@ -830,7 +881,91 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: GraySmashu 50
+      name: GraySmashu 53
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GraySmashu 54
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GraySmashu 55
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GraySmashu 56
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GraySmashu 57
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GraySmashu 58
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GraySmashu 59
       rect:
         serializedVersion: 2
         x: 256

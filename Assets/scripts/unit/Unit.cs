@@ -95,6 +95,7 @@ public class Unit : MonoBehaviour
     /// 캐릭터와 충돌했을 때 플레이어가 입을 대미지입니다.
     /// </summary>
     public int _damage;
+
     /// <summary>
     /// 항상 무적 상태라면 참입니다.
     /// </summary>
@@ -104,7 +105,6 @@ public class Unit : MonoBehaviour
     /// 탄환을 무시한다면 참입니다.
     /// </summary>
     public bool _hasBulletImmunity = false;
-
 
     /// <summary>
     /// 캐릭터가 사용할 효과음 집합입니다.

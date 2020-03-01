@@ -1501,42 +1501,46 @@ public class ZController : PlayerController
     /// 플레이어가 대미지를 입습니다.
     /// </summary>
     /// <param name="damage">플레이어가 입을 대미지입니다.</param>
-    public override void Hurt(int damage)
+    public override bool Hurt(int damage)
     {
-        base.Hurt(damage);
-        DeactivateAllAttackRange();
-
-        // 플레이어가 생존해있다면
-        float damagedTime = 0;
-        if (IsAlive())
+        if (base.Hurt(damage))
         {
-            // 대미지 음성 및 효과음을 재생합니다.
-            if (BigDamaged)
+            DeactivateAllAttackRange();
+
+            // 플레이어가 생존해있다면
+            float damagedTime = 0;
+            if (IsAlive())
             {
-                VoiceBigDamaged.Play();
-                SoundHit.Play();
-                damagedTime = BIG_DAMAGED_TIME;
-            }
-            else
-            {
-                VoiceDamaged.Play();
-                SoundHit.Play();
-                damagedTime = DAMAGED_TIME;
+                // 대미지 음성 및 효과음을 재생합니다.
+                if (BigDamaged)
+                {
+                    VoiceBigDamaged.Play();
+                    SoundHit.Play();
+                    damagedTime = BIG_DAMAGED_TIME;
+                }
+                else
+                {
+                    VoiceDamaged.Play();
+                    SoundHit.Play();
+                    damagedTime = DAMAGED_TIME;
+                }
+
+                // 발생한 효과를 제거합니다.
+                if (_slideFogEffect != null)
+                {
+                    _slideFogEffect.GetComponent<EffectScript>().RequestDestroy();
+                }
+                if (_dashBoostEffect != null)
+                {
+                    _dashBoostEffect.GetComponent<EffectScript>().RequestDestroy();
+                }
             }
 
-            // 발생한 효과를 제거합니다.
-            if (_slideFogEffect != null)
-            {
-                _slideFogEffect.GetComponent<EffectScript>().RequestDestroy();
-            }
-            if (_dashBoostEffect != null)
-            {
-                _dashBoostEffect.GetComponent<EffectScript>().RequestDestroy();
-            }
+            // END_HURT_TIME 시간 후에 대미지를 입은 상태를 종료합니다.
+            Invoke("EndHurt", damagedTime);
+            return true;
         }
-
-        // END_HURT_TIME 시간 후에 대미지를 입은 상태를 종료합니다.
-        Invoke("EndHurt", damagedTime);
+        return false;
     }
 
     /// <summary>

@@ -1999,8 +1999,13 @@ public abstract class PlayerController : MonoBehaviour
     /// 플레이어가 대미지를 입습니다.
     /// </summary>
     /// <param name="point">플레이어가 입을 대미지입니다.</param>
-    public virtual void Hurt(int point)
+    public virtual bool Hurt(int point)
     {
+        if (point <= 0)
+        {
+            return false;
+        }
+
         // 체력을 깎습니다.
         Health -= point;
         if (IsAlive() == false)
@@ -2045,6 +2050,9 @@ public abstract class PlayerController : MonoBehaviour
                 _Rigidbody.AddForce(force * speed);
             }
         }
+
+        // 
+        return true;
     }
     /// <summary>
     /// 넉백에 대한 코루틴입니다.

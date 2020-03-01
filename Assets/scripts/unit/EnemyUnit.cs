@@ -111,6 +111,26 @@ public class EnemyUnit : Unit
     }
 
     /// <summary>
+    /// 플레이어를 쳐다봅니다.
+    /// </summary>
+    public void LookPlayer()
+    {
+        // 사용할 변수를 선언합니다.
+        Vector3 playerPos = _StageManager.GetCurrentPlayerPosition();
+        Vector2 relativePos = playerPos - transform.position;
+
+        // 플레이어를 향해 수평 방향 전환합니다.
+        if (relativePos.x < 0 && FacingRight)
+        {
+            Flip();
+        }
+        else if (relativePos.x > 0 && FacingRight == false)
+        {
+            Flip();
+        }
+    }
+
+    /// <summary>
     /// 캐릭터에게 대미지를 입힙니다.
     /// </summary>
     /// <param name="damage">입힐 대미지의 양입니다.</param>

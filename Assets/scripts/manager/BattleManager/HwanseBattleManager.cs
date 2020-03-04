@@ -34,11 +34,11 @@ public class HwanseBattleManager : BattleManager
     /// <summary>
     /// 린샹 유닛입니다.
     /// </summary>
-    public EnemyRinshanUnit _rinshanUnit;
+    public EnemyBossRinshanUnit _rinshanUnit;
     /// <summary>
     /// 스마슈 유닛입니다.
     /// </summary>
-    public EnemySmashuUnit _smashuUnit;
+    public EnemyBossSmashuUnit _smashuUnit;
 
     #endregion
 
@@ -324,11 +324,11 @@ public class HwanseBattleManager : BattleManager
     {
         if (unitIndex == 0)
         {
-            _rinshanUnit = (EnemyRinshanUnit)unit;
+            _rinshanUnit = (EnemyBossRinshanUnit)unit;
         }
         else
         {
-            _smashuUnit = (EnemySmashuUnit)unit;
+            _smashuUnit = (EnemyBossSmashuUnit)unit;
         }
     }
     
@@ -602,13 +602,13 @@ public class HwanseBattleManager : BattleManager
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
             // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
-            // 스마슈를 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
-            if (_smashuUnit == null)
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            if (_rinshanUnit == null)
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
                 int spawnIndex;
-                spawnIndex = 8; // Random.Range(7, 10);
-                _atahoUnit.CallSmashu(_positions[spawnIndex]);
+                spawnIndex = 9; // Random.Range(7, 10);
+                _atahoUnit.CallRinshan(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
             else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
@@ -710,12 +710,12 @@ public class HwanseBattleManager : BattleManager
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
             // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
-            // 스마슈를 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
             if (_smashuUnit == null)
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
                 int spawnIndex;
-                spawnIndex = 8; // Random.Range(7, 10);
+                spawnIndex = 7; // Random.Range(7, 10);
                 _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
@@ -775,13 +775,13 @@ public class HwanseBattleManager : BattleManager
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
             // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
-            // 스마슈를 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
-            if (_smashuUnit == null)
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            if (_rinshanUnit == null)
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
                 int spawnIndex;
-                spawnIndex = 8; // Random.Range(7, 10);
-                _atahoUnit.CallSmashu(_positions[spawnIndex]);
+                spawnIndex = 9; // Random.Range(7, 10);
+                _atahoUnit.CallRinshan(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
             else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
@@ -804,7 +804,7 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            // 거리가 먼 경우에 스마슈를 호출할 수 있으므로, 그대로 진행합니다.
+            // 거리가 먼 경우에 팀원을 호출할 수 있으므로, 그대로 진행합니다.
             if (_smashuUnit == null)
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
@@ -839,12 +839,12 @@ public class HwanseBattleManager : BattleManager
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
             // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
-            // 스마슈를 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
             if (_smashuUnit == null)
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
                 int spawnIndex;
-                spawnIndex = 8; // Random.Range(7, 10);
+                spawnIndex = 7; // Random.Range(7, 10);
                 _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
@@ -868,7 +868,7 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            // 거리가 먼 경우에 스마슈를 호출할 수 있으므로, 그대로 진행합니다.
+            // 거리가 먼 경우에 팀원을 호출할 수 있으므로, 그대로 진행합니다.
             if (_smashuUnit == null)
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
@@ -903,12 +903,12 @@ public class HwanseBattleManager : BattleManager
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
             // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
-            // 스마슈를 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
             if (_smashuUnit == null)
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
                 int spawnIndex;
-                spawnIndex = 8; // Random.Range(7, 10);
+                spawnIndex = 7; // Random.Range(7, 10);
                 _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
@@ -932,7 +932,7 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            // 거리가 먼 경우에 스마슈를 호출할 수 있으므로, 그대로 진행합니다.
+            // 거리가 먼 경우에 팀원을 호출할 수 있으므로, 그대로 진행합니다.
             if (_smashuUnit == null)
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.

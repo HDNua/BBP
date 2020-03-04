@@ -1,0 +1,14 @@
+.color-0 { color: rgb(0,0,0); }   
+.color-1 { color: rgb(255,255,255); }   
+.color-2 { color: rgb(255,0,0); }   
+.color-3 { color: rgb(82,49,0); }   
+.color-4 { color: rgb(115,66,33); }   
+.color-5 { color: rgb(206,82,0); }   
+.color-6 { color: rgb(222,140,16); }   
+.color-7 { color: rgb(255,189,16); }   
+.color-8 { color: rgb(255,222,82); }   
+.color-9 { color: rgb(255,222,206); }   
+.color-10 { color: rgb(33,66,0); }   
+.color-11 { color: rgb(99,115,33); }   
+.color-12 { color: rgb(140,156,49); }   
+.color-13 { color: rgb(49,99,16); }   

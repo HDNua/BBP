@@ -152,6 +152,10 @@ public class StageManager1P : StageManager
             yield return false;
         }
 
+        // 
+        MainPlayer.GetComponent<Collider2D>().isTrigger = true;
+
+        //
         float time = 0;
         while (_player.IsAnimationPlaying("ReturnRun"))
         {

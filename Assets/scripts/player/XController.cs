@@ -343,19 +343,19 @@ public class XController : PlayerController
         // 테스트 코드입니다.
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            ChangeWeapon(_weaponState == 1 ? 0 : 1);
+            ChangeWeapon(_weaponState == 5 ? 4 : 5);
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            ChangeWeapon(_weaponState == 2 ? 0 : 2);
+            ChangeWeapon(_weaponState == 6 ? 4 : 6);
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            ChangeWeapon(_weaponState == 3 ? 0 : 3);
+            ChangeWeapon(_weaponState == 7 ? 4 : 7);
         }
         else if (Input.GetKeyDown(KeyCode.V))
         {
-            ChangeWeapon(_weaponState == 4 ? 0 : 4);
+            ChangeWeapon(_weaponState == 8 ? 4 : 8);
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -1512,7 +1512,7 @@ public class XController : PlayerController
     /// <param name="weaponIndex"></param>
     void ChangeWeapon(int weaponIndex)
     {
-        _weaponState = 4 + weaponIndex;
+        _weaponState = weaponIndex;
         _PaletteUser.UpdatePaletteIndex(_weaponState);
     }
 

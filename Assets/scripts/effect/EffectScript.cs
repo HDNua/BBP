@@ -36,6 +36,11 @@ public class EffectScript : MonoBehaviour
     /// </summary>
     public float _clipLength = 0;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public float _playTime = 0;
+
     #endregion
 
 
@@ -98,26 +103,32 @@ public class EffectScript : MonoBehaviour
     /// </summary>
     protected virtual void Start()
     {
-
+        _playTime = 0;
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트합니다.
     /// </summary>
     protected virtual void Update()
     {
-        if (_destroyRequested == false)
+        if (DestroyRequested == false)
             return;
 
         // 애니메이션이 재생중이거나 음원 재생중이라면
         if (_animator.enabled || _audioSource && _audioSource.isPlaying)
         {
-            
+            if (_playTime > _clipLength)
+            {
+                Destroy(gameObject);
+            }
         }
         // 모든 재생이 끝난 경우 파괴합니다.
         else
         {
             Destroy(gameObject);
         }
+
+        // 
+        _playTime += Time.deltaTime;
     }
     /// <summary>
     /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.
@@ -125,7 +136,7 @@ public class EffectScript : MonoBehaviour
     /// </summary>
     protected virtual void LateUpdate()
     {
-        // 
+        // 팔레트 사용자라면 갱신합니다.
         if (_paletteUser)
         {
             if (GetComponent<SpriteRenderer>().color != Color.clear)

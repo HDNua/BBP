@@ -1999,12 +1999,37 @@ public abstract class PlayerController : MonoBehaviour
     /// 플레이어가 대미지를 입습니다.
     /// </summary>
     /// <param name="point">플레이어가 입을 대미지입니다.</param>
-    public virtual bool Hurt(int point)
+    /// <param name="hitTransform">피격당한 위치입니다. 방향 판단을 위해 사용합니다.</param>
+    /// <returns></returns>
+    public virtual bool Hurt(int point, Transform hitTransform)
     {
         if (point <= 0)
         {
             return false;
         }
+
+        // 방향을 조정합니다. 다섯 가지 경우가 있습니다. 
+        // 1) 오른쪽을 보고 있는데 오른쪽에서 피격당했습니다.
+        // 2) 오른쪽을 보고 있는데 왼쪽에서 피격당했습니다.
+        // 3) 왼쪽을 보고 있는데 오른쪽에서 피격당했습니다.
+        // 4) 왼쪽을 보고 있는데 왼쪽에서 피격당했습니다.
+        // 5) 방향이 아무래도 상관없는 경우입니다.
+        // 방향이 아무래도 상관없으면 hitTransform을 null로 만들면 됩니다.
+        bool knockbackRight = FacingRight;
+        if (hitTransform != null)
+        {
+            float posX = transform.position.x;
+            float hitX = hitTransform.position.x;
+
+            // 오른쪽을 보고 있는 경우 오른쪽으로 피격당하는 조건은 타격체가 플레이어의 왼쪽에 있는 경우입니다.
+            // 왼쪽을 보고 있는 경우 왼쪽으로 피격당하는 조건은 타격체가 플레이어의 오른쪽에 있는 경우입니다.
+            knockbackRight = FacingRight ? (hitX < posX) : (posX < hitX);
+            if (knockbackRight != FacingRight)
+            {
+                Flip();
+            }
+        }
+        Vector2 knockbackDir = knockbackRight ? Vector2.right : Vector2.left;
 
         // 체력을 깎습니다.
         Health -= point;
@@ -2038,16 +2063,22 @@ public abstract class PlayerController : MonoBehaviour
         {
             if (BigDamaged)
             {
-                Vector2 force = (FacingRight ? Vector2.left : Vector2.right) * KnockbackSpeed;
+                //Vector2 force = (knockbackRight ? Vector2.left : Vector2.right) * KnockbackSpeed;
+                Vector2 force = knockbackDir * KnockbackSpeed;
                 _Velocity = new Vector2(force.x, KnockbackJumpSize);
                 StartCoroutine(CoroutineKnockback());
             }
             else
             {
+                //float speed = 100;
+                //Vector2 force = (knockbackRight ? Vector2.left : Vector2.right);
+                //_Velocity = Vector2.zero;
+                //_Rigidbody.AddForce(force * speed);
+
                 float speed = 100;
-                Vector2 force = (FacingRight ? Vector2.left : Vector2.right);
+                Vector2 force = knockbackDir * speed;
                 _Velocity = Vector2.zero;
-                _Rigidbody.AddForce(force * speed);
+                _Rigidbody.AddForce(force);
             }
         }
 

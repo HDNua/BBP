@@ -84,7 +84,7 @@ public class StageManager1P : StageManager
     /// </summary>
     protected override void HurtPlayer()
     {
-        _player.Hurt(TestDamageValue);
+        _player.Hurt(TestDamageValue, null);
     }
 
     /// <summary>

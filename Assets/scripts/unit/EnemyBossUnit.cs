@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -67,12 +68,33 @@ public class EnemyBossUnit : EnemyUnit
     }
 
     /// <summary>
+    /// 위험 상태가 되는 체력입니다.
+    /// </summary>
+    public int _dangerHealth = 20;
+    /// <summary>
+    /// 위험 상태가 되는 체력입니다.
+    /// </summary>
+    public int DangerHealth
+    {
+        get { return _dangerHealth; }
+        protected set { _dangerHealth = value; }
+    }
+
+    /// <summary>
     /// 플레이어의 체력이 가득 찼는지 확인합니다.
     /// </summary>
     /// <returns>체력이 가득 찼다면 true입니다.</returns>
     public bool IsHealthFull()
     {
         return (Health == MaxHealth);
+    }
+    /// <summary>
+    /// 위험한 상태인지를 확인합니다.
+    /// </summary>
+    /// <returns>위험한 상태라면 참입니다.</returns>
+    public virtual bool IsDanger()
+    {
+        return (Health <= DangerHealth);
     }
 
 
@@ -210,7 +232,7 @@ public class EnemyBossUnit : EnemyUnit
             else
             {
                 // 플레이어에게 대미지를 입힙니다.
-                player.Hurt(Damage);
+                player.Hurt(Damage, transform);
             }
         }
     }
@@ -236,7 +258,7 @@ public class EnemyBossUnit : EnemyUnit
             else
             {
                 // 플레이어에게 대미지를 입힙니다.
-                player.Hurt(Damage);
+                player.Hurt(Damage, transform);
             }
         }
     }
@@ -262,7 +284,7 @@ public class EnemyBossUnit : EnemyUnit
             else
             {
                 // 플레이어에게 대미지를 입힙니다.
-                player.Hurt(Damage);
+                player.Hurt(Damage, transform);
             }
         }
     }

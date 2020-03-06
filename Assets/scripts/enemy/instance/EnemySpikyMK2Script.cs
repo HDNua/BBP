@@ -259,7 +259,7 @@ public class EnemySpikyMK2Script : EnemyScript
             else
             {
                 // 플레이어에게 대미지를 입힙니다.
-                player.Hurt(Damage);
+                player.Hurt(Damage, transform);
             }
         }
     }

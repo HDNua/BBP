@@ -1500,10 +1500,12 @@ public class ZController : PlayerController
     /// <summary>
     /// 플레이어가 대미지를 입습니다.
     /// </summary>
-    /// <param name="damage">플레이어가 입을 대미지입니다.</param>
-    public override bool Hurt(int damage)
+    /// <param name="point">플레이어가 입을 대미지입니다.</param>
+    /// <param name="hitTransform">피격당한 위치입니다. 방향 판단을 위해 사용합니다.</param>
+    /// <returns></returns>
+    public override bool Hurt(int damage, Transform hitTransform)
     {
-        if (base.Hurt(damage))
+        if (base.Hurt(damage, transform))
         {
             DeactivateAllAttackRange();
 

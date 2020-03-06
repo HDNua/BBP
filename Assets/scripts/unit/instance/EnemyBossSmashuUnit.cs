@@ -20,7 +20,7 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// <summary>
     /// 대타격 공격의 대미지입니다.
     /// </summary>
-    public int DAMAGE_DAETAKYOK = 20;
+    public int DAMAGE_DAETAKYUK = 20;
 
     #endregion
 
@@ -596,38 +596,38 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// <summary>
     /// 대타격 행동 중이라면 참입니다.
     /// </summary>
-    bool _doingDaetakyok;
+    bool _doingDaetakyuk;
     /// <summary>
     /// 대타격 행동 중이라면 참입니다.
     /// </summary>
-    public bool DoingDaetakyok
+    public bool DoingDaetakyuk
     {
-        get { return _doingDaetakyok; }
-        private set { _Animator.SetBool("DoingDaetakyok", _doingDaetakyok = value); }
+        get { return _doingDaetakyuk; }
+        private set { _Animator.SetBool("DoingDaetakyuk", _doingDaetakyuk = value); }
     }
 
     /// <summary>
     /// 대타격 코루틴입니다.
     /// </summary>
-    Coroutine _coroutineDaetakyok;
+    Coroutine _coroutineDaetakyuk;
 
     /// <summary>
     /// 대타격 행동을 시작합니다.
     /// </summary>
-    public void DoDaetakyok()
+    public void DoDaetakyuk()
     {
-        DoingDaetakyok = true;
+        DoingDaetakyuk = true;
 
         // 대타격 코루틴을 시작합니다.
         StartAction();
-        _coroutineDaetakyok = StartCoroutine(CoroutineDaetakyok());
+        _coroutineDaetakyuk = StartCoroutine(CoroutineDaetakyuk());
     }
     /// <summary>
     /// 대타격 행동을 중지합니다.
     /// </summary>
-    public void StopDaetakyok()
+    public void StopDaetakyuk()
     {
-        DoingDaetakyok = false;
+        DoingDaetakyuk = false;
         _damage = _defaultDamage;
 
         // 
@@ -637,7 +637,7 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// <summary>
     /// 대타격 코루틴입니다.
     /// </summary>
-    IEnumerator CoroutineDaetakyok()
+    IEnumerator CoroutineDaetakyuk()
     {
         yield return false;
         RunAction();
@@ -646,7 +646,7 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         // 대타격 시작 모션시까지 플레이어를 쳐다보면서 준비합니다.
         attackRange.gameObject.SetActive(false);
         LookPlayer();
-        while (IsAnimatorInState("DaetakyokBeg"))
+        while (IsAnimatorInState("DaetakyukBeg"))
         {
             yield return false;
         }
@@ -654,8 +654,8 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
 
         // 대타격 진행 시에는 몸에 닿았을 때의 대미지도 칼로 베었을 때와 같게 합니다.
         // 그렇게 해야 플레이어가 칼에 맞는 대신 몸통에 박치기하지 않을 것입니다.
-        _damage = DAMAGE_DAETAKYOK;
-        attackRange._damage = DAMAGE_DAETAKYOK;
+        _damage = DAMAGE_DAETAKYUK;
+        attackRange._damage = DAMAGE_DAETAKYUK;
 
         // 플레이어를 쳐다보는 방향으로 대타격을 진행합니다.
         float x = transform.localScale.x;
@@ -702,13 +702,13 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         Velocity = Vector2.zero;
         SoundEffects[1].Play();
         attackRange.gameObject.SetActive(true);
-        while (IsAnimatorInState("DaetakyokRun"))
+        while (IsAnimatorInState("DaetakyukRun"))
         {
             yield return false;
         }
 
         // 공격을 끝냅니다.
-        while (IsAnimatorInState("DaetakyokEnd"))
+        while (IsAnimatorInState("DaetakyukEnd1"))
         {
             yield return false;
         }
@@ -716,9 +716,9 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         attackRange.gameObject.SetActive(false);
 
         // 대타격을 종료합니다.
-        StopDaetakyok();
-        StopCoroutine(_coroutineDaetakyok);
-        _coroutineDaetakyok = null;
+        StopDaetakyuk();
+        StopCoroutine(_coroutineDaetakyuk);
+        _coroutineDaetakyuk = null;
         yield break;
     }
 
@@ -753,45 +753,45 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// <summary>
     /// 쾌진격 행동 중이라면 참입니다.
     /// </summary>
-    bool _doingKwaejinkyok;
+    bool _doingKwaejinkyuk;
     /// <summary>
     /// 쾌진격 행동 중이라면 참입니다.
     /// </summary>
-    public bool DoingKwaejinkyok
+    public bool DoingKwaejinkyuk
     {
-        get { return _doingKwaejinkyok; }
-        private set { _Animator.SetBool("DoingKwaejinkyok", _doingKwaejinkyok = value); }
+        get { return _doingKwaejinkyuk; }
+        private set { _Animator.SetBool("DoingKwaejinkyuk", _doingKwaejinkyuk = value); }
     }
 
     /// <summary>
     /// 쾌진격 코루틴입니다.
     /// </summary>
-    Coroutine _coroutineKwaejinkyok;
+    Coroutine _coroutineKwaejinkyuk;
 
     /// <summary>
     /// 쾌진격 행동을 시작합니다.
     /// </summary>
-    public void DoKwaejinkyok()
+    public void DoKwaejinkyuk()
     {
-        DoingKwaejinkyok = true;
+        DoingKwaejinkyuk = true;
 
         // 쾌진격 코루틴을 시작합니다.
         StartAction();
-        _coroutineKwaejinkyok = StartCoroutine(CoroutineKwaejinkyok());
+        _coroutineKwaejinkyuk = StartCoroutine(CoroutineKwaejinkyuk());
     }
     /// <summary>
     /// 쾌진격 행동을 중지합니다.
     /// </summary>
-    public void StopKwaejinkyok()
+    public void StopKwaejinkyuk()
     {
-        DoingKwaejinkyok = false;
+        DoingKwaejinkyuk = false;
         EndAction();
     }
 
     /// <summary>
     /// 쾌진격 코루틴입니다.
     /// </summary>
-    IEnumerator CoroutineKwaejinkyok()
+    IEnumerator CoroutineKwaejinkyuk()
     {
         yield return false;
         RunAction();
@@ -800,7 +800,7 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         yield return false;
 
         // 
-        StopKwaejinkyok();
+        StopKwaejinkyuk();
         yield break;
     }
 

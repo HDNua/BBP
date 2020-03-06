@@ -89,7 +89,7 @@ public class BossAtahoBulletScript1 : EnemyBulletScript
             else
             {
                 // 플레이어에게 대미지를 입힙니다.
-                player.Hurt(Damage);
+                player.Hurt(Damage, transform);
             }
 
             // 맞는 순간 폭발합니다.

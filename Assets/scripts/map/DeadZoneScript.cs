@@ -18,11 +18,6 @@ public class DeadZoneScript : EnemyScript
 
 
 
-
-
-
-
-
     #region Unity에서 접근 가능한 공용 객체를 정의합니다.
     public int _spikeDamage = 100;
 
@@ -33,20 +28,10 @@ public class DeadZoneScript : EnemyScript
 
 
 
-
-
-
-
-
     #region 캐릭터의 상태 필드 및 프로퍼티를 정의합니다.
 
 
     #endregion
-
-
-
-
-
 
 
 
@@ -77,11 +62,6 @@ public class DeadZoneScript : EnemyScript
 
 
 
-
-
-
-
-
     #region Collider2D의 기본 메서드를 재정의합니다.
     /// <summary>
     /// 충돌체가 여전히 트리거 내부에 있습니다.
@@ -106,18 +86,12 @@ public class DeadZoneScript : EnemyScript
             else
             {
                 // 플레이어에게 대미지를 입힙니다.
-                player.Hurt(_spikeDamage);
+                player.Hurt(_spikeDamage, null);
             }
         }
     }
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -132,20 +106,10 @@ public class DeadZoneScript : EnemyScript
 
 
 
-
-
-
-
-
     #region 메서드를 정의합니다.
 
 
     #endregion
-
-
-
-
-
 
 
 

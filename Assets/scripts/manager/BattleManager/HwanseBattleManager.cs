@@ -11,6 +11,41 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class HwanseBattleManager : BattleManager
 {
+    #region 전투 개요입니다.
+    // 린샹은 아타호가 위험한 상태에 빠진 이후부터 등장하여
+    // 전체 공격기와 버프를 통해 아타호를 보조하는 보스입니다.
+    // 전투 불능 상태가 되면 수경으로 벽을 생성하고 전투 자세를 가다듬습니다.
+    // 린샹은 그대로 놔두면 지속적으로 방해가 되기 때문에,
+    // 플레이어가 아타호만을 공략하는 대신 지속적으로 지상에 내려와서
+    // 린샹까지 견제하는 플레이를 유도하게 합니다.
+    // 이때 지상에 간헐적으로 등장하는 스마슈가 매우 강력하므로, 이를 잘 피해야 합니다.
+    // 즉 환세 스테이지의 보스들은 각각 다음과 같은 포지션이 됩니다.
+    // 아타호: 메인 보스. 근거리 및 원거리에서 적을 마주하는 탱커.
+    // 린샹: 서브 보스. 원거리에서 아타호를 보조하는 서포터.
+    // 스마슈: 서브 보스. 근거리에서 빠른 속도로 치고 빠지는 딜러.
+    //
+    // 린샹이 서포터 역할을 맡게 된 것에는 여러 가지 이유가 있습니다.
+    // 1) 아타호, 린샹, 스마슈를 모두 메인 보스로 등장시키기는 어려웠습니다.
+    //    환세취호전 게임의 덤프를 따내면 아타호의 스프라이트가 가장 풍부하고,
+    //    린샹과 스마슈가 그 다음인데 이들은 보스의 패턴을 구현하기에는 부족한 양입니다.
+    //    따라서 환세취호전의 주인공인 아타호를 메인에 내세우고,
+    //    나머지 캐릭터를 전투 중간에 게릴라 식으로 등장시키는 것이 적절했습니다.
+    // 2) 린샹과 스마슈가 모두 공격적인 기술을 가지고 있지만,
+    //    분신술을 이용하여 임의의 위치에서 자유롭게 등장하는 것이 적절한 스마슈와 달리
+    //    린샹의 등장을 디자인하는 것은 예상 외로 어려운 일이었습니다.
+    //    스마슈와 똑같은 등장을 한다면 캐릭터의 개성을 잃고 전투를 지루하게 만들 수 있었고,
+    //    치고 빠지는 다른 동작을 만드는 것은 벽을 뚫고 들어와야 하는데
+    //    그것을 보는 플레이어가 린샹의 등장을 적절하게 느끼게 할 방법을 찾지 못했습니다.
+    //    그러던 와중 보스 문을 뚫고 들어온 다음 자신이 들어온 문을 막는 방법을 떠올렸고,
+    //    그러려면 린샹이 등장 이후에 다시 왔던 길로 되돌아가서는 안 되었습니다.
+    //    따라서 린샹은 아타호의 체력이 까인 중후반부터 등장하는 보스가 되었고,
+    //    위치 이동을 구현하기가 상대적으로 까다로운 린샹은 거의 고정적인 위치에서
+    //    원거리 공격 또는 버프를 제공하는 서포터 캐릭터로 설정되었습니다.
+
+    #endregion
+
+
+
     #region 상수를 정의합니다.
     /// <summary>
     /// 패턴 1에서 Hop 행동 후 잠깐 쉬는 시간입니다.
@@ -57,9 +92,17 @@ public class HwanseBattleManager : BattleManager
     public int _currentPositionIndex = 0;
 
     /// <summary>
-    /// 아타호를 생성할 위치입니다.
+    /// 아타호를 소환할 위치입니다.
     /// </summary>
-    public Transform _spawnPosition;
+    public Transform _atahoSpawnPosition;
+    /// <summary>
+    /// 린샹을 소환할 위치입니다.
+    /// </summary>
+    public Transform _rinshanSpawnPosition;
+    /// <summary>
+    /// 린샹의 등장이 종료되는 위치입니다.
+    /// </summary>
+    public Transform _rinshanSpawnEndPosition;
     /// <summary>
     /// 이동할 위치 집합입니다.
     /// </summary>
@@ -157,7 +200,7 @@ public class HwanseBattleManager : BattleManager
     protected override IEnumerator CoroutineAppear()
     {
         // 
-        _atahoUnit.transform.position = _spawnPosition.position;
+        _atahoUnit.transform.position = _atahoSpawnPosition.position;
 
         // 모든 보스를 등장시킵니다.
         _atahoUnit.gameObject.SetActive(true);
@@ -258,10 +301,10 @@ public class HwanseBattleManager : BattleManager
                             _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPattern1());
                             break;
                         case 1:
-                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPattern1());
+                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPattern2());
                             break;
                         case 2:
-                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPattern1());
+                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPattern3());
                             break;
                         default:
                             _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPattern1());
@@ -524,7 +567,11 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoActionLU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (IsNear(atahoUnit.transform, player.transform))
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsNear(atahoUnit.transform, player.transform))
         {
             _atahoUnit.Guard();
         }
@@ -551,7 +598,11 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoActionU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (IsNear(atahoUnit.transform, player.transform))
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsNear(atahoUnit.transform, player.transform))
         {
             atahoUnit.Guard();
         }
@@ -571,7 +622,11 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoActionRU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (IsNear(atahoUnit.transform, player.transform))
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsNear(atahoUnit.transform, player.transform))
         {
             _atahoUnit.Guard();
         }
@@ -598,17 +653,21 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoActionL(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (IsTargetOnGround(player.transform))
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
             // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
             // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
-            if (_rinshanUnit == null)
+            if (_smashuUnit == null)
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
                 int spawnIndex;
                 spawnIndex = 9; // Random.Range(7, 10);
-                _atahoUnit.CallRinshan(_positions[spawnIndex]);
+                _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
             else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
@@ -663,7 +722,11 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoActionM(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (IsTargetOnGround(player.transform))
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
             // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
@@ -706,7 +769,11 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoActionR(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (IsTargetOnGround(player.transform))
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
             // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
@@ -771,17 +838,21 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoActionLD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (IsTargetOnGround(player.transform))
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
             // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
             // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
-            if (_rinshanUnit == null)
+            if (_smashuUnit == null)
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
                 int spawnIndex;
                 spawnIndex = 9; // Random.Range(7, 10);
-                _atahoUnit.CallRinshan(_positions[spawnIndex]);
+                _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
             else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
@@ -835,7 +906,11 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoActionD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (IsTargetOnGround(player.transform))
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
             // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
@@ -899,7 +974,11 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoActionRD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (IsTargetOnGround(player.transform))
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
             // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
@@ -1150,7 +1229,101 @@ public class HwanseBattleManager : BattleManager
         }
 
         // 대타격을 수행합니다.
-        _smashuUnit.DoDaetakyok();
+        _smashuUnit.DoDaetakyuk();
+
+        // 행동이 종료될 때까지 대기합니다.
+        while (_smashuUnit.IsActionStarted == false)
+        {
+            yield return false;
+        }
+        while (_smashuUnit.IsActionRunning)
+        {
+            yield return false;
+        }
+        while (_smashuUnit.IsActionEnded == false)
+        {
+            yield return false;
+        }
+
+        // 사라집니다.
+        _smashuUnit.Disappear();
+
+        // 행동이 종료될 때까지 대기합니다.
+        while (_smashuUnit.IsActionStarted == false)
+        {
+            yield return false;
+        }
+        while (_smashuUnit.IsActionRunning)
+        {
+            yield return false;
+        }
+        while (_smashuUnit.IsActionEnded == false)
+        {
+            yield return false;
+            if (_smashuUnit == null)
+            {
+                break;
+            }
+        }
+
+        // 
+        _coroutineSmashuPattern = null;
+        yield break;
+    }
+    /// <summary>
+    /// 2번 패턴입니다.
+    /// </summary>
+    IEnumerator CoroutineSmashuPattern2()
+    {
+        // 대타격을 수행합니다.
+        _smashuUnit.DoDaetakyuk();
+
+        // 행동이 종료될 때까지 대기합니다.
+        while (_smashuUnit.IsActionStarted == false)
+        {
+            yield return false;
+        }
+        while (_smashuUnit.IsActionRunning)
+        {
+            yield return false;
+        }
+        while (_smashuUnit.IsActionEnded == false)
+        {
+            yield return false;
+        }
+
+        // 사라집니다.
+        _smashuUnit.Disappear();
+
+        // 행동이 종료될 때까지 대기합니다.
+        while (_smashuUnit.IsActionStarted == false)
+        {
+            yield return false;
+        }
+        while (_smashuUnit.IsActionRunning)
+        {
+            yield return false;
+        }
+        while (_smashuUnit.IsActionEnded == false)
+        {
+            yield return false;
+            if (_smashuUnit == null)
+            {
+                break;
+            }
+        }
+
+        // 
+        _coroutineSmashuPattern = null;
+        yield break;
+    }
+    /// <summary>
+    /// 3번 패턴입니다.
+    /// </summary>
+    IEnumerator CoroutineSmashuPattern3()
+    {
+        // 대타격을 수행합니다.
+        _smashuUnit.DoDaetakyuk();
 
         // 행동이 종료될 때까지 대기합니다.
         while (_smashuUnit.IsActionStarted == false)

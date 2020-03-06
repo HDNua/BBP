@@ -151,6 +151,28 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     /// </summary>
     bool _isGroundableNow = true;
 
+    /// <summary>
+    /// X축 속력입니다.
+    /// </summary>
+    public float _movingSpeedX = 1;
+    /// <summary>
+    /// Y축 속력입니다.
+    /// </summary>
+    public float _movingSpeedY = 2;
+
+    /// <summary>
+    /// 착지가 막혀있다면 참입니다.
+    /// </summary>
+    public bool _landBlocked = false;
+    /// <summary>
+    /// 착지가 불가능하다면 참입니다.
+    /// </summary>
+    bool LandBlocked
+    {
+        get { return _landBlocked; }
+        set { _landBlocked = value; }
+    }
+
     #endregion
 
 
@@ -195,14 +217,17 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     /// </summary>
     protected override void Start()
     {
+        base.Start();
 
+        // 등장합니다.
+        Appear();
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트합니다.
     /// </summary>
     protected override void Update()
     {
-
+        base.Update();
     }
     /// <summary>
     /// FixedTimestep에 설정된 값에 따라 일정한 간격으로 업데이트 합니다.
@@ -214,7 +239,18 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         // 점프 중이라면
         if (Jumping)
         {
-            if (Velocity.y <= 0)
+            if (Landed)
+            {
+                if (LandBlocked)
+                {
+                    UpdateVy();
+                }
+                else
+                {
+                    Land();
+                }
+            }
+            else if (Velocity.y <= 0)
             {
                 Fall();
             }
@@ -228,7 +264,14 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         {
             if (Landed)
             {
-                Land();
+                if (LandBlocked)
+                {
+                    UpdateVy();
+                }
+                else
+                {
+                    Land();
+                }
             }
             else
             {
@@ -274,9 +317,6 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         // 상태를 정의합니다.
         Appearing = true;
 
-        // 효과음을 재생합니다.
-        SoundEffects[0].Play();
-
         // 내용을 정의합니다.
         StartAction();
         _coroutineAppear = StartCoroutine(CoroutineAppear());
@@ -295,55 +335,43 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     /// </summary>
     IEnumerator CoroutineAppear()
     {
-        // 
-        gameObject.tag = "Untagged";
-        _PaletteUser.DisableTexture();
+        // 초기 설정을 진행합니다.
+        transform.position = _BattleManager._rinshanSpawnPosition.position;
+        yield return false;
+        RunAction();
 
-        /*
-        // 닌자 등장 풀때기 효과를 생성합니다.
-        GameObject effectGrassObject = Instantiate(
-            EffectNinjaGrass,
-            transform.position,
-            transform.rotation);
-        effectGrassObject.SetActive(true);
-        EffectScript effectGrass = effectGrassObject.GetComponent<EffectScript>();
-        float effectClipLength = effectGrass._clipLength;
-
-        // 
-        float time = 0;
-        while (time < _appearReadyTime)
+        // Groundable 개체의 올바른 초기화는 일단 바닥에 닿은 것을 기준으로 합니다.
+        Fall();
+        while (Landed == false)
         {
-            time += Time.deltaTime;
             yield return false;
         }
 
         // 
-        gameObject.tag = "Enemy";
+        float v0 = 10;
+        float begPosX = transform.position.x;
+        float endPosX = _BattleManager._rinshanSpawnEndPosition.position.x;
+        float dist = Mathf.Abs(endPosX - begPosX);
+        float time = 1f;
+        float passTime = 0;
 
-        // 
-        bool blink = false;
-        while (time < effectClipLength)
+        // 착지 완료 후 왼쪽에서 보스 문을 박차고 들어옵니다.
+        // 소환 후 등장 지점까지 이동합니다.
+        Velocity = new Vector2(v0, 0);
+        SoundEffects[0].Play();
+        while (Velocity.x > 0)
         {
-            time += TIME_30FPS + Time.deltaTime;
+            yield return false;
 
-            if (blink)
-            {
-                _PaletteUser.EnableTexture();
-            }
-            else
-            {
-                _PaletteUser.DisableTexture();
-            }
-            blink = !blink;
-
-            // 30 FPS 간격으로 반짝이게 합니다.
-            yield return new WaitForSeconds(TIME_30FPS);
+            // 
+            //Velocity = new Vector2(v0 + (2 * dist / time) - ((2 * dist) / (time * time)) * passTime, 0);
+            Velocity = new Vector2(v0 - ((2 * dist) / (time * time)) * passTime, 0);
+            passTime += Time.deltaTime;
         }
+        transform.position = new Vector3(_BattleManager._rinshanSpawnEndPosition.position.x, transform.position.y, transform.position.z);
+        Velocity = Vector2.zero;
 
-        // 효과를 제거하고 스마슈의 색상을 원래대로 돌립니다.
-        effectGrass.RequestDestroy();
-        _PaletteUser.EnableTexture();
-        */
+        // 수경 등을 이용하여 들어온 문을 막습니다.
 
         // 등장을 끝냅니다.
         StopAppearing();
@@ -451,7 +479,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
 
 
 
-    #region "사망" 행동을 정의합니다.
+    #region "기절" 행동을 정의합니다.
     /// <summary>
     /// 사망 코루틴입니다. 린샹은 실제로 사망하지 않고 그저 무적 상태로 일정 시간 방어만 합니다.
     /// </summary>
@@ -557,42 +585,42 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
 
 
 
-    #region "대타격" 행동을 정의합니다.
+    #region "수경" 행동을 정의합니다.
     /// <summary>
     /// 대타격 행동 중이라면 참입니다.
     /// </summary>
-    bool _doingDaetakyok;
+    bool _doingSukyeong;
     /// <summary>
     /// 대타격 행동 중이라면 참입니다.
     /// </summary>
-    public bool DoingDaetakyok
+    public bool DoingSukyeong
     {
-        get { return _doingDaetakyok; }
-        private set { _Animator.SetBool("DoingDaetakyok", _doingDaetakyok = value); }
+        get { return _doingSukyeong; }
+        private set { _Animator.SetBool("DoingSukyeong", _doingSukyeong = value); }
     }
 
     /// <summary>
     /// 대타격 코루틴입니다.
     /// </summary>
-    Coroutine _coroutineDaetakyok;
+    Coroutine _coroutineSukyeong;
 
     /// <summary>
     /// 대타격 행동을 시작합니다.
     /// </summary>
-    public void DoDaetakyok()
+    public void DoSukyeong()
     {
-        DoingDaetakyok = true;
+        DoingSukyeong = true;
 
         // 대타격 코루틴을 시작합니다.
         StartAction();
-        _coroutineDaetakyok = StartCoroutine(CoroutineDaetakyok());
+        _coroutineSukyeong = StartCoroutine(CoroutineSukyeong());
     }
     /// <summary>
     /// 대타격 행동을 중지합니다.
     /// </summary>
-    public void StopDaetakyok()
+    public void StopSukyeong()
     {
-        DoingDaetakyok = false;
+        DoingSukyeong = false;
         _damage = _defaultDamage;
 
         // 
@@ -602,16 +630,13 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     /// <summary>
     /// 대타격 코루틴입니다.
     /// </summary>
-    IEnumerator CoroutineDaetakyok()
+    IEnumerator CoroutineSukyeong()
     {
         yield return false;
         RunAction();
-        EnemyUnit attackRange = _attackRanges[0];
 
-        // 대타격 시작 모션시까지 플레이어를 쳐다보면서 준비합니다.
-        attackRange.gameObject.SetActive(false);
-        LookPlayer();
-        while (IsAnimatorInState("DaetakyokBeg"))
+        // 수경을 준비합니다.
+        while (IsAnimatorInState("SukyeongBeg"))
         {
             yield return false;
         }
@@ -681,9 +706,9 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         attackRange.gameObject.SetActive(false);
 
         // 대타격을 종료합니다.
-        StopDaetakyok();
-        StopCoroutine(_coroutineDaetakyok);
-        _coroutineDaetakyok = null;
+        StopSukyeong();
+        StopCoroutine(_coroutineSukyeong);
+        _coroutineSukyeong = null;
         yield break;
     }
 
@@ -791,6 +816,131 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     GameObject EffectNinjaGrass
     {
         get { return _effects[0]; }
+    }
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    bool Moving
+    {
+        get; set;
+    }
+
+    /// <summary>
+    /// 왼쪽으로 이동합니다.
+    /// </summary>
+    protected void MoveLeft()
+    {
+        if (FacingRight)
+            Flip();
+
+        Moving = true;
+        _Rigidbody.velocity = new Vector2(-_movingSpeedX, _Rigidbody.velocity.y);
+    }
+    /// <summary>
+    /// 오른쪽으로 이동합니다.
+    /// </summary>
+    protected void MoveRight()
+    {
+        if (FacingRight == false)
+            Flip();
+
+        // 상태를 정의합니다.
+        Moving = true;
+
+        // 내용을 정의합니다.
+        _Rigidbody.velocity = new Vector2(_movingSpeedX, _Rigidbody.velocity.y);
+    }
+    /// <summary>
+    /// 위쪽으로 이동합니다.
+    /// </summary>
+    protected void MoveUp()
+    {
+        // 상태를 정의합니다.
+        Moving = true;
+
+        // 내용을 정의합니다.
+        _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, _movingSpeedY);
+    }
+    /// <summary>
+    /// 아래쪽으로 이동합니다.
+    /// </summary>
+    protected void MoveDown()
+    {
+        // 상태를 정의합니다.
+        Moving = true;
+
+        // 내용을 정의합니다.
+        _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, -_movingSpeedY);
+    }
+    /// <summary>
+    /// 이동을 중지합니다.
+    /// </summary>
+    protected void StopMoving()
+    {
+        Velocity = Vector2.zero;
+
+        // 상태를 정의합니다.
+        Moving = false;
+    }
+
+    /// <summary>
+    /// 특정 지점으로 이동합니다.
+    /// </summary>
+    /// <param name="t">이동할 지점입니다.</param>
+    void MoveTo(Transform t)
+    {
+        // 사용할 변수를 선언합니다.
+        Vector2 relativePos = t.position - transform.position;
+
+        // 플레이어를 향해 수평 방향 전환합니다.
+        if (relativePos.x < 0)
+        {
+            MoveLeft();
+        }
+        else if (relativePos.x > 0)
+        {
+            MoveRight();
+        }
+        // 플레이어를 향해 수직 방향 전환합니다.
+        if (relativePos.y > 0)
+        {
+            MoveUp();
+        }
+        else if (relativePos.y < 0)
+        {
+            MoveDown();
+        }
+    }
+    /// <summary>
+    /// 플레이어를 향해 이동합니다.
+    /// </summary>
+    private void MoveToPlayer()
+    {
+        // 사용할 변수를 선언합니다.
+        Vector3 playerPos = _StageManager.GetCurrentPlayerPosition();
+        Vector2 relativePos = playerPos - transform.position;
+
+        // 플레이어를 향해 수평 방향 전환합니다.
+        if (relativePos.x < 0)
+        {
+            MoveLeft();
+        }
+        else if (relativePos.x > 0)
+        {
+            MoveRight();
+        }
+        // 플레이어를 향해 수직 방향 전환합니다.
+        if (relativePos.y > 0)
+        {
+            MoveUp();
+        }
+        else if (relativePos.y < 0)
+        {
+            MoveDown();
+        }
     }
 
     #endregion

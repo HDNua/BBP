@@ -1220,18 +1220,18 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         {
             yield return false;
             time += Time.deltaTime;
-            if (time < TIME_CALL_TEAM)
+            if (time >= TIME_CALL_TEAM)
             {
                 break;
             }
         }
 
-        // 
-        yield return new WaitForSeconds(TIME_WAIT);
-
         // 팀원 호출 상태를 끝냅니다.
         StopCallingTeamUnit();
         _coroutineCallTeamUnit = null;
+
+        // 팀원 호출 상태를 끝내고 IDLE 상태에서 잠시 쉽니다.
+        yield return new WaitForSeconds(TIME_WAIT);
         yield break;
     }
 
@@ -1251,13 +1251,13 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         SoundEffects[(int)seIndex].Play();
     }
     /// <summary>
-    /// 
+    /// 탄환을 발사합니다.
     /// </summary>
-    /// <param name="shotPosition"></param>
-    /// <param name="destination"></param>
-    /// <param name="bulletIndex"></param>
-    /// <param name="effectIndex"></param>
-    /// <param name="seIndex"></param>
+    /// <param name="shotPosition">탄환을 발사할 위치입니다.</param>
+    /// <param name="destination">탄환의 목적지입니다.</param>
+    /// <param name="bulletIndex">탄환 인덱스입니다.</param>
+    /// <param name="effectIndex">탄환 생성 효과 인덱스입니다.</param>
+    /// <param name="seIndex">효과음 인덱스입니다.</param>
     void Shot(Transform shotPosition, Vector3 destination, Bullet bulletIndex, int effectIndex, SoundEffect seIndex)
     {
         // 

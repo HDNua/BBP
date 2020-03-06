@@ -100,7 +100,7 @@ public class StageManager2P : StageManager
     {
         foreach (var player in _players)
         {
-            player.Hurt(TestDamageValue);
+            player.Hurt(TestDamageValue, null);
         }
     }
 

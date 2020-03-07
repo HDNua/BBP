@@ -22,6 +22,11 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// </summary>
     public int DAMAGE_DAETAKYUK = 20;
 
+    /// <summary>
+    /// 플레이어와 스마슈 사이가 가깝다고 인지할 수 있는 간격입니다.
+    /// </summary>
+    public float THRESHOLD_NEAR_DIST = 1f;
+
     #endregion
 
 
@@ -134,6 +139,12 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// </summary>
     public float _damagedTime = 1.6f;
 
+    /// <summary>
+    /// 스마슈의 근거리 베기 공격 범위입니다.
+    /// </summary>
+    public EnemyUnit[] _attackRanges;
+
+
     #endregion
 
 
@@ -149,6 +160,11 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// 사라지기 상태라면 참입니다.
     /// </summary>
     bool _disappearing = false;
+
+    /// <summary>
+    /// 행동의 RUN 상태에 대한 종료 요청을 받았습니다.
+    /// </summary>
+    bool _runEndRequest = false;
 
     /// <summary>
     /// Groundable 컴포넌트가 활성화된 상태라면 참입니다.
@@ -185,6 +201,15 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     {
         get { return _Animator.GetBool("IsAlmostDead"); }
         set { _Animator.SetBool("IsAlmostDead", value); }
+    }
+
+    /// <summary>
+    /// 행동의 RUN 상태에 대한 종료 요청을 받았습니다.
+    /// </summary>
+    public bool RunEndRequest
+    {
+        get { return _runEndRequest; }
+        private set { _Animator.SetBool("RunEndRequest", _runEndRequest = value); }
     }
 
     /// <summary>
@@ -721,27 +746,6 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         _coroutineDaetakyuk = null;
         yield break;
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public float THRESHOLD_NEAR_DIST = 1f;
-    /// <summary>
-    /// 
-    /// </summary>
-    bool _runEndRequest = false;
-    /// <summary>
-    /// 
-    /// </summary>
-    public bool RunEndRequest
-    {
-        get { return _runEndRequest; }
-        private set { _Animator.SetBool("RunEndRequest", _runEndRequest = value); }
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    public EnemyUnit[] _attackRanges;
 
     #endregion
 

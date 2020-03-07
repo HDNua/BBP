@@ -165,7 +165,7 @@ public class XBusterScript : AttackScript
                 {
                     // 타격 효과를 생성하고 대미지를 입힙니다.
                     MakeHitParticle(_rigidbody.velocity.x < 0, transform);
-                    enemy.Hurt(damage);
+                    enemy.Hurt(damage, transform);
                 }
 
                 // 적이 살아있다면 탄환을 제거합니다.

@@ -130,21 +130,29 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     public EnemyUnit[] _team;
 
     /// <summary>
-    /// 플레이어의 마나를 확인합니다.
+    /// 캐릭터의 마나입니다.
     /// </summary>
     public int _mana = 40;
     /// <summary>
-    /// 플레이어의 최대 마나를 확인합니다.
+    /// 캐릭터의 최대 마나입니다.
     /// </summary>
     public int _maxMana = 40;
     /// <summary>
-    /// 플레이어의 경험치를 확인합니다.
+    /// 캐릭터의 레벨업에 따른 최대 마나 증가량입니다.
+    /// </summary>
+    public int _manaIncreaseStep = 20;
+    /// <summary>
+    /// 캐릭터의 경험치입니다.
     /// </summary>
     public int _exp = 0;
     /// <summary>
-    /// 플레이어의 최대 경험치를 확인합니다.
+    /// 캐릭터의 최대 경험치입니다.
     /// </summary>
-    public int _maxExp = 40;
+    public int _maxExp = 200;
+    /// <summary>
+    /// 캐릭터의 레벨업에 따른 최대 경험치 증가량입니다.
+    /// </summary>
+    public int _expIncreaseStep = 50;
 
     /// <summary>
     /// 이동할 위치 집합입니다.
@@ -449,23 +457,30 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
             transform.SetParent(enemyParent);
         }
 
+        // 효과를 생성하기 전에 방향을 설정합니다.
+        LookPlayer();
+
         // 개체 대신 놓일 그림을 활성화합니다.
         Vector3 position = transform.position;
-        BossDeadEffectScript effect;
+        BossDeadEffectScript effectPrefab;
         if (isEveryBossesDead)
         {
-            effect = _battleManager._bossDeadEffects[0];
+            effectPrefab = _battleManager._bossDeadEffects[0];
         }
         else
         {
-            effect = _battleManager._bossDeadEffects[1];
+            effectPrefab = _battleManager._bossDeadEffects[1];
         }
-        Instantiate(effect, position, transform.rotation)
-            .gameObject.SetActive(true);
+        BossDeadEffectScript effect = Instantiate(effectPrefab, position, transform.rotation);
+        effect.gameObject.SetActive(true);
         effect.transform.position = position;
-        if (FacingRight)
+
+        // 
+        if (!FacingRight)
+        {
             effect.transform.localScale = new Vector3
-                (-effect.transform.localScale.x, effect.transform.localScale.x);
+                    (-effect.transform.localScale.x, effect.transform.localScale.x);
+        }
         effect.gameObject.SetActive(true);
 
         // 플레이어의 움직임을 막습니다.
@@ -480,10 +495,11 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 캐릭터에게 대미지를 입힙니다.
     /// </summary>
-    /// <param name="damage">입힐 대미지입니다.</param>
-    public override void Hurt(int damage)
+    /// <param name="damage">입힐 대미지의 양입니다.</param>
+    /// <param name="hitTransform">타격체입니다.</param>
+    public override void Hurt(int damage, Transform hitTransform)
     {
-        base.Hurt(damage);
+        base.Hurt(damage, hitTransform);
 
         // 맞은 대미지만큼 경험치를 올립니다.
         UpdateExp(damage);
@@ -559,13 +575,13 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
     /// <summary>
-    /// 
+    /// 경험치 업데이트 요청이 들어왔습니다.
     /// </summary>
     public bool _expUpdateRequest = false;
     /// <summary>
-    /// 
+    /// 경험치를 업데이트 합니다.
     /// </summary>
-    /// <param name=""></param>
+    /// <param damage="">피해량이 경험치가 됩니다.</param>
     public void UpdateExp(int damage)
     {
         _expUpdateRequest = true;
@@ -573,6 +589,11 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         // 페이즈 업데이트 시엔 마나를 모두 회복합니다.
         if (_exp + damage - _phase * _maxExp >= _maxExp)
         {
+            // 최대 마나와 최대 경험치를 업데이트 합니다.
+            _maxMana += _manaIncreaseStep;
+            //_maxExp += _expIncreaseStep;
+
+            // 마나를 모두 회복합니다.
             FillMana(_maxMana);
         }
 
@@ -883,6 +904,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     IEnumerator CoroutineHokyokkwon()
     {
         // 움직임을 멈춥니다.
+        LookPlayer();
         StopMoving();
         yield return false;
         RunAction();
@@ -894,7 +916,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         while (IsAnimatorInState("HokyokkwonBeg"))
         {
             yield return false;
-            RunAction();
             time += Time.deltaTime;
 
             if (time > TIME_SWING_ARM)
@@ -968,15 +989,16 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     IEnumerator CoroutineHopokwon()
     {
         // 움직임을 멈춥니다.
+        LookPlayer();
         StopMoving();
         yield return false;
+        RunAction();
 
         // 탄환을 발사합니다.
         PlaySoundEffect(SoundEffect.Recover);
         while (IsAnimatorInState("HopokwonBeg"))
         {
             yield return false;
-            RunAction();
         }
 
         // 
@@ -1137,7 +1159,8 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <param name="newUnitPosIndex">린샹 인덱스입니다.</param>
     public void CallRinshan(Transform newUnitPosition)
     {
-        int rinshanIndex = 2 * _phase;
+        ///int rinshanIndex = 2 * _phase;
+        int rinshanIndex = 0;
         CallTeamUnit(rinshanIndex, newUnitPosition);
     }
     /// <summary>
@@ -1146,7 +1169,8 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <param name="newUnitPosIndex">스마슈 인덱스입니다.</param>
     public void CallSmashu(Transform newUnitPosition)
     {
-        int smashuIndex = 2 * _phase + 1;
+        ///int smashuIndex = 2 * _phase + 1;
+        int smashuIndex = 1;
         CallTeamUnit(smashuIndex, newUnitPosition);
     }
 
@@ -1229,9 +1253,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         // 팀원 호출 상태를 끝냅니다.
         StopCallingTeamUnit();
         _coroutineCallTeamUnit = null;
-
-        // 팀원 호출 상태를 끝내고 IDLE 상태에서 잠시 쉽니다.
-        yield return new WaitForSeconds(TIME_WAIT);
         yield break;
     }
 

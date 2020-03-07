@@ -134,7 +134,8 @@ public class EnemyUnit : Unit
     /// 캐릭터에게 대미지를 입힙니다.
     /// </summary>
     /// <param name="damage">입힐 대미지의 양입니다.</param>
-    public virtual void Hurt(int damage)
+    /// <param name="hitTransform">타격체입니다.</param>
+    public virtual void Hurt(int damage, Transform hitTransform)
     {
         Health -= damage;
         IsDamaged = true;

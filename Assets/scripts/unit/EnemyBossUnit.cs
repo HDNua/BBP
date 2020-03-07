@@ -97,6 +97,10 @@ public class EnemyBossUnit : EnemyUnit
         return (Health <= DangerHealth);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    protected Transform _hitTransform;
 
 
     /// <summary>
@@ -365,6 +369,18 @@ public class EnemyBossUnit : EnemyUnit
         Health += healStep;
         if (Health > MaxHealth)
             Health = MaxHealth;
+    }
+    /// <summary>
+    /// 캐릭터에게 대미지를 입힙니다.
+    /// </summary>
+    /// <param name="damage">입힐 대미지의 양입니다.</param>
+    /// <param name="hitTransform">타격체입니다.</param>
+    public override void Hurt(int damage, Transform hitTransform)
+    {
+        base.Hurt(damage, hitTransform);
+
+        // 피격당한 위치를 보관합니다.
+        _hitTransform = hitTransform;
     }
 
     #endregion

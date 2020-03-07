@@ -645,7 +645,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         // 대타격 진행 시에는 몸에 닿았을 때의 대미지도 칼로 베었을 때와 같게 합니다.
         // 그렇게 해야 플레이어가 칼에 맞는 대신 몸통에 박치기하지 않을 것입니다.
         _damage = DAMAGE_DAETAKYOK;
-        attackRange._damage = DAMAGE_DAETAKYOK;
+        //attackRange._damage = DAMAGE_DAETAKYOK;
 
         // 플레이어를 쳐다보는 방향으로 대타격을 진행합니다.
         float x = transform.localScale.x;
@@ -691,7 +691,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         // 공격을 진행합니다.
         Velocity = Vector2.zero;
         SoundEffects[1].Play();
-        attackRange.gameObject.SetActive(true);
+        //attackRange.gameObject.SetActive(true);
         while (IsAnimatorInState("DaetakyokRun"))
         {
             yield return false;
@@ -703,7 +703,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             yield return false;
         }
         RunEndRequest = false;
-        attackRange.gameObject.SetActive(false);
+        //attackRange.gameObject.SetActive(false);
 
         // 대타격을 종료합니다.
         StopSukyeong();

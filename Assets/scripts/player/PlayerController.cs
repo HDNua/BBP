@@ -2021,10 +2021,18 @@ public abstract class PlayerController : MonoBehaviour
             float posX = transform.position.x;
             float hitX = hitTransform.position.x;
 
+            /*
             // 오른쪽을 보고 있는 경우 오른쪽으로 피격당하는 조건은 타격체가 플레이어의 왼쪽에 있는 경우입니다.
             // 왼쪽을 보고 있는 경우 왼쪽으로 피격당하는 조건은 타격체가 플레이어의 오른쪽에 있는 경우입니다.
             knockbackRight = FacingRight ? (hitX < posX) : (posX < hitX);
-            if (knockbackRight != FacingRight)
+            if (knockbackRight == FacingRight)
+            {
+                Flip();
+            }
+            */
+
+            knockbackRight = (hitX < posX);
+            if (knockbackRight == FacingRight)
             {
                 Flip();
             }

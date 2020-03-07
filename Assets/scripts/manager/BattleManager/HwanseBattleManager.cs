@@ -53,6 +53,10 @@ public class HwanseBattleManager : BattleManager
     public float TIME_WAIT_PATTERN1 = 0.4f;
 
     /// <summary>
+    /// 플레이어와 스테이지 위쪽의 거리 차이 threshold입니다.
+    /// </summary>
+    public float THRESHOLD_HIGH_DIFF = 1f;
+    /// <summary>
     /// 플레이어와 바닥의 거리 차이 threshold입니다.
     /// </summary>
     public float THRESHOLD_GROUND_DIFF = 1f;
@@ -523,6 +527,10 @@ public class HwanseBattleManager : BattleManager
         {
             yield return false;
         }
+        while (_atahoUnit.IsAnimatorInState("Idle") == false)
+        {
+            yield return false;
+        }
         _coroutineAtahoPattern = null;
         yield break;
     }
@@ -571,13 +579,26 @@ public class HwanseBattleManager : BattleManager
         {
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
         }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
         else if (IsNear(atahoUnit.transform, player.transform))
         {
             _atahoUnit.Guard();
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
             }
@@ -601,6 +622,19 @@ public class HwanseBattleManager : BattleManager
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
         }
         else if (IsNear(atahoUnit.transform, player.transform))
         {
@@ -626,13 +660,26 @@ public class HwanseBattleManager : BattleManager
         {
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
         }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
         else if (IsNear(atahoUnit.transform, player.transform))
         {
             _atahoUnit.Guard();
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
             }
@@ -657,6 +704,19 @@ public class HwanseBattleManager : BattleManager
         {
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
         }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
         else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
@@ -666,11 +726,11 @@ public class HwanseBattleManager : BattleManager
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
                 int spawnIndex;
-                spawnIndex = 9; // Random.Range(7, 10);
+                spawnIndex = 8; // Random.Range(7, 10);
                 _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
-            else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            else if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
             }
@@ -726,6 +786,19 @@ public class HwanseBattleManager : BattleManager
         {
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
         }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
         else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
@@ -739,7 +812,7 @@ public class HwanseBattleManager : BattleManager
                 _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
-            else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            else if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
             }
@@ -773,6 +846,19 @@ public class HwanseBattleManager : BattleManager
         {
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
         }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
         else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
@@ -782,11 +868,11 @@ public class HwanseBattleManager : BattleManager
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
                 int spawnIndex;
-                spawnIndex = 7; // Random.Range(7, 10);
+                spawnIndex = 8; // Random.Range(7, 10);
                 _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
-            else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            else if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
             }
@@ -851,11 +937,11 @@ public class HwanseBattleManager : BattleManager
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
                 int spawnIndex;
-                spawnIndex = 9; // Random.Range(7, 10);
+                spawnIndex = 8; // Random.Range(7, 10);
                 _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
-            else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            else if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
             }
@@ -875,6 +961,7 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
+            /*
             // 거리가 먼 경우에 팀원을 호출할 수 있으므로, 그대로 진행합니다.
             if (_smashuUnit == null)
             {
@@ -883,8 +970,9 @@ public class HwanseBattleManager : BattleManager
                 spawnIndex = 8; // Random.Range(7, 10);
                 _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
+            */
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
-            else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
             }
@@ -919,11 +1007,11 @@ public class HwanseBattleManager : BattleManager
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
                 int spawnIndex;
-                spawnIndex = 7; // Random.Range(7, 10);
+                spawnIndex = 8; // Random.Range(7, 10);
                 _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
-            else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            else if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
             }
@@ -943,6 +1031,7 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
+            /*
             // 거리가 먼 경우에 팀원을 호출할 수 있으므로, 그대로 진행합니다.
             if (_smashuUnit == null)
             {
@@ -951,8 +1040,9 @@ public class HwanseBattleManager : BattleManager
                 spawnIndex = 8; // Random.Range(7, 10);
                 _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
+            */
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
-            else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
             }
@@ -987,11 +1077,11 @@ public class HwanseBattleManager : BattleManager
             {
                 // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
                 int spawnIndex;
-                spawnIndex = 7; // Random.Range(7, 10);
+                spawnIndex = 8; // Random.Range(7, 10);
                 _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
-            else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            else if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
             }
@@ -1011,6 +1101,7 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
+            /*
             // 거리가 먼 경우에 팀원을 호출할 수 있으므로, 그대로 진행합니다.
             if (_smashuUnit == null)
             {
@@ -1019,8 +1110,9 @@ public class HwanseBattleManager : BattleManager
                 spawnIndex = 8; // Random.Range(7, 10);
                 _atahoUnit.CallSmashu(_positions[spawnIndex]);
             }
+            */
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
-            else if (atahoUnit._mana >= atahoUnit._maxMana / 3)
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
             }
@@ -1370,6 +1462,40 @@ public class HwanseBattleManager : BattleManager
 
 
 
+    const float anglePivotR = 0f;
+    const float anglePivotU = 90f;
+    const float anglePivotL = 180f;
+    const float anglePivotD = -90f;
+
+    public float anglePivotRU = 45f;
+    public float anglePivotLU = 135f;
+    public float anglePivotLD = -135f;
+    public float anglePivotRD = -45f;
+
+    public float angleRtoRU = 22.5f;
+    public float angleRtoRD = 22.5f;
+    public float angleUtoRU = 22.5f;
+    public float angleUtoLU = 22.5f;
+    public float angleLtoLU = 22.5f;
+    public float angleLtoLD = 22.5f;
+    public float angleDtoLD = 22.5f;
+    public float angleDtoRD = 22.5f;
+
+
+    public Vector2 dir(float deg)
+    {
+        return new Vector2(cos(deg), sin(deg));
+    }
+    public static float cos(float deg)
+    {
+        return Mathf.Cos(deg * Mathf.Deg2Rad);
+    }
+    public static float sin(float deg)
+    {
+        return Mathf.Sin(deg * Mathf.Deg2Rad);
+    }
+
+    public float _debugLeyLength = 10f;
 
     #region 유닛 전략 구성을 위한 보조 메서드를 정의합니다.
     /// <summary>
@@ -1385,36 +1511,57 @@ public class HwanseBattleManager : BattleManager
         float dy = _dv.y;
         Direction direction = Direction.M;
 
+        // 
+
+        // 
+        Vector2 ray0 = dir(anglePivotR + angleRtoRU) * _debugLeyLength;
+        Vector2 ray1 = dir(anglePivotU - angleUtoRU) * _debugLeyLength;
+        Vector2 ray2 = dir(anglePivotU + angleUtoLU) * _debugLeyLength;
+        Vector2 ray3 = dir(anglePivotL - angleLtoLU) * _debugLeyLength;
+        Vector2 ray4 = dir(-anglePivotL + angleLtoLD) * _debugLeyLength;
+        Vector2 ray5 = dir(anglePivotD - angleDtoLD) * _debugLeyLength;
+        Vector2 ray6 = dir(anglePivotD + angleDtoRD) * _debugLeyLength;
+        Vector2 ray7 = dir(anglePivotR - angleRtoRD) * _debugLeyLength;
+        Debug.DrawRay(st.position, ray0, Color.green);
+        Debug.DrawRay(st.position, ray1, Color.green);
+        Debug.DrawRay(st.position, ray2, Color.green);
+        Debug.DrawRay(st.position, ray3, Color.green);
+        Debug.DrawRay(st.position, ray4, Color.green);
+        Debug.DrawRay(st.position, ray5, Color.green);
+        Debug.DrawRay(st.position, ray6, Color.green);
+        Debug.DrawRay(st.position, ray7, Color.green);
+
+        //
         _angle = Vector3.SignedAngle(Vector3.right, _dv.normalized, Vector3.forward);
-        if (0 - 22.5 <= _angle && _angle < 0 + 22.5)
+        if (anglePivotR - angleRtoRD <= _angle && _angle < anglePivotR + angleRtoRU)
         {
             direction = Direction.R;
         }
-        else if (45 - 22.5 <= _angle && _angle < 45 + 22.5)
+        else if (anglePivotR + angleRtoRU <= _angle && _angle < anglePivotU - angleUtoRU)
         {
             direction = Direction.RU;
         }
-        else if (90 - 22.5 <= _angle && _angle < 90 + 22.5)
+        else if (anglePivotU - angleUtoRU <= _angle && _angle < anglePivotU + angleUtoLU)
         {
             direction = Direction.U;
         }
-        else if (135 - 22.5 <= _angle && _angle < 135 + 22.5)
+        else if (anglePivotU + angleUtoLU <= _angle && _angle < anglePivotL - angleLtoLU)
         {
             direction = Direction.LU;
         }
-        else if (180 - 22.5 <= _angle || _angle < -180 + 22.5)
+        else if (anglePivotL - angleLtoLU <= _angle || _angle < -anglePivotL + angleLtoLD)
         {
             direction = Direction.L;
         }
-        else if (-135 - 22.5 <= _angle && _angle < -135 + 22.5)
+        else if (-anglePivotL + angleLtoLD <= _angle && _angle < anglePivotD - angleDtoLD)
         {
             direction = Direction.LD;
         }
-        else if (-90 - 22.5 <= _angle && _angle < -90 + 22.5)
+        else if (anglePivotD - angleDtoLD <= _angle && _angle < anglePivotD + angleDtoRD)
         {
             direction = Direction.D;
         }
-        else if (-45 - 22.5 <= _angle && _angle < -45 + 22.5)
+        else if (anglePivotD + angleDtoRD <= _angle && _angle < anglePivotR - angleRtoRD)
         {
             direction = Direction.RD;
         }
@@ -1441,6 +1588,19 @@ public class HwanseBattleManager : BattleManager
     bool IsFar(Transform st, Transform dt)
     {
         return (_distance >= _ellipseR);
+    }
+    /// <summary>
+    /// 타겟이 스테이지의 위쪽에 있는지를 확인합니다.
+    /// </summary>
+    /// <param name="targetTransform">타겟 Transform 개체입니다. 보통 플레이어가 됩니다.</param>
+    /// <returns>타겟이 스테이지의 위쪽에 있다면 참입니다.</returns>
+    bool IsTargetOnHigh(Transform targetTransform)
+    {
+        // 
+        float playerPosY = targetTransform.position.y;
+        float highPosY = _positions[2].position.y;
+        float dy = Mathf.Abs(highPosY - playerPosY);
+        return (dy < THRESHOLD_HIGH_DIFF);
     }
     /// <summary>
     /// 타겟이 지상에 있는지를 확인합니다.

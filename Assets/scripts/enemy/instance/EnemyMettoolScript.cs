@@ -4,6 +4,7 @@ using System.Collections;
 
 
 
+[Obsolete("EnemyMettoolUnit으로 대체될 것입니다. (아직 대체 이전입니다)")]
 /// <summary>
 /// 멧토 적 캐릭터를 정의합니다.
 /// </summary>
@@ -18,9 +19,9 @@ public class EnemyMettoolScript : EnemyScript
     /// BoxCollider2D 요소를 가져옵니다.
     /// </summary>
     Collider2D _collider2D;
-    
+
     #endregion
-    
+
 
 
 
@@ -42,13 +43,8 @@ public class EnemyMettoolScript : EnemyScript
     /// 무엇이 땅인지를 결정합니다. 기본값은 "Ground, TiledGeometry"입니다.
     /// </summary>
     public LayerMask _whatIsGround;
-    
+
     #endregion
-
-
-
-
-
 
 
 
@@ -61,11 +57,6 @@ public class EnemyMettoolScript : EnemyScript
     public float _movingSpeed = 1;
 
     #endregion
-
-
-
-
-
 
 
 
@@ -124,11 +115,6 @@ public class EnemyMettoolScript : EnemyScript
 
 
 
-
-
-
-
-
     #region Collider2D의 기본 메서드를 재정의합니다.
     /// <summary>
     /// 충돌체가 여전히 트리거 내부에 있습니다.
@@ -158,13 +144,7 @@ public class EnemyMettoolScript : EnemyScript
         }
     }
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -195,13 +175,7 @@ public class EnemyMettoolScript : EnemyScript
         Invoke("RequestDestroy", 3f);
     }
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -258,11 +232,6 @@ public class EnemyMettoolScript : EnemyScript
     */
 
     #endregion
-
-
-
-
-
 
 
 

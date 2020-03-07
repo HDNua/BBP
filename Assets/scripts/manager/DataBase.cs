@@ -204,6 +204,7 @@ public class DataBase : MonoBehaviour
     /// </summary>
     public CameraZoneParent CameraZoneParent; // { get; set; }
     public CameraZoneBorderParent CameraZoneBorderParent; //{ get; set; }
+    public DeadZoneParent DeadZoneParent;
     public TiledGeometryParent TiledGeometryParent; // { get; set; }
     public InvisibleWallParent InvisibleWallParent; // { get; set; }
 

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 [Tiled2Unity.CustomTiledImporter]
 /// <summary>
-/// TiledGeometry의 정보를 임포트합니다.
+/// InvisibleWall의 정보를 임포트합니다.
 /// </summary>
 public class HandyImporter_InvisibleWall: HandyImporter
 {
@@ -24,9 +24,11 @@ public class HandyImporter_InvisibleWall: HandyImporter
             return;
 
         // 사용할 변수를 선언합니다.
+        InvisibleWallScript component = gameObject.GetComponent<InvisibleWallScript>();
 
         // 속성을 업데이트합니다.
-
+        component.gameObject.SetActive(!GetBooleanValue(customProperties, "_disabled"));
+        
     }
     /// <summary>
     /// 프리팹을 커스터마이징합니다.
@@ -36,7 +38,6 @@ public class HandyImporter_InvisibleWall: HandyImporter
     {
         // Do Nothing
     }
-
 
     #endregion
 
@@ -50,7 +51,6 @@ public class HandyImporter_InvisibleWall: HandyImporter
     {
 
     }
-
 
     #endregion
 }

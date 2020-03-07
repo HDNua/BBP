@@ -173,6 +173,20 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         set { _landBlocked = value; }
     }
 
+    /// <summary>
+    /// 행동의 RUN 상태에 대한 종료 요청을 받았습니다.
+    /// </summary>
+    bool _runEndRequest = false;
+    /// <summary>
+    /// 행동의 RUN 상태에 대한 종료 요청을 받았습니다.
+    /// </summary>
+    public bool RunEndRequest
+    {
+        get { return _runEndRequest; }
+        private set { _Animator.SetBool("RunEndRequest", _runEndRequest = value); }
+    }
+
+
     #endregion
 
 
@@ -293,8 +307,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     /// </summary>
     protected override void LateUpdate()
     {
-        // base.LateUpdate();
-        //_PaletteUser.UpdateColor();
+        _PaletteUser.UpdateColor();
     }
 
     #endregion
@@ -628,7 +641,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     }
 
     /// <summary>
-    /// 대타격 코루틴입니다.
+    /// 수경 코루틴입니다.
     /// </summary>
     IEnumerator CoroutineSukyeong()
     {
@@ -640,98 +653,15 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         {
             yield return false;
         }
-        RunEndRequest = false;
 
-        // 대타격 진행 시에는 몸에 닿았을 때의 대미지도 칼로 베었을 때와 같게 합니다.
-        // 그렇게 해야 플레이어가 칼에 맞는 대신 몸통에 박치기하지 않을 것입니다.
-        _damage = DAMAGE_DAETAKYOK;
-        //attackRange._damage = DAMAGE_DAETAKYOK;
 
-        // 플레이어를 쳐다보는 방향으로 대타격을 진행합니다.
-        float x = transform.localScale.x;
-        float dirX = x;
 
-        // 
-        Transform dstPosition;
-        if (transform.position.x == _BattleManager._positions[7].position.x)
-        {
-            dstPosition = _BattleManager._positions[9];
-        }
-        else if (transform.position.x == _BattleManager._positions[9].position.x)
-        {
-            dstPosition = _BattleManager._positions[7];
-        }
-        else
-        {
-            dstPosition = (dirX > 0) ? _BattleManager._positions[7] : _BattleManager._positions[9];
-        }
-        Vector3 dv = dstPosition.position - transform.position;
-
-        //
-        Velocity = new Vector2(x > 0 ? 10f : -10f, 0);
-        while (Mathf.Abs(dv.x) >= THRESHOLD_NEAR_DIST)
-        {
-            dv = dstPosition.position - transform.position;
-            Vector3 playerPos = _StageManager.GetCurrentPlayerPosition();
-            Vector3 diffBetweenPlayer = playerPos - transform.position;
-            if (THRESHOLD_NEAR_DIST >= Mathf.Abs(diffBetweenPlayer.x))
-            {
-                break;
-            }
-            yield return false;
-        }
-
-        // Run 애니메이션의 종료 시점을 모르는 경우 대기를 위해 사용합니다.
-        RunEndRequest = true;
-        while (_Animator.GetBool("RunEndRequest") == false)
-        {
-            yield return false;
-        }
-
-        // 공격을 진행합니다.
-        Velocity = Vector2.zero;
-        SoundEffects[1].Play();
-        //attackRange.gameObject.SetActive(true);
-        while (IsAnimatorInState("DaetakyokRun"))
-        {
-            yield return false;
-        }
-
-        // 공격을 끝냅니다.
-        while (IsAnimatorInState("DaetakyokEnd"))
-        {
-            yield return false;
-        }
-        RunEndRequest = false;
-        //attackRange.gameObject.SetActive(false);
-
-        // 대타격을 종료합니다.
+        // 수경을 종료합니다.
         StopSukyeong();
         StopCoroutine(_coroutineSukyeong);
         _coroutineSukyeong = null;
         yield break;
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public float THRESHOLD_NEAR_DIST = 1f;
-    /// <summary>
-    /// 
-    /// </summary>
-    bool _runEndRequest = false;
-    /// <summary>
-    /// 
-    /// </summary>
-    public bool RunEndRequest
-    {
-        get { return _runEndRequest; }
-        private set { _Animator.SetBool("RunEndRequest", _runEndRequest = value); }
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    public EnemyUnit[] _attackRanges;
 
     #endregion
 

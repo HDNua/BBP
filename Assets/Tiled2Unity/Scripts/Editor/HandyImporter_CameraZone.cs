@@ -45,7 +45,7 @@ public class HandyImporter_CameraZone : HandyImporter
         component._isBottomBounded = GetBooleanValue(customProperties, "_isBottomBounded");
         component._isBottomFirst = GetBooleanValue(customProperties, "_isBottomFirst");
 
-        // 
+        // 체크포인트라면 스테이지에 등록합니다.
         if (isCheckpoint)
         {
             // 
@@ -55,6 +55,9 @@ public class HandyImporter_CameraZone : HandyImporter
             StageManager stageManager = StageManager.Instance;
             stageManager._checkpointCameraZones[checkpointIndex] = gameObject.GetComponent<CameraZone>();
         }
+
+        // 
+        component.gameObject.SetActive(!GetBooleanValue(customProperties, "_disabled"));
     }
     /// <summary>
     /// 프리팹을 커스터마이징합니다.
@@ -64,7 +67,6 @@ public class HandyImporter_CameraZone : HandyImporter
     {
         // Do Nothing
     }
-
 
     #endregion
 

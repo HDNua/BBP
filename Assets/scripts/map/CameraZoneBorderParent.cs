@@ -41,20 +41,6 @@ public class CameraZoneBorderParent : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("[v6.6.3] 다음 커밋에서 삭제할 예정입니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    public DataBase _database;
-
-    [Obsolete("[v6.6.3] 다음 커밋에서 삭제할 예정입니다.")]
-    /// <summary>
-    /// 카메라가 주인공을 따라갑니다.
-    /// </summary>
-    public CameraFollow1PScript CameraFollow
-    {
-        get { return _database.CameraFollow; }
-    }
 
     #endregion
 }

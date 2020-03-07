@@ -158,6 +158,10 @@ namespace Tiled2Unity
                                 DataBase.Instance.CameraZoneBorderParent = child.AddComponent<CameraZoneBorderParent>();
                                 break;
 
+                            case "DeadZoneParent":
+                                DataBase.Instance.DeadZoneParent = child.AddComponent<DeadZoneParent>();
+                                break;
+
                             case "TiledGeometryParent":
                                 DataBase.Instance.TiledGeometryParent = child.AddComponent<TiledGeometryParent>();
                                 break;

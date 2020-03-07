@@ -40,6 +40,10 @@ public class HandyImporter_AddComponent : HandyImporter
                     gameObject.AddComponent<DeadZoneScript>();
                     break;
 
+                case "InvisibleWallScript":
+                    gameObject.AddComponent<InvisibleWallScript>();
+                    break;
+
                 default:
                     Log("Unknown component typename '{0}'", typename);
                     break;
@@ -54,7 +58,6 @@ public class HandyImporter_AddComponent : HandyImporter
     {
         // Do Nothing
     }
-
 
     #endregion
 

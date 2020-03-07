@@ -11,6 +11,16 @@ using UnityEngine;
 /// </summary>
 public abstract class EnemyBulletScript : EnemyScript, IMovableEnemy
 {
+    #region 상수를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    public float TIME_DESTROY_REQUEST = 1f;
+
+    #endregion
+
+
+
     #region 컨트롤러가 사용할 Unity 객체를 정의합니다.
     /// <summary>
     /// Rigidbody2D 요소를 가져옵니다.
@@ -75,7 +85,9 @@ public abstract class EnemyBulletScript : EnemyScript, IMovableEnemy
 
         // 생존 기간이 존재하는 탄환이면 _lifeTime 이후 폭발합니다.
         if (_lifeTime > 0)
+        {
             Invoke("Dead", _lifeTime);
+        }
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트합니다.

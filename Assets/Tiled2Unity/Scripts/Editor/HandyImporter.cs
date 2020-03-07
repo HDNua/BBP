@@ -24,10 +24,11 @@ public abstract class HandyImporter : Tiled2Unity.ICustomTiledImporter
     /// <param name="prefab">커스터마이징할 프리팹입니다.</param>
     public abstract void CustomizePrefab(GameObject prefab);
 
-
     #endregion
 
     
+
+
 
     #region 필드 및 프로퍼티를 정의합니다.
     string _targetName;
@@ -36,8 +37,9 @@ public abstract class HandyImporter : Tiled2Unity.ICustomTiledImporter
     /// </summary>
     public string TargetName { get { return _targetName; } }
 
-
     #endregion
+
+
 
 
     
@@ -51,8 +53,9 @@ public abstract class HandyImporter : Tiled2Unity.ICustomTiledImporter
         _targetName = targetName;
     }
 
-
     #endregion
+
+
 
 
     
@@ -81,7 +84,6 @@ public abstract class HandyImporter : Tiled2Unity.ICustomTiledImporter
         string front = "HI_" + _targetName + ": ";
         Debug.Log(front + string.Format(format, args));
     }
-
 
     /// <summary>
     /// 자신이 관리할 객체라면 참입니다.
@@ -124,7 +126,6 @@ public abstract class HandyImporter : Tiled2Unity.ICustomTiledImporter
         // 자신이 관리할 객체임을 확인했습니다.
         return true;
     }
-
 
     /// <summary>
     /// 사용자 정의 프로퍼티 딕셔너리로부터 부울 값을 획득합니다.
@@ -179,7 +180,6 @@ public abstract class HandyImporter : Tiled2Unity.ICustomTiledImporter
             return int.MinValue;
         }
     }
-
 
     #endregion
 }

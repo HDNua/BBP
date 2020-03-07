@@ -839,7 +839,6 @@ public class XController : PlayerController
         }
     }
 
-
     /// <summary>
     /// 탄환 생성 코루틴입니다.
     /// </summary>
@@ -851,20 +850,19 @@ public class XController : PlayerController
         Transform shotPosition = GetShotPosition();
         bool toLeft = (Sliding ? FacingRight : !FacingRight);
 
-
         // 탄환 발사 효과에 대해 먼저 생성하고 처리합니다.
-        GameObject fireEffect = CloneObject(effects[7 + index], shotPosition);
+        GameObject fireEffectObject = CloneObject(effects[7 + index], shotPosition);
         if (index == 2)
         {
             if (IsAnimationPlaying("Idle"))
             {
-                fireEffect.transform.position = transform.position;
+                fireEffectObject.transform.position = transform.position;
             }
         }
-        Vector3 effectScale = fireEffect.transform.localScale;
+        Vector3 effectScale = fireEffectObject.transform.localScale;
         effectScale.x *= (toLeft ? -1 : 1);
-        fireEffect.transform.localScale = effectScale;
-        fireEffect.transform.parent = shotPosition.transform;
+        fireEffectObject.transform.localScale = effectScale;
+        fireEffectObject.transform.parent = shotPosition.transform;
 
         // 버스터 컴포넌트를 발사체에 붙입니다.
         GameObject _bullet = CloneObject(_bullets[index], shotPosition);
@@ -873,7 +871,21 @@ public class XController : PlayerController
         if (index == 2)
         {
             _bullet.GetComponent<SpriteRenderer>().color = Color.clear;
-            yield return new WaitForSeconds(0.15f);
+
+            ///yield return new WaitForSeconds(0.15f);
+            float time = 0;
+            float endTime = 0.15f;
+            while (time < endTime)
+            {
+                if (_bullet == null)
+                {
+                    ///fireEffectObject.GetComponent<Animator>().SetBool("Hit", true);
+                    Destroy(fireEffectObject);
+                    yield break;
+                }
+                yield return false;
+                time += Time.deltaTime;
+            }
         }
 
         // 

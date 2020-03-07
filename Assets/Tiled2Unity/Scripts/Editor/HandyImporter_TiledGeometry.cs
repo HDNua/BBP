@@ -24,9 +24,10 @@ public class HandyImporter_TiledGeometry : HandyImporter
             return;
 
         // 사용할 변수를 선언합니다.
+        TiledGeometryScript component = gameObject.GetComponent<TiledGeometryScript>();
 
         // 속성을 업데이트합니다.
-
+        component.gameObject.SetActive(!GetBooleanValue(customProperties, "_disabled"));
     }
     /// <summary>
     /// 프리팹을 커스터마이징합니다.
@@ -36,7 +37,6 @@ public class HandyImporter_TiledGeometry : HandyImporter
     {
         // Do Nothing
     }
-
 
     #endregion
 
@@ -50,7 +50,6 @@ public class HandyImporter_TiledGeometry : HandyImporter
     {
 
     }
-
 
     #endregion
 }

@@ -4,6 +4,7 @@ using System.Collections;
 
 
 
+[Obsolete("EnemyBattonBoneUnit으로 대체될 것입니다. (아직 대체 이전입니다)")]
 /// <summary>
 /// 박쥐 적 캐릭터를 정의합니다.
 /// </summary>
@@ -166,7 +167,6 @@ public class EnemyBattonBoneScript : EnemyScript
         }
     }
 
-
     #endregion
 
 
@@ -195,7 +195,6 @@ public class EnemyBattonBoneScript : EnemyScript
         // 
         Invoke("RequestDestroy", 3f);
     }
-
 
     #endregion
 

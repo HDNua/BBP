@@ -1,4 +1,17 @@
-﻿BBP v1.5.3.1
+﻿BBP v1.5.3.2
+----
+
+- UI 및 기타 업데이트.
+> TitleSceneManager 재사용
+> LoadingSceneManager 재사용
+> PauseMenuManager 재사용
+> SnakeHeadScene에 개발중인 게임임을 명시함
+
+
+end.
+
+
+BBP v1.5.3.1
 ----
 
 - 밑간은 얼추 된 것 같다.

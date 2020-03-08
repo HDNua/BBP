@@ -10,14 +10,23 @@ using System.Collections;
 public class PauseMenuManager : MonoBehaviour
 {
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
-    /// <summary>
-    /// Scene 데이터베이스입니다.
-    /// </summary>
-    public DataBase _database;
 
     #endregion
 
-    
+
+
+    #region 컨트롤러가 사용할 Unity 개체에 대한 참조를 보관합니다.
+    /// <summary>
+    /// UnityEngine.Time 관리자입니다.
+    /// </summary>
+    TimeManager TimeManager
+    {
+        get { return DataBase.Instance.TimeManager; }
+    }
+
+    #endregion
+
+
 
 
 
@@ -34,23 +43,14 @@ public class PauseMenuManager : MonoBehaviour
 
     #region 프로퍼티를 정의합니다.
     /// <summary>
-    /// 
+    /// https://answers.unity.com/questions/198001/findgameobjectswithtag-not-finding-a-tagged-object.html
     /// </summary>
     public static PauseMenuManager Instance
     {
         get
         {
-            return GameObject.FindGameObjectWithTag("PauseMenuManager")
-                .GetComponent<PauseMenuManager>();
+            return DataBase.Instance._pauseMenu;
         }
-    }
-
-    /// <summary>
-    /// UnityEngine.Time 관리자입니다.
-    /// </summary>
-    TimeManager TimeManager
-    {
-        get { return _database.TimeManager; }
     }
 
     #endregion
@@ -65,12 +65,7 @@ public class PauseMenuManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        // 필드를 초기화합니다.
-        /// _timeManager = _database.TimeManager;
-
-
-        // 필드 초기화 이후 개체를 비활성화합니다.
-        /// PauseUI.SetActive(false);
+        // 개체를 비활성화합니다.
         gameObject.SetActive(false);
     }
     /// <summary>
@@ -106,8 +101,8 @@ public class PauseMenuManager : MonoBehaviour
 
     #endregion
 
-    
 
+    float _defaultBgmVolume = 1;
 
 
     #region 요청 메서드를 정의합니다.
@@ -121,12 +116,17 @@ public class PauseMenuManager : MonoBehaviour
             _paused = false;
             TimeManager.PauseMenuRequested = false;
             gameObject.SetActive(false);
+
+            StageManager.Instance.SetBackgroundMusicVolume(_defaultBgmVolume);
         }
         else
         {
             _paused = true;
             TimeManager.PauseMenuRequested = true;
             gameObject.SetActive(true);
+
+            _defaultBgmVolume = StageManager.Instance.GetBackgroundMusicVolume();
+            StageManager.Instance.SetBackgroundMusicVolume(0.1f);
         }
     }
 

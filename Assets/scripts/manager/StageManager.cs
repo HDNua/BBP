@@ -450,14 +450,6 @@ public class StageManager : HDSceneManager
         throw new NotImplementedException();
     }
     /// <summary>
-    /// 배경 음악 재생 중지를 요청합니다.
-    /// </summary>
-    public void RequestStopBackgroundMusic()
-    {
-        _bgmSource.Stop();
-        BattleManager.Instance.GetComponent<AudioSource>().Stop();
-    }
-    /// <summary>
     /// 현재 조작중인 플레이어의 위치를 반환합니다.
     /// </summary>
     /// <returns>현재 조작중인 플레이어의 위치입니다.</returns>
@@ -691,60 +683,8 @@ public class StageManager : HDSceneManager
     /// </summary>
     public void StopBackgroundMusic()
     {
+        RequestStopBackgroundMusic();
         _bgmSource.Stop();
-    }
-
-    /// <summary>
-    /// 플레이어의 움직임 방지를 요청합니다.
-    /// </summary>
-    public virtual void RequestBlockMoving()
-    {
-        throw new NotImplementedException();
-    }
-    /// <summary>
-    /// 플레이어의 움직임 방지 중지를 요청합니다.
-    /// </summary>
-    public virtual void RequestUnblockMoving()
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// 플레이어의 입력 요청을 막습니다.
-    /// </summary>
-    public virtual void RequestBlockInput()
-    {
-        MainPlayer.RequestBlockInput();
-    }
-    /// <summary>
-    /// 플레이어의 입력 요청을 받아들입니다.
-    /// </summary>
-    public virtual void RequestUnblockInput()
-    {
-        MainPlayer.RequestUnblockInput();
-    }
-
-    /// <summary>
-    /// 모든 적 개체를 활성화합니다.
-    /// </summary>
-    public void RequestEnableAllEnemy()
-    {
-        _enemyParent.SetActive(true);
-    }
-    /// <summary>
-    /// 모든 적 개체의 활성화를 중지합니다.
-    /// </summary>
-    public void RequestDisableAllEnemy()
-    {
-        _enemyParent.SetActive(false);
-    }
-
-    /// <summary>
-    /// 경고 애니메이션 재생을 요청합니다.
-    /// </summary>
-    public void RequestPlayingWarningAnimation()
-    {
-        PlayWarningAnimation();
     }
 
     #endregion
@@ -805,51 +745,94 @@ public class StageManager : HDSceneManager
 
 
 
+    #region 요청 메서드를 정의합니다.
+    /// <summary>
+    /// 플레이어의 움직임 방지를 요청합니다.
+    /// </summary>
+    public virtual void RequestBlockMoving()
+    {
+        throw new NotImplementedException();
+    }
+    /// <summary>
+    /// 플레이어의 움직임 방지 중지를 요청합니다.
+    /// </summary>
+    public virtual void RequestUnblockMoving()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// 플레이어의 입력 요청을 막습니다.
+    /// </summary>
+    public virtual void RequestBlockInput()
+    {
+        MainPlayer.RequestBlockInput();
+    }
+    /// <summary>
+    /// 플레이어의 입력 요청을 받아들입니다.
+    /// </summary>
+    public virtual void RequestUnblockInput()
+    {
+        MainPlayer.RequestUnblockInput();
+    }
+
+    /// <summary>
+    /// 모든 적 개체를 활성화합니다.
+    /// </summary>
+    public void RequestEnableAllEnemy()
+    {
+        _enemyParent.SetActive(true);
+    }
+    /// <summary>
+    /// 모든 적 개체의 활성화를 중지합니다.
+    /// </summary>
+    public void RequestDisableAllEnemy()
+    {
+        _enemyParent.SetActive(false);
+    }
+
+    /// <summary>
+    /// 경고 애니메이션 재생을 요청합니다.
+    /// </summary>
+    public void RequestPlayingWarningAnimation()
+    {
+        PlayWarningAnimation();
+    }
+
+
+
+    /// <summary>
+    /// 배경 음악 볼륨을 가져옵니다.
+    /// </summary>
+    /// <returns>0에서 1 사이의 스케일 값입니다.</returns>
+    public float GetBackgroundMusicVolume()
+    {
+        return _bgmSource.volume;
+    }
+    /// <summary>
+    /// 배경 음악 볼륨을 설정합니다.
+    /// </summary>
+    /// <param name="scale">0에서 1 사이의 스케일 값입니다.</param>
+    public void SetBackgroundMusicVolume(float scale)
+    {
+        _bgmSource.volume = scale;
+    }
+    /// <summary>
+    /// 배경 음악 재생 중지를 요청합니다.
+    /// </summary>
+    public void RequestStopBackgroundMusic()
+    {
+        _bgmSource.Stop();
+        BattleManager.Instance.GetComponent<AudioSource>().Stop();
+    }
+
+    #endregion
+
+
+
+
+
     #region 구형 정의를 보관합니다.
-    [Obsolete("HealBoss(EnemyBossUnit)로 대체되었습니다.")]
-    /// <summary>
-    /// 보스의 체력을 회복합니다.
-    /// </summary>
-    public void HealBoss(EnemyBossScript boss)
-    {
-        StartCoroutine(BossHealRoutine(boss));
-    }
-    [Obsolete("BossHealRoutine(EnemyBossUnit)로 대체되었습니다.")]
-    /// <summary>
-    /// 보스 체력이 회복되는 루틴입니다.
-    /// </summary>
-    /// <param name="boss">플레이어 객체입니다.</param>
-    /// <param name="item">사용한 아이템입니다.</param>
-    /// <returns>Update()를 다시 호출하기 위해 함수를 종료할 때마다 null을 반환합니다.</returns>
-    IEnumerator BossHealRoutine(EnemyBossScript boss)
-    {
-        // 사용할 변수를 선언합니다.
-        float time = 0f;
-        float unitTime = 0.02f;
-        AudioSource audioSource = AudioSources[1];
-
-        // 체력을 회복하는 루프입니다.
-        while (boss.IsHealthFull() == false)
-        {
-            // 루프 진입시마다 시작 시간을 초기화합니다.
-            time = 0f;
-
-            // 체력을 회복하면서 체력 회복 효과음을 재생합니다.
-            audioSource.Play();
-            audioSource.time = 0;
-            boss.Heal();
-
-            // 일정한 간격으로 체력을 회복합니다.
-            while (time < unitTime)
-            {
-                time += Time.unscaledDeltaTime;
-                yield return null;
-            }
-        }
-
-        // 코루틴을 종료합니다.
-        yield break;
-    }
 
     #endregion
 }

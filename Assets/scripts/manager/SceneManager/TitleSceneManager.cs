@@ -32,7 +32,7 @@ public class TitleSceneManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    int _menuIndex = 1;
+    int _menuIndex = 0;
     /// <summary>
     /// 
     /// </summary>
@@ -107,6 +107,7 @@ public class TitleSceneManager : MonoBehaviour
                 }
                 else if (IsSelectKeyPressed())
                 {
+                    /*
                     switch (_menuIndex)
                     {
                         case 0:
@@ -141,6 +142,24 @@ public class TitleSceneManager : MonoBehaviour
                             _nextLevelName = null;
                             break;
                     }
+                    */
+
+                    switch (_menuIndex)
+                    {
+                        case 0:
+                            _nextLevelName = "03_Hwanse";
+                            _changeSceneRequested = true;
+                            fader.FadeOut(1);
+                            break;
+
+                        case 1:
+                            Application.Quit();
+                            break;
+
+                        default:
+                            _nextLevelName = null;
+                            break;
+                    }
                     _seSources[1].Play();
                 }
             }
@@ -162,6 +181,7 @@ public class TitleSceneManager : MonoBehaviour
                 }
                 else if (IsSelectKeyPressed())
                 {
+                    /*
                     switch (_menuIndex)
                     {
                         case 0:
@@ -189,6 +209,24 @@ public class TitleSceneManager : MonoBehaviour
                             break;
 
                         case 4:
+                            Application.Quit();
+                            break;
+
+                        default:
+                            _nextLevelName = null;
+                            break;
+                    }
+                    */
+
+                    switch (_menuIndex)
+                    {
+                        case 0:
+                            _nextLevelName = "03_Hwanse";
+                            _changeSceneRequested = true;
+                            fader.FadeOut(1);
+                            break;
+
+                        case 1:
                             Application.Quit();
                             break;
 

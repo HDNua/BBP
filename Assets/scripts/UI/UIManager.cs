@@ -10,16 +10,6 @@ public class UIManager : MonoBehaviour
 {
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
     /// <summary>
-    /// 데이터베이스입니다.
-    /// </summary>
-    public DataBase _database;
-    
-    /// <summary>
-    /// 정지 화면 관리자입니다.
-    /// </summary>
-    public PauseMenuManager _pauseMenuManager;
-
-    /// <summary>
     /// 주 플레이어 HUD 개체입니다.
     /// </summary>
     public HUDScript _HUD;
@@ -47,8 +37,8 @@ public class UIManager : MonoBehaviour
     {
         get
         {
-            return GameObject.FindGameObjectWithTag("UIManager")
-                .GetComponent<UIManager>();
+            ///return GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+            return DataBase.Instance.UIManager;
         }
     }
 
@@ -145,6 +135,17 @@ public class UIManager : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("DataBase.Instance로 대체되었습니다.")]
+    /// <summary>
+    /// 데이터베이스입니다.
+    /// </summary>
+    public DataBase _database;
+
+    [Obsolete("PauseMenuManager.Instance로 대체되었습니다.")]
+    /// <summary>
+    /// 정지 화면 관리자입니다.
+    /// </summary>
+    PauseMenuManager _pauseMenuManager;
 
     #endregion
 }

@@ -26,6 +26,19 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     ///
     /// </summary>
     public float TIME_GUARD = 3f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float TIME_SUKYEONG_RUN = 1f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float TIME_DAEPOKJIN_RUN = 1f;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public float TIME_ROIHWA_END = 1f;
 
     #endregion
 
@@ -100,6 +113,8 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     void Jump()
     {
         _Groundable.Jump();
+        Landed = false;
+        LandBlocked = true;
     }
     /// <summary>
     /// 낙하합니다.
@@ -107,6 +122,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     void Fall()
     {
         _Groundable.Fall();
+        Landed = false;
     }
 
     /// <summary>
@@ -274,6 +290,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             {
                 if (LandBlocked)
                 {
+                    Landed = false;
                     UpdateVy();
                 }
                 else
@@ -297,6 +314,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             {
                 if (LandBlocked)
                 {
+                    Landed = false;
                     UpdateVy();
                 }
                 else
@@ -317,6 +335,9 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
                 Fall();
             }
         }
+
+        // 
+        _Groundable._position = transform.position;
     }
     /// <summary>
     /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.
@@ -568,6 +589,74 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
 
 
 
+
+    #region "세레모니" 행동을 정의합니다.
+    /// <summary>
+    /// 세레모니 행동 중이라면 참입니다.
+    /// </summary>
+    bool _doingCeremony;
+    /// <summary>
+    /// 세레모니 행동 중이라면 참입니다.
+    /// </summary>
+    public bool DoingCeremony
+    {
+        get { return _doingCeremony; }
+        private set { _Animator.SetBool("Win", _doingCeremony = value); }
+    }
+    /// <summary>
+    /// 세레모니 행동입니다.
+    /// </summary>
+    public void Ceremony()
+    {
+        DoingCeremony = true;
+        _hasBulletImmunity = true;
+
+        // 세레모니 코루틴을 시작합니다.
+        StartAction();
+        _coroutineCeremony = StartCoroutine(CoroutineCeremony());
+    }
+    /// <summary>
+    /// 세레모니를 중지합니다.
+    /// </summary>
+    public void StopCeremonying()
+    {
+        DoingCeremony = false;
+        _hasBulletImmunity = false;
+
+        // 행동을 종료합니다.
+        EndAction();
+    }
+
+    /// <summary>
+    /// 세레모니 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineCeremony;
+    /// <summary>
+    /// 세레모니 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineCeremony()
+    {
+        yield return false;
+        RunAction();
+
+        // 
+        while (IsAnimatorInState("Win"))
+        {
+            yield return false;
+        }
+
+        // 세레모니 상태를 끝냅니다.
+        StopCeremonying();
+        _coroutineCeremony = null;
+        yield break;
+    }
+
+    #endregion
+
+
+
+
+
     #region "기절" 행동을 정의합니다.
     /// <summary>
     /// 기절 코루틴입니다. 린샹은 실제로 사망하지 않고 그저 무적 상태로 일정 시간 방어만 합니다.
@@ -584,6 +673,10 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         {
             IsDead = true;
             IsKnockouted = true;
+            StopGuarding();
+            StopDaepokjin();
+            StopSukyeong();
+            StopRoihwa();
 
             // 
             if (_coroutineAppear != null) StopCoroutine(_coroutineAppear);
@@ -628,7 +721,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         _PaletteUser.UpdatePaletteIndex(0);
 
         // 재정비 상태에 들어갑니다.
-        _hasBulletImmunity = false;
+        _hasBulletImmunity = true;
         Guarding = true;
         while (IsAnimatorInState("Regroup") == false)
         {
@@ -701,7 +794,6 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     public void StopSukyeong()
     {
         DoingSukyeong = false;
-        _damage = _defaultDamage;
 
         // 
         EndAction();
@@ -721,7 +813,17 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             yield return false;
         }
 
-
+        // 
+        float time = 0;
+        while (IsAnimatorInState("SukyeongRun"))
+        {
+            yield return false;
+            if (time >= TIME_SUKYEONG_RUN)
+            {
+                break;
+            }
+            time += Time.deltaTime;
+        }
 
         // 수경을 종료합니다.
         StopSukyeong();
@@ -736,58 +838,246 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
 
 
 
-    #region "쾌진격" 행동을 정의합니다.
+    #region "대폭진" 행동을 정의합니다.
     /// <summary>
-    /// 쾌진격 행동 중이라면 참입니다.
+    /// 대폭진 행동 중이라면 참입니다.
     /// </summary>
-    bool _doingKwaejinkyok;
+    bool _doingDaepokjin;
     /// <summary>
-    /// 쾌진격 행동 중이라면 참입니다.
+    /// 대폭진 행동 중이라면 참입니다.
     /// </summary>
-    public bool DoingKwaejinkyok
+    public bool DoingDaepokjin
     {
-        get { return _doingKwaejinkyok; }
-        private set { _Animator.SetBool("DoingKwaejinkyok", _doingKwaejinkyok = value); }
+        get { return _doingDaepokjin; }
+        private set { _Animator.SetBool("DoingDaepokjin", _doingDaepokjin = value); }
     }
 
     /// <summary>
-    /// 쾌진격 코루틴입니다.
+    /// 대폭진 코루틴입니다.
     /// </summary>
-    Coroutine _coroutineKwaejinkyok;
+    Coroutine _coroutineDaepokjin;
 
     /// <summary>
-    /// 쾌진격 행동을 시작합니다.
+    /// 대폭진 행동을 시작합니다.
     /// </summary>
-    public void DoKwaejinkyok()
+    public void DoDaepokjin()
     {
-        DoingKwaejinkyok = true;
+        DoingDaepokjin = true;
 
-        // 쾌진격 코루틴을 시작합니다.
+        // 대폭진 코루틴을 시작합니다.
         StartAction();
-        _coroutineKwaejinkyok = StartCoroutine(CoroutineKwaejinkyok());
+        _coroutineDaepokjin = StartCoroutine(CoroutineDaepokjin());
     }
     /// <summary>
-    /// 쾌진격 행동을 중지합니다.
+    /// 대폭진 행동을 중지합니다.
     /// </summary>
-    public void StopKwaejinkyok()
+    public void StopDaepokjin()
     {
-        DoingKwaejinkyok = false;
+        DoingDaepokjin = false;
         EndAction();
     }
 
     /// <summary>
-    /// 쾌진격 코루틴입니다.
+    /// 대폭진 코루틴입니다.
     /// </summary>
-    IEnumerator CoroutineKwaejinkyok()
+    IEnumerator CoroutineDaepokjin()
     {
         yield return false;
         RunAction();
 
         // 
-        yield return false;
+        while (IsAnimatorInState("DaepokjinBeg"))
+        {
+            yield return false;
+        }
 
         // 
-        StopKwaejinkyok();
+        while (IsAnimatorInState("DaepokjinRun"))
+        {
+            yield return false;
+        }
+
+        // 
+        float time = 0;
+        while (IsAnimatorInState("DaepokjinEnd"))
+        {
+            yield return false;
+            if (time >= TIME_DAEPOKJIN_RUN)
+            {
+                break;
+            }
+            time += Time.deltaTime;
+        }
+
+        // 
+        StopDaepokjin();
+        yield break;
+    }
+
+    #endregion
+
+
+
+
+
+    #region "영상뢰화" 행동을 정의합니다.
+    /// <summary>
+    /// 영상뢰화 행동 중이라면 참입니다.
+    /// </summary>
+    bool _doingRoihwa;
+    /// <summary>
+    /// 영상뢰화 행동 중이라면 참입니다.
+    /// </summary>
+    public bool DoingRoihwa
+    {
+        get { return _doingRoihwa; }
+        private set { _Animator.SetBool("DoingRoihwa", _doingRoihwa = value); }
+    }
+
+    /// <summary>
+    /// 영상뢰화 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineRoihwa;
+
+    /// <summary>
+    /// 영상뢰화 행동을 시작합니다.
+    /// </summary>
+    public void DoRoihwa()
+    {
+        DoingRoihwa = true;
+
+        // 영상뢰화 코루틴을 시작합니다.
+        StartAction();
+        _coroutineRoihwa = StartCoroutine(CoroutineRoihwa());
+    }
+    /// <summary>
+    /// 영상뢰화 행동을 중지합니다.
+    /// </summary>
+    public void StopRoihwa()
+    {
+        DoingRoihwa = false;
+        EndAction();
+    }
+
+    /// <summary>
+    /// 영상뢰화 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineRoihwa()
+    {
+        float time = 0;
+        yield return false;
+        RunAction();
+
+        // 
+        while (IsAnimatorInState("Roihwa1") == false)
+        {
+            yield return false;
+        }
+        SoundEffects[1].Play();
+
+        // 
+        while (IsAnimatorInState("Roihwa4") == false)
+        {
+            yield return false;
+        }
+        SoundEffects[1].Play();
+
+        // 
+        while (IsAnimatorInState("Roihwa1 0") == false)
+        {
+            yield return false;
+        }
+        SoundEffects[1].Play();
+
+        // 
+        while (IsAnimatorInState("Roihwa4 0") == false)
+        {
+            yield return false;
+        }
+        SoundEffects[1].Play();
+
+        // 
+        while (IsAnimatorInState("Roihwa6") == false)
+        {
+            yield return false;
+        }
+        SoundEffects[1].Play();
+
+        // 
+        while (IsAnimatorInState("Roihwa8") == false)
+        {
+            yield return false;
+        }
+        SoundEffects[1].Play();
+
+        // 
+        while (IsAnimatorInState("Roihwa10") == false)
+        {
+            yield return false;
+        }
+        SoundEffects[1].Play();
+
+        // 
+        while (IsAnimatorInState("Roihwa13") == false)
+        {
+            yield return false;
+        }
+
+        // 
+        Jump();
+        time = 0;
+        Velocity = Vector2.zero;
+        Vector3 position = transform.position;
+        float ay = _Groundable._jumpDecSize;
+        float vy0 = _Groundable._jumpSpeed;
+        float vy = vy0;
+
+        while (IsAnimatorInState("Roihwa13"))
+        {
+            yield return false;
+
+            // 
+            float dt = Time.deltaTime;
+            time += dt;
+
+            // 
+            position = transform.position;
+
+            // 
+            float ds = vy0 * dt - 0.5f * ay * dt * dt;
+            position.y += ds;
+            transform.position = position;
+
+            // 
+            vy0 -= ay;
+
+            // 
+            if (Landed && vy0 < 0)
+            {
+                break;
+            }
+            else if (ds <= 0)
+            {
+                Fall();
+                LandBlocked = false;
+            }
+        }
+
+        // 
+        time = 0;
+        while (IsAnimatorInState("Roihwa14"))
+        {
+            yield return false;
+            if (time >= TIME_ROIHWA_END)
+            {
+                break;
+            }
+            time += Time.deltaTime;
+        }
+
+        // 
+        StopRoihwa();
+        _coroutineRoihwa = null;
         yield break;
     }
 
@@ -806,143 +1096,6 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("안 쓰고 있는 것 같습니다.")]
-    /// <summary>
-    /// Groundable 컴포넌트가 활성화된 상태라면 참입니다.
-    /// </summary>
-    bool _isGroundableNow = true;
-
-
-    [Obsolete("안 쓰고 있는 것 같습니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    bool Moving
-    {
-        get; set;
-    }
-
-    [Obsolete("안 쓰고 있는 것 같습니다.")]
-    /// <summary>
-    /// 왼쪽으로 이동합니다.
-    /// </summary>
-    protected void MoveLeft()
-    {
-        if (FacingRight)
-            Flip();
-
-        Moving = true;
-        _Rigidbody.velocity = new Vector2(-_movingSpeedX, _Rigidbody.velocity.y);
-    }
-    [Obsolete("안 쓰고 있는 것 같습니다.")]
-    /// <summary>
-    /// 오른쪽으로 이동합니다.
-    /// </summary>
-    protected void MoveRight()
-    {
-        if (FacingRight == false)
-            Flip();
-
-        // 상태를 정의합니다.
-        Moving = true;
-
-        // 내용을 정의합니다.
-        _Rigidbody.velocity = new Vector2(_movingSpeedX, _Rigidbody.velocity.y);
-    }
-    [Obsolete("안 쓰고 있는 것 같습니다.")]
-    /// <summary>
-    /// 위쪽으로 이동합니다.
-    /// </summary>
-    protected void MoveUp()
-    {
-        // 상태를 정의합니다.
-        Moving = true;
-
-        // 내용을 정의합니다.
-        _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, _movingSpeedY);
-    }
-    [Obsolete("안 쓰고 있는 것 같습니다.")]
-    /// <summary>
-    /// 아래쪽으로 이동합니다.
-    /// </summary>
-    protected void MoveDown()
-    {
-        // 상태를 정의합니다.
-        Moving = true;
-
-        // 내용을 정의합니다.
-        _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, -_movingSpeedY);
-    }
-    [Obsolete("안 쓰고 있는 것 같습니다.")]
-    /// <summary>
-    /// 이동을 중지합니다.
-    /// </summary>
-    protected void StopMoving()
-    {
-        Velocity = Vector2.zero;
-
-        // 상태를 정의합니다.
-        Moving = false;
-    }
-
-    [Obsolete("안 쓰고 있는 것 같습니다.")]
-    /// <summary>
-    /// 특정 지점으로 이동합니다.
-    /// </summary>
-    /// <param name="t">이동할 지점입니다.</param>
-    void MoveTo(Transform t)
-    {
-        // 사용할 변수를 선언합니다.
-        Vector2 relativePos = t.position - transform.position;
-
-        // 플레이어를 향해 수평 방향 전환합니다.
-        if (relativePos.x < 0)
-        {
-            MoveLeft();
-        }
-        else if (relativePos.x > 0)
-        {
-            MoveRight();
-        }
-        // 플레이어를 향해 수직 방향 전환합니다.
-        if (relativePos.y > 0)
-        {
-            MoveUp();
-        }
-        else if (relativePos.y < 0)
-        {
-            MoveDown();
-        }
-    }
-    [Obsolete("안 쓰고 있는 것 같습니다.")]
-    /// <summary>
-    /// 플레이어를 향해 이동합니다.
-    /// </summary>
-    private void MoveToPlayer()
-    {
-        // 사용할 변수를 선언합니다.
-        Vector3 playerPos = _StageManager.GetCurrentPlayerPosition();
-        Vector2 relativePos = playerPos - transform.position;
-
-        // 플레이어를 향해 수평 방향 전환합니다.
-        if (relativePos.x < 0)
-        {
-            MoveLeft();
-        }
-        else if (relativePos.x > 0)
-        {
-            MoveRight();
-        }
-        // 플레이어를 향해 수직 방향 전환합니다.
-        if (relativePos.y > 0)
-        {
-            MoveUp();
-        }
-        else if (relativePos.y < 0)
-        {
-            MoveDown();
-        }
-    }
 
     #endregion
 }

@@ -48,14 +48,18 @@ public class HwanseBattleManager : BattleManager
 
     #region 상수를 정의합니다.
     /// <summary>
+    /// 숨고르기 시간입니다.
+    /// </summary>
+    public float TIME_WAIT = 0.4f;
+    /// <summary>
     /// 패턴 1에서 Hop 행동 후 잠깐 쉬는 시간입니다.
     /// </summary>
     public float TIME_WAIT_PATTERN1 = 0.4f;
 
     /// <summary>
-    /// 
+    /// 스마슈의 생존 시간입니다.
     /// </summary>
-    public float TIME_LIFE_SMASHU = 10f;
+    public float TIME_LIFE_SMASHU = 3f;
 
     /// <summary>
     /// 플레이어와 스테이지 위쪽의 거리 차이 threshold입니다.
@@ -67,19 +71,19 @@ public class HwanseBattleManager : BattleManager
     public float THRESHOLD_GROUND_DIFF = 1f;
 
     /// <summary>
-    /// 
+    /// 동쪽 축 피벗입니다.
     /// </summary>
     const float anglePivotR = 0f;
     /// <summary>
-    /// 
+    /// 북쪽 축 피벗입니다.
     /// </summary>
     const float anglePivotU = 90f;
     /// <summary>
-    /// 
+    /// 서쪽 축 피벗입니다.
     /// </summary>
     const float anglePivotL = 180f;
     /// <summary>
-    /// 
+    /// 남쪽 축 피벗입니다.
     /// </summary>
     const float anglePivotD = -90f;
 
@@ -238,6 +242,20 @@ public class HwanseBattleManager : BattleManager
     public override void Update()
     {
         base.Update();
+
+        /*
+        if (StageManager.Instance.MainPlayer.IsDead)
+        {
+            ///_atahoUnit.Ceremony();
+            
+            if (_rinshanUnit.DoingCeremony == false)
+            {
+                _rinshanUnit.Ceremony();
+            }
+
+            ///_smashuUnit.Ceremony();
+        }
+        */
     }
     /// <summary>
     /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.
@@ -362,6 +380,24 @@ public class HwanseBattleManager : BattleManager
                 */
             }
 
+            // 린샹 유닛이 존재한다면 린샹에 대한 패턴도 수행합니다.
+            if (_rinshanUnit)
+            {
+                if (_rinshanUnit.Appearing)
+                {
+
+                }
+                else if (_coroutineRinshanPattern == null)
+                {
+                    _coroutineRinshanPattern = StartCoroutine(CoroutineRinshanPhase3());
+                }
+            }
+            else if (_coroutineRinshanPattern != null)
+            {
+                StopCoroutine(_coroutineRinshanPattern);
+                _coroutineRinshanPattern = null;
+            }
+
             // 스마슈 유닛이 존재한다면 스마슈에 대한 패턴도 수행합니다.
             if (_smashuUnit)
             {
@@ -373,17 +409,14 @@ public class HwanseBattleManager : BattleManager
                 {
                     switch (_phase)
                     {
-                        case 0:
-                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPattern1());
-                            break;
                         case 1:
-                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPattern2());
+                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPhase2());
                             break;
                         case 2:
-                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPattern3());
+                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPhase3());
                             break;
                         default:
-                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPattern1());
+                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPhase2());
                             break;
                     }
                 }
@@ -1304,6 +1337,96 @@ public class HwanseBattleManager : BattleManager
     /// <summary>
     /// 패턴 코루틴입니다.
     /// </summary>
+    Coroutine _coroutineRinshanPattern;
+    /// <summary>
+    /// 행동 코루틴입니다.
+    /// </summary>
+    Coroutine _subcoroutineRnishanAction;
+
+    /// <summary>
+    /// 스마슈 개체를 파괴합니다.
+    /// </summary>
+    public void RequestDestroyRinshan()
+    {
+        if (_rinshanUnit)
+        {
+            Destroy(_rinshanUnit.gameObject);
+            _rinshanUnit = null;
+        }
+    }
+
+    /// <summary>
+    /// 1번 패턴입니다.
+    /// </summary>
+    IEnumerator CoroutineRinshanPhase3()
+    {
+        // 영상뢰화 또는 대폭진을 수행합니다.
+        PlayerController player = _stageManager.MainPlayer;
+        if (player.IsAlive() == false)
+        {
+            _rinshanUnit.Ceremony();
+        }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            _rinshanUnit.DoRoihwa();
+        }
+        else if (IsTargetOnGround(player.transform))
+        {
+            _rinshanUnit.DoDaepokjin();
+        }
+        else
+        {
+            _rinshanUnit.DoSukyeong();
+        }
+
+        // 행동이 종료될 때까지 대기합니다.
+        while (_rinshanUnit.IsActionStarted == false)
+        {
+            yield return false;
+            if (_rinshanUnit == null)
+            {
+                yield break;
+            }
+        }
+        while (_rinshanUnit.IsActionRunning)
+        {
+            yield return false;
+            if (_rinshanUnit == null)
+            {
+                yield break;
+            }
+        }
+        while (_rinshanUnit.IsActionEnded == false)
+        {
+            yield return false;
+            if (_rinshanUnit == null)
+            {
+                yield break;
+            }
+        }
+
+        // 
+        while (_rinshanUnit.IsAnimatorInState("Idle") == false)
+        {
+            yield return false;
+        }
+        yield return new WaitForSeconds(TIME_WAIT_PATTERN1);
+
+        // 
+        _coroutineRinshanPattern = null;
+        yield break;
+    }
+
+    #endregion
+
+
+
+
+
+    #region 스마슈 전략을 정의합니다.
+    /// <summary>
+    /// 패턴 코루틴입니다.
+    /// </summary>
     Coroutine _coroutineSmashuPattern;
     /// <summary>
     /// 행동 코루틴입니다.
@@ -1311,7 +1434,7 @@ public class HwanseBattleManager : BattleManager
     Coroutine _subcoroutineSmashuAction;
 
     /// <summary>
-    /// 
+    /// 스마슈 개체를 파괴합니다.
     /// </summary>
     public void RequestDestroySmashu()
     {
@@ -1325,10 +1448,18 @@ public class HwanseBattleManager : BattleManager
     /// <summary>
     /// 1번 패턴입니다.
     /// </summary>
-    IEnumerator CoroutineSmashuPattern1()
+    IEnumerator CoroutineSmashuPhase2()
     {
         // 대타격을 수행합니다.
-        _smashuUnit.DoDaetakyuk();
+        PlayerController player = _stageManager.MainPlayer;
+        if (player.IsDead)
+        {
+            _smashuUnit.Ceremony();
+        }
+        else
+        {
+            _smashuUnit.DoDaetakyuk();
+        }
 
         // 행동이 종료될 때까지 대기합니다.
         while (_smashuUnit.IsActionStarted == false)
@@ -1340,6 +1471,7 @@ public class HwanseBattleManager : BattleManager
             // 다음 커밋에서 그렇게 구현합시다.
             if (_smashuUnit == null)
             {
+                // Enumerator에 try-catch를 못 쓴대요..
                 yield break;
             }
         }
@@ -1361,7 +1493,6 @@ public class HwanseBattleManager : BattleManager
         }
 
         // 
-        PlayerController player = StageManager.Instance.MainPlayer;
         if (player.Damaged || player.BigDamaged || player.Invencible)
         {
             // 사라집니다.
@@ -1395,7 +1526,7 @@ public class HwanseBattleManager : BattleManager
             yield return false;
             if (_smashuUnit == null)
             {
-                break;
+                yield break;
             }
         }
 
@@ -1406,54 +1537,7 @@ public class HwanseBattleManager : BattleManager
     /// <summary>
     /// 2번 패턴입니다.
     /// </summary>
-    IEnumerator CoroutineSmashuPattern2()
-    {
-        // 대타격을 수행합니다.
-        _smashuUnit.DoDaetakyuk();
-
-        // 행동이 종료될 때까지 대기합니다.
-        while (_smashuUnit.IsActionStarted == false)
-        {
-            yield return false;
-        }
-        while (_smashuUnit.IsActionRunning)
-        {
-            yield return false;
-        }
-        while (_smashuUnit.IsActionEnded == false)
-        {
-            yield return false;
-        }
-
-        // 사라집니다.
-        _smashuUnit.Disappear();
-
-        // 행동이 종료될 때까지 대기합니다.
-        while (_smashuUnit.IsActionStarted == false)
-        {
-            yield return false;
-        }
-        while (_smashuUnit.IsActionRunning)
-        {
-            yield return false;
-        }
-        while (_smashuUnit.IsActionEnded == false)
-        {
-            yield return false;
-            if (_smashuUnit == null)
-            {
-                break;
-            }
-        }
-
-        // 
-        _coroutineSmashuPattern = null;
-        yield break;
-    }
-    /// <summary>
-    /// 3번 패턴입니다.
-    /// </summary>
-    IEnumerator CoroutineSmashuPattern3()
+    IEnumerator CoroutineSmashuPhase3()
     {
         // 대타격을 수행합니다.
         _smashuUnit.DoDaetakyuk();
@@ -1607,7 +1691,7 @@ public class HwanseBattleManager : BattleManager
         float playerPosY = targetTransform.position.y;
         float highPosY = _positions[2].position.y;
         float dy = Mathf.Abs(highPosY - playerPosY);
-        return (dy < THRESHOLD_HIGH_DIFF);
+        return (dy < THRESHOLD_HIGH_DIFF) || (highPosY < playerPosY);
     }
     /// <summary>
     /// 타겟이 지상에 있는지를 확인합니다.

@@ -402,10 +402,10 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// </summary>
     IEnumerator CoroutineAppear()
     {
-        // 
-        MakeUnattackable();
-        ///gameObject.tag = "Untagged";
-        _PaletteUser.DisableTexture();
+        // 초기 설정을 진행합니다.
+        MakeUnattackable(); // 스마슈가 플레이어를 공격하지 못하게 합니다.
+        gameObject.tag = "Untagged"; // 플레이어가 스마슈를 공격하지 못하게 합니다.
+        _PaletteUser.DisableTexture(); // 텍스쳐를 잠깐 가립니다.
 
         // 닌자 등장 풀때기 효과를 생성합니다.
         GameObject effectGrassObject = Instantiate(
@@ -425,11 +425,11 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
             yield return false;
         }
 
-        // 
-        ///gameObject.tag = "Enemy";
-        MakeAttackable();
+        // 중간 설정을 진행합니다.
+        gameObject.tag = "Enemy"; // 플레이어가 스마슈를 공격할 수 있게 합니다.
+        MakeAttackable(); // 스마슈가 플레이어를 공격할 수 있게 합니다.
 
-        // 
+        // 등장 시 깜빡이는 부분입니다.
         bool blink = false;
         while (time < effectClipLength)
         {
@@ -500,10 +500,12 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     {
         // 초기화를 진행합니다.
         _hasBulletImmunity = true;
+        gameObject.tag = "Untagged"; // 플레이어가 스마슈를 때릴 수 없게 합니다.
+        MakeUnattackable(); // 스마슈가 플레이어를 때릴 수 없게 합니다.
         yield return false;
         RunAction();
 
-        //
+        // 퇴장 준비 시간입니다.
         float time = 0;
         while (time < _disappearReadyTime)
         {
@@ -512,10 +514,6 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
             // 30 FPS 간격으로 반짝이게 합니다.
             yield return false;
         }
-
-        // 
-        ///gameObject.tag = "Untagged";
-        MakeUnattackable();
 
         // 효과음을 재생합니다.
         SoundEffects[0].Play();
@@ -669,6 +667,73 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         EndDisappear();
         EndAction();
         Destroy(gameObject);
+        yield break;
+    }
+
+    #endregion
+
+
+
+
+
+    #region "세레모니" 행동을 정의합니다.
+    /// <summary>
+    /// 세레모니 행동 중이라면 참입니다.
+    /// </summary>
+    bool _doingCeremony;
+    /// <summary>
+    /// 세레모니 행동 중이라면 참입니다.
+    /// </summary>
+    public bool DoingCeremony
+    {
+        get { return _doingCeremony; }
+        private set { _Animator.SetBool("Win", _doingCeremony = value); }
+    }
+    /// <summary>
+    /// 세레모니 행동입니다.
+    /// </summary>
+    public void Ceremony()
+    {
+        DoingCeremony = true;
+        _hasBulletImmunity = true;
+
+        // 세레모니 코루틴을 시작합니다.
+        StartAction();
+        _coroutineCeremony = StartCoroutine(CoroutineCeremony());
+    }
+    /// <summary>
+    /// 세레모니를 중지합니다.
+    /// </summary>
+    public void StopCeremonying()
+    {
+        DoingCeremony = false;
+        _hasBulletImmunity = false;
+
+        // 행동을 종료합니다.
+        EndAction();
+    }
+
+    /// <summary>
+    /// 세레모니 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineCeremony;
+    /// <summary>
+    /// 세레모니 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineCeremony()
+    {
+        yield return false;
+        RunAction();
+
+        // 
+        while (IsAnimatorInState("Win"))
+        {
+            yield return false;
+        }
+
+        // 세레모니 상태를 끝냅니다.
+        StopCeremonying();
+        _coroutineCeremony = null;
         yield break;
     }
 

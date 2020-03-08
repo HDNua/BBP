@@ -19,7 +19,6 @@ public class ParticleSpreadScript : MonoBehaviour
     /// </summary>
     public Vector2 _acceleration = new Vector2(0f, 20f);
 
-
     #endregion
 
 
@@ -30,7 +29,6 @@ public class ParticleSpreadScript : MonoBehaviour
     /// </summary>
     public Sprite[] spriteParticles;
 
-
     #endregion
 
 
@@ -40,7 +38,6 @@ public class ParticleSpreadScript : MonoBehaviour
     /// 파편 개체 집합입니다.
     /// </summary>
     GameObject[] _particles;
-
 
     #endregion
 
@@ -139,7 +136,6 @@ public class ParticleSpreadScript : MonoBehaviour
         return dir;
     }
 
-
     #endregion
 
 
@@ -147,17 +143,6 @@ public class ParticleSpreadScript : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("_velocity로 대체되었습니다.")]
-    /// <summary>
-    /// 파편이 튀는 시작 속도입니다.
-    /// </summary>
-    public float _particleSpeed = 10f;
-    [Obsolete("_acceleration으로 대체되었습니다.")]
-    /// <summary>
-    /// 파편에 대한 가속도입니다.
-    /// </summary>
-    public float _particleAccelaration = 20f;
-
 
     #endregion
 }

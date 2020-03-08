@@ -5,7 +5,6 @@ using UnityEngine;
 
 
 
-[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(PaletteUser))]
@@ -23,10 +22,11 @@ public class Unit : MonoBehaviour
     /// 1/60 프레임 간의 시간입니다.
     /// </summary>
     public const float TIME_60FPS = 0.0166667f;
+
     /// <summary>
     /// 무적 시간입니다.
     /// </summary>
-    public float INVENCIBLE_TIME_LENGTH = 1f;
+    public float TIME_INVENCIBLE = 1f;
 
     #endregion
 

@@ -701,7 +701,7 @@ public abstract class PlayerController : MonoBehaviour
     {
         get { return _moveBlocked; }
         set { _moveBlocked = value; }
-    } // { get; set; }
+    }
     /// <summary>
     /// 점프가 막혀있다면 true입니다.
     /// </summary>
@@ -2015,7 +2015,7 @@ public abstract class PlayerController : MonoBehaviour
         // 4) 왼쪽을 보고 있는데 왼쪽에서 피격당했습니다.
         // 5) 방향이 아무래도 상관없는 경우입니다.
         // 방향이 아무래도 상관없으면 hitTransform을 null로 만들면 됩니다.
-        bool knockbackRight = FacingRight;
+        bool knockbackRight = !FacingRight;
         if (hitTransform != null)
         {
             float posX = transform.position.x;

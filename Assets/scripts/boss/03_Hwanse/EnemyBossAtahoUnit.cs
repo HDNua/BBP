@@ -268,7 +268,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         set { _Animator.SetBool("DoingHokyokkwon", _doingHokyokkwon = value); }
     }
     /// <summary>
-    /// 방패를 들어 막는 중이라면 참입니다.
+    /// 방어 중이라면 참입니다.
     /// </summary>
     bool Guarding
     {

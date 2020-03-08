@@ -9,7 +9,7 @@ using UnityEngine;
 /// <summary>
 /// 트랩 블래스트 등장 파편 효과를 정의합니다.
 /// </summary>
-public class TrapBlastRevealParticleSpreadScript: ParticleSpreadScript
+public class TrapBlastRevealParticleSpreadScript : ParticleSpreadScript
 {
     /// <summary>
     /// 파편이 튈 방향을 설정합니다.

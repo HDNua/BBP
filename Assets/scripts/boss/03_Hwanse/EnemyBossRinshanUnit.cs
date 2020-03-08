@@ -17,6 +17,15 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     /// </summary>
     public int DAMAGE_DAETAKYOK = 20;
 
+    /// <summary>
+    /// 문과 가깝다고 느낄 거리입니다.
+    /// </summary>
+    public float THRESHOLD_NEAR_DOOR = 1f;
+
+    /// <summary>
+    ///
+    /// </summary>
+    public float TIME_GUARD = 3f;
 
     #endregion
 
@@ -147,9 +156,9 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     bool _disappearing = false;
 
     /// <summary>
-    /// Groundable 컴포넌트가 활성화된 상태라면 참입니다.
+    /// 방어 상태라면 참입니다.
     /// </summary>
-    bool _isGroundableNow = true;
+    bool _guarding = false;
 
     /// <summary>
     /// X축 속력입니다.
@@ -213,10 +222,18 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     /// <summary>
     /// 대미지를 받았다면 참입니다.
     /// </summary>
-    public bool IsAlmostDead
+    public bool IsKnockouted
     {
-        get { return _Animator.GetBool("IsAlmostDead"); }
-        set { _Animator.SetBool("IsAlmostDead", value); }
+        get { return _Animator.GetBool("IsKnockouted"); }
+        set { _Animator.SetBool("IsKnockouted", value); }
+    }
+    /// <summary>
+    /// 방어 중이라면 참입니다.
+    /// </summary>
+    bool Guarding
+    {
+        get { return _guarding; }
+        set { _Animator.SetBool("Guarding", _guarding = value); }
     }
 
     #endregion
@@ -360,6 +377,9 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             yield return false;
         }
 
+        // 대시 애니메이션을 추가합니다.
+        GameObject dashEffectObject = Instantiate(_effects[0], transform.position, transform.rotation, transform);
+
         // 
         float v0 = 10;
         float begPosX = transform.position.x;
@@ -372,12 +392,19 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         // 소환 후 등장 지점까지 이동합니다.
         Velocity = new Vector2(v0, 0);
         SoundEffects[0].Play();
+
+        bool explosionOn = false;
+        Vector3 doorPos = _BattleManager._bossRoomDoor.transform.position;
         while (Velocity.x > 0)
         {
+            if (explosionOn == false && Mathf.Abs(doorPos.x - transform.position.x) < THRESHOLD_NEAR_DOOR)
+            {
+                _BattleManager.RequestDestroyDoor();
+                explosionOn = true;
+            }
             yield return false;
 
             // 
-            //Velocity = new Vector2(v0 + (2 * dist / time) - ((2 * dist) / (time * time)) * passTime, 0);
             Velocity = new Vector2(v0 - ((2 * dist) / (time * time)) * passTime, 0);
             passTime += Time.deltaTime;
         }
@@ -411,7 +438,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     {
         // 상태를 정의합니다.
         Disappearing = true;
-        IsAlmostDead = false;
+        IsKnockouted = false;
 
         // 
         StartAction();
@@ -440,20 +467,12 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             yield return false;
         }
 
+        /*
         // 
         gameObject.tag = "Untagged";
 
         // 효과음을 재생합니다.
         SoundEffects[0].Play();
-
-        // 닌자 등장 풀때기 효과를 생성합니다.
-        GameObject effectGrassObject = Instantiate(
-            EffectNinjaGrass,
-            transform.position,
-            transform.rotation);
-        effectGrassObject.SetActive(true);
-        EffectScript effectGrass = effectGrassObject.GetComponent<EffectScript>();
-        float effectClipLength = effectGrass._clipLength;
 
         // 
         bool blink = false;
@@ -479,6 +498,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         // 효과를 제거하고 스마슈의 색상을 없앱니다.
         effectGrass.RequestDestroy();
         _PaletteUser.DisableTexture();
+        */
 
         // 퇴장을 끝냅니다.
         EndDisappear();
@@ -492,14 +512,70 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
 
 
 
+    #region "방어" 행동을 정의합니다.
+    /// <summary>
+    /// 방어 행동입니다.
+    /// </summary>
+    public void Guard()
+    {
+        Guarding = true;
+        _hasBulletImmunity = true;
+
+        // 막기 코루틴을 시작합니다.
+        StartAction();
+        _coroutineGuard = StartCoroutine(CoroutineGuard());
+    }
+    /// <summary>
+    /// 방어를 중지합니다.
+    /// </summary>
+    public void StopGuarding()
+    {
+        Guarding = false;
+        _hasBulletImmunity = false;
+
+        // 행동을 종료합니다.
+        EndAction();
+    }
+
+    /// <summary>
+    /// 방어 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineGuard;
+    /// <summary>
+    /// 방어 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineGuard()
+    {
+        yield return false;
+        RunAction();
+
+        // 
+        float time = 0;
+        while (time < TIME_GUARD)
+        {
+            time += Time.deltaTime;
+            yield return false;
+        }
+
+        // 막기 상태를 끝냅니다.
+        StopGuarding();
+        _coroutineGuard = null;
+        yield break;
+    }
+
+    #endregion
+
+
+
+
     #region "기절" 행동을 정의합니다.
     /// <summary>
-    /// 사망 코루틴입니다. 린샹은 실제로 사망하지 않고 그저 무적 상태로 일정 시간 방어만 합니다.
+    /// 기절 코루틴입니다. 린샹은 실제로 사망하지 않고 그저 무적 상태로 일정 시간 방어만 합니다.
     /// </summary>
     Coroutine _coroutineDead;
 
     /// <summary>
-    /// 캐릭터를 죽입니다.
+    /// 캐릭터를 기절시킵니다. 린샹은 실제로 사망하지 않고 그저 무적 상태로 일정 시간 방어만 합니다.
     /// </summary>
     public override void Dead()
     {
@@ -507,7 +583,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         if (IsDead == false)
         {
             IsDead = true;
-            IsAlmostDead = true;
+            IsKnockouted = true;
 
             // 
             if (_coroutineAppear != null) StopCoroutine(_coroutineAppear);
@@ -515,12 +591,12 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             // 
             StopAllCoroutines();
             _coroutineDead = StartCoroutine(CoroutineDead());
-            _coroutineInvencible = StartCoroutine(CoroutineInvencible(999));
+            _coroutineInvencible = StartCoroutine(CoroutineInvencible(TIME_INVENCIBLE));
         }
     }
 
     /// <summary>
-    /// 사망 코루틴입니다.
+    /// 기절 코루틴입니다.
     /// </summary>
     IEnumerator CoroutineDead()
     {
@@ -547,48 +623,39 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             // 30 FPS 간격으로 반짝이게 합니다.
             yield return new WaitForSeconds(TIME_30FPS);
         }
+        IsKnockouted = false;
+        _health = _maxHealth;
+        _PaletteUser.UpdatePaletteIndex(0);
 
-        // 효과음을 재생합니다.
-        SoundEffects[0].Play();
-
-        // 닌자 등장 풀때기 효과를 생성합니다.
-        GameObject effectGrassObject = Instantiate(
-            EffectNinjaGrass,
-            transform.position,
-            transform.rotation);
-        effectGrassObject.SetActive(true);
-        EffectScript effectGrass = effectGrassObject.GetComponent<EffectScript>();
-        float effectClipLength = effectGrass._clipLength;
-
-        // 
-        blink = false;
-        time = 0;
-        while (time < effectClipLength)
+        // 재정비 상태에 들어갑니다.
+        _hasBulletImmunity = false;
+        Guarding = true;
+        while (IsAnimatorInState("Regroup") == false)
         {
-            time += TIME_30FPS + Time.deltaTime;
-
-            if (blink)
-            {
-                _PaletteUser.EnableTexture();
-            }
-            else
-            {
-                _PaletteUser.DisableTexture();
-            }
-            blink = !blink;
-
-            // 30 FPS 간격으로 반짝이게 합니다.
-            yield return new WaitForSeconds(TIME_30FPS);
+            yield return false;
         }
 
-        // 효과를 제거하고 스마슈의 색상을 없앱니다.
-        effectGrass.RequestDestroy();
-        _PaletteUser.DisableTexture();
+        // Guard를 호출하는 대신 직접 Guarding을 조작하는 이유는,
+        // Guard 함수가 코루틴을 생성하는 함수이기 때문입니다.
+        // 여기서 Guarding 파라미터는 Regroup AnimatorState로 넘어가기 위한 조건일 뿐
+        // 실제로 방어 행동을 목적으로 사용되지는 않았기 때문에 서로 별개입니다.
+        time = 0;
+        while (IsAnimatorInState("Regroup"))
+        {
+            yield return false;
+            if (time >= TIME_GUARD)
+            {
+                break;
+            }
+            time += Time.deltaTime;
+        }
+        Guarding = false;
+        _hasBulletImmunity = false;
 
-        // 등장을 끝냅니다.
+        // 기절 상태를 끝냅니다.
+        MakeAttackable();
+        IsDead = false;
         _coroutineDead = null;
-        EndDisappear();
-        Destroy(gameObject);
         yield break;
     }
 
@@ -600,11 +667,11 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
 
     #region "수경" 행동을 정의합니다.
     /// <summary>
-    /// 대타격 행동 중이라면 참입니다.
+    /// 수경 행동 중이라면 참입니다.
     /// </summary>
     bool _doingSukyeong;
     /// <summary>
-    /// 대타격 행동 중이라면 참입니다.
+    /// 수경 행동 중이라면 참입니다.
     /// </summary>
     public bool DoingSukyeong
     {
@@ -613,12 +680,12 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     }
 
     /// <summary>
-    /// 대타격 코루틴입니다.
+    /// 수경 코루틴입니다.
     /// </summary>
     Coroutine _coroutineSukyeong;
 
     /// <summary>
-    /// 대타격 행동을 시작합니다.
+    /// 수경 행동을 시작합니다.
     /// </summary>
     public void DoSukyeong()
     {
@@ -629,7 +696,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         _coroutineSukyeong = StartCoroutine(CoroutineSukyeong());
     }
     /// <summary>
-    /// 대타격 행동을 중지합니다.
+    /// 수경 행동을 중지합니다.
     /// </summary>
     public void StopSukyeong()
     {
@@ -739,17 +806,14 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("린샹이 쓰는 기술은 아닙니다만.. 스마슈에서 복사하느라 임시로 남았습니다.")]
+    [Obsolete("안 쓰고 있는 것 같습니다.")]
     /// <summary>
-    /// 등장 풀때기 효과입니다.
+    /// Groundable 컴포넌트가 활성화된 상태라면 참입니다.
     /// </summary>
-    GameObject EffectNinjaGrass
-    {
-        get { return _effects[0]; }
-    }
+    bool _isGroundableNow = true;
 
 
-
+    [Obsolete("안 쓰고 있는 것 같습니다.")]
     /// <summary>
     /// 
     /// </summary>
@@ -758,6 +822,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         get; set;
     }
 
+    [Obsolete("안 쓰고 있는 것 같습니다.")]
     /// <summary>
     /// 왼쪽으로 이동합니다.
     /// </summary>
@@ -769,6 +834,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         Moving = true;
         _Rigidbody.velocity = new Vector2(-_movingSpeedX, _Rigidbody.velocity.y);
     }
+    [Obsolete("안 쓰고 있는 것 같습니다.")]
     /// <summary>
     /// 오른쪽으로 이동합니다.
     /// </summary>
@@ -783,6 +849,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         // 내용을 정의합니다.
         _Rigidbody.velocity = new Vector2(_movingSpeedX, _Rigidbody.velocity.y);
     }
+    [Obsolete("안 쓰고 있는 것 같습니다.")]
     /// <summary>
     /// 위쪽으로 이동합니다.
     /// </summary>
@@ -794,6 +861,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         // 내용을 정의합니다.
         _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, _movingSpeedY);
     }
+    [Obsolete("안 쓰고 있는 것 같습니다.")]
     /// <summary>
     /// 아래쪽으로 이동합니다.
     /// </summary>
@@ -805,6 +873,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         // 내용을 정의합니다.
         _Rigidbody.velocity = new Vector2(_Rigidbody.velocity.x, -_movingSpeedY);
     }
+    [Obsolete("안 쓰고 있는 것 같습니다.")]
     /// <summary>
     /// 이동을 중지합니다.
     /// </summary>
@@ -816,6 +885,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         Moving = false;
     }
 
+    [Obsolete("안 쓰고 있는 것 같습니다.")]
     /// <summary>
     /// 특정 지점으로 이동합니다.
     /// </summary>
@@ -844,6 +914,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             MoveDown();
         }
     }
+    [Obsolete("안 쓰고 있는 것 같습니다.")]
     /// <summary>
     /// 플레이어를 향해 이동합니다.
     /// </summary>

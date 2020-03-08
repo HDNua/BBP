@@ -21,11 +21,24 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// 대타격 공격의 대미지입니다.
     /// </summary>
     public int DAMAGE_DAETAKYUK = 20;
+    /// <summary>
+    /// 쾌진격 공격의 대미지입니다.
+    /// </summary>
+    public int DAMAGE_KWAEJINKYUK = 15;
 
     /// <summary>
     /// 플레이어와 스마슈 사이가 가깝다고 인지할 수 있는 간격입니다.
     /// </summary>
     public float THRESHOLD_NEAR_DIST = 1f;
+
+    /// <summary>
+    /// 대타격 속도입니다.
+    /// </summary>
+    public float SPEED_DAETAKYUK = 10f;
+    /// <summary>
+    /// 쾌진격 속도입니다.
+    /// </summary>
+    public float SPEED_KWAEJINKYUK = 15f;
 
     #endregion
 
@@ -35,7 +48,7 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// <summary>
     /// 지상에 착지할 수 있는 유닛입니다.
     /// </summary>
-    Groundable _Groundable
+    Groundable _groundable
     {
         get { return GetComponent<Groundable>(); }
     }
@@ -59,32 +72,45 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// </summary>
     bool Landed
     {
-        get { return _Groundable.Landed; }
-        set { _Groundable.Landed = value; }
+        get { return _groundable.Landed; }
+        set { _groundable.Landed = value; }
     }
     /// <summary>
     /// 점프 상태라면 참입니다.
     /// </summary>
     bool Jumping
     {
-        get { return _Groundable.Jumping; }
-        set { _Groundable.Jumping = value; }
+        get { return _groundable.Jumping; }
+        set { _groundable.Jumping = value; }
     }
     /// <summary>
     /// 낙하 상태라면 참입니다.
     /// </summary>
     bool Falling
     {
-        get { return _Groundable.Falling; }
-        set { _Groundable.Falling = value; }
+        get { return _groundable.Falling; }
+        set { _groundable.Falling = value; }
     }
     /// <summary>
     /// 개체의 속도 벡터를 구합니다.
     /// </summary>
     Vector2 Velocity
     {
-        get { return _Groundable.Velocity; }
-        set { _Groundable.Velocity = value; }
+        get { return _groundable.Velocity; }
+        set { _groundable.Velocity = value; }
+    }
+
+    /// <summary>
+    /// 착지가 막혀있다면 참입니다.
+    /// </summary>
+    public bool _landBlocked = false;
+    /// <summary>
+    /// 착지가 불가능하다면 참입니다.
+    /// </summary>
+    bool LandBlocked
+    {
+        get { return _landBlocked; }
+        set { _landBlocked = value; }
     }
 
     /// <summary>
@@ -92,21 +118,21 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// </summary>
     void Land()
     {
-        _Groundable.Land();
+        _groundable.Land();
     }
     /// <summary>
     /// 점프합니다.
     /// </summary>
     void Jump()
     {
-        _Groundable.Jump();
+        _groundable.Jump();
     }
     /// <summary>
     /// 낙하합니다.
     /// </summary>
     void Fall()
     {
-        _Groundable.Fall();
+        _groundable.Fall();
     }
 
     /// <summary>
@@ -114,7 +140,7 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// </summary>
     void UpdateVy()
     {
-        _Groundable.UpdateVy();
+        _groundable.UpdateVy();
     }
 
     #endregion
@@ -273,7 +299,18 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
             // 점프 중이라면
             if (Jumping)
             {
-                if (Velocity.y <= 0)
+                if (Landed)
+                {
+                    if (LandBlocked)
+                    {
+                        UpdateVy();
+                    }
+                    else
+                    {
+                        Land();
+                    }
+                }
+                else if (Velocity.y <= 0)
                 {
                     Fall();
                 }
@@ -287,7 +324,14 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
             {
                 if (Landed)
                 {
-                    Land();
+                    if (LandBlocked)
+                    {
+                        UpdateVy();
+                    }
+                    else
+                    {
+                        Land();
+                    }
                 }
                 else
                 {
@@ -297,7 +341,11 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
             // 그 외의 경우
             else
             {
-                if (Landed == false)
+                if (LandBlocked)
+                {
+                    UpdateVy();
+                }
+                else if (Landed == false)
                 {
                     Fall();
                 }
@@ -355,7 +403,8 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     IEnumerator CoroutineAppear()
     {
         // 
-        gameObject.tag = "Untagged";
+        MakeUnattackable();
+        ///gameObject.tag = "Untagged";
         _PaletteUser.DisableTexture();
 
         // 닌자 등장 풀때기 효과를 생성합니다.
@@ -372,11 +421,13 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         while (time < _appearReadyTime)
         {
             time += Time.deltaTime;
+            MakeUnattackable();
             yield return false;
         }
 
         // 
-        gameObject.tag = "Enemy";
+        ///gameObject.tag = "Enemy";
+        MakeAttackable();
 
         // 
         bool blink = false;
@@ -447,6 +498,12 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     /// </summary>
     IEnumerator CoroutineDisappear()
     {
+        // 초기화를 진행합니다.
+        _hasBulletImmunity = true;
+        yield return false;
+        RunAction();
+
+        //
         float time = 0;
         while (time < _disappearReadyTime)
         {
@@ -457,7 +514,8 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         }
 
         // 
-        gameObject.tag = "Untagged";
+        ///gameObject.tag = "Untagged";
+        MakeUnattackable();
 
         // 효과음을 재생합니다.
         SoundEffects[0].Play();
@@ -498,6 +556,7 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
 
         // 퇴장을 끝냅니다.
         EndDisappear();
+        EndAction();
         Destroy(gameObject);
         yield break;
     }
@@ -529,10 +588,8 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
             if (_coroutineAppear != null) StopCoroutine(_coroutineAppear);
 
             // 
-            if (_coroutinePattern != null) StopCoroutine(_coroutinePattern);
-
-            // 
             StopAllCoroutines();
+            StartAction();
             _coroutineDead = StartCoroutine(CoroutineDead());
             _coroutineInvencible = StartCoroutine(CoroutineInvencible(999));
         }
@@ -544,7 +601,10 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     IEnumerator CoroutineDead()
     {
         // 
+        Velocity = Vector2.zero;
         MakeUnattackable();
+        yield return false;
+        RunAction();
 
         // 
         bool blink = false;
@@ -607,6 +667,7 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         // 등장을 끝냅니다.
         _coroutineDead = null;
         EndDisappear();
+        EndAction();
         Destroy(gameObject);
         yield break;
     }
@@ -703,15 +764,20 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         Vector3 dv = dstPosition.position - transform.position;
 
         //
-        Velocity = new Vector2(x > 0 ? 10f : -10f, 0);
+        Velocity = new Vector2(x > 0 ? SPEED_DAETAKYUK : -SPEED_DAETAKYUK, 0);
         while (Mathf.Abs(dv.x) >= THRESHOLD_NEAR_DIST)
         {
             dv = dstPosition.position - transform.position;
             Vector3 playerPos = _StageManager.GetCurrentPlayerPosition();
             Vector3 diffBetweenPlayer = playerPos - transform.position;
+
             if (THRESHOLD_NEAR_DIST >= Mathf.Abs(diffBetweenPlayer.x))
             {
-                break;
+                if (THRESHOLD_NEAR_DIST >= Mathf.Abs(diffBetweenPlayer.y))
+                {
+                    // 대타격으로 플레이어를 때릴 수 있다면 멈춥니다.
+                    break;
+                }
             }
             yield return false;
         }
@@ -729,16 +795,31 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         attackRange.gameObject.SetActive(true);
         while (IsAnimatorInState("DaetakyukRun"))
         {
+            // 저는 위에서 한 번만 정의해주면 값이 바뀔 줄 알았는데 아니네요... 왜죠
+            _damage = DAMAGE_DAETAKYUK;
+            attackRange._damage = DAMAGE_DAETAKYUK;
             yield return false;
         }
 
         // 공격을 끝냅니다.
         while (IsAnimatorInState("DaetakyukEnd1"))
         {
+            // 저는 위에서 한 번만 정의해주면 값이 바뀔 줄 알았는데 아니네요... 왜죠
+            _damage = DAMAGE_DAETAKYUK;
+            attackRange._damage = DAMAGE_DAETAKYUK;
             yield return false;
         }
         RunEndRequest = false;
         attackRange.gameObject.SetActive(false);
+
+        // 
+        while (IsAnimatorInState("DaetakyukEnd2"))
+        {
+            _damage = _defaultDamage;
+            attackRange._damage = 0;
+            yield return false;
+        }
+        _damage = _defaultDamage;
 
         // 대타격을 종료합니다.
         StopDaetakyuk();
@@ -800,11 +881,43 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         yield return false;
         RunAction();
 
-        // 
-        yield return false;
+        // 초기 설정을 진행합니다.
+        LookPlayer();
+        while (IsAnimatorInState("KwaejinkyukBeg"))
+        {
+            yield return false;
+        }
 
         // 
+        EnemyUnit attackRange0 = _attackRanges[1];
+        EnemyUnit attackRange1 = _attackRanges[2];
+
+        // 
+        Vector3 playerPos = _StageManager.GetCurrentPlayerPosition();
+        Vector3 dv = (playerPos - transform.position).normalized;
+        SoundEffects[2].Play();
+
+        _isGroundableNow = false;
+        LandBlocked = true;
+
+        Velocity = dv * SPEED_KWAEJINKYUK;
+        LookPlayer();
+
+        _groundable._whatIsWall = 0;
+        _groundable._whatIsGround = 0;
+
+        // https://forum.unity.com/threads/child-doesnt-follow-parent.314583/
+        attackRange0.gameObject.SetActive(true);
+        attackRange1.gameObject.SetActive(true);
+        while (IsAnimatorInState("KwaejinkyukRun"))
+        {
+            _damage = DAMAGE_KWAEJINKYUK;
+            yield return false;
+        }
+
+        // 행동을 종료합니다.
         StopKwaejinkyuk();
+        _coroutineKwaejinkyuk = null;
         yield break;
     }
 
@@ -831,223 +944,7 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("이거 쓰긴 쓰나요?")]
-    /// <summary>
-    /// 스마슈의 패턴입니다.
-    /// </summary>
-    int Pattern
-    {
-        set { _Animator.SetInteger("Pattern", value); }
-    }
 
-    [Obsolete("행동 이후의 행동은 행동의 끝이 아닌 패턴에서 정의해야 합니다.")]
-    /// <summary>
-    /// 등장이 끝난 이후의 행동을 정의합니다.
-    /// </summary>
-    void PerformActionAfterAppear()
-    {
-        int patternOffset = 0; // Random.Range(0, 2);
-        int patternBase;
-
-        // 
-        switch (_phase)
-        {
-            case 0:
-                patternBase = 11;
-                break;
-            case 1:
-                patternBase = 21;
-                break;
-            default:
-                patternBase = 31;
-                break;
-        }
-
-        // 
-        DoPattern(patternBase + patternOffset);
-    }
-
-
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 패턴 코루틴입니다.
-    /// </summary>
-    Coroutine _coroutinePattern;
-
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 패턴을 수행합니다.
-    /// </summary>
-    /// <param name="patternIndex">수행할 패턴의 인덱스입니다.</param>
-    void DoPattern(int patternIndex)
-    {
-        // 상태를 정의합니다.
-        Pattern = patternIndex;
-
-        // 
-        switch (patternIndex)
-        {
-            case 11:
-                DoPattern11();
-                break;
-            case 12:
-                DoPattern12();
-                break;
-            case 21:
-                DoPattern21();
-                break;
-            case 22:
-                DoPattern22();
-                break;
-            case 31:
-                DoPattern31();
-                break;
-            case 32:
-                DoPattern32();
-                break;
-            default:
-                break;
-        }
-    }
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 패턴을 중지합니다.
-    /// </summary>
-    void StopPattern()
-    {
-        Pattern = 0;
-    }
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 페이즈 1의 패턴 1을 실행합니다.
-    /// </summary>
-    void DoPattern11()
-    {
-        _coroutinePattern = StartCoroutine(CoroutinePattern11());
-    }
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 페이즈 1의 패턴 1이 실행된 후의 행동을 정의합니다.
-    /// </summary>
-    void PerformActionAfterPattern11()
-    {
-        Disappear();
-    }
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 페이즈 1의 패턴 2를 실행합니다.
-    /// </summary>
-    void DoPattern12()
-    {
-        _coroutinePattern = StartCoroutine(CoroutinePattern12());
-    }
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 페이즈 1의 패턴 2가 실행된 후의 행동을 정의합니다.
-    /// </summary>
-    void PerformActionAfterPattern12()
-    {
-        Disappear();
-    }
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    void DoPattern21()
-    {
-
-    }
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    void DoPattern22()
-    {
-
-    }
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    void DoPattern31()
-    {
-
-    }
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 
-    /// </summary>
-    void DoPattern32()
-    {
-
-    }
-
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 페이즈 1의 패턴 1 코루틴입니다.
-    /// </summary>
-    IEnumerator CoroutinePattern11()
-    {
-        // 
-        yield return new WaitForSeconds(TIME_30FPS);
-        while (IsAnimatorInState("Pattern111"))
-        {
-            yield return false;
-        }
-
-        // 
-        yield return new WaitForSeconds(TIME_30FPS);
-        while (IsAnimatorInState("Pattern112"))
-        {
-            yield return false;
-        }
-
-        // 
-        yield return new WaitForSeconds(TIME_30FPS);
-        while (IsAnimatorInState("Pattern113"))
-        {
-            yield return false;
-        }
-
-        // 
-        yield return new WaitForSeconds(TIME_30FPS);
-
-        // 패턴을 끝냅니다.
-        StopPattern();
-        PerformActionAfterPattern11();
-        _coroutinePattern = null;
-        yield break;
-    }
-    [Obsolete("패턴의 정의는 유닛이 아닌 전투 관리자에 있어야 합니다.")]
-    /// <summary>
-    /// 페이즈 1의 패턴 2 코루틴입니다.
-    /// </summary>
-    IEnumerator CoroutinePattern12()
-    {
-        // 
-        while (IsAnimatorInState("Pattern121"))
-        {
-            yield return false;
-        }
-
-        // 
-        while (IsAnimatorInState("Pattern122"))
-        {
-            yield return false;
-        }
-
-        // 
-        while (IsAnimatorInState("Pattern12E"))
-        {
-            yield return false;
-        }
-
-        // 패턴을 끝냅니다.
-        StopPattern();
-        PerformActionAfterPattern12();
-        _coroutinePattern = null;
-        yield break;
-    }
 
     #endregion
 }

@@ -5,7 +5,7 @@ using System;
 
 
 
-[Obsolete("EnemyMettoolUnit으로 대체될 것입니다. (EnemyBulletScript 때문에 아직 대체 이전입니다)")]
+[Obsolete("EnemyUnit으로 대체될 것입니다. (EnemyBulletScript 때문에 아직 대체 이전입니다)")]
 /// <summary>
 /// 적 캐릭터를 정의합니다.
 /// </summary>

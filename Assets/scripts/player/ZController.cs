@@ -1505,7 +1505,7 @@ public class ZController : PlayerController
     /// <returns></returns>
     public override bool Hurt(int damage, Transform hitTransform)
     {
-        if (base.Hurt(damage, transform))
+        if (base.Hurt(damage, hitTransform))
         {
             DeactivateAllAttackRange();
 

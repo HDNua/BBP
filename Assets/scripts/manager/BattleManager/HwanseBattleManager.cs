@@ -53,6 +53,11 @@ public class HwanseBattleManager : BattleManager
     public float TIME_WAIT_PATTERN1 = 0.4f;
 
     /// <summary>
+    /// 
+    /// </summary>
+    public float TIME_LIFE_SMASHU = 10f;
+
+    /// <summary>
     /// 플레이어와 스테이지 위쪽의 거리 차이 threshold입니다.
     /// </summary>
     public float THRESHOLD_HIGH_DIFF = 1f;
@@ -60,6 +65,23 @@ public class HwanseBattleManager : BattleManager
     /// 플레이어와 바닥의 거리 차이 threshold입니다.
     /// </summary>
     public float THRESHOLD_GROUND_DIFF = 1f;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    const float anglePivotR = 0f;
+    /// <summary>
+    /// 
+    /// </summary>
+    const float anglePivotU = 90f;
+    /// <summary>
+    /// 
+    /// </summary>
+    const float anglePivotL = 180f;
+    /// <summary>
+    /// 
+    /// </summary>
+    const float anglePivotD = -90f;
 
     #endregion
 
@@ -116,6 +138,56 @@ public class HwanseBattleManager : BattleManager
     /// 아타호가 쳐다보는 플레이어의 방향입니다.
     /// </summary>
     public Direction _direction;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public float anglePivotRU = 45f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float anglePivotLU = 135f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float anglePivotLD = -135f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float anglePivotRD = -45f;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public float angleRtoRU = 22.5f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float angleRtoRD = 22.5f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float angleUtoRU = 22.5f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float angleUtoLU = 22.5f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float angleLtoLU = 22.5f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float angleLtoLD = 22.5f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float angleDtoLD = 22.5f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float angleDtoRD = 22.5f;
 
     /// <summary>
     /// 거리 검사를 위한 타원의 가로 길이입니다.
@@ -378,6 +450,24 @@ public class HwanseBattleManager : BattleManager
             _smashuUnit = (EnemyBossSmashuUnit)unit;
         }
     }
+    /// <summary>
+    /// 문 파괴를 요청합니다.
+    /// </summary>
+    public void RequestDestroyDoor()
+    {
+        Instantiate(DataBase.Instance.MultipleExplosionEffect, 
+            _bossRoomDoor.transform.position, 
+            _bossRoomDoor.transform.rotation);
+        Instantiate(_doorDestroyEffect,
+            _bossRoomDoor.transform.position,
+            _bossRoomDoor.transform.rotation
+            ).gameObject.SetActive(true);
+        _doorInvisibleWall.gameObject.SetActive(true);
+        Destroy(_bossRoomDoor.gameObject);
+    }
+    public BossRoomDoorScript _bossRoomDoor;
+    public ParticleSpreadScript _doorDestroyEffect;
+    public InvisibleWallScript _doorInvisibleWall;
     
     #endregion
 
@@ -403,13 +493,6 @@ public class HwanseBattleManager : BattleManager
         return _atahoUnit ? !_atahoUnit.IsAlive() : true;
     }
 
-    #endregion
-
-
-
-
-
-    #region 유닛 행동 메서드를 정의합니다.
     #endregion
 
 
@@ -486,31 +569,31 @@ public class HwanseBattleManager : BattleManager
         switch (_direction)
         {
             case Direction.LU:
-                PerformAtahoActionLU(_atahoUnit, player);
+                PerformAtahoPattern1ActionLU(_atahoUnit, player);
                 break;
             case Direction.U:
-                PerformAtahoActionU(_atahoUnit, player);
+                PerformAtahoPattern1ActionU(_atahoUnit, player);
                 break;
             case Direction.RU:
-                PerformAtahoActionRU(_atahoUnit, player);
+                PerformAtahoPattern1ActionRU(_atahoUnit, player);
                 break;
             case Direction.L:
-                PerformAtahoActionL(_atahoUnit, player);
+                PerformAtahoPattern1ActionL(_atahoUnit, player);
                 break;
             case Direction.R:
-                PerformAtahoActionR(_atahoUnit, player);
+                PerformAtahoPattern1ActionR(_atahoUnit, player);
                 break;
             case Direction.LD:
-                PerformAtahoActionLD(_atahoUnit, player);
+                PerformAtahoPattern1ActionLD(_atahoUnit, player);
                 break;
             case Direction.D:
-                PerformAtahoActionD(_atahoUnit, player);
+                PerformAtahoPattern1ActionD(_atahoUnit, player);
                 break;
             case Direction.RD:
-                PerformAtahoActionRD(_atahoUnit, player);
+                PerformAtahoPattern1ActionRD(_atahoUnit, player);
                 break;
             default:
-                PerformAtahoActionM(_atahoUnit, player);
+                PerformAtahoPattern1ActionM(_atahoUnit, player);
                 break;
         }
 
@@ -567,13 +650,13 @@ public class HwanseBattleManager : BattleManager
 
 
 
-    #region 아타호 유닛 전략 메서드를 정의합니다.
+    #region 아타호 유닛 패턴 1 행동 메서드를 정의합니다.
     /// <summary>
     /// 왼쪽 위 방향 전략입니다.
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoActionLU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern1ActionLU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -617,7 +700,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoActionU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern1ActionU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -654,7 +737,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoActionRU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern1ActionRU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -698,7 +781,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoActionL(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern1ActionL(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -780,7 +863,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoActionM(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern1ActionM(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -840,7 +923,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoActionR(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern1ActionR(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -922,7 +1005,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoActionLD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern1ActionLD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -992,7 +1075,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoActionD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern1ActionD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -1062,7 +1145,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoActionRD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern1ActionRD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -1134,7 +1217,7 @@ public class HwanseBattleManager : BattleManager
 
 
 
-    #region 아타호 유닛 전략 구성에 사용되는 보조 메서드를 정의합니다.
+    #region 아타호 유닛 패턴에 사용되는 보조 메서드를 정의합니다.
     /// <summary>
     /// 다음 뛸 지점의 집합을 반환합니다.
     /// </summary>
@@ -1228,98 +1311,22 @@ public class HwanseBattleManager : BattleManager
     Coroutine _subcoroutineSmashuAction;
 
     /// <summary>
+    /// 
+    /// </summary>
+    public void RequestDestroySmashu()
+    {
+        if (_smashuUnit)
+        {
+            Destroy(_smashuUnit.gameObject);
+            _smashuUnit = null;
+        }
+    }
+
+    /// <summary>
     /// 1번 패턴입니다.
     /// </summary>
     IEnumerator CoroutineSmashuPattern1()
     {
-        if (false)
-        {
-            /*
-            //////////////////////////////////////////////////////////
-            // 스마슈의 남은 마력이 없다면
-            // 기술 사용을 위해 마나 회복을 최우선으로 진행해야 합니다.
-            // 게임 시작 시에 반드시 스마슈의 마력이 0인 상태이므로
-            // 플레이어는 스마슈의 마력 회복 행동을 통해
-            // 스마슈가 마력이 부족할 때 마나 회복을 할 것이라고 예상할 수 있습니다.
-            if (_smashuUnit._mana == 0)
-            {
-                _smashuUnit.DrinkMana();
-
-                // 행동이 종료될 때까지 대기합니다.
-                while (_smashuUnit.IsActionStarted == false)
-                {
-                    yield return false;
-                }
-                while (_smashuUnit.IsActionRunning)
-                {
-                    yield return false;
-                }
-                while (_smashuUnit.IsActionEnded == false)
-                {
-                    yield return false;
-                }
-            }
-
-            //////////////////////////////////////////////////////////
-            // 
-            _subcoroutineSmashuAction = StartCoroutine(SubcoroutineHop());
-            while (_subcoroutineSmashuAction != null)
-            {
-                yield return false;
-            }
-            while (_smashuUnit.IsAnimatorInState("FallEnd"))
-            {
-                yield return false;
-            }
-
-            // 약간 기다립니다.
-            yield return new WaitForSeconds(TIME_WAIT_PATTERN1);
-
-            //////////////////////////////////////////////////////////
-            // 코루틴 도중 둘 중 하나가 끝났다면 코루틴을 중지합니다.
-            PlayerController player = _stageManager.MainPlayer;
-            if (player == null || _smashuUnit.IsDead)
-            {
-                yield break;
-            }
-
-            // 스마슈가 전략을 구상하기 위한 조건들을 초기화합니다.
-            UpdateCondition(_smashuUnit, player);
-
-            // 업데이트한 조건을 바탕으로 전략을 수행합니다.
-            switch (_direction)
-            {
-                case Direction.LU:
-                    PerformSmashuActionLU(_smashuUnit, player);
-                    break;
-                case Direction.U:
-                    PerformSmashuActionU(_smashuUnit, player);
-                    break;
-                case Direction.RU:
-                    PerformSmashuActionRU(_smashuUnit, player);
-                    break;
-                case Direction.L:
-                    PerformSmashuActionL(_smashuUnit, player);
-                    break;
-                case Direction.R:
-                    PerformSmashuActionR(_smashuUnit, player);
-                    break;
-                case Direction.LD:
-                    PerformSmashuActionLD(_smashuUnit, player);
-                    break;
-                case Direction.D:
-                    PerformSmashuActionD(_smashuUnit, player);
-                    break;
-                case Direction.RD:
-                    PerformSmashuActionRD(_smashuUnit, player);
-                    break;
-                default:
-                    PerformSmashuActionM(_smashuUnit, player);
-                    break;
-            }
-            */
-        }
-
         // 대타격을 수행합니다.
         _smashuUnit.DoDaetakyuk();
 
@@ -1327,27 +1334,61 @@ public class HwanseBattleManager : BattleManager
         while (_smashuUnit.IsActionStarted == false)
         {
             yield return false;
+
+            // 모든 단위 행동의 다음에는 해당 개체가 살아있는지 확인해야 에러가 없습니다.
+            // 어쩌면... try/catch를 사용하여 그냥 넘겨버릴 수도 있겠지요.
+            // 다음 커밋에서 그렇게 구현합시다.
+            if (_smashuUnit == null)
+            {
+                yield break;
+            }
         }
         while (_smashuUnit.IsActionRunning)
         {
             yield return false;
+            if (_smashuUnit == null)
+            {
+                yield break;
+            }
         }
         while (_smashuUnit.IsActionEnded == false)
         {
             yield return false;
+            if (_smashuUnit == null)
+            {
+                yield break;
+            }
         }
 
-        // 사라집니다.
-        _smashuUnit.Disappear();
+        // 
+        PlayerController player = StageManager.Instance.MainPlayer;
+        if (player.Damaged || player.BigDamaged || player.Invencible)
+        {
+            // 사라집니다.
+            _smashuUnit.Disappear();
+        }
+        else
+        {
+            _smashuUnit.DoKwaejinkyuk();
+            Invoke("RequestDestroySmashu", TIME_LIFE_SMASHU);
+        }
 
         // 행동이 종료될 때까지 대기합니다.
         while (_smashuUnit.IsActionStarted == false)
         {
             yield return false;
+            if (_smashuUnit == null)
+            {
+                yield break;
+            }
         }
         while (_smashuUnit.IsActionRunning)
         {
             yield return false;
+            if (_smashuUnit == null)
+            {
+                yield break;
+            }
         }
         while (_smashuUnit.IsActionEnded == false)
         {
@@ -1462,40 +1503,6 @@ public class HwanseBattleManager : BattleManager
 
 
 
-    const float anglePivotR = 0f;
-    const float anglePivotU = 90f;
-    const float anglePivotL = 180f;
-    const float anglePivotD = -90f;
-
-    public float anglePivotRU = 45f;
-    public float anglePivotLU = 135f;
-    public float anglePivotLD = -135f;
-    public float anglePivotRD = -45f;
-
-    public float angleRtoRU = 22.5f;
-    public float angleRtoRD = 22.5f;
-    public float angleUtoRU = 22.5f;
-    public float angleUtoLU = 22.5f;
-    public float angleLtoLU = 22.5f;
-    public float angleLtoLD = 22.5f;
-    public float angleDtoLD = 22.5f;
-    public float angleDtoRD = 22.5f;
-
-
-    public Vector2 dir(float deg)
-    {
-        return new Vector2(cos(deg), sin(deg));
-    }
-    public static float cos(float deg)
-    {
-        return Mathf.Cos(deg * Mathf.Deg2Rad);
-    }
-    public static float sin(float deg)
-    {
-        return Mathf.Sin(deg * Mathf.Deg2Rad);
-    }
-
-    public float _debugLeyLength = 10f;
 
     #region 유닛 전략 구성을 위한 보조 메서드를 정의합니다.
     /// <summary>
@@ -1514,14 +1521,14 @@ public class HwanseBattleManager : BattleManager
         // 
 
         // 
-        Vector2 ray0 = dir(anglePivotR + angleRtoRU) * _debugLeyLength;
-        Vector2 ray1 = dir(anglePivotU - angleUtoRU) * _debugLeyLength;
-        Vector2 ray2 = dir(anglePivotU + angleUtoLU) * _debugLeyLength;
-        Vector2 ray3 = dir(anglePivotL - angleLtoLU) * _debugLeyLength;
-        Vector2 ray4 = dir(-anglePivotL + angleLtoLD) * _debugLeyLength;
-        Vector2 ray5 = dir(anglePivotD - angleDtoLD) * _debugLeyLength;
-        Vector2 ray6 = dir(anglePivotD + angleDtoRD) * _debugLeyLength;
-        Vector2 ray7 = dir(anglePivotR - angleRtoRD) * _debugLeyLength;
+        Vector2 ray0 = dir(anglePivotR + angleRtoRU) * _debugRayLength;
+        Vector2 ray1 = dir(anglePivotU - angleUtoRU) * _debugRayLength;
+        Vector2 ray2 = dir(anglePivotU + angleUtoLU) * _debugRayLength;
+        Vector2 ray3 = dir(anglePivotL - angleLtoLU) * _debugRayLength;
+        Vector2 ray4 = dir(-anglePivotL + angleLtoLD) * _debugRayLength;
+        Vector2 ray5 = dir(anglePivotD - angleDtoLD) * _debugRayLength;
+        Vector2 ray6 = dir(anglePivotD + angleDtoRD) * _debugRayLength;
+        Vector2 ray7 = dir(anglePivotR - angleRtoRD) * _debugRayLength;
         Debug.DrawRay(st.position, ray0, Color.green);
         Debug.DrawRay(st.position, ray1, Color.green);
         Debug.DrawRay(st.position, ray2, Color.green);
@@ -1634,6 +1641,34 @@ public class HwanseBattleManager : BattleManager
         _ellipseR = Mathf.Sqrt(a * a * cos_t * cos_t + b * b * sin_t * sin_t);
     }
 
+    /// <summary>
+    /// 주어진 각도에 맞는 방향 벡터를 가져옵니다.
+    /// </summary>
+    /// <param name="deg">360도 각도입니다.</param>
+    /// <returns>주어진 각도에 맞는 방향 벡터를 가져옵니다.</returns>
+    public Vector2 dir(float deg)
+    {
+        return new Vector2(cos(deg), sin(deg));
+    }
+    /// <summary>
+    /// 360도 각도에 대한 코사인 값을 반환합니다.
+    /// </summary>
+    /// <param name="deg">360도 각도입니다.</param>
+    /// <returns>360도 각도에 대한 코사인 값을 반환합니다.</returns>
+    public static float cos(float deg)
+    {
+        return Mathf.Cos(deg * Mathf.Deg2Rad);
+    }
+    /// <summary>
+    /// 360도 각도에 대한 사인 값을 반환합니다.
+    /// </summary>
+    /// <param name="deg">360도 각도입니다.</param>
+    /// <returns>360도 각도에 대한 사인 값을 반환합니다.</returns>
+    public static float sin(float deg)
+    {
+        return Mathf.Sin(deg * Mathf.Deg2Rad);
+    }
+
     #endregion
 
 
@@ -1641,6 +1676,11 @@ public class HwanseBattleManager : BattleManager
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("8방향 검사를 위해 사용했는데 앞으로 BattleManager로 옮길 것 같습니다.")]
+    /// <summary>
+    /// 디버깅 선의 길이입니다.
+    /// </summary>
+    public float _debugRayLength = 40f;
 
     #endregion
 }

@@ -170,21 +170,6 @@ public class PaletteUser : MonoBehaviour
             _palettes[i] = palette;
         }
     }
-    /// <summary>
-    /// 팔레트를 초기화 합니다.
-    /// </summary>
-    /// <param name="palette"></param>
-    /// <param name="colorKeys"></param>
-    /// <param name="colorValues"></param>
-    void InitPalette(Color[] palette, uint[] colorKeys, Color[] colorValues)
-    {
-        for (int i = 0; i < colorKeys.Length; ++i)
-        {
-            uint key = colorKeys[i];
-            Color value = colorValues[i];
-            palette[i] = value;
-        }
-    }
 
 
     /// <summary>
@@ -252,6 +237,10 @@ public class PaletteUser : MonoBehaviour
     {
         // 타겟 팔레트를 가져옵니다.
         uint[] colors = _palettes[_paletteIndex];
+        if (_palettes == null)
+        {
+            throw new Exception("IMPOSSIBLE");
+        }
 
         // 새 팔레트 값으로 색상을 덮어씌웁니다.
         for (int i = 0; i < _indexes.Length; ++i)
@@ -284,6 +273,22 @@ public class PaletteUser : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("PaletteUser로 대체되었습니다. 다음 커밋에서 발견하면 즉시 삭제하십시오.")]
+    /// <summary>
+    /// 팔레트를 초기화 합니다.
+    /// </summary>
+    /// <param name="palette"></param>
+    /// <param name="colorKeys"></param>
+    /// <param name="colorValues"></param>
+    void InitPalette(Color[] palette, uint[] colorKeys, Color[] colorValues)
+    {
+        for (int i = 0; i < colorKeys.Length; ++i)
+        {
+            uint key = colorKeys[i];
+            Color value = colorValues[i];
+            palette[i] = value;
+        }
+    }
 
     #endregion
 }

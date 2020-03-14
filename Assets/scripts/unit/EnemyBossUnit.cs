@@ -98,7 +98,7 @@ public class EnemyBossUnit : EnemyUnit
     }
 
     /// <summary>
-    /// 
+    /// 피격당한 위치입니다.
     /// </summary>
     protected Transform _hitTransform;
 

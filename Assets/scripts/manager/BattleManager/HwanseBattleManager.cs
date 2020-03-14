@@ -361,13 +361,13 @@ public class HwanseBattleManager : BattleManager
                         _coroutineAtahoPattern = StartCoroutine(CoroutineAtahoPattern1());
                         break;
                     case 1:
-                        _coroutineAtahoPattern = StartCoroutine(CoroutineAtahoPattern1());
+                        _coroutineAtahoPattern = StartCoroutine(CoroutineAtahoPattern2());
                         break;
                     case 2:
-                        _coroutineAtahoPattern = StartCoroutine(CoroutineAtahoPattern1());
+                        _coroutineAtahoPattern = StartCoroutine(CoroutineAtahoPattern3());
                         break;
                     default:
-                        _coroutineAtahoPattern = StartCoroutine(CoroutineAtahoPattern1());
+                        _coroutineAtahoPattern = StartCoroutine(CoroutineAtahoPattern3());
                         break;
                 }
 
@@ -416,7 +416,7 @@ public class HwanseBattleManager : BattleManager
                             _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPhase3());
                             break;
                         default:
-                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPhase2());
+                            _coroutineSmashuPattern = StartCoroutine(CoroutineSmashuPhase3());
                             break;
                     }
                 }
@@ -543,6 +543,33 @@ public class HwanseBattleManager : BattleManager
     Coroutine _subcoroutineAtahoAction;
 
     /// <summary>
+    /// Hop 서브 코루틴입니다.
+    /// </summary>
+    IEnumerator SubcoroutineHop()
+    {
+        // 다음 점프 위치를 구합니다.
+        int[] nextHopPositionArray = GetNextHopPositionArray();
+        int newPositionIndex = nextHopPositionArray
+            [Random.Range(0, nextHopPositionArray.Length)];
+
+        // 이전에 있던 위치, 현재 위치를 업데이트 합니다.
+        _previousPositionIndex = _currentPositionIndex;
+        _currentPositionIndex = newPositionIndex;
+
+        // 새 점프할 위치로 실제로 점프하게 합니다.
+        Transform newPosition = _positions[newPositionIndex];
+        _atahoUnit.HopTo(newPosition);
+        while (_atahoUnit.Hopping)
+        {
+            yield return false;
+        }
+
+        // 서브 코루틴을 종료합니다.
+        _subcoroutineAtahoAction = null;
+        yield return true;
+    }
+
+    /// <summary>
     /// 1번 패턴입니다.
     /// </summary>
     IEnumerator CoroutineAtahoPattern1()
@@ -651,30 +678,220 @@ public class HwanseBattleManager : BattleManager
         yield break;
     }
     /// <summary>
-    /// Hop 서브 코루틴입니다.
+    /// 2번 패턴입니다.
     /// </summary>
-    IEnumerator SubcoroutineHop()
+    IEnumerator CoroutineAtahoPattern2()
     {
-        // 다음 점프 위치를 구합니다.
-        int[] nextHopPositionArray = GetNextHopPositionArray();
-        int newPositionIndex = nextHopPositionArray
-            [Random.Range(0, nextHopPositionArray.Length)];
+        //////////////////////////////////////////////////////////
+        // 아타호의 남은 마력이 없다면
+        // 기술 사용을 위해 마나 회복을 최우선으로 진행해야 합니다.
+        // 게임 시작 시에 반드시 아타호의 마력이 0인 상태이므로
+        // 플레이어는 아타호의 마력 회복 행동을 통해
+        // 아타호가 마력이 부족할 때 마나 회복을 할 것이라고 예상할 수 있습니다.
+        if (_atahoUnit._mana == 0)
+        {
+            _atahoUnit.DrinkMana();
 
-        // 이전에 있던 위치, 현재 위치를 업데이트 합니다.
-        _previousPositionIndex = _currentPositionIndex;
-        _currentPositionIndex = newPositionIndex;
+            // 행동이 종료될 때까지 대기합니다.
+            while (_atahoUnit.IsActionStarted == false)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionRunning)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionEnded == false)
+            {
+                yield return false;
+            }
+        }
 
-        // 새 점프할 위치로 실제로 점프하게 합니다.
-        Transform newPosition = _positions[newPositionIndex];
-        _atahoUnit.HopTo(newPosition);
-        while (_atahoUnit.Hopping)
+        //////////////////////////////////////////////////////////
+        // 
+        _subcoroutineAtahoAction = StartCoroutine(SubcoroutineHop());
+        while (_subcoroutineAtahoAction != null)
+        {
+            yield return false;
+        }
+        while (_atahoUnit.IsAnimatorInState("FallEnd"))
         {
             yield return false;
         }
 
-        // 서브 코루틴을 종료합니다.
-        _subcoroutineAtahoAction = null;
-        yield return true;
+        // 약간 기다립니다.
+        yield return new WaitForSeconds(TIME_WAIT_PATTERN1);
+
+        //////////////////////////////////////////////////////////
+        // 코루틴 도중 둘 중 하나가 끝났다면 코루틴을 중지합니다.
+        PlayerController player = _stageManager.MainPlayer;
+        if (player == null || _atahoUnit.IsDead)
+        {
+            yield break;
+        }
+
+        // 아타호가 전략을 구상하기 위한 조건들을 초기화합니다.
+        UpdateCondition(_atahoUnit, player);
+
+        // 업데이트한 조건을 바탕으로 전략을 수행합니다.
+        switch (_direction)
+        {
+            case Direction.LU:
+                PerformAtahoPattern2ActionLU(_atahoUnit, player);
+                break;
+            case Direction.U:
+                PerformAtahoPattern2ActionU(_atahoUnit, player);
+                break;
+            case Direction.RU:
+                PerformAtahoPattern2ActionRU(_atahoUnit, player);
+                break;
+            case Direction.L:
+                PerformAtahoPattern2ActionL(_atahoUnit, player);
+                break;
+            case Direction.R:
+                PerformAtahoPattern2ActionR(_atahoUnit, player);
+                break;
+            case Direction.LD:
+                PerformAtahoPattern2ActionLD(_atahoUnit, player);
+                break;
+            case Direction.D:
+                PerformAtahoPattern2ActionD(_atahoUnit, player);
+                break;
+            case Direction.RD:
+                PerformAtahoPattern2ActionRD(_atahoUnit, player);
+                break;
+            default:
+                PerformAtahoPattern2ActionM(_atahoUnit, player);
+                break;
+        }
+
+        // 행동이 종료될 때까지 대기합니다.
+        while (_atahoUnit.IsActionStarted == false)
+        {
+            yield return false;
+        }
+        while (_atahoUnit.IsActionRunning)
+        {
+            yield return false;
+        }
+        while (_atahoUnit.IsActionEnded == false)
+        {
+            yield return false;
+        }
+        while (_atahoUnit.IsAnimatorInState("Idle") == false)
+        {
+            yield return false;
+        }
+        _coroutineAtahoPattern = null;
+        yield break;
+    }
+    /// <summary>
+    /// 3번 패턴입니다.
+    /// </summary>
+    IEnumerator CoroutineAtahoPattern3()
+    {
+        //////////////////////////////////////////////////////////
+        // 아타호의 남은 마력이 없다면
+        // 기술 사용을 위해 마나 회복을 최우선으로 진행해야 합니다.
+        // 게임 시작 시에 반드시 아타호의 마력이 0인 상태이므로
+        // 플레이어는 아타호의 마력 회복 행동을 통해
+        // 아타호가 마력이 부족할 때 마나 회복을 할 것이라고 예상할 수 있습니다.
+        if (_atahoUnit._mana == 0)
+        {
+            _atahoUnit.DrinkMana();
+
+            // 행동이 종료될 때까지 대기합니다.
+            while (_atahoUnit.IsActionStarted == false)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionRunning)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionEnded == false)
+            {
+                yield return false;
+            }
+        }
+
+        //////////////////////////////////////////////////////////
+        // 
+        _subcoroutineAtahoAction = StartCoroutine(SubcoroutineHop());
+        while (_subcoroutineAtahoAction != null)
+        {
+            yield return false;
+        }
+        while (_atahoUnit.IsAnimatorInState("FallEnd"))
+        {
+            yield return false;
+        }
+
+        // 약간 기다립니다.
+        yield return new WaitForSeconds(TIME_WAIT_PATTERN1);
+
+        //////////////////////////////////////////////////////////
+        // 코루틴 도중 둘 중 하나가 끝났다면 코루틴을 중지합니다.
+        PlayerController player = _stageManager.MainPlayer;
+        if (player == null || _atahoUnit.IsDead)
+        {
+            yield break;
+        }
+
+        // 아타호가 전략을 구상하기 위한 조건들을 초기화합니다.
+        UpdateCondition(_atahoUnit, player);
+
+        // 업데이트한 조건을 바탕으로 전략을 수행합니다.
+        switch (_direction)
+        {
+            case Direction.LU:
+                PerformAtahoPattern3ActionLU(_atahoUnit, player);
+                break;
+            case Direction.U:
+                PerformAtahoPattern3ActionU(_atahoUnit, player);
+                break;
+            case Direction.RU:
+                PerformAtahoPattern3ActionRU(_atahoUnit, player);
+                break;
+            case Direction.L:
+                PerformAtahoPattern3ActionL(_atahoUnit, player);
+                break;
+            case Direction.R:
+                PerformAtahoPattern3ActionR(_atahoUnit, player);
+                break;
+            case Direction.LD:
+                PerformAtahoPattern3ActionLD(_atahoUnit, player);
+                break;
+            case Direction.D:
+                PerformAtahoPattern3ActionD(_atahoUnit, player);
+                break;
+            case Direction.RD:
+                PerformAtahoPattern3ActionRD(_atahoUnit, player);
+                break;
+            default:
+                PerformAtahoPattern3ActionM(_atahoUnit, player);
+                break;
+        }
+
+        // 행동이 종료될 때까지 대기합니다.
+        while (_atahoUnit.IsActionStarted == false)
+        {
+            yield return false;
+        }
+        while (_atahoUnit.IsActionRunning)
+        {
+            yield return false;
+        }
+        while (_atahoUnit.IsActionEnded == false)
+        {
+            yield return false;
+        }
+        while (_atahoUnit.IsAnimatorInState("Idle") == false)
+        {
+            yield return false;
+        }
+        _coroutineAtahoPattern = null;
+        yield break;
     }
 
     #endregion
@@ -690,6 +907,528 @@ public class HwanseBattleManager : BattleManager
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern1ActionLU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        // H
+        if (IsTargetOnHigh(player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "H");
+            }
+        }
+        // NLU
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NLU");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NLU");
+            }
+        }
+        // FLU
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "FLU");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FLU");
+            }
+        }
+        // DEFAULT
+        else
+        {
+            _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
+        }
+    }
+    /// <summary>
+    /// 위 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern1ActionU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        // H
+        if (IsTargetOnHigh(player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "H");
+            }
+        }
+        // NU
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "NU");
+        }
+        // FU
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "FU");
+        }
+        // DEFAULT
+        else
+        {
+            _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
+        }
+    }
+    /// <summary>
+    /// 오른쪽 위 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern1ActionRU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        // H
+        if (IsTargetOnHigh(player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "H");
+            }
+        }
+        // NRU
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NRU");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NRU");
+            }
+        }
+        // FRU
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "FRU");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FRU");
+            }
+        }
+        // DEFAULT
+        else
+        {
+            _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
+        }
+    }
+    /// <summary>
+    /// 왼쪽 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern1ActionL(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        // H
+        if (IsTargetOnHigh(player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "H");
+            }
+        }
+        // G
+        else if (IsTargetOnGround(player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "G");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "G");
+            }
+        }
+        // NL
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NL");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NL");
+            }
+        }
+        // FL
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "FL");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FL");
+            }
+        }
+        // DEFAULT
+        else
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
+            }
+            else
+            {
+                atahoUnit.Guard();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
+            }
+        }
+    }
+    /// <summary>
+    /// 가운데 방향 전략입니다. 실제로 사용되지는 않을 것입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern1ActionM(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        // H
+        if (IsTargetOnHigh(player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "H");
+            }
+        }
+        // G
+        else if (IsTargetOnGround(player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "G");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "G");
+            }
+        }
+        // NM
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "NM");
+        }
+        // FM
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.DrinkMana();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "FM");
+        }
+        // DEFAULT
+        else
+        {
+            _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
+        }
+    }
+    /// <summary>
+    /// 오른쪽 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern1ActionR(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        // H
+        if (IsTargetOnHigh(player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "H");
+            }
+        }
+        // G
+        else if (IsTargetOnGround(player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "G");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "G");
+            }
+        }
+        // NR
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NR");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NR");
+            }
+        }
+        // FR
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "FR");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FR");
+            }
+        }
+        // DEFAULT
+        else
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "X");
+            }
+            else
+            {
+                atahoUnit.Guard();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
+            }
+        }
+    }
+    /// <summary>
+    /// 왼쪽 아래 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern1ActionLD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        // G
+        if (IsTargetOnGround(player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "G");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "G");
+            }
+        }
+        // NLD
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NLD");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NLD");
+            }
+        }
+        // FLD
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "FLD");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FLD");
+            }
+        }
+        // DEFAULT
+        else
+        {
+            _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
+        }
+    }
+    /// <summary>
+    /// 아래 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern1ActionD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        // G
+        if (IsTargetOnGround(player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "G");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "G");
+            }
+        }
+        // ND
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "ND");
+        }
+        // FD
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "FD");
+        }
+        // DEFAULT
+        else
+        {
+            _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
+        }
+    }
+    /// <summary>
+    /// 오른쪽 아래 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern1ActionRD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        // G
+        if (IsTargetOnGround(player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "G");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "G");
+            }
+        }
+        // NRD
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NRD");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NRD");
+            }
+        }
+        // FRD
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "FRD");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FRD");
+            }
+        }
+        // DEFAULT
+        else
+        {
+            _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
+        }
+    }
+
+    #endregion
+
+       
+
+
+
+    #region 아타호 유닛 패턴 2 행동 메서드를 정의합니다.
+    /// <summary>
+    /// 왼쪽 위 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern2ActionLU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -733,7 +1472,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoPattern1ActionU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern2ActionU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -770,7 +1509,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoPattern1ActionRU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern2ActionRU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -814,7 +1553,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoPattern1ActionL(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern2ActionL(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -858,9 +1597,9 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsNear(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYOKKWON)
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
             {
-                atahoUnit.DoHokyokkwon();
+                atahoUnit.DoHokyukkwon();
             }
             else
             {
@@ -870,9 +1609,9 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYOKKWON)
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
             {
-                atahoUnit.DoHokyokkwon();
+                atahoUnit.DoHokyukkwon();
             }
             else
             {
@@ -881,9 +1620,9 @@ public class HwanseBattleManager : BattleManager
         }
         else
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYOKKWON)
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
             {
-                atahoUnit.DoHokyokkwon();
+                atahoUnit.DoHokyukkwon();
             }
             else
             {
@@ -896,7 +1635,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoPattern1ActionM(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern2ActionM(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -956,7 +1695,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoPattern1ActionR(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern2ActionR(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -1000,9 +1739,9 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsNear(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYOKKWON)
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
             {
-                atahoUnit.DoHokyokkwon();
+                atahoUnit.DoHokyukkwon();
             }
             else
             {
@@ -1012,9 +1751,9 @@ public class HwanseBattleManager : BattleManager
         }
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYOKKWON)
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
             {
-                atahoUnit.DoHokyokkwon();
+                atahoUnit.DoHokyukkwon();
             }
             else
             {
@@ -1023,9 +1762,9 @@ public class HwanseBattleManager : BattleManager
         }
         else
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYOKKWON)
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
             {
-                atahoUnit.DoHokyokkwon();
+                atahoUnit.DoHokyukkwon();
             }
             else
             {
@@ -1038,7 +1777,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoPattern1ActionLD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern2ActionLD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -1108,7 +1847,7 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoPattern1ActionD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern2ActionD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -1178,7 +1917,574 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     /// <param name="atahoUnit">아타호입니다.</param>
     /// <param name="player">플레이어입니다.</param>
-    void PerformAtahoPattern1ActionRD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    void PerformAtahoPattern2ActionRD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnGround(player.transform))
+        {
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            if (_smashuUnit == null)
+            {
+                // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
+                int spawnIndex;
+                spawnIndex = 8; // Random.Range(7, 10);
+                _atahoUnit.CallSmashu(_positions[spawnIndex]);
+            }
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            else if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            // 근거리에 있어 호출하는 것이 별로 이득을 보지 못한다고 판단되면
+            // 아타호는 현재 방어를 하는 것으로만 구현되었습니다.
+            // 사실 이 부분은 권법가로서의 정신과는 약간 다른 듯하여,
+            // 후에 근거리 공격에 적합한 다른 액션을 구현해볼까 합니다.
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            /*
+            // 거리가 먼 경우에 팀원을 호출할 수 있으므로, 그대로 진행합니다.
+            if (_smashuUnit == null)
+            {
+                // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
+                int spawnIndex;
+                spawnIndex = 8; // Random.Range(7, 10);
+                _atahoUnit.CallSmashu(_positions[spawnIndex]);
+            }
+            */
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+
+    #endregion
+
+
+    
+
+
+    #region 아타호 유닛 패턴 3 행동 메서드를 정의합니다.
+    /// <summary>
+    /// 왼쪽 위 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern3ActionLU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+    /// <summary>
+    /// 위 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern3ActionU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            atahoUnit.DrinkMana();
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+    /// <summary>
+    /// 오른쪽 위 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern3ActionRU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+    /// <summary>
+    /// 왼쪽 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern3ActionL(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else if (IsTargetOnGround(player.transform))
+        {
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            if (_smashuUnit == null)
+            {
+                // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
+                int spawnIndex;
+                spawnIndex = 8; // Random.Range(7, 10);
+                _atahoUnit.CallSmashu(_positions[spawnIndex]);
+            }
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            else if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+            }
+            else
+            {
+                // 차라리 빨리 도망을 칩시다.
+                atahoUnit.SkipAction();
+            }
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+            }
+            else
+            {
+                atahoUnit.Guard();
+            }
+        }
+    }
+    /// <summary>
+    /// 가운데 방향 전략입니다. 실제로 사용되지는 않을 것입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern3ActionM(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else if (IsTargetOnGround(player.transform))
+        {
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 스마슈를 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            if (_smashuUnit == null)
+            {
+                // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
+                int spawnIndex;
+                spawnIndex = 8; // Random.Range(7, 10);
+                _atahoUnit.CallSmashu(_positions[spawnIndex]);
+            }
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            else if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            _atahoUnit.DrinkMana();
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+    /// <summary>
+    /// 오른쪽 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern3ActionR(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnHigh(player.transform))
+        {
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else if (IsTargetOnGround(player.transform))
+        {
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            if (_smashuUnit == null)
+            {
+                // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
+                int spawnIndex;
+                spawnIndex = 8; // Random.Range(7, 10);
+                _atahoUnit.CallSmashu(_positions[spawnIndex]);
+            }
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            else if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+            }
+            else
+            {
+                // 차라리 빨리 도망을 칩시다.
+                atahoUnit.SkipAction();
+            }
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else
+        {
+            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            {
+                atahoUnit.DoHokyukkwon();
+            }
+            else
+            {
+                atahoUnit.Guard();
+            }
+        }
+    }
+    /// <summary>
+    /// 왼쪽 아래 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern3ActionLD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnGround(player.transform))
+        {
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            if (_smashuUnit == null)
+            {
+                // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
+                int spawnIndex;
+                spawnIndex = 8; // Random.Range(7, 10);
+                _atahoUnit.CallSmashu(_positions[spawnIndex]);
+            }
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            else if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            // 근거리에 있어 호출하는 것이 별로 이득을 보지 못한다고 판단되면
+            // 아타호는 현재 방어를 하는 것으로만 구현되었습니다.
+            // 사실 이 부분은 권법가로서의 정신과는 약간 다른 듯하여,
+            // 후에 근거리 공격에 적합한 다른 액션을 구현해볼까 합니다.
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            /*
+            // 거리가 먼 경우에 팀원을 호출할 수 있으므로, 그대로 진행합니다.
+            if (_smashuUnit == null)
+            {
+                // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
+                int spawnIndex;
+                spawnIndex = 8; // Random.Range(7, 10);
+                _atahoUnit.CallSmashu(_positions[spawnIndex]);
+            }
+            */
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+    /// <summary>
+    /// 아래 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern3ActionD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
+    {
+        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        {
+            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+        }
+        else if (IsTargetOnGround(player.transform))
+        {
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            if (_smashuUnit == null)
+            {
+                // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
+                int spawnIndex;
+                spawnIndex = 8; // Random.Range(7, 10);
+                _atahoUnit.CallSmashu(_positions[spawnIndex]);
+            }
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            else if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else if (IsNear(atahoUnit.transform, player.transform))
+        {
+            // 근거리에 있어 호출하는 것이 별로 이득을 보지 못한다고 판단되면
+            // 아타호는 현재 방어를 하는 것으로만 구현되었습니다.
+            // 사실 이 부분은 권법가로서의 정신과는 약간 다른 듯하여,
+            // 후에 근거리 공격에 적합한 다른 액션을 구현해볼까 합니다.
+            _atahoUnit.Guard();
+        }
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            /*
+            // 거리가 먼 경우에 팀원을 호출할 수 있으므로, 그대로 진행합니다.
+            if (_smashuUnit == null)
+            {
+                // 아래 방향에 대한 전략이므로 상대적으로 아래에 소환하는 것이 좋아 보입니다.
+                int spawnIndex;
+                spawnIndex = 8; // Random.Range(7, 10);
+                _atahoUnit.CallSmashu(_positions[spawnIndex]);
+            }
+            */
+            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
+            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            {
+                atahoUnit.DoHopokwon();
+            }
+            // 마나를 회복합니다.
+            else
+            {
+                atahoUnit.DrinkMana();
+            }
+        }
+        else
+        {
+            _atahoUnit.Guard();
+        }
+    }
+    /// <summary>
+    /// 오른쪽 아래 방향 전략입니다.
+    /// </summary>
+    /// <param name="atahoUnit">아타호입니다.</param>
+    /// <param name="player">플레이어입니다.</param>
+    void PerformAtahoPattern3ActionRD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
         if (_rinshanUnit == null && _atahoUnit.IsDanger())
         {
@@ -1341,7 +2647,7 @@ public class HwanseBattleManager : BattleManager
     /// <summary>
     /// 행동 코루틴입니다.
     /// </summary>
-    Coroutine _subcoroutineRnishanAction;
+    Coroutine _subcoroutineRinshanAction;
 
     /// <summary>
     /// 스마슈 개체를 파괴합니다.

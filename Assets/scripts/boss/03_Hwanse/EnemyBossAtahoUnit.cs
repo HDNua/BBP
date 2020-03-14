@@ -15,7 +15,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 호격권 사용에 필요한 마나입니다.
     /// </summary>
-    public int MANA_HOKYOKKWON = 10;
+    public int MANA_HOKYUKKWON = 10;
     /// <summary>
     /// 호포권 사용에 필요한 마나입니다.
     /// </summary>
@@ -262,10 +262,10 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 캐릭터가 공격 중이라면 참입니다.
     /// </summary>
-    bool DoingHokyokkwon
+    bool DoingHokyukkwon
     {
         get { return _doingHokyokkwon; }
-        set { _Animator.SetBool("DoingHokyokkwon", _doingHokyokkwon = value); }
+        set { _Animator.SetBool("DoingHokyukkwon", _doingHokyokkwon = value); }
     }
     /// <summary>
     /// 방어 중이라면 참입니다.
@@ -877,9 +877,9 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 호격권을 사용합니다.
     /// </summary>
-    public void DoHokyokkwon()
+    public void DoHokyukkwon()
     {
-        DoingHokyokkwon = true;
+        DoingHokyukkwon = true;
 
         // 공격 코루틴을 시작합니다.
         StartAction();
@@ -890,7 +890,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// </summary>
     public void StopDoingHokyokkwon()
     {
-        DoingHokyokkwon = false;
+        DoingHokyukkwon = false;
         EndAction();
     }
 
@@ -913,7 +913,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         float time = 0;
 
         // 탄환을 발사합니다.
-        while (IsAnimatorInState("HokyokkwonBeg"))
+        while (IsAnimatorInState("HokyukkwonBeg"))
         {
             yield return false;
             time += Time.deltaTime;
@@ -927,14 +927,14 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
         // 
         time = 0;
-        UseMana(MANA_HOKYOKKWON);
+        UseMana(MANA_HOKYUKKWON);
 
         // 
         Transform shotPosition = _shotPosition[1];
         Vector3 destination = _StageManager.GetCurrentPlayerPosition();
         destination.y = shotPosition.position.y; // transform.position.y;
         Shot(shotPosition, destination, Bullet.Hokyokkwon, 1, SoundEffect.TigerCry);
-        while (IsAnimatorInState("HokyokkwonRun"))
+        while (IsAnimatorInState("HokyukkwonRun"))
         {
             yield return false;
             time += Time.deltaTime;

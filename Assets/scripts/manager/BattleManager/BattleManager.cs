@@ -7,7 +7,7 @@ using UnityEngine;
 
 #region 상수 및 형식을 정의합니다.
 /// <summary>
-/// 
+/// 방향을 정의합니다.
 /// </summary>
 public enum Direction
 {

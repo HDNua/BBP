@@ -17,7 +17,10 @@ public class PaletteUser : MonoBehaviour
     /// <summary>
     /// SpriteRenderer입니다.
     /// </summary>
-    SpriteRenderer _renderer;
+    SpriteRenderer _Renderer
+    {
+        get { return GetComponent<SpriteRenderer>(); }
+    }
 
     #endregion
 
@@ -85,23 +88,23 @@ public class PaletteUser : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        if (_usePaletteSwap)
-        {
-            // !!!!! IMPORTANT !!!!!
-            // SpriteRenderer를 이 시점에 가져오지 않으면 이후의 과정이 동작하지 않습니다!
-            _renderer = GetComponent<SpriteRenderer>();
 
-            // 스왑 텍스쳐 및 팔레트를 초기화 합니다.
-            InitColorSwapTexture();
-            InitPalette();
-        }
     }
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다. (생성될 때마다)
     /// </summary>
     private void Start()
     {
-        
+        if (_usePaletteSwap)
+        {
+            // !!!!! IMPORTANT !!!!!
+            /// SpriteRenderer를 이 시점에 가져오지 않으면 이후의 과정이 동작하지 않습니다!
+            ///_Renderer = GetComponent<SpriteRenderer>();
+
+            // 스왑 텍스쳐 및 팔레트를 초기화 합니다.
+            InitColorSwapTexture();
+            InitPalette();
+        }
     }
     /// <summary>
     /// 모든 Update 함수가 호출된 후 마지막으로 호출됩니다.
@@ -139,7 +142,7 @@ public class PaletteUser : MonoBehaviour
         colorSwapTexture.Apply();
 
         // 렌더에 초기화한 스왑 텍스쳐를 적용합니다.
-        _renderer.material.SetTexture("_SwapTex", colorSwapTexture);
+        _Renderer.material.SetTexture("_SwapTex", colorSwapTexture);
         _colorSwapTexture = colorSwapTexture;
     }
     /// <summary>
@@ -159,6 +162,10 @@ public class PaletteUser : MonoBehaviour
         // _paletteSprites를 사용하여 목적 팔레트를 생성합니다.
         int numOfPaletteSprites = _paletteTextures.Length;
         _palettes = new uint[numOfPaletteSprites][];
+        if (_palettes == null)
+        {
+            throw new Exception("WHY IS THIS NOT INITIALIZED???");
+        }
         for (int i = 0; i < numOfPaletteSprites; ++i)
         {
             Color[] paletteTexture = _paletteTextures[i].GetPixels();
@@ -168,6 +175,12 @@ public class PaletteUser : MonoBehaviour
                 palette[j] = UIntFromColor(paletteTexture[j]);
             }
             _palettes[i] = palette;
+        }
+
+        //
+        if (_palettes == null)
+        {
+            throw new Exception("WHY IS THIS NOT INITIALIZED???");
         }
     }
 
@@ -236,11 +249,16 @@ public class PaletteUser : MonoBehaviour
     public void UpdateColor()
     {
         // 타겟 팔레트를 가져옵니다.
-        uint[] colors = _palettes[_paletteIndex];
         if (_palettes == null)
         {
-            throw new Exception("IMPOSSIBLE");
+            InitColorSwapTexture();
+            InitPalette();
+            if (_palettes == null)
+            {
+                throw new Exception("IMPOSSIBLE");
+            }
         }
+        uint[] colors = _palettes[_paletteIndex];
 
         // 새 팔레트 값으로 색상을 덮어씌웁니다.
         for (int i = 0; i < _indexes.Length; ++i)
@@ -256,14 +274,14 @@ public class PaletteUser : MonoBehaviour
     /// </summary>
     public void EnableTexture()
     {
-        _renderer.enabled = true;
+        _Renderer.enabled = true;
     }
     /// <summary>
     /// 텍스쳐를 비활성화합니다.
     /// </summary>
     public void DisableTexture()
     {
-        _renderer.enabled = false;
+        _Renderer.enabled = false;
     }
 
     #endregion

@@ -685,7 +685,7 @@ public class ZController : PlayerController
         yield return new WaitForEndOfFrame();
         if (IsAnimationPlaying("DashBeg"))
         {
-            yield return new WaitForSeconds(DASH_BEG_TIME);
+            yield return new WaitForSeconds(TIME_DASH_BEG);
         }
 
         // DashRun
@@ -701,7 +701,7 @@ public class ZController : PlayerController
             }
             _dashBoostEffect = dashBoost;
 
-            yield return new WaitForSeconds(DASH_RUN_TIME);
+            yield return new WaitForSeconds(TIME_DASH_RUN);
         }
 
         // DashEnd (사용자 입력 중지가 아닌 기본 대쉬 중지 행동입니다.)
@@ -736,7 +736,7 @@ public class ZController : PlayerController
         SoundEffects[4].Play();
         BlockMoving();
 
-        yield return new WaitForSeconds(DASH_END_TIME);
+        yield return new WaitForSeconds(TIME_DASH_END);
 
         UnblockMoving();
         _dashCoroutine = null;
@@ -1518,13 +1518,13 @@ public class ZController : PlayerController
                 {
                     VoiceBigDamaged.Play();
                     SoundHit.Play();
-                    damagedTime = BIG_DAMAGED_TIME;
+                    damagedTime = TIME_BIGDAMAGED;
                 }
                 else
                 {
                     VoiceDamaged.Play();
                     SoundHit.Play();
-                    damagedTime = DAMAGED_TIME;
+                    damagedTime = TIME_DAMAGED;
                 }
 
                 // 발생한 효과를 제거합니다.

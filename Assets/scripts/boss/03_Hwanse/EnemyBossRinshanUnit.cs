@@ -38,6 +38,10 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     /// <summary>
     /// 
     /// </summary>
+    public float[] TIME_ROIHWA_INTERVAL = { 0.10f, 0.20f, 0.30f, 0.40f, 0.50f, };
+    /// <summary>
+    /// 
+    /// </summary>
     public float TIME_ROIHWA_END = 1f;
 
     #endregion
@@ -106,15 +110,18 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     void Land()
     {
         _Groundable.Land();
+        SoundEffects[4].Play();
     }
     /// <summary>
     /// 점프합니다.
     /// </summary>
     void Jump()
     {
-        _Groundable.Jump();
+        ///_Groundable.Jump();
+        Jumping = true;
         Landed = false;
         LandBlocked = true;
+        SoundEffects[3].Play();
     }
     /// <summary>
     /// 낙하합니다.
@@ -336,7 +343,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             }
         }
 
-        // 
+        // 디버깅용 구문입니다.
         _Groundable._position = transform.position;
     }
     /// <summary>
@@ -964,66 +971,98 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     /// </summary>
     IEnumerator CoroutineRoihwa()
     {
+        //////////////////////////////////////////////////////////
+        // 영상뢰화는 총 다섯 번의 번개를 내리찍는 강력한 전체공격기입니다.
+        // 실제 게임에서는 모든 모션 직후에 번개가 내리꽂혔지만,
+        // 플랫포머 스타일의 전투에서는 어울리지 않았기 때문에 약간 변경했습니다.
+        // 린샹이 팔을 흔들면 번개가 내리치는 지점에 마크를 해주고,
+        // 플레이어는 해당 지점을 번개가 내리치는 시점에 피하면 되는 식입니다.
         float time = 0;
+        Transform[] attackTransforms = new Transform[5];
         yield return false;
         RunAction();
 
-        // 
+        // 팔 흔들기 1입니다.
         while (IsAnimatorInState("Roihwa1") == false)
         {
             yield return false;
         }
         SoundEffects[1].Play();
 
-        // 
+        // 팔 흔들기 2입니다.
         while (IsAnimatorInState("Roihwa4") == false)
         {
             yield return false;
         }
         SoundEffects[1].Play();
 
-        // 
+        // 번개가 내리칠 지점에 효과를 생성합니다.
+        SoundEffects[2].Play();
+        attackTransforms[0] = GetAttackTransform(_BattleManager.RoihwaPositions[0]);
+        Instantiate(_effects[1], attackTransforms[0].position, attackTransforms[0].rotation);
+
+        // 팔 흔들기 1입니다.
         while (IsAnimatorInState("Roihwa1 0") == false)
         {
             yield return false;
         }
         SoundEffects[1].Play();
 
-        // 
+        // 팔 흔들기 2입니다.
         while (IsAnimatorInState("Roihwa4 0") == false)
         {
             yield return false;
         }
         SoundEffects[1].Play();
 
-        // 
+        // 번개가 내리칠 지점에 효과를 생성합니다.
+        SoundEffects[2].Play();
+        attackTransforms[1] = GetAttackTransform(_BattleManager.RoihwaPositions[1]);
+        Instantiate(_effects[1], attackTransforms[1].position, attackTransforms[1].rotation);
+
+        // 발차기 1입니다.
         while (IsAnimatorInState("Roihwa6") == false)
         {
             yield return false;
         }
         SoundEffects[1].Play();
 
-        // 
+        // 번개가 내리칠 지점에 효과를 생성합니다.
+        SoundEffects[2].Play();
+        attackTransforms[2] = GetAttackTransform(_BattleManager.RoihwaPositions[2]);
+        Instantiate(_effects[1], attackTransforms[2].position, attackTransforms[2].rotation);
+
+        // 발차기 2입니다.
         while (IsAnimatorInState("Roihwa8") == false)
         {
             yield return false;
         }
         SoundEffects[1].Play();
 
-        // 
+        // 번개가 내리칠 지점에 효과를 생성합니다.
+        SoundEffects[2].Play();
+        attackTransforms[3] = GetAttackTransform(_BattleManager.RoihwaPositions[3]);
+        Instantiate(_effects[1], attackTransforms[3].position, attackTransforms[3].rotation);
+
+        // 발차기 3입니다.
         while (IsAnimatorInState("Roihwa10") == false)
         {
             yield return false;
         }
         SoundEffects[1].Play();
 
-        // 
+        // 번개가 내리칠 지점에 효과를 생성합니다.
+        // 마지막 한 발만큼은 플레이어의 X 좌표를 가리키게 합시다.
+        SoundEffects[2].Play();
+        Vector3 attackPosition = new Vector3(_StageManager.GetCurrentPlayerPosition().x, _BattleManager.RoihwaPositions[4].y);
+        attackTransforms[4] = GetAttackTransform(attackPosition);
+        Instantiate(_effects[1], attackTransforms[4].position, attackTransforms[4].rotation);
+
+        // 공중 회전입니다. 본격적인 공격이 시작됩니다.
         while (IsAnimatorInState("Roihwa13") == false)
         {
             yield return false;
         }
-
-        // 
         Jump();
         time = 0;
         Velocity = Vector2.zero;
@@ -1031,19 +1070,59 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         float ay = _Groundable._jumpDecSize;
         float vy0 = _Groundable._jumpSpeed;
         float vy = vy0;
-
+        bool[] lightningOccurred = { false, false, false, false, false };
         while (IsAnimatorInState("Roihwa13"))
         {
             yield return false;
+            float dt = Time.deltaTime;
 
             // 
-            float dt = Time.deltaTime;
-            time += dt;
+            if (time < TIME_ROIHWA_INTERVAL[0])
+            {
+                if (lightningOccurred[0] == false)
+                {
+                    MakeLightning(attackTransforms[0]);
+                    lightningOccurred[0] = true;
+                }
+            }
+            else if (time < TIME_ROIHWA_INTERVAL[1])
+            {
+                if (lightningOccurred[1] == false)
+                {
+                    MakeLightning(attackTransforms[1]);
+                    lightningOccurred[1] = true;
+                }
+            }
+            else if (time < TIME_ROIHWA_INTERVAL[2])
+            {
+                if (lightningOccurred[2] == false)
+                {
+                    MakeLightning(attackTransforms[2]);
+                    lightningOccurred[2] = true;
+                }
+            }
+            else if (time < TIME_ROIHWA_INTERVAL[3])
+            {
+                if (lightningOccurred[3] == false)
+                {
+                    MakeLightning(attackTransforms[3]);
+                    lightningOccurred[3] = true;
+                }
+            }
+            else if (time < TIME_ROIHWA_INTERVAL[4])
+            {
+                if (lightningOccurred[4] == false)
+                {
+                    MakeLightning(attackTransforms[4]);
+                    lightningOccurred[4] = true;
+                }
+            }
 
             // 
             position = transform.position;
 
             // 
+            time += dt;
             float ds = vy0 * dt - 0.5f * ay * dt * dt;
             position.y += ds;
             transform.position = position;
@@ -1088,6 +1167,31 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
 
 
     #region 보조 메서드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="startPosition"></param>
+    /// <returns></returns>
+    Transform GetAttackTransform(Vector3 startPosition)
+    {
+        Vector2 startPos = new Vector2(startPosition.x, startPosition.y);
+        RaycastHit2D ray = Physics2D.Raycast(startPos, Vector2.down, 1000000, 1 << 19); // 19번은 TiledGeometry Layer입니다.
+
+        ///Debug.DrawLine(startPosition, ray.point, Color.red, 10f);
+
+        GameObject gameObject = new GameObject();
+        gameObject.transform.position = new Vector3(ray.point.x, ray.point.y);
+        return gameObject.transform;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="position"></param>
+    void MakeLightning(Transform transform)
+    {
+        Instantiate(_effects[2], transform.position, transform.rotation);
+        Destroy(transform.gameObject);
+    }
 
     #endregion
 

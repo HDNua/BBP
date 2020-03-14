@@ -20,6 +20,10 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// 호포권 사용에 필요한 마나입니다.
     /// </summary>
     public int MANA_HOPOKWON = 15;
+    /// <summary>
+    /// 맹호광파참 사용에 필요한 마나입니다.
+    /// </summary>
+    public int MANA_GWANGPACHAM = 15;
 
     /// <summary>
     /// 숨고르기 시간입니다.
@@ -42,6 +46,10 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// 호포권을 수행하는 시간입니다.
     /// </summary>
     public float TIME_HOPOKWON_RUN = 1f;
+    /// <summary>
+    /// 맹호광파참을 수행하는 시간입니다.
+    /// </summary>
+    public float TIME_GWANGPACHAM_RUN = 3f;
 
     /// <summary>
     /// 방어 행동을 수행하는 시간입니다.
@@ -92,6 +100,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         Accept,
         Miss,
         GigadeathFire,
+        Charge,
     }
     /// <summary>
     /// 탄환 타입입니다.
@@ -100,7 +109,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     {
         Hokyokkwon,
         Hopokwon,
-        MaenghoGwangpacham
+        Gwangpacham
     }
 
     #endregion
@@ -167,21 +176,26 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
     #region 캐릭터의 운동 상태 필드를 정의합니다.
     /// <summary>
-    /// 호격권 중이라면 참입니다.
-    /// </summary>
-    bool _doingHokyokkwon = false;
-    /// <summary>
-    /// 방패를 들어 막는 중이라면 참입니다.
+    /// 방어 중이라면 참입니다.
     /// </summary>
     bool _guarding = false;
     /// <summary>
     /// 위치를 변경하는 중이라면 참입니다.
     /// </summary>
     bool _hopping = false;
+
+    /// <summary>
+    /// 호격권 중이라면 참입니다.
+    /// </summary>
+    bool _doingHokyokkwon = false;
     /// <summary>
     /// 호포권 중이라면 참입니다.
     /// </summary>
     bool _doingHopokwon = false;
+    /// <summary>
+    /// 맹호광파참 중이라면 참입니다.
+    /// </summary>
+    bool _doingGwangpacham = false;
 
 
 
@@ -260,14 +274,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     }
 
     /// <summary>
-    /// 캐릭터가 공격 중이라면 참입니다.
-    /// </summary>
-    bool DoingHokyukkwon
-    {
-        get { return _doingHokyokkwon; }
-        set { _Animator.SetBool("DoingHokyukkwon", _doingHokyokkwon = value); }
-    }
-    /// <summary>
     /// 방어 중이라면 참입니다.
     /// </summary>
     bool Guarding
@@ -283,6 +289,15 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         get { return _hopping; }
         private set { _Animator.SetBool("Hopping", _hopping = value); }
     }
+
+    /// <summary>
+    /// 호격권 중이라면 참입니다.
+    /// </summary>
+    bool DoingHokyukkwon
+    {
+        get { return _doingHokyokkwon; }
+        set { _Animator.SetBool("DoingHokyukkwon", _doingHokyokkwon = value); }
+    }
     /// <summary>
     /// 호포권 중이라면 참입니다.
     /// </summary>
@@ -290,6 +305,14 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     {
         get { return _doingHopokwon; }
         set { _Animator.SetBool("DoingHopokwon", _doingHopokwon = value); }
+    }
+    /// <summary>
+    /// 맹호광파참 중이라면 참입니다.
+    /// </summary>
+    bool DoingGwangpacham
+    {
+        get { return _doingGwangpacham; }
+        set { _Animator.SetBool("DoingGwangpacham", _doingGwangpacham = value); }
     }
 
     /// <summary>
@@ -893,6 +916,14 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         DoingHokyukkwon = false;
         EndAction();
     }
+    /// <summary>
+    /// 호격권이 사용 가능한지 확인합니다.
+    /// </summary>
+    /// <returns>사용 가능하다면 참입니다.</returns>
+    public bool IsHokyukkwonAvailable()
+    {
+        return _mana >= MANA_HOPOKWON;
+    }
 
     /// <summary>
     /// 호격권 코루틴입니다.
@@ -982,6 +1013,14 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         DoingHopokwon = false;
         EndAction();
     }
+    /// <summary>
+    /// 호포권이 사용 가능한지 확인합니다.
+    /// </summary>
+    /// <returns>사용 가능하다면 참입니다.</returns>
+    public bool IsHopokwonAvailable()
+    {
+        return _mana >= MANA_HOPOKWON;
+    }
 
     /// <summary>
     /// 호포권 코루틴입니다.
@@ -994,7 +1033,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         yield return false;
         RunAction();
 
-        // 탄환을 발사합니다.
+        // 탄환을 발사하기 위해 기를 모읍니다.
         PlaySoundEffect(SoundEffect.Recover);
         while (IsAnimatorInState("HopokwonBeg"))
         {
@@ -1021,6 +1060,87 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         // 공격을 끝냅니다.
         StopDoingHopokwon();
         _coroutineHopokwon = null;
+        yield break;
+    }
+
+    #endregion
+
+
+
+
+
+    #region "맹호광파참" 행동을 정의합니다.
+    /// <summary>
+    /// 맹호광파참 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineGwangpacham;
+
+    /// <summary>
+    /// 맹호광파참을 사용합니다.
+    /// </summary>
+    public void DoGwangpacham()
+    {
+        DoingGwangpacham = true;
+
+        // 공격 코루틴을 시작합니다.
+        StartAction();
+        _coroutineGwangpacham = StartCoroutine(CoroutineGwangpacham());
+    }
+    /// <summary>
+    /// 맹호광파참을 중지합니다.
+    /// </summary>
+    public void StopDoingGwangpacham()
+    {
+        DoingGwangpacham = false;
+        EndAction();
+    }
+    /// <summary>
+    /// 맹호광파참이 사용 가능한지 확인합니다.
+    /// </summary>
+    /// <returns>사용 가능하다면 참입니다.</returns>
+    public bool IsGwangpachamAvailable()
+    {
+        return _mana >= MANA_GWANGPACHAM;
+    }
+
+    /// <summary>
+    /// 맹호광파참 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineGwangpacham()
+    {
+        // 움직임을 멈춥니다.
+        LookPlayer();
+        StopMoving();
+        yield return false;
+        RunAction();
+
+        // 탄환을 발사하기 위해 기를 모읍니다.
+        PlaySoundEffect(SoundEffect.Charge);
+        while (IsAnimatorInState("GwangpachamBeg"))
+        {
+            yield return false;
+        }
+
+        // 탄환을 발사합니다.
+        float time = 0;
+        UseMana(MANA_GWANGPACHAM);
+        Vector3 destination = _StageManager.GetCurrentPlayerPosition();
+        Shot(_shotPosition[1], destination, Bullet.Gwangpacham, 1, SoundEffect.GigadeathFire);
+        while (IsAnimatorInState("GwangpachamRun"))
+        {
+            yield return false;
+
+            // 
+            time += Time.deltaTime;
+            if (time >= TIME_GWANGPACHAM_RUN)
+            {
+                break;
+            }
+        }
+
+        // 공격을 끝냅니다.
+        StopDoingGwangpacham();
+        _coroutineGwangpacham = null;
         yield break;
     }
 

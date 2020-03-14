@@ -38,24 +38,29 @@ public abstract class PlayerController : MonoBehaviour
     /// <summary>
     /// 대미지를 입는 시간입니다.
     /// </summary>
-    public const float DAMAGED_TIME = 0.361f;
+    public const float TIME_DAMAGED = 0.361f;
     /// <summary>
     /// 큰 대미지를 입는 시간입니다.
     /// </summary>
-    public const float BIG_DAMAGED_TIME = 1.028f;
+    public const float TIME_BIGDAMAGED = 1.028f;
 
     /// <summary>
     /// 대쉬 시작 모션 재생 시간입니다.
     /// </summary>
-    public const float DASH_BEG_TIME = 0.056f;
+    public const float TIME_DASH_BEG = 0.056f;
     /// <summary>
     /// 대쉬 진행 모션 재생 시간입니다.
     /// </summary>
-    public const float DASH_RUN_TIME = 0.444f;
+    public const float TIME_DASH_RUN = 0.444f;
     /// <summary>
     /// 대쉬 종료 모션 재생 시간입니다.
     /// </summary>
-    public const float DASH_END_TIME = 0.250f;
+    public const float TIME_DASH_END = 0.250f;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    float TIME_SLIDE_BEG = 0.133f;
 
     #endregion
 
@@ -1707,8 +1712,11 @@ public abstract class PlayerController : MonoBehaviour
         Sliding = true;
 
         // 
-        Invoke("InvokeSliding", SLIDE_BEG_TIME);
+        Invoke("InvokeSliding", TIME_SLIDE_BEG);
     }
+    /// <summary>
+    /// 
+    /// </summary>
     void InvokeSliding()
     {
         if (Sliding)
@@ -1728,7 +1736,6 @@ public abstract class PlayerController : MonoBehaviour
             _Velocity = new Vector2(0, -_slideSpeed);
         }
     }
-    float SLIDE_BEG_TIME = 0.133f;
 
     /// <summary>
     /// 플레이어의 벽 타기를 중지합니다.
@@ -2065,6 +2072,7 @@ public abstract class PlayerController : MonoBehaviour
         StopDashing(userCanceled: true);
         StopJumping();
         StopFalling();
+        StopSliding();
         
         // 플레이어에 대해 넉백 효과를 겁니다.
         if (IsAlive())

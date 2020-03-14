@@ -192,9 +192,9 @@ public abstract class AttackScript : MonoBehaviour
         return particle;
     }
     /// <summary>
-         /// 피격 효과 객체를 생성합니다.
-         /// </summary>
-         /// <returns>피격 효과 객체입니다.</returns>
+    /// 피격 효과 객체를 생성합니다.
+    /// </summary>
+    /// <returns>피격 효과 객체입니다.</returns>
     protected GameObject MakeReflectedParticle(bool right, Vector3 position)
     {
         GameObject particle = Instantiate

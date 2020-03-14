@@ -4,7 +4,6 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(PaletteUser))]
 /// <summary>
 /// 효과 스크립트입니다.
 /// </summary>
@@ -14,7 +13,7 @@ public class EffectScript : MonoBehaviour
     /// <summary>
     /// AudioSource 개체입니다.
     /// </summary>
-    AudioSource _audioSource = null;
+    protected AudioSource _audioSource = null;
     /// <summary>
     /// Animator 개체입니다.
     /// </summary>
@@ -96,6 +95,8 @@ public class EffectScript : MonoBehaviour
                 _clipLength = clips[0].length;
             }
         }
+
+        // 
         _paletteUser = GetComponent<PaletteUser>();
     }
     /// <summary>
@@ -103,6 +104,7 @@ public class EffectScript : MonoBehaviour
     /// </summary>
     protected virtual void Start()
     {
+        // 
         _playTime = 0;
     }
     /// <summary>
@@ -139,9 +141,12 @@ public class EffectScript : MonoBehaviour
         // 팔레트 사용자라면 갱신합니다.
         if (_paletteUser)
         {
-            if (GetComponent<SpriteRenderer>().color != Color.clear)
+            if (_paletteUser._usePaletteSwap)
             {
-                _paletteUser.UpdateColor();
+                if (GetComponent<SpriteRenderer>().color != Color.clear)
+                {
+                    _paletteUser.UpdateColor();
+                }
             }
         }
     }
@@ -191,9 +196,12 @@ public class EffectScript : MonoBehaviour
     /// </summary>
     public void RequestDestroy()
     {
-        _animator.enabled = false;
-        GetComponent<SpriteRenderer>().color = Color.clear;
-        DestroyRequested = true;
+        if (_animator)
+        {
+            _animator.enabled = false;
+            GetComponent<SpriteRenderer>().color = Color.clear;
+            DestroyRequested = true;
+        }
     }
     /// <summary>
     /// 효과 객체 종료를 요청합니다.

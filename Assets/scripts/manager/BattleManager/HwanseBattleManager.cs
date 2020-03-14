@@ -284,7 +284,8 @@ public class HwanseBattleManager : BattleManager
     #endregion
 
 
-
+    public bool _test = true;
+    public bool _testHurt = true;
 
 
     #region BattleManager의 Instance가 반드시 정의해야 하는 코루틴 메서드를 정의합니다.
@@ -350,17 +351,44 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     protected override IEnumerator CoroutineFight()
     {
+        if (_test)
+        {
+            if (_testHurt)
+            {
+                _atahoUnit.Hurt(300, null);
+                _testHurt = false;
+            }
+        }
+
         while (DoesBattleEnd() == false)
         {
             // 아타호 패턴을 수행합니다.
             if (_coroutineAtahoPattern == null)
             {
+                // 전투 관리자의 페이즈가 아타호 유닛의 페이즈와 같지 않다면 갱신합니다.
+                // _phaseChanged는 페이즈가 변했음을 알립니다.
+                if (_phase != _atahoUnit._phase)
+                {
+                    _phaseChanged = true;
+                    _phase = _atahoUnit._phase;
+                }
+
+                // 페이즈에 따라 패턴 분기합니다.
                 switch (_phase)
                 {
                     case 0:
                         _coroutineAtahoPattern = StartCoroutine(CoroutineAtahoPattern1());
                         break;
                     case 1:
+                        //////////////////////////////////////////////////////////
+                        // 페이즈가 전환된 직후에는 반드시 새로 추가되는 패턴을 플레이어에게 보여주어야 합니다.
+                        // 이것을 보여주지 않으면 플레이어는 아타호의 EXP가 모두 차는 것이
+                        // 단순히 마나 회복으로만 이어진다고 오해할 수 있습니다.
+                        // 이 때 패턴의 가장 처음에 호출 동작을 제시하고 스마슈를 호출하면,
+                        // 플레이어는 EXP가 모두 차는 것이 새로운 패턴이 등장하는 것이라고까지 이해하게 됩니다.
+                        // 스마슈는 대타격-쾌진격 연계를 통해 치고 빠지는 근거리 딜러 타입으로,
+                        // 첫 페이즈 전투에서 호포권을 피하며 공격을 하기 위해 보통 지상에 있지 않기 때문에
+                        // 스마슈의 공격을 피하는 것이 어렵지 않을 것입니다.
                         _coroutineAtahoPattern = StartCoroutine(CoroutineAtahoPattern2());
                         break;
                     case 2:
@@ -498,8 +526,20 @@ public class HwanseBattleManager : BattleManager
         _doorInvisibleWall.gameObject.SetActive(true);
         Destroy(_bossRoomDoor.gameObject);
     }
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
     public BossRoomDoorScript _bossRoomDoor;
+    /// <summary>
+    /// 
+    /// </summary>
     public ParticleSpreadScript _doorDestroyEffect;
+    /// <summary>
+    /// 
+    /// </summary>
     public InvisibleWallScript _doorInvisibleWall;
     
     #endregion
@@ -541,6 +581,11 @@ public class HwanseBattleManager : BattleManager
     /// 행동 코루틴입니다.
     /// </summary>
     Coroutine _subcoroutineAtahoAction;
+
+    /// <summary>
+    /// 페이즈가 변했다면 참입니다.
+    /// </summary>
+    bool _phaseChanged = false;
 
     /// <summary>
     /// Hop 서브 코루틴입니다.
@@ -815,6 +860,14 @@ public class HwanseBattleManager : BattleManager
             }
         }
 
+        if (_test)
+        {
+            if (_rinshanUnit)
+            {
+                yield break;
+            }
+        }
+
         //////////////////////////////////////////////////////////
         // 
         _subcoroutineAtahoAction = StartCoroutine(SubcoroutineHop());
@@ -911,7 +964,7 @@ public class HwanseBattleManager : BattleManager
         // H
         if (IsTargetOnHigh(player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
@@ -925,7 +978,7 @@ public class HwanseBattleManager : BattleManager
         // NLU
         else if (IsNear(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            if (atahoUnit.IsHokyukkwonAvailable())
             {
                 atahoUnit.DoHokyukkwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NLU");
@@ -939,7 +992,7 @@ public class HwanseBattleManager : BattleManager
         // FLU
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "FLU");
@@ -967,7 +1020,7 @@ public class HwanseBattleManager : BattleManager
         // H
         if (IsTargetOnHigh(player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
@@ -1007,7 +1060,7 @@ public class HwanseBattleManager : BattleManager
         // H
         if (IsTargetOnHigh(player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
@@ -1021,7 +1074,7 @@ public class HwanseBattleManager : BattleManager
         // NRU
         else if (IsNear(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            if (atahoUnit.IsHokyukkwonAvailable())
             {
                 atahoUnit.DoHokyukkwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NRU");
@@ -1035,7 +1088,7 @@ public class HwanseBattleManager : BattleManager
         // FRU
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "FRU");
@@ -1063,7 +1116,7 @@ public class HwanseBattleManager : BattleManager
         // H
         if (IsTargetOnHigh(player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            if (atahoUnit.IsHokyukkwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
@@ -1077,7 +1130,7 @@ public class HwanseBattleManager : BattleManager
         // G
         else if (IsTargetOnGround(player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "G");
@@ -1091,7 +1144,7 @@ public class HwanseBattleManager : BattleManager
         // NL
         else if (IsNear(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            if (atahoUnit.IsHokyukkwonAvailable())
             {
                 atahoUnit.DoHokyukkwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NL");
@@ -1105,7 +1158,7 @@ public class HwanseBattleManager : BattleManager
         // FL
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            if (atahoUnit.IsHokyukkwonAvailable())
             {
                 atahoUnit.DoHokyukkwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "FL");
@@ -1119,7 +1172,7 @@ public class HwanseBattleManager : BattleManager
         // DEFAULT
         else
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            if (atahoUnit.IsHokyukkwonAvailable())
             {
                 atahoUnit.DoHokyukkwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
@@ -1141,7 +1194,7 @@ public class HwanseBattleManager : BattleManager
         // H
         if (IsTargetOnHigh(player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
@@ -1155,7 +1208,7 @@ public class HwanseBattleManager : BattleManager
         // G
         else if (IsTargetOnGround(player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "G");
@@ -1195,7 +1248,7 @@ public class HwanseBattleManager : BattleManager
         // H
         if (IsTargetOnHigh(player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
@@ -1209,7 +1262,7 @@ public class HwanseBattleManager : BattleManager
         // G
         else if (IsTargetOnGround(player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "G");
@@ -1223,7 +1276,7 @@ public class HwanseBattleManager : BattleManager
         // NR
         else if (IsNear(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            if (atahoUnit.IsHokyukkwonAvailable())
             {
                 atahoUnit.DoHokyukkwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NR");
@@ -1237,7 +1290,7 @@ public class HwanseBattleManager : BattleManager
         // FR
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            if (atahoUnit.IsHokyukkwonAvailable())
             {
                 atahoUnit.DoHokyukkwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "FR");
@@ -1251,7 +1304,7 @@ public class HwanseBattleManager : BattleManager
         // DEFAULT
         else
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
+            if (atahoUnit.IsHokyukkwonAvailable())
             {
                 atahoUnit.DoHokyukkwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "X");
@@ -1273,7 +1326,7 @@ public class HwanseBattleManager : BattleManager
         // G
         if (IsTargetOnGround(player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "G");
@@ -1287,29 +1340,61 @@ public class HwanseBattleManager : BattleManager
         // NLD
         else if (IsNear(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (IsTargetOnHigh(atahoUnit.transform))
             {
-                atahoUnit.DoHokyukkwon();
-                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NLD");
+                if (atahoUnit.IsHopokwonAvailable())
+                {
+                    atahoUnit.DoHopokwon();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "NLD");
+                }
+                else
+                {
+                    atahoUnit.DrinkMana();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NLD");
+                }
             }
             else
             {
-                atahoUnit.DrinkMana();
-                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NLD");
+                if (atahoUnit.IsHokyukkwonAvailable())
+                {
+                    atahoUnit.DoHokyukkwon();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NLD");
+                }
+                else
+                {
+                    atahoUnit.DrinkMana();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NLD");
+                }
             }
         }
         // FLD
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (IsTargetOnHigh(atahoUnit.transform))
             {
-                atahoUnit.DoHopokwon();
-                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "FLD");
+                if (atahoUnit.IsHopokwonAvailable())
+                {
+                    atahoUnit.DoHopokwon();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "FLD");
+                }
+                else
+                {
+                    atahoUnit.DrinkMana();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FLD");
+                }
             }
             else
             {
-                atahoUnit.DrinkMana();
-                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FLD");
+                if (atahoUnit.IsHokyukkwonAvailable())
+                {
+                    atahoUnit.DoHokyukkwon();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "FLD");
+                }
+                else
+                {
+                    atahoUnit.DrinkMana();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FLD");
+                }
             }
         }
         // DEFAULT
@@ -1329,7 +1414,7 @@ public class HwanseBattleManager : BattleManager
         // G
         if (IsTargetOnGround(player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
                 HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "G");
@@ -1383,29 +1468,61 @@ public class HwanseBattleManager : BattleManager
         // NRD
         else if (IsNear(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (IsTargetOnHigh(atahoUnit.transform))
             {
-                atahoUnit.DoHokyukkwon();
-                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NRD");
+                if (atahoUnit.IsHopokwonAvailable())
+                {
+                    atahoUnit.DoHopokwon();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "NRD");
+                }
+                else
+                {
+                    atahoUnit.DrinkMana();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NRD");
+                }
             }
             else
             {
-                atahoUnit.DrinkMana();
-                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NRD");
+                if (atahoUnit.IsHokyukkwonAvailable())
+                {
+                    atahoUnit.DoHokyukkwon();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NRD");
+                }
+                else
+                {
+                    atahoUnit.DrinkMana();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NRD");
+                }
             }
         }
         // FRD
         else if (IsFar(atahoUnit.transform, player.transform))
         {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (IsTargetOnHigh(atahoUnit.transform))
             {
-                atahoUnit.DoHopokwon();
-                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "FRD");
+                if (atahoUnit.IsHopokwonAvailable())
+                {
+                    atahoUnit.DoHopokwon();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "FRD");
+                }
+                else
+                {
+                    atahoUnit.DrinkMana();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FRD");
+                }
             }
             else
             {
-                atahoUnit.DrinkMana();
-                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FRD");
+                if (atahoUnit.IsHokyukkwonAvailable())
+                {
+                    atahoUnit.DoHokyukkwon();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "FRD");
+                }
+                else
+                {
+                    atahoUnit.DrinkMana();
+                    HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FRD");
+                }
             }
         }
         // DEFAULT
@@ -1430,41 +1547,66 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern2ActionLU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
-            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            int spawnIndex;
+            spawnIndex = 8; // Random.Range(7, 10);
+            _atahoUnit.CallSmashu(_positions[spawnIndex]);
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnHigh(player.transform))
         {
-            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "H");
             }
-            // 마나를 회복합니다.
             else
             {
                 atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "H");
             }
         }
+        // NLU
         else if (IsNear(atahoUnit.transform, player.transform))
         {
-            _atahoUnit.Guard();
-        }
-        else if (IsFar(atahoUnit.transform, player.transform))
-        {
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHokyukkwonAvailable())
             {
-                atahoUnit.DoHopokwon();
+                atahoUnit.DoHokyukkwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHokyukkwon", "NLU");
             }
             else
             {
                 atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "NLU");
             }
         }
+        // FLU
+        else if (IsFar(atahoUnit.transform, player.transform))
+        {
+            if (atahoUnit.IsHopokwonAvailable())
+            {
+                atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DoHopokwon", "FLU");
+            }
+            else
+            {
+                atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "DrinkMana", "FLU");
+            }
+        }
+        // DEFAULT
         else
         {
             _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
         }
     }
     /// <summary>
@@ -1474,34 +1616,46 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern2ActionU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
-            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            int spawnIndex;
+            spawnIndex = 8; // Random.Range(7, 10);
+            _atahoUnit.CallSmashu(_positions[spawnIndex]);
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnHigh(player.transform))
         {
-            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
             if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
             }
-            // 마나를 회복합니다.
             else
             {
                 atahoUnit.DrinkMana();
             }
         }
+        // NU
         else if (IsNear(atahoUnit.transform, player.transform))
         {
-            atahoUnit.Guard();
+            atahoUnit.DrinkMana();
         }
+        // FU
         else if (IsFar(atahoUnit.transform, player.transform))
         {
             atahoUnit.DrinkMana();
         }
+        // DEFAULT
         else
         {
             _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
         }
     }
     /// <summary>
@@ -1511,27 +1665,37 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern2ActionRU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
-            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            int spawnIndex;
+            spawnIndex = 8; // Random.Range(7, 10);
+            _atahoUnit.CallSmashu(_positions[spawnIndex]);
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnHigh(player.transform))
         {
-            // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
-            if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
+            if (atahoUnit.IsHopokwonAvailable())
             {
                 atahoUnit.DoHopokwon();
             }
-            // 마나를 회복합니다.
             else
             {
                 atahoUnit.DrinkMana();
             }
         }
+        // NRU
         else if (IsNear(atahoUnit.transform, player.transform))
         {
             _atahoUnit.Guard();
         }
+        // FRU
         else if (IsFar(atahoUnit.transform, player.transform))
         {
             if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
@@ -1543,9 +1707,11 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // DEFAULT
         else
         {
             _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
         }
     }
     /// <summary>
@@ -1555,10 +1721,20 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern2ActionL(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
-            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            int spawnIndex;
+            spawnIndex = 8; // Random.Range(7, 10);
+            _atahoUnit.CallSmashu(_positions[spawnIndex]);
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnHigh(player.transform))
         {
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
@@ -1572,6 +1748,7 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // G
         else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
@@ -1627,6 +1804,7 @@ public class HwanseBattleManager : BattleManager
             else
             {
                 atahoUnit.Guard();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
             }
         }
     }
@@ -1637,10 +1815,20 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern2ActionM(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
-            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            int spawnIndex;
+            spawnIndex = 8; // Random.Range(7, 10);
+            _atahoUnit.CallSmashu(_positions[spawnIndex]);
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnHigh(player.transform))
         {
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
@@ -1654,6 +1842,7 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // G
         else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
@@ -1677,17 +1866,21 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // NM
         else if (IsNear(atahoUnit.transform, player.transform))
         {
             _atahoUnit.Guard();
         }
+        // FM
         else if (IsFar(atahoUnit.transform, player.transform))
         {
             _atahoUnit.DrinkMana();
         }
+        // DEFAULT
         else
         {
             _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
         }
     }
     /// <summary>
@@ -1697,10 +1890,20 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern2ActionR(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
-            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            int spawnIndex;
+            spawnIndex = 8; // Random.Range(7, 10);
+            _atahoUnit.CallSmashu(_positions[spawnIndex]);
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnHigh(player.transform))
         {
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
@@ -1714,6 +1917,7 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // G
         else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
@@ -1737,6 +1941,7 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // NR
         else if (IsNear(atahoUnit.transform, player.transform))
         {
             if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
@@ -1749,6 +1954,7 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.SkipAction();
             }
         }
+        // FR
         else if (IsFar(atahoUnit.transform, player.transform))
         {
             if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
@@ -1760,6 +1966,7 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // DEFAULT
         else
         {
             if (atahoUnit._mana >= atahoUnit.MANA_HOKYUKKWON)
@@ -1769,6 +1976,7 @@ public class HwanseBattleManager : BattleManager
             else
             {
                 atahoUnit.Guard();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
             }
         }
     }
@@ -1779,10 +1987,20 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern2ActionLD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
-            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            int spawnIndex;
+            spawnIndex = 8; // Random.Range(7, 10);
+            _atahoUnit.CallSmashu(_positions[spawnIndex]);
+
+            // 
+            _phaseChanged = false;
         }
+        // G
         else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
@@ -1806,6 +2024,7 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // NLD
         else if (IsNear(atahoUnit.transform, player.transform))
         {
             // 근거리에 있어 호출하는 것이 별로 이득을 보지 못한다고 판단되면
@@ -1814,6 +2033,7 @@ public class HwanseBattleManager : BattleManager
             // 후에 근거리 공격에 적합한 다른 액션을 구현해볼까 합니다.
             _atahoUnit.Guard();
         }
+        // FLD
         else if (IsFar(atahoUnit.transform, player.transform))
         {
             /*
@@ -1837,9 +2057,11 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // DEFAULT
         else
         {
             _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
         }
     }
     /// <summary>
@@ -1849,10 +2071,20 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern2ActionD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
-            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            int spawnIndex;
+            spawnIndex = 8; // Random.Range(7, 10);
+            _atahoUnit.CallSmashu(_positions[spawnIndex]);
+
+            // 
+            _phaseChanged = false;
         }
+        // G
         else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
@@ -1876,6 +2108,7 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // ND
         else if (IsNear(atahoUnit.transform, player.transform))
         {
             // 근거리에 있어 호출하는 것이 별로 이득을 보지 못한다고 판단되면
@@ -1884,6 +2117,7 @@ public class HwanseBattleManager : BattleManager
             // 후에 근거리 공격에 적합한 다른 액션을 구현해볼까 합니다.
             _atahoUnit.Guard();
         }
+        // FD
         else if (IsFar(atahoUnit.transform, player.transform))
         {
             /*
@@ -1907,9 +2141,11 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // DEFAULT
         else
         {
             _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
         }
     }
     /// <summary>
@@ -1919,10 +2155,20 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern2ActionRD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
-            _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
+            // 아래에 있어서 대상을 공격할 수 없을 경우 아타호에게 효율적인 전략은,
+            // 팀원을 재빠르게 호출하여 공격하게 하고 자신은 다른 위치로 이동하는 것입니다.
+            int spawnIndex;
+            spawnIndex = 8; // Random.Range(7, 10);
+            _atahoUnit.CallSmashu(_positions[spawnIndex]);
+
+            // 
+            _phaseChanged = false;
         }
+        // G
         else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
@@ -1946,6 +2192,7 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // NRD
         else if (IsNear(atahoUnit.transform, player.transform))
         {
             // 근거리에 있어 호출하는 것이 별로 이득을 보지 못한다고 판단되면
@@ -1954,6 +2201,7 @@ public class HwanseBattleManager : BattleManager
             // 후에 근거리 공격에 적합한 다른 액션을 구현해볼까 합니다.
             _atahoUnit.Guard();
         }
+        // FRD
         else if (IsFar(atahoUnit.transform, player.transform))
         {
             /*
@@ -1977,9 +2225,11 @@ public class HwanseBattleManager : BattleManager
                 atahoUnit.DrinkMana();
             }
         }
+        // DEFAULT
         else
         {
             _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
         }
     }
 
@@ -1997,41 +2247,57 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern3ActionLU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
+            // 패턴 3 시작 시에 린샹을 반드시 호출합니다.
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "CallRinshan", "P");
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnHigh(player.transform))
         {
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
             if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
             }
             // 마나를 회복합니다.
             else
             {
                 atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
             }
         }
+        // NLU
         else if (IsNear(atahoUnit.transform, player.transform))
         {
             _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
         }
+        // FLU
         else if (IsFar(atahoUnit.transform, player.transform))
         {
             if (atahoUnit._mana >= atahoUnit.MANA_HOPOKWON)
             {
                 atahoUnit.DoHopokwon();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
             }
             else
             {
                 atahoUnit.DrinkMana();
+                HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
             }
         }
+        // DEFAULT
         else
         {
             _atahoUnit.Guard();
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "Guard", "X");
         }
     }
     /// <summary>
@@ -2041,10 +2307,17 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern3ActionU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
+            // 패턴 3 시작 시에 린샹을 반드시 호출합니다.
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "CallRinshan", "P");
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnHigh(player.transform))
         {
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
@@ -2078,10 +2351,17 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern3ActionRU(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
+            // 패턴 3 시작 시에 린샹을 반드시 호출합니다.
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "CallRinshan", "P");
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnHigh(player.transform))
         {
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
@@ -2122,10 +2402,17 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern3ActionL(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
+            // 패턴 3 시작 시에 린샹을 반드시 호출합니다.
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "CallRinshan", "P");
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnHigh(player.transform))
         {
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
@@ -2204,10 +2491,17 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern3ActionM(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
+            // 패턴 3 시작 시에 린샹을 반드시 호출합니다.
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "CallRinshan", "P");
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnHigh(player.transform))
         {
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
@@ -2264,10 +2558,17 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern3ActionR(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
+            // 패턴 3 시작 시에 린샹을 반드시 호출합니다.
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "CallRinshan", "P");
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnHigh(player.transform))
         {
             // 자신이 마나를 소모하여 원거리의 적을 공격합니다.
@@ -2346,10 +2647,17 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern3ActionLD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
+            // 패턴 3 시작 시에 린샹을 반드시 호출합니다.
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "CallRinshan", "P");
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
@@ -2416,10 +2724,17 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern3ActionD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
+            // 패턴 3 시작 시에 린샹을 반드시 호출합니다.
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "CallRinshan", "P");
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
@@ -2486,10 +2801,17 @@ public class HwanseBattleManager : BattleManager
     /// <param name="player">플레이어입니다.</param>
     void PerformAtahoPattern3ActionRD(EnemyBossAtahoUnit atahoUnit, PlayerController player)
     {
-        if (_rinshanUnit == null && _atahoUnit.IsDanger())
+        // 페이즈 변화 시엔 가장 먼저 발동해야 합니다.
+        if (_phaseChanged)
         {
+            // 패턴 3 시작 시에 린샹을 반드시 호출합니다.
             _atahoUnit.CallRinshan(_rinshanSpawnPosition);
+            HwanseBattleDebugger.Log(atahoUnit, _phase, "CallRinshan", "P");
+
+            // 
+            _phaseChanged = false;
         }
+        // H
         else if (IsTargetOnGround(player.transform))
         {
             // 대상이 바닥에 있다면 항상 아타호보다는 밑에 있게 됩니다.
@@ -2639,7 +2961,19 @@ public class HwanseBattleManager : BattleManager
 
 
 
-    #region 스마슈 전략을 정의합니다.
+    #region 린샹 전략을 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    Vector3[] _roihwaPositions;
+    /// <summary>
+    /// 
+    /// </summary>
+    public Vector3[] RoihwaPositions
+    {
+        get { return _roihwaPositions; }
+    }
+
     /// <summary>
     /// 패턴 코루틴입니다.
     /// </summary>
@@ -2670,10 +3004,30 @@ public class HwanseBattleManager : BattleManager
         PlayerController player = _stageManager.MainPlayer;
         if (player.IsAlive() == false)
         {
+            // 전투 승리 시에 세레모니를 합니다.
+            // 웃기기도 하고 빡치기도 할 것입니다.
             _rinshanUnit.Ceremony();
+        }
+        else if (true)
+        {
+            // 플레이어가 상대적으로 맵의 왼쪽에 있다면 왼쪽부터,
+            // 오른쪽에 있다면 오른쪽부터 시작합니다.
+            // _roihwaPositions로 위치를 지정해주고,
+            // 마지막 위치는 내리찍는 시점에 린샹이 계산합니다.
+            UpdateRoihwaPositions(player);
+
+            // 업데이트된 영상뢰화 위치를 사용하여 영상뢰화를 수행하게 합니다.
+            _rinshanUnit.DoRoihwa();
         }
         else if (IsTargetOnHigh(player.transform))
         {
+            // 플레이어가 상대적으로 맵의 왼쪽에 있다면 왼쪽부터,
+            // 오른쪽에 있다면 오른쪽부터 시작합니다.
+            // _roihwaPositions로 위치를 지정해주고,
+            // 마지막 위치는 내리찍는 시점에 린샹이 계산합니다.
+            UpdateRoihwaPositions(player);
+
+            // 업데이트된 영상뢰화 위치를 사용하여 영상뢰화를 수행하게 합니다.
             _rinshanUnit.DoRoihwa();
         }
         else if (IsTargetOnGround(player.transform))
@@ -2721,6 +3075,39 @@ public class HwanseBattleManager : BattleManager
         // 
         _coroutineRinshanPattern = null;
         yield break;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void UpdateRoihwaPositions(PlayerController player)
+    {
+        float playerPosX = player.transform.position.x;
+        float centerPosX = _positions[3].position.x;
+        float lightningPosY = _positions[10].position.y;
+        if (playerPosX <= centerPosX)
+        {
+            _roihwaPositions = new Vector3[]
+            {
+                    new Vector3(_positions[6].position.x, lightningPosY),
+                    new Vector3(_positions[4].position.x, lightningPosY),
+                    new Vector3(_positions[3].position.x, lightningPosY),
+                    new Vector3(_positions[2].position.x, lightningPosY),
+                    new Vector3(_positions[10].position.x, lightningPosY)
+            };
+        }
+        else
+        {
+            _roihwaPositions = new Vector3[]
+            {
+                    new Vector3(_positions[0].position.x, lightningPosY),
+                    new Vector3(_positions[2].position.x, lightningPosY),
+                    new Vector3(_positions[3].position.x, lightningPosY),
+                    new Vector3(_positions[4].position.x, lightningPosY),
+                    new Vector3(_positions[10].position.x, lightningPosY)
+            };
+        }
+
     }
 
     #endregion
@@ -2846,40 +3233,82 @@ public class HwanseBattleManager : BattleManager
     IEnumerator CoroutineSmashuPhase3()
     {
         // 대타격을 수행합니다.
-        _smashuUnit.DoDaetakyuk();
+        PlayerController player = _stageManager.MainPlayer;
+        if (player.IsDead)
+        {
+            _smashuUnit.Ceremony();
+        }
+        else
+        {
+            _smashuUnit.DoDaetakyuk();
+        }
 
         // 행동이 종료될 때까지 대기합니다.
         while (_smashuUnit.IsActionStarted == false)
         {
             yield return false;
+
+            // 모든 단위 행동의 다음에는 해당 개체가 살아있는지 확인해야 에러가 없습니다.
+            // 어쩌면... try/catch를 사용하여 그냥 넘겨버릴 수도 있겠지요.
+            // 다음 커밋에서 그렇게 구현합시다.
+            if (_smashuUnit == null)
+            {
+                // Enumerator에 try-catch를 못 쓴대요..
+                yield break;
+            }
         }
         while (_smashuUnit.IsActionRunning)
         {
             yield return false;
-        }
-        while (_smashuUnit.IsActionEnded == false)
-        {
-            yield return false;
-        }
-
-        // 사라집니다.
-        _smashuUnit.Disappear();
-
-        // 행동이 종료될 때까지 대기합니다.
-        while (_smashuUnit.IsActionStarted == false)
-        {
-            yield return false;
-        }
-        while (_smashuUnit.IsActionRunning)
-        {
-            yield return false;
+            if (_smashuUnit == null)
+            {
+                yield break;
+            }
         }
         while (_smashuUnit.IsActionEnded == false)
         {
             yield return false;
             if (_smashuUnit == null)
             {
-                break;
+                yield break;
+            }
+        }
+
+        // 
+        if (player.Damaged || player.BigDamaged || player.Invencible)
+        {
+            // 사라집니다.
+            _smashuUnit.Disappear();
+        }
+        else
+        {
+            _smashuUnit.DoKwaejinkyuk();
+            Invoke("RequestDestroySmashu", TIME_LIFE_SMASHU);
+        }
+
+        // 행동이 종료될 때까지 대기합니다.
+        while (_smashuUnit.IsActionStarted == false)
+        {
+            yield return false;
+            if (_smashuUnit == null)
+            {
+                yield break;
+            }
+        }
+        while (_smashuUnit.IsActionRunning)
+        {
+            yield return false;
+            if (_smashuUnit == null)
+            {
+                yield break;
+            }
+        }
+        while (_smashuUnit.IsActionEnded == false)
+        {
+            yield return false;
+            if (_smashuUnit == null)
+            {
+                yield break;
             }
         }
 

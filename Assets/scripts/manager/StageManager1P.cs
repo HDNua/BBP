@@ -16,7 +16,6 @@ public class StageManager1P : StageManager
     /// </summary>
     public PlayerController _player;
 
-
     #endregion
 
 
@@ -120,9 +119,6 @@ public class StageManager1P : StageManager
     /// </summary>
     protected override IEnumerator CoroutineClearStage()
     {
-        // 다음 커밋에서 삭제할 예정입니다.
-        /// GameManager.Instance.SpawnPositionIndex = 0;
-
         // 
         AudioSource audioSource = AudioSources[5];
         audioSource.Play();

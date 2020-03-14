@@ -406,7 +406,7 @@ public class Unit : MonoBehaviour
     /// <returns>애니메이터가 지정된 문자열의 상태라면 true를 반환합니다.</returns>
     public bool IsAnimatorInState(string stateName, int layerIndex = 0)
     {
-        return _Animator.GetCurrentAnimatorStateInfo(layerIndex).IsName(stateName);
+        return _Animator ? _Animator.GetCurrentAnimatorStateInfo(layerIndex).IsName(stateName) : false;
     }
 
     #endregion

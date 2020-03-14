@@ -284,13 +284,12 @@ public class StageManager : HDSceneManager
     /// </summary>
     protected override void Update()
     {
-        /// Handy: 하는 일이 없어서 삭제해도 될 것 같습니다.
-        /// base.Update();
-
+        // 게임이 종료된 후에 페이드 아웃까지 완료되면 새 장면으로 넘어갑니다.
         if (_gameEnded)
         {
             if (_fader.FadeOutEnded)
             {
+                ///LoadingSceneManager.LoadLevel("CS03_GaiaFound");
                 LoadingSceneManager.LoadLevel("CS03_GaiaFound");
             }
 

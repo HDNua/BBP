@@ -11,20 +11,11 @@ public class HDSceneManager : MonoBehaviour
 {
     #region Unity에서 접근 가능한 공용 객체를 정의합니다.
     /// <summary>
-    /// 페이드 인/아웃 효과를 담당하는 개체입니다.
-    /// </summary>
-    public ScreenFader _fader;
-    /// <summary>
     /// Scene에서 사용할 효과음의 리스트입니다.
     /// </summary>
     public AudioClip[] _audioClips;
 
-
     #endregion
-
-
-
-
 
 
 
@@ -39,13 +30,7 @@ public class HDSceneManager : MonoBehaviour
         get { return Camera.main; }
     }
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -61,13 +46,7 @@ public class HDSceneManager : MonoBehaviour
     /// </summary>
     public AudioSource[] AudioSources { get { return _audioSources; } }
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -95,13 +74,7 @@ public class HDSceneManager : MonoBehaviour
 
     }
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -109,21 +82,18 @@ public class HDSceneManager : MonoBehaviour
 
     #region 메서드를 정의합니다.
 
-
-
     #endregion
 
 
 
 
 
-
-
-
-
-
     #region 구형 정의를 보관합니다.
-    
+    [Obsolete("FadeManager로 대체될 것입니다.")]
+    /// <summary>
+    /// 페이드 인/아웃 효과를 담당하는 개체입니다.
+    /// </summary>
+    public ScreenFader _fader;
 
     #endregion
 }

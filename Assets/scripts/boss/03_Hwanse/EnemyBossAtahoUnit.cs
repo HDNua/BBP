@@ -23,7 +23,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 맹호광파참 사용에 필요한 마나입니다.
     /// </summary>
-    public int MANA_GWANGPACHAM = 15;
+    public int MANA_GWANGPACHAM = 30;
 
     /// <summary>
     /// 숨고르기 시간입니다.

@@ -13,34 +13,29 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
 {
     #region 상수를 정의합니다.
     /// <summary>
-    /// 임시; 린샹은 대타격을 쓰지 않죠.
-    /// </summary>
-    public int DAMAGE_DAETAKYOK = 20;
-
-    /// <summary>
     /// 문과 가깝다고 느낄 거리입니다.
     /// </summary>
     public float THRESHOLD_NEAR_DOOR = 1f;
 
     /// <summary>
-    ///
+    /// 방어 시간입니다.
     /// </summary>
     public float TIME_GUARD = 3f;
     /// <summary>
-    /// 
+    /// 수경 행동 시간입니다.
     /// </summary>
     public float TIME_SUKYEONG_RUN = 1f;
     /// <summary>
-    /// 
+    /// 대폭진 행동 시간입니다.
     /// </summary>
     public float TIME_DAEPOKJIN_RUN = 1f;
 
     /// <summary>
-    /// 
+    /// 영상뢰화 간격입니다.
     /// </summary>
     public float[] TIME_ROIHWA_INTERVAL = { 0.10f, 0.20f, 0.30f, 0.40f, 0.50f, };
     /// <summary>
-    /// 
+    /// 영상뢰화가 끝나는 시간입니다.
     /// </summary>
     public float TIME_ROIHWA_END = 1f;
 
@@ -217,8 +212,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         get { return _runEndRequest; }
         private set { _Animator.SetBool("RunEndRequest", _runEndRequest = value); }
     }
-
-
+    
     #endregion
 
 

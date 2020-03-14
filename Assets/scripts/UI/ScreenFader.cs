@@ -3,6 +3,7 @@ using UnityEngine;
 
 
 
+[Obsolete("FadeManager로 대체되었습니다.")]
 /// <summary>
 /// 장면의 페이드인 또는 페이드아웃 효과를 처리합니다.
 /// </summary>
@@ -21,10 +22,6 @@ public class ScreenFader : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// GUITexture 개체입니다.
-    /// </summary>
-    GUITexture _guiTexture;
     /// <summary>
     /// 페이드 인/아웃 속도입니다.
     /// </summary>
@@ -170,7 +167,7 @@ public class ScreenFader : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// 페이딩 텍스쳐의 색상을 변경합니다.
     /// </summary>
     /// <param name="guiTextureColor"></param>
     /// <param name="colorDst"></param>
@@ -188,6 +185,19 @@ public class ScreenFader : MonoBehaviour
     {
         _guiTexture.texture = _textures[index];
     }
+
+    #endregion
+
+
+
+
+
+    #region 구형 정의를 보관합니다.
+    [Obsolete("쓰지 말랍니다.")]
+    /// <summary>
+    /// GUITexture 개체입니다.
+    /// </summary>
+    GUITexture _guiTexture;
 
     #endregion
 }

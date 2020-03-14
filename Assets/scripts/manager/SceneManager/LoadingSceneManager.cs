@@ -29,11 +29,6 @@ public class LoadingSceneManager : MonoBehaviour
 
 
 
-
-
-
-
-
     #region 필드를 정의합니다.
     /// <summary>
     /// 불러오기가 요청되었습니다.
@@ -46,11 +41,6 @@ public class LoadingSceneManager : MonoBehaviour
 
 
     #endregion
-
-
-
-
-
 
 
 
@@ -83,11 +73,6 @@ public class LoadingSceneManager : MonoBehaviour
 
 
     #endregion
-
-
-
-
-
 
 
 
@@ -127,7 +112,6 @@ public class LoadingSceneManager : MonoBehaviour
         SceneManager.LoadScene(_loadingLevelName);
     }
 
-
     /// <summary>
     /// 장면을 불러옵니다.
     /// </summary>
@@ -139,13 +123,7 @@ public class LoadingSceneManager : MonoBehaviour
         SceneManager.LoadScene("Loading");
     }
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -153,7 +131,6 @@ public class LoadingSceneManager : MonoBehaviour
 
     #region 구형 정의를 보관합니다.
     bool _fadeRequested = false;
-
 
     #endregion
 }

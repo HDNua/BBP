@@ -10,11 +10,18 @@ using System.Collections;
 public class TitleSceneManager : MonoBehaviour
 {
     #region Unity에서 접근 가능한 공용 객체를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
     public GameObject[] menuItems;
+    /// <summary>
+    /// 
+    /// </summary>
     public Sprite[] sprites;
+    /// <summary>
+    /// 
+    /// </summary>
     public AudioClip[] soundEffects;
-    public ScreenFader fader;
-
 
     #endregion
 
@@ -24,24 +31,22 @@ public class TitleSceneManager : MonoBehaviour
 
     #region 필드를 정의합니다.
     /// <summary>
-    /// 
+    /// 효과음 집합입니다.
     /// </summary>
     AudioSource[] _seSources;
 
-
     /// <summary>
-    /// 
+    /// 메뉴 인덱스입니다.
     /// </summary>
     int _menuIndex = 0;
     /// <summary>
-    /// 
+    /// 장면 변화 요청이 들어왔습니다.
     /// </summary>
     bool _changeSceneRequested = false;
     /// <summary>
-    /// 
+    /// 다음 장면의 이름입니다.
     /// </summary>
     string _nextLevelName = null;
-
 
     #endregion
 
@@ -240,7 +245,6 @@ public class TitleSceneManager : MonoBehaviour
         }
     }
 
-
     #endregion
 
 
@@ -272,6 +276,19 @@ public class TitleSceneManager : MonoBehaviour
             || Input.GetButton("Attack")
             || Input.GetKey(KeyCode.Space));
     }
-    
+
+    #endregion
+
+
+
+
+
+    #region 구형 정의를 보관합니다.
+    [Obsolete("FadeManager로 대체될 것으로 보입니다.")]
+    /// <summary>
+    /// 스크린 페이딩 관리자입니다.
+    /// </summary>
+    public ScreenFader fader;
+
     #endregion
 }

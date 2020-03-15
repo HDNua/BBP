@@ -700,6 +700,7 @@ public class HwanseBattleManager : BattleManager
                 PerformAtahoPattern1ActionM(_atahoUnit, player);
                 break;
         }
+        ///_atahoUnit.DoGwangpacham();
 
         // 행동이 종료될 때까지 대기합니다.
         while (_atahoUnit.IsActionStarted == false)
@@ -3179,17 +3180,6 @@ public class HwanseBattleManager : BattleManager
             // 웃기기도 하고 빡치기도 할 것입니다.
             _rinshanUnit.Ceremony();
         }
-        else if (true)
-        {
-            // 플레이어가 상대적으로 맵의 왼쪽에 있다면 왼쪽부터,
-            // 오른쪽에 있다면 오른쪽부터 시작합니다.
-            // _roihwaPositions로 위치를 지정해주고,
-            // 마지막 위치는 내리찍는 시점에 린샹이 계산합니다.
-            UpdateRoihwaPositions(player);
-
-            // 업데이트된 영상뢰화 위치를 사용하여 영상뢰화를 수행하게 합니다.
-            _rinshanUnit.DoRoihwa();
-        }
         else if (IsTargetOnHigh(player.transform))
         {
             // 플레이어가 상대적으로 맵의 왼쪽에 있다면 왼쪽부터,
@@ -3510,8 +3500,6 @@ public class HwanseBattleManager : BattleManager
         Direction direction = Direction.M;
 
         // 
-
-        // 
         Vector2 ray0 = dir(anglePivotR + angleRtoRU) * _debugRayLength;
         Vector2 ray1 = dir(anglePivotU - angleUtoRU) * _debugRayLength;
         Vector2 ray2 = dir(anglePivotU + angleUtoLU) * _debugRayLength;
@@ -3683,29 +3671,6 @@ public class HwanseBattleManager : BattleManager
 
 
     #region 구형 정의를 보관합니다.
-
-    [Obsolete("아무래도 안 쓸 것 같습니다.")]
-    /// <summary>
-    /// 행동 코루틴입니다.
-    /// </summary>
-    Coroutine _subcoroutineSmashuAction;
-    [Obsolete("아무래도 안 쓸 것 같습니다.")]
-    /// <summary>
-    /// 행동 코루틴입니다.
-    /// </summary>
-    Coroutine _subcoroutineRinshanAction;
-    [Obsolete("린샹은 파괴되지 않습니다. 다음 커밋에서 발견하는 즉시 삭제하십시오.")]
-    /// <summary>
-    /// 린샹 개체를 파괴합니다.
-    /// </summary>
-    public void RequestDestroyRinshan()
-    {
-        if (_rinshanUnit)
-        {
-            Destroy(_rinshanUnit.gameObject);
-            _rinshanUnit = null;
-        }
-    }
 
     #endregion
 }

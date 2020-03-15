@@ -9,30 +9,6 @@ using UnityEngine;
 /// </summary>
 public class BossAtahoBulletScript1 : EnemyBulletScript
 {
-    #region 컨트롤러가 사용할 Unity 객체를 정의합니다.
-
-    #endregion
-
-
-
-
-
-    #region Unity에서 접근 가능한 공용 객체를 정의합니다.
-
-    #endregion
-
-
-
-
-
-    #region 캐릭터의 상태 필드 및 프로퍼티를 정의합니다.
-
-    #endregion
-
-
-
-
-
     #region MonoBehaviour 기본 메서드를 재정의합니다.
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다.
@@ -47,6 +23,13 @@ public class BossAtahoBulletScript1 : EnemyBulletScript
     protected override void Update()
     {
         base.Update();
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    protected override void LateUpdate()
+    {
+        base.LateUpdate();
     }
 
     #endregion
@@ -139,30 +122,6 @@ public class BossAtahoBulletScript1 : EnemyBulletScript
         // 플레이어를 향해 발사합니다.
         _Rigidbody.velocity = diff.normalized * _movingSpeed;
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    protected override void LateUpdate()
-    {
-        base.LateUpdate();
-    }
-
-
-    #endregion
-
-
-
-
-
-    #region 메서드를 정의합니다.
-
-    #endregion
-
-
-
-
-
-    #region 구형 정의를 보관합니다.
 
     #endregion
 }

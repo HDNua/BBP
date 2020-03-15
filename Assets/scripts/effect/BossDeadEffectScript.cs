@@ -12,20 +12,20 @@ public class BossDeadEffectScript : EffectScript
 {
     #region 상수를 정의합니다.
     /// <summary>
-    /// 
+    /// 보스 폭발 페이드인 속도입니다.
     /// </summary>
-    public float SPEED_FADEIN_BOSS_EXPLOSION = 3f;
+    public float SPEED_FADEIN_BOSS_EXPLOSION = 0.2f;
     /// <summary>
-    /// 
+    /// 보스 폭발 페이드아웃 속도입니다.
     /// </summary>
     public float SPEED_FADEOUT_BOSS_EXPLOSION = 1f;
 
     /// <summary>
-    /// 
+    /// 보스 폭발 페이드인이 끝나는 임계점입니다.
     /// </summary>
     public float THRES_FADEIN_BOSS_EXPLOSION = 0.2f;
     /// <summary>
-    /// 
+    /// 보스 폭발 페이드아웃이 끝나는 임계점입니다.
     /// </summary>
     public float THRES_FADEOUT_BOSS_EXPLOSION = 0.9f;
 
@@ -235,13 +235,7 @@ public class BossDeadEffectScript : EffectScript
         explosion.gameObject.SetActive(true);
 
         // 
-        ///ScreenFader fader = stageManager._fader;
-        ///fader.fadeSpeed = 0.2f;
-        ///fader.ChangeFadeTextureColor(1);
-        ///fader.ChangeFadeTextureColor(new Color(1, 1, 1, 0), Color.white, 0.5f);
-
         FadeManager fader = FadeManager.Instance;
-        ///fader.ChangeFadeTextureColor(new Color(1, 1, 1, 0), Color.white, 0.5f);
         fader._colorDst = Color.white;
         fader.FadeOut(SPEED_FADEOUT_BOSS_EXPLOSION, THRES_FADEOUT_BOSS_EXPLOSION);
 
@@ -270,8 +264,6 @@ public class BossDeadEffectScript : EffectScript
 
         // 사망이 끝났습니다.
         fader.ResetToDefault();
-        ///fader._fadeSpeed = 3f;
-        ///fader.ChangeFadeTextureColor(new Color(0, 0, 0, 0), Color.black, 0.95f);
         stageManager.RequestClearStage();
         yield break;
     }
@@ -307,13 +299,10 @@ public class BossDeadEffectScript : EffectScript
     {
         if (_battleManager.DoesBattleEnd())
         {
-            ///return ScreenFader.Instance.FadeOutEnded;
-            ///return FadeManager.Instance.FadeOutEnded;
             return FadeManager.Instance.Alpha >= THRES_FADEOUT_BOSS_EXPLOSION;
         }
         else
         {
-            //Debug.Log(_explosionTime);
             return (_explosionTime >= _explosionEndTime);
         }
     }

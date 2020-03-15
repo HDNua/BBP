@@ -489,39 +489,6 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             yield return false;
         }
 
-        /*
-        // 
-        gameObject.tag = "Untagged";
-
-        // 효과음을 재생합니다.
-        SoundEffects[0].Play();
-
-        // 
-        bool blink = false;
-        time = 0;
-        while (time < effectClipLength)
-        {
-            time += TIME_30FPS + Time.deltaTime;
-
-            if (blink)
-            {
-                _PaletteUser.EnableTexture();
-            }
-            else
-            {
-                _PaletteUser.DisableTexture();
-            }
-            blink = !blink;
-
-            // 30 FPS 간격으로 반짝이게 합니다.
-            yield return new WaitForSeconds(TIME_30FPS);
-        }
-
-        // 효과를 제거하고 스마슈의 색상을 없앱니다.
-        effectGrass.RequestDestroy();
-        _PaletteUser.DisableTexture();
-        */
-
         // 퇴장을 끝냅니다.
         EndDisappear();
         Destroy(gameObject);
@@ -893,6 +860,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         }
 
         // 
+        SoundEffects[6].Play();
         while (IsAnimatorInState("DaepokjinRun"))
         {
             yield return false;
@@ -1178,9 +1146,9 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         return gameObject.transform;
     }
     /// <summary>
-    /// 
+    /// 영상뢰화 번개를 생성합니다.
     /// </summary>
-    /// <param name="position"></param>
+    /// <param name="position">영상뢰화 번개를 생성할 위치입니다.</param>
     void MakeLightning(Transform transform)
     {
         Instantiate(_effects[2], transform.position, transform.rotation);

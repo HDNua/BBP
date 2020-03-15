@@ -274,12 +274,6 @@ public class TitleSceneManager : HDSceneManager
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("HDSceneManager에서 상속받아 쓰기로 했습니다.")]
-    /// <summary>
-    /// 효과음 집합입니다.
-    /// </summary>
-    AudioSource[] _seSources;
-
 
     #endregion
 }

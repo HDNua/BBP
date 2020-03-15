@@ -212,4 +212,99 @@ public class EnemyBulletUnit : EnemyUnit
     }
 
     #endregion
+
+
+
+
+
+    #region Collider2D 요청 메서드를 정의합니다.
+    /// <summary>
+    /// 충돌체가 트리거 내부로 진입했습니다.
+    /// </summary>
+    /// <param name="other">자신이 아닌 충돌체 개체입니다.</param>
+    public virtual void RequestOnTriggerEnter2D(Collider2D other)
+    {
+        // 트리거가 발동한 상대 충돌체가 플레이어라면 대미지를 입힙니다.
+        if (other.CompareTag("Player"))
+        {
+            GameObject pObject = other.gameObject;
+            PlayerController player = pObject.GetComponent<PlayerController>();
+
+            // 플레이어가 무적 상태이거나 죽었다면
+            if (player.Invencible || player.IsDead)
+            {
+                // 아무 것도 하지 않습니다.
+
+            }
+            // 그 외의 경우
+            else
+            {
+                // 플레이어에게 대미지를 입힙니다.
+                player.Hurt(Damage, transform);
+            }
+
+            // 맞는 순간 폭발합니다.
+            Dead();
+        }
+    }
+    /// <summary>
+    /// 충돌체가 여전히 트리거 내부에 있습니다.
+    /// </summary>
+    /// <param name="other">자신이 아닌 충돌체 개체입니다.</param>
+    public virtual void RequestOnTriggerStay2D(Collider2D other)
+    {
+        // 트리거가 발동한 상대 충돌체가 플레이어라면 대미지를 입힙니다.
+        if (other.CompareTag("Player"))
+        {
+            GameObject pObject = other.gameObject;
+            PlayerController player = pObject.GetComponent<PlayerController>();
+
+            // 플레이어가 무적 상태이거나 죽었다면
+            if (player.Invencible || player.IsDead)
+            {
+                // 아무 것도 하지 않습니다.
+
+            }
+            // 그 외의 경우
+            else
+            {
+                // 플레이어에게 대미지를 입힙니다.
+                player.Hurt(Damage, transform);
+            }
+
+            // 맞는 순간 폭발합니다.
+            Dead();
+        }
+    }
+    /// <summary>
+    /// 충돌체가 트리거 내부에서 나옵니다.
+    /// </summary>
+    /// <param name="other">자신이 아닌 충돌체 개체입니다.</param>
+    public virtual void RequestOnTriggerExit2D(Collider2D other)
+    {
+        // 트리거가 발동한 상대 충돌체가 플레이어라면 대미지를 입힙니다.
+        if (other.CompareTag("Player"))
+        {
+            GameObject pObject = other.gameObject;
+            PlayerController player = pObject.GetComponent<PlayerController>();
+
+            // 플레이어가 무적 상태이거나 죽었다면
+            if (player.Invencible || player.IsDead)
+            {
+                // 아무 것도 하지 않습니다.
+
+            }
+            // 그 외의 경우
+            else
+            {
+                // 플레이어에게 대미지를 입힙니다.
+                player.Hurt(Damage, transform);
+            }
+
+            // 맞는 순간 폭발합니다.
+            Dead();
+        }
+    }
+
+    #endregion
 }

@@ -286,7 +286,6 @@ public class StageManager : HDSceneManager
         }
 
         // 페이드인 효과를 처리합니다.
-        ///_fader.FadeIn();
         FadeManager.Instance.FadeIn();
     }
     /// <summary>
@@ -297,13 +296,6 @@ public class StageManager : HDSceneManager
         // 게임이 종료된 후에 페이드 아웃까지 완료되면 새 장면으로 넘어갑니다.
         if (_gameEnded)
         {
-            /*
-            if (_fader.FadeOutEnded)
-            {
-                ///LoadingSceneManager.LoadLevel("CS03_GaiaFound");
-            }
-            */
-
             if (FadeManager.Instance.FadeOutEnded)
             {
                 LoadingSceneManager.LoadLevel("GameEnd");
@@ -311,15 +303,6 @@ public class StageManager : HDSceneManager
 
             return;
         }
-
-        /*
-        // 페이드 인 효과가 종료되는 시점에
-        if (_fader.FadeInEnded)
-        {
-            // 준비 애니메이션 재생을 시작합니다.
-            PlayReadyAnimation();
-        }
-        */
 
         // 페이드 인 효과가 종료되는 시점에
         if (FadeManager.Instance.Alpha < THRES_FADER_ALPHA)

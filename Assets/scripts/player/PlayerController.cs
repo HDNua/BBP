@@ -1345,12 +1345,12 @@ public abstract class PlayerController : MonoBehaviour
         // 벽과 닿아있지 않으면 거짓입니다.
         return false;
     }
-    
+
     #endregion
 
 
 
-    
+    protected float _fadeOutTime = 2f;
 
     #region 일회성 행동 메서드를 정의합니다.
     /// <summary>
@@ -1382,18 +1382,21 @@ public abstract class PlayerController : MonoBehaviour
     protected virtual void Dead()
     {
         IsDead = true;
-        Invoke("RequestFadeOut", 1);
+
+        // 
+        _fadeOutTime = 1f;
+        Invoke("RequestFadeOut", 1f);
     }
     /// <summary>
     /// 페이드 아웃을 요청합니다.
     /// </summary>
     /// <param name="fadeOutTime">페이드 아웃 시간입니다.</param>
-    void RequestFadeOut(float fadeOutTime)
+    void RequestFadeOut()
     {
         ///_stageManager._fader.FadeOut(1);
         ///Invoke("RequestRestart", 1);
-        FadeManager.Instance.FadeOut(fadeOutTime);
-        Invoke("RequestRestart", fadeOutTime);
+        FadeManager.Instance.FadeOut(_fadeOutTime);
+        Invoke("RequestRestart", 1);
     }
     /// <summary>
     /// 재시작을 요청합니다.

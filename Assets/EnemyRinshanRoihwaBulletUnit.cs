@@ -5,13 +5,13 @@ using UnityEngine;
 
 
 /// <summary>
-/// 
+/// 린샹 영상뢰화 탄환입니다.
 /// </summary>
 public class EnemyRinshanRoihwaBulletUnit : EnemyBulletUnit
 {
     #region 상수를 정의합니다.
     /// <summary>
-    /// 
+    /// 영상뢰화가 플레이어에게 대미지를 입히는 시간입니다.
     /// </summary>
     public float TIME_ROIHWA_DANGEROUS = 0.2f;
 
@@ -37,7 +37,7 @@ public class EnemyRinshanRoihwaBulletUnit : EnemyBulletUnit
 
     #region 필드 및 프로퍼티를 정의합니다.
     /// <summary>
-    /// 
+    /// 타이머입니다.
     /// </summary>
     float _time = 0;
 
@@ -49,7 +49,7 @@ public class EnemyRinshanRoihwaBulletUnit : EnemyBulletUnit
 
     #region MonoBehaviour 기본 메서드를 재정의합니다.
     /// <summary>
-    /// 
+    /// MonoBehaviour 개체를 초기화합니다.
     /// </summary>
     protected override void Start()
     {
@@ -59,7 +59,7 @@ public class EnemyRinshanRoihwaBulletUnit : EnemyBulletUnit
         _time = 0;
     }
     /// <summary>
-    /// 
+    /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트합니다.
     /// </summary>
     protected override void Update()
     {

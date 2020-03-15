@@ -49,7 +49,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 맹호광파참을 수행하는 시간입니다.
     /// </summary>
-    public float TIME_GWANGPACHAM_RUN = 3f;
+    public float TIME_GWANGPACHAM_RUN = 2f;
 
     /// <summary>
     /// 방어 행동을 수행하는 시간입니다.
@@ -101,6 +101,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         Miss,
         GigadeathFire,
         Charge,
+        Beam,
     }
     /// <summary>
     /// 탄환 타입입니다.
@@ -1116,6 +1117,14 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
         // 탄환을 발사하기 위해 기를 모읍니다.
         PlaySoundEffect(SoundEffect.Charge);
+        GameObject effectChargeObject = Instantiate(_effects[2], transform.position, transform.rotation);
+        if (!FacingRight)
+        {
+            Vector3 newScale = effectChargeObject.transform.localScale;
+            newScale.x = -newScale.x;
+            effectChargeObject.transform.localScale = newScale;
+        }
+
         while (IsAnimatorInState("GwangpachamBeg"))
         {
             yield return false;
@@ -1126,6 +1135,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         UseMana(MANA_GWANGPACHAM);
         Vector3 destination = _StageManager.GetCurrentPlayerPosition();
         Shot(_shotPosition[1], destination, Bullet.Gwangpacham, 1, SoundEffect.GigadeathFire);
+        PlaySoundEffect(SoundEffect.Beam);
         while (IsAnimatorInState("GwangpachamRun"))
         {
             yield return false;
@@ -1415,14 +1425,30 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         }
 
         // 
-        EnemyBulletScript bullet = Instantiate
-            (_bullets[(int)bulletIndex], shotPosition.position, shotPosition.rotation)
-            as EnemyBulletScript;
-        bullet.transform.parent = _StageManager._enemyParent.transform;
+        switch (bulletIndex)
+        {
+            case Bullet.Hokyokkwon:
+            case Bullet.Hopokwon:
+                EnemyBulletScript bulletScript = Instantiate
+                    (_bullets[(int)bulletIndex], shotPosition.position, shotPosition.rotation)
+                    as EnemyBulletScript;
+                bulletScript.transform.parent = _StageManager._enemyParent.transform;
 
-        // 
-        bullet.FacingRight = FacingRight;
-        bullet.MoveTo(destination);
+                // 
+                bulletScript.FacingRight = FacingRight;
+                bulletScript.MoveTo(destination);
+                break;
+            default:
+                EnemyBulletUnit bulletUnit = Instantiate
+                    (_bulletUnits[(int)bulletIndex], shotPosition.position, shotPosition.rotation)
+                    as EnemyBulletUnit;
+                bulletUnit.transform.parent = _StageManager._enemyParent.transform;
+
+                // 
+                bulletUnit.FacingRight = FacingRight;
+                bulletUnit.MoveTo(destination);
+                break;
+        }
     }
 
     #endregion
@@ -1432,11 +1458,6 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("지금은 사용하지 않습니다.")]
-    /// <summary>
-    /// 궁극기가 활성화되었다면 참입니다.
-    /// </summary>
-    bool UltimateEnabled { get; set; }
 
     #endregion
 }

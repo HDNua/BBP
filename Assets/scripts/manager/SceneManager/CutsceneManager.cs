@@ -43,10 +43,6 @@ public class CutsceneManager : MonoBehaviour
     /// 
     /// </summary>
     AudioSource[] _audioSources;
-    /// <summary>
-    /// 
-    /// </summary>
-    GUIText _guiText;
 
     /// <summary>
     /// 
@@ -484,6 +480,19 @@ public class CutsceneManager : MonoBehaviour
         _inputBlocked = false;
         _speechScriptPlaying = false;
     }
+
+    #endregion
+
+
+
+
+
+    #region 구형 정의를 보관합니다.
+    [Obsolete("쓰지 말래요")]
+    /// <summary>
+    /// 
+    /// </summary>
+    GUIText _guiText;
 
     #endregion
 }

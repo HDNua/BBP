@@ -12,16 +12,9 @@ public class LoadingSceneManager : MonoBehaviour
 {
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
     /// <summary>
-    /// 페이드 인/아웃 효과 관리자입니다.
-    /// </summary>
-    public ScreenFader fader;
-
-
-    /// <summary>
     /// 진행 상황을 텍스트로 보여주는 개체입니다.
     /// </summary>
     public UnityEngine.UI.Text _text;
-
 
     #endregion
 
@@ -31,6 +24,11 @@ public class LoadingSceneManager : MonoBehaviour
 
     #region 필드를 정의합니다.
     /// <summary>
+    /// 페이딩 요청되었습니다.
+    /// </summary>
+    bool _fadeRequested = false;
+
+    /// <summary>
     /// 불러오기가 요청되었습니다.
     /// </summary>
     static bool _loadRequested = false;
@@ -38,7 +36,6 @@ public class LoadingSceneManager : MonoBehaviour
     /// 불러올 장면의 이름입니다.
     /// </summary>
     static string _loadingLevelName = null;
-
 
     #endregion
 
@@ -53,7 +50,7 @@ public class LoadingSceneManager : MonoBehaviour
     void Start()
     {
         // 페이드인 효과를 추가합니다.
-        fader.FadeIn();
+        FadeManager.Instance.FadeIn();
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트 합니다.
@@ -99,7 +96,7 @@ public class LoadingSceneManager : MonoBehaviour
             {
                 if (async.progress >= 0.6f)
                 {
-                    fader.FadeOut();
+                    FadeManager.Instance.FadeOut();
                     _fadeRequested = true;
                 }
             }
@@ -130,7 +127,6 @@ public class LoadingSceneManager : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    bool _fadeRequested = false;
 
     #endregion
 }

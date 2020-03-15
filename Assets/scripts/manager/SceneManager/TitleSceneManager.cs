@@ -7,7 +7,7 @@ using System.Collections;
 /// <summary>
 /// 타이틀 화면을 처리합니다.
 /// </summary>
-public class TitleSceneManager : MonoBehaviour
+public class TitleSceneManager : HDSceneManager
 {
     #region Unity에서 접근 가능한 공용 객체를 정의합니다.
     /// <summary>
@@ -31,11 +31,6 @@ public class TitleSceneManager : MonoBehaviour
 
     #region 필드를 정의합니다.
     /// <summary>
-    /// 효과음 집합입니다.
-    /// </summary>
-    AudioSource[] _seSources;
-
-    /// <summary>
     /// 메뉴 인덱스입니다.
     /// </summary>
     int _menuIndex = 0;
@@ -58,20 +53,15 @@ public class TitleSceneManager : MonoBehaviour
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다.
     /// </summary>
-    void Start()
+    protected override void Start()
     {
         Time.timeScale = 1;
 
         // 효과음 리스트를 초기화 합니다.
-        _seSources = new AudioSource[soundEffects.Length];
-        for (int i = 0, len = _seSources.Length; i < len; ++i)
-        {
-            _seSources[i] = gameObject.AddComponent<AudioSource>();
-            _seSources[i].clip = soundEffects[i];
-        }
+        base.Start();
 
         // 페이드인 효과를 실행합니다.
-        fader.FadeIn();
+        FadeManager.Instance.FadeIn();
 
         // 
         GameManager.Instance.RequestSetTryCount(2);
@@ -79,12 +69,12 @@ public class TitleSceneManager : MonoBehaviour
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트 합니다.
     /// </summary>
-    void Update()
+    protected override void Update()
     {
         // 장면 전환 요청을 확인한 경우의 처리입니다.
         if (_changeSceneRequested)
         {
-            if (fader.FadeOutEnded)
+            if (FadeManager.Instance.FadeOutEnded)
             {
                 LoadingSceneManager.LoadLevel(_nextLevelName);
             }
@@ -152,9 +142,9 @@ public class TitleSceneManager : MonoBehaviour
                     switch (_menuIndex)
                     {
                         case 0:
-                            _nextLevelName = "03_Hwanse";
+                            _nextLevelName = NAME_NEXT_SCENES[0];
                             _changeSceneRequested = true;
-                            fader.FadeOut(1);
+                            FadeManager.Instance.FadeOut();
                             break;
 
                         case 1:
@@ -165,7 +155,7 @@ public class TitleSceneManager : MonoBehaviour
                             _nextLevelName = null;
                             break;
                     }
-                    _seSources[1].Play();
+                    AudioSources[1].Play();
                 }
             }
             else
@@ -226,9 +216,9 @@ public class TitleSceneManager : MonoBehaviour
                     switch (_menuIndex)
                     {
                         case 0:
-                            _nextLevelName = "03_Hwanse";
+                            _nextLevelName = NAME_NEXT_SCENES[0];
                             _changeSceneRequested = true;
-                            fader.FadeOut(1);
+                            FadeManager.Instance.FadeOut();
                             break;
 
                         case 1:
@@ -239,7 +229,7 @@ public class TitleSceneManager : MonoBehaviour
                             _nextLevelName = null;
                             break;
                     }
-                    _seSources[1].Play();
+                    AudioSources[1].Play();
                 }
             }
         }
@@ -263,7 +253,7 @@ public class TitleSceneManager : MonoBehaviour
         prevItem.GetComponent<SpriteRenderer>().sprite = sprites[2 * _menuIndex + 1];
         nextItem.GetComponent<SpriteRenderer>().sprite = sprites[2 * index];
         _menuIndex = index;
-        _seSources[0].Play();
+        AudioSources[0].Play();
     }
     
     /// <summary>
@@ -284,11 +274,12 @@ public class TitleSceneManager : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("FadeManager로 대체될 것으로 보입니다.")]
+    [Obsolete("HDSceneManager에서 상속받아 쓰기로 했습니다.")]
     /// <summary>
-    /// 스크린 페이딩 관리자입니다.
+    /// 효과음 집합입니다.
     /// </summary>
-    public ScreenFader fader;
+    AudioSource[] _seSources;
+
 
     #endregion
 }

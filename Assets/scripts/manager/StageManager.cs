@@ -11,6 +11,16 @@ using System.Runtime.CompilerServices;
 /// </summary>
 public class StageManager : HDSceneManager
 {
+    #region 상수를 정의합니다.
+    /// <summary>
+    /// READY 애니메이션을 호출할 페이더 알파 값입니다.
+    /// </summary>
+    public float THRES_FADER_ALPHA =  0.2f;
+
+    #endregion
+
+
+
     #region Unity에서 접근 가능한 공용 객체를 정의합니다.
     /// <summary>
     /// 준비 애니메이션 관리자입니다.
@@ -43,11 +53,11 @@ public class StageManager : HDSceneManager
     /// <summary>
     /// 테스트 시간입니다.
     /// </summary>
-    public float test = 0.1f;
+    public float _testTimeSpeed = 0.1f;
     /// <summary>
     /// 테스트 대미지 값입니다.
     /// </summary>
-    public int TestDamageValue = 10;
+    public int _testDamageValue = 41;
 
     /// <summary>
     /// 적 캐릭터 집합의 부모 개체입니다.
@@ -195,9 +205,8 @@ public class StageManager : HDSceneManager
         get { return AudioSources[12]; }
     }
 
-
     /// <summary>
-    /// 
+    /// 재시작 플래그입니다.
     /// </summary>
     public bool Restarting
     {
@@ -277,7 +286,8 @@ public class StageManager : HDSceneManager
         }
 
         // 페이드인 효과를 처리합니다.
-        _fader.FadeIn();
+        ///_fader.FadeIn();
+        FadeManager.Instance.FadeIn();
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트 합니다.
@@ -287,17 +297,32 @@ public class StageManager : HDSceneManager
         // 게임이 종료된 후에 페이드 아웃까지 완료되면 새 장면으로 넘어갑니다.
         if (_gameEnded)
         {
+            /*
             if (_fader.FadeOutEnded)
             {
                 ///LoadingSceneManager.LoadLevel("CS03_GaiaFound");
-                LoadingSceneManager.LoadLevel("CS03_GaiaFound");
+            }
+            */
+
+            if (FadeManager.Instance.FadeOutEnded)
+            {
+                LoadingSceneManager.LoadLevel("GameEnd");
             }
 
             return;
         }
 
+        /*
         // 페이드 인 효과가 종료되는 시점에
         if (_fader.FadeInEnded)
+        {
+            // 준비 애니메이션 재생을 시작합니다.
+            PlayReadyAnimation();
+        }
+        */
+
+        // 페이드 인 효과가 종료되는 시점에
+        if (FadeManager.Instance.Alpha < THRES_FADER_ALPHA)
         {
             // 준비 애니메이션 재생을 시작합니다.
             PlayReadyAnimation();
@@ -307,7 +332,7 @@ public class StageManager : HDSceneManager
         if (Input.GetKeyDown(KeyCode.Q))
         {
             // 플레이 속도를 바꿉니다.
-            _timeManager.TimeScale = _timeManager.TimeScale == test ? 1 : test;
+            _timeManager.TimeScale = _timeManager.TimeScale == _testTimeSpeed ? 1 : _testTimeSpeed;
         }
         else if (Input.GetKeyDown(KeyCode.W))
         {

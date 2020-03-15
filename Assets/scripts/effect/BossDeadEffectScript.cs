@@ -10,6 +10,29 @@ using UnityEngine;
 /// </summary>
 public class BossDeadEffectScript : EffectScript
 {
+    #region 상수를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    public float SPEED_FADEIN_BOSS_EXPLOSION = 3f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float SPEED_FADEOUT_BOSS_EXPLOSION = 1f;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public float THRES_FADEIN_BOSS_EXPLOSION = 0.2f;
+    /// <summary>
+    /// 
+    /// </summary>
+    public float THRES_FADEOUT_BOSS_EXPLOSION = 0.9f;
+
+    #endregion
+
+
+
     #region 컨트롤러가 사용할 Unity 개체를 정의합니다.
     /// <summary>
     /// 스테이지 관리자입니다.
@@ -212,11 +235,15 @@ public class BossDeadEffectScript : EffectScript
         explosion.gameObject.SetActive(true);
 
         // 
-        ScreenFader fader = stageManager._fader;
-        fader.fadeSpeed = 0.2f;
-        fader.ChangeFadeTextureColor(1);
-        fader.ChangeFadeTextureColor(new Color(1, 1, 1, 0), Color.white, 0.5f);
-        fader.FadeOut();
+        ///ScreenFader fader = stageManager._fader;
+        ///fader.fadeSpeed = 0.2f;
+        ///fader.ChangeFadeTextureColor(1);
+        ///fader.ChangeFadeTextureColor(new Color(1, 1, 1, 0), Color.white, 0.5f);
+
+        FadeManager fader = FadeManager.Instance;
+        ///fader.ChangeFadeTextureColor(new Color(1, 1, 1, 0), Color.white, 0.5f);
+        fader._colorDst = Color.white;
+        fader.FadeOut(SPEED_FADEOUT_BOSS_EXPLOSION, THRES_FADEOUT_BOSS_EXPLOSION);
 
         // 
         while (ExplosionEnd() == false)
@@ -226,8 +253,8 @@ public class BossDeadEffectScript : EffectScript
         }
 
         // 
-        AudioSource se = stageManager.BossClearExplosionSoundEffect;
-        se.Play();
+        AudioSource clearExplosionSound = stageManager.BossClearExplosionSoundEffect;
+        clearExplosionSound.Play();
 
         // 
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
@@ -235,17 +262,16 @@ public class BossDeadEffectScript : EffectScript
         explosion.gameObject.SetActive(false);
 
         // 
-        fader.fadeSpeed = 1f;
-        fader.FadeIn();
-        while (fader.FadeInEnded == false || se.isPlaying)
+        fader.FadeIn(SPEED_FADEIN_BOSS_EXPLOSION, THRES_FADEIN_BOSS_EXPLOSION);
+        while (fader.FadeInEnded == false || clearExplosionSound.isPlaying)
         {
             yield return false;
         }
 
         // 사망이 끝났습니다.
-        fader.fadeSpeed = 3f;
-        fader.ChangeFadeTextureColor(0);
-        fader.ChangeFadeTextureColor(new Color(0, 0, 0, 0), Color.black, 0.95f);
+        fader.ResetToDefault();
+        ///fader._fadeSpeed = 3f;
+        ///fader.ChangeFadeTextureColor(new Color(0, 0, 0, 0), Color.black, 0.95f);
         stageManager.RequestClearStage();
         yield break;
     }
@@ -281,7 +307,9 @@ public class BossDeadEffectScript : EffectScript
     {
         if (_battleManager.DoesBattleEnd())
         {
-            return ScreenFader.Instance.FadeOutEnded;
+            ///return ScreenFader.Instance.FadeOutEnded;
+            ///return FadeManager.Instance.FadeOutEnded;
+            return FadeManager.Instance.Alpha >= THRES_FADEOUT_BOSS_EXPLOSION;
         }
         else
         {

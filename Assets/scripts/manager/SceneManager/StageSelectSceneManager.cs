@@ -7,21 +7,9 @@ using System.Collections;
 /// <summary>
 /// 스테이지 선택 화면 관리자입니다.
 /// </summary>
-public class StageSelectSceneManager : MonoBehaviour
+public class StageSelectSceneManager : HDSceneManager
 {
     #region Unity에서 접근 가능한 공용 필드를 정의합니다.
-    /// <summary>
-    /// 페이드 인/아웃 효과 관리자입니다.
-    /// </summary>
-    public ScreenFader _fader;
-
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public AudioClip[] _soundEffects;
-
-
     /// <summary>
     /// 
     /// </summary>
@@ -35,13 +23,7 @@ public class StageSelectSceneManager : MonoBehaviour
     /// </summary>
     public GameObject[] _stagePoints;
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -51,18 +33,11 @@ public class StageSelectSceneManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    AudioSource[] _seSources;
-
-
-    /// <summary>
-    /// 
-    /// </summary>
     int _cursorRow = 0;
     /// <summary>
     /// 
     /// </summary>
     int _cursorCol = 0;
-
 
     /// <summary>
     /// 
@@ -73,13 +48,7 @@ public class StageSelectSceneManager : MonoBehaviour
     /// </summary>
     string _nextLevelName;
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -89,39 +58,31 @@ public class StageSelectSceneManager : MonoBehaviour
     /// <summary>
     /// MonoBehaviour 개체를 초기화합니다.
     /// </summary>
-    void Start()
+    protected override void Start()
     {
-        // 사운드 이펙트 소스를 초기화합니다.
-        _seSources = new AudioSource[_soundEffects.Length];
-        for (int i = 0; i < _soundEffects.Length; ++i)
-        {
-            AudioSource seSource = gameObject.AddComponent<AudioSource>();
-            seSource.clip = _soundEffects[i];
-            _seSources[i] = seSource;
-        }
+        base.Start();
 
         // 
         ChangeItem(0, 0);
 
         // 
-        _fader.FadeIn();
+        FadeManager.Instance.FadeIn();
     }
-
     /// <summary>
-    /// 
+    /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트 합니다.
     /// </summary>
-    void Update()
+    protected override void Update()
     {
         if (_loading)
         {
-            if (_fader.FadeOutEnded)
+            if (FadeManager.Instance.FadeOutEnded)
             {
                 LoadingSceneManager.LoadLevel(_nextLevelName);
             }
             return;
         }
 
-
+        // 
         if (Input.anyKeyDown)
         {
             if (Input.GetButton("Attack"))
@@ -139,8 +100,7 @@ public class StageSelectSceneManager : MonoBehaviour
                 return;
             }
 
-
-
+            // 
             if (Input.GetKey(KeyCode.UpArrow))
             {
                 ChangeItem(-1, 0);
@@ -159,15 +119,16 @@ public class StageSelectSceneManager : MonoBehaviour
             }
         }
 
-
+        //
         foreach (GameObject stagePoint in _stagePoints)
         {
             Debug.DrawRay(_earth.transform.position, stagePoint.transform.position);
         }
     }
 
-
     #endregion
+
+
 
 
 
@@ -202,7 +163,7 @@ public class StageSelectSceneManager : MonoBehaviour
 
             // 회전 테스트
         }
-        _seSources[0].Play();
+        AudioSources[0].Play();
     }
     /// <summary>
     /// 
@@ -213,17 +174,16 @@ public class StageSelectSceneManager : MonoBehaviour
         return _cursorRow * 3 + _cursorCol;
     }
 
-
     /// <summary>
     /// Scene을 불러옵니다.
     /// </summary>
     void Load()
     {
         _loading = true;
-        _seSources[1].Play();
+        AudioSources[1].Play();
 
         // 페이드 아웃을 진행합니다.
-        _fader.FadeOut(1);
+        FadeManager.Instance.FadeOut();
     }
     /// <summary>
     /// Scene을 불러옵니다.
@@ -232,14 +192,13 @@ public class StageSelectSceneManager : MonoBehaviour
     void Load(string levelName)
     {
         _loading = true;
-        _seSources[1].Play();
+        AudioSources[1].Play();
 
         _nextLevelName = levelName;
 
         // 페이드 아웃을 진행합니다.
-        _fader.FadeOut(1);
+        FadeManager.Instance.FadeOut();
     }
-
 
     #endregion
 }

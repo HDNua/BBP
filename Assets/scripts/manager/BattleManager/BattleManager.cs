@@ -403,6 +403,18 @@ public abstract class BattleManager : MonoBehaviour
 
 
 
+    #region 디버깅 필드 및 메서드를 정의합니다.
+    /// <summary>
+    /// 디버깅 선의 길이입니다.
+    /// </summary>
+    public float _debugRayLength = 40f;
+
+    #endregion
+
+
+
+
+
     #region 구형 정의를 보관합니다.
 
     #endregion

@@ -83,7 +83,7 @@ public class StageManager1P : StageManager
     /// </summary>
     protected override void HurtPlayer()
     {
-        _player.Hurt(TestDamageValue, null);
+        _player.Hurt(_testDamageValue, null);
     }
 
     /// <summary>
@@ -165,7 +165,8 @@ public class StageManager1P : StageManager
 
         //
         GameEnded = true;
-        _fader.FadeOut();
+        ///_fader.FadeOut();
+        FadeManager.Instance.FadeOut();
         yield break;
     }
     

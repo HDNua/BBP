@@ -3297,10 +3297,6 @@ public class HwanseBattleManager : BattleManager
     /// 패턴 코루틴입니다.
     /// </summary>
     Coroutine _coroutineSmashuPattern;
-    /// <summary>
-    /// 행동 코루틴입니다.
-    /// </summary>
-    Coroutine _subcoroutineSmashuAction;
 
     /// <summary>
     /// 스마슈 개체를 파괴합니다.
@@ -3670,13 +3666,7 @@ public class HwanseBattleManager : BattleManager
 
 
 
-    #region 구형 정의를 보관합니다.
-    [Obsolete("8방향 검사를 위해 사용했는데 앞으로 BattleManager로 옮길 것 같습니다.")]
-    /// <summary>
-    /// 디버깅 선의 길이입니다.
-    /// </summary>
-    public float _debugRayLength = 40f;
-
+    #region 디버깅 필드와 메서드를 정의합니다.
     /// <summary>
     /// 테스트 플래그입니다.
     /// </summary>
@@ -3686,6 +3676,19 @@ public class HwanseBattleManager : BattleManager
     /// </summary>
     public bool _testHurt = true;
 
+    #endregion
+
+
+
+
+
+    #region 구형 정의를 보관합니다.
+
+    [Obsolete("아무래도 안 쓸 것 같습니다.")]
+    /// <summary>
+    /// 행동 코루틴입니다.
+    /// </summary>
+    Coroutine _subcoroutineSmashuAction;
     [Obsolete("아무래도 안 쓸 것 같습니다.")]
     /// <summary>
     /// 행동 코루틴입니다.

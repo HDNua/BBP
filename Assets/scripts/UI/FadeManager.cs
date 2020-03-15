@@ -34,6 +34,11 @@ public class FadeManager : MonoBehaviour
     /// </summary>
     public Color _colorDst = Color.black;
     /// <summary>
+    /// 기본 페이딩 목적 색상입니다. Fader는 기본으로 black입니다.
+    /// </summary>
+    public Color _defaultColorDst = Color.black;
+
+    /// <summary>
     /// 페이딩 시작 임계점입니다.
     /// </summary>
     public float _thresholdSrc = 0.01f;
@@ -43,9 +48,22 @@ public class FadeManager : MonoBehaviour
     public float _thresholdDst = 0.99f;
 
     /// <summary>
-    /// 페이드 인/아웃 속도입니다.
+    /// 페이드 인 속도입니다. 통상적으로 페이드 아웃의 1/3입니다.
     /// </summary>
-    public float _fadeSpeed = 1.5f;
+    public float _fadeInSpeed = 1f;
+    /// <summary>
+    /// 페이드 아웃 속도입니다. 통상적으로 페이드 인의 3배입니다.
+    /// </summary>
+    public float _fadeOutSpeed = 3f;
+    /// <summary>
+    /// 기본 페이드 인 속도입니다. 통상적으로 페이드 아웃의 1/3입니다.
+    /// </summary>
+    public float _defaultFadeInSpeed = 1f;
+    /// <summary>
+    /// 기본 페이드 아웃 속도입니다. 통상적으로 페이드 인의 3배입니다.
+    /// </summary>
+    public float _defaultFadeOutSpeed = 3f;
+
 
     /// <summary>
     /// 페이드 인이 요청되었다면 참입니다.
@@ -64,6 +82,11 @@ public class FadeManager : MonoBehaviour
     /// 페이드 아웃이 끝났다면 참입니다.
     /// </summary>
     public bool FadeOutEnded { get { return (_faderPanel.color == _colorDst); } }
+
+    /// <summary>
+    /// 페이더 알파 값입니다.
+    /// </summary>
+    public float Alpha { get { return _faderPanel.color.a; } }
 
     #endregion
 
@@ -155,14 +178,14 @@ public class FadeManager : MonoBehaviour
     /// </summary>
     void FadeToClear()
     {
-        _faderPanel.color = Color.Lerp(_faderPanel.color, Color.clear, _fadeSpeed * Time.deltaTime);
+        _faderPanel.color = Color.Lerp(_faderPanel.color, Color.clear, _fadeInSpeed * Time.deltaTime);
     }
     /// <summary>
     /// 페이드아웃 효과를 한 단계 진행합니다.
     /// </summary>
     void FadeToDestination()
     {
-        _faderPanel.color = Color.Lerp(_faderPanel.color, _colorDst, _fadeSpeed * Time.deltaTime);
+        _faderPanel.color = Color.Lerp(_faderPanel.color, _colorDst, _fadeOutSpeed * Time.deltaTime);
     }
 
     /// <summary>
@@ -174,12 +197,16 @@ public class FadeManager : MonoBehaviour
         _fadeOutRequested = false;
     }
     /// <summary>
-    /// 페이드인 효과를 처리합니다.
+    /// 페이드 인 효과를 처리합니다.
     /// </summary>
-    /// <param name="fadeSpeed">페이드인 속도입니다.</param>
-    public void FadeIn(float fadeSpeed)
+    /// <param name="fadeSpeed">페이드 인 속도입니다.</param>
+    public void FadeIn(float fadeSpeed, float thresSrc = 0)
     {
-        _fadeSpeed = fadeSpeed;
+        _fadeInSpeed = fadeSpeed;
+        if (thresSrc != 0)
+        {
+            _thresholdSrc = thresSrc;
+        }
         FadeIn();
     }
     /// <summary>
@@ -194,10 +221,24 @@ public class FadeManager : MonoBehaviour
     /// 페이드아웃 효과를 처리합니다.
     /// </summary>
     /// <param name="fadeSpeed">페이드아웃 속도입니다.</param>
-    public void FadeOut(float fadeSpeed)
+    public void FadeOut(float fadeSpeed, float thresDst = 0)
     {
-        _fadeSpeed = fadeSpeed;
+        _fadeOutSpeed = fadeSpeed;
+        if (thresDst != 0)
+        {
+            _thresholdDst = thresDst;
+        }
         FadeOut();
+    }
+
+    /// <summary>
+    /// 페이더를 초기화합니다.
+    /// </summary>
+    public void ResetToDefault()
+    {
+        _fadeInSpeed = _defaultFadeInSpeed;
+        _fadeOutSpeed = _defaultFadeOutSpeed;
+        _colorDst = _defaultColorDst;
     }
 
     /// <summary>
@@ -229,6 +270,11 @@ public class FadeManager : MonoBehaviour
         _colorDst = colorDst;
         _thresholdDst = thresDst;
     }
+    [Obsolete("_fadeInSpeed, _fadeOutSpeed로 대체되었습니다.")]
+    /// <summary>
+    /// 페이드 인/아웃 속도입니다.
+    /// </summary>
+    public float _fadeSpeed = 1.5f;
 
     #endregion
 }

@@ -100,7 +100,7 @@ public class StageManager2P : StageManager
     {
         foreach (var player in _players)
         {
-            player.Hurt(TestDamageValue, null);
+            player.Hurt(_testDamageValue, null);
         }
     }
 
@@ -116,7 +116,7 @@ public class StageManager2P : StageManager
     /// </summary>
     protected override IEnumerator CoroutineClearStage()
     {
-        // 다음 커밋에서 삭제할 예정입니다.
+        // 다음 커밋에서 삭제할 예정입니다.... 왜?
         AudioSource audioSource = AudioSources[5];
         audioSource.Play();
         while (audioSource.isPlaying)
@@ -164,7 +164,8 @@ public class StageManager2P : StageManager
         //
         GameEnded = true;
         
-        _fader.FadeOut();
+        ///_fader.FadeOut();
+        FadeManager.Instance.FadeOut();
         yield break;
     }
 

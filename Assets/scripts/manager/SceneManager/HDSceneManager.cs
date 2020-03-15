@@ -15,6 +15,11 @@ public class HDSceneManager : MonoBehaviour
     /// </summary>
     public AudioClip[] _audioClips;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public string[] NAME_NEXT_SCENES;
+
     #endregion
 
 
@@ -22,13 +27,6 @@ public class HDSceneManager : MonoBehaviour
 
 
     #region 프로퍼티를 정의합니다.
-    /// <summary>
-    /// Scene에서 사용할 메인 카메라입니다.
-    /// </summary>
-    public Camera MainCamera
-    {
-        get { return Camera.main; }
-    }
 
     #endregion
 
@@ -89,11 +87,14 @@ public class HDSceneManager : MonoBehaviour
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("FadeManager로 대체될 것입니다.")]
+    [Obsolete("다 그냥 Camera.main 직접 쓰더라구요.")]
     /// <summary>
-    /// 페이드 인/아웃 효과를 담당하는 개체입니다.
+    /// Scene에서 사용할 메인 카메라입니다.
     /// </summary>
-    public ScreenFader _fader;
+    public Camera MainCamera
+    {
+        get { return Camera.main; }
+    }
 
     #endregion
 }

@@ -967,12 +967,22 @@ public abstract class PlayerController : MonoBehaviour
         // 사망했다면
         else if (IsDead)
         {
+            /*
             // 페이더가 종료되는 경우에
             if (_stageManager._fader.FadeOutEnded)
             {
                 // 스테이지를 재시작합니다.
                 RequestRestart();
             }
+            */
+
+            // 페이더가 종료되는 경우에
+            if (FadeManager.Instance.FadeOutEnded)
+            {
+                // 스테이지를 재시작합니다.
+                RequestRestart();
+            }
+
             return false;
         }
         // 사망 직전이라면
@@ -1377,10 +1387,13 @@ public abstract class PlayerController : MonoBehaviour
     /// <summary>
     /// 페이드 아웃을 요청합니다.
     /// </summary>
-    void RequestFadeOut()
+    /// <param name="fadeOutTime">페이드 아웃 시간입니다.</param>
+    void RequestFadeOut(float fadeOutTime)
     {
-        _stageManager._fader.FadeOut(1);
-        Invoke("RequestRestart", 1);
+        ///_stageManager._fader.FadeOut(1);
+        ///Invoke("RequestRestart", 1);
+        FadeManager.Instance.FadeOut(fadeOutTime);
+        Invoke("RequestRestart", fadeOutTime);
     }
     /// <summary>
     /// 재시작을 요청합니다.

@@ -348,22 +348,22 @@ public class XController : PlayerController
         else if (Input.GetKeyDown(KeyCode.A))
         {
             ChangeWeapon(_weaponState == 5 ? _defaultWeaponState : 5);
-            Shot();
+            //Shot();
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
             ChangeWeapon(_weaponState == 6 ? _defaultWeaponState : 6);
-            Shot();
+            //Shot();
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
             ChangeWeapon(_weaponState == 7 ? _defaultWeaponState : 7);
-            Shot();
+            //Shot();
         }
         else if (Input.GetKeyDown(KeyCode.V))
         {
             ChangeWeapon(_weaponState == 8 ? _defaultWeaponState : 8);
-            Shot();
+            //Shot();
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -729,12 +729,16 @@ public class XController : PlayerController
         // 탄환 객체 인덱스입니다.
         int bulletIndex = -1;
         int bulletSoundEffectIndex = -1;
+
+        /*
         if (_weaponState != _defaultWeaponState)
         {
             bulletIndex = _weaponState - _defaultWeaponState + 2;
             bulletSoundEffectIndex = 2;
         }
-        else if (_chargeTime < CHARGE_LEVEL[1])
+        else 
+        */
+        if (_chargeTime < CHARGE_LEVEL[1])
         {
             // 탄환 객체 인덱스를 업데이트합니다.
             bulletIndex = 0;

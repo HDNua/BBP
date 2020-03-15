@@ -21,14 +21,17 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     /// 방어 시간입니다.
     /// </summary>
     public float TIME_GUARD = 3f;
+
     /// <summary>
     /// 수경 행동 시간입니다.
     /// </summary>
     public float TIME_SUKYEONG_RUN = 1f;
+
     /// <summary>
     /// 대폭진 행동 시간입니다.
     /// </summary>
     public float TIME_DAEPOKJIN_RUN = 1f;
+    public float[] TIME_DAEPOKJIN_ICE_INTERVAL = { 0.20f, 0.40f, 0.60f, 0.80f, 1.00f, 1.20f, 1.40f };
 
     /// <summary>
     /// 영상뢰화 간격입니다.
@@ -803,7 +806,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     #endregion
 
 
-
+    public float _dx = 2f;
 
 
     #region "대폭진" 행동을 정의합니다.
@@ -853,21 +856,23 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         yield return false;
         RunAction();
 
-        // 
+        // 바닥을 찍을 준비를 합니다.
         while (IsAnimatorInState("DaepokjinBeg"))
         {
             yield return false;
         }
 
-        // 
+        // 바닥을 찍습니다.
         SoundEffects[6].Play();
         while (IsAnimatorInState("DaepokjinRun"))
         {
             yield return false;
         }
 
-        // 
+        // 일정한 시간 간격으로 바닥에 가시를 생성합니다.
         float time = 0;
+        bool[] isDaepokjinIceGenerated = { false, false, false, false, false, false, false };
+        Vector3 newIcePosition = transform.position;
         while (IsAnimatorInState("DaepokjinEnd"))
         {
             yield return false;
@@ -875,12 +880,92 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             {
                 break;
             }
+            else if (time >= TIME_DAEPOKJIN_ICE_INTERVAL[6])
+            {
+                if (isDaepokjinIceGenerated[6] == false)
+                {
+                    newIcePosition.x += _dx;
+                    Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
+                    MakeIce(newIceBulletTransform);
+                    isDaepokjinIceGenerated[6] = true;
+                }
+            }
+            else if (time >= TIME_DAEPOKJIN_ICE_INTERVAL[5])
+            {
+                if (isDaepokjinIceGenerated[5] == false)
+                {
+                    newIcePosition.x += _dx;
+                    Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
+                    MakeIce(newIceBulletTransform);
+                    isDaepokjinIceGenerated[5] = true;
+                }
+            }
+            else if (time >= TIME_DAEPOKJIN_ICE_INTERVAL[4])
+            {
+                if (isDaepokjinIceGenerated[4] == false)
+                {
+                    newIcePosition.x += _dx;
+                    Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
+                    MakeIce(newIceBulletTransform);
+                    isDaepokjinIceGenerated[4] = true;
+                }
+            }
+            else if (time >= TIME_DAEPOKJIN_ICE_INTERVAL[3])
+            {
+                if (isDaepokjinIceGenerated[3] == false)
+                {
+                    newIcePosition.x += _dx;
+                    Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
+                    MakeIce(newIceBulletTransform);
+                    isDaepokjinIceGenerated[3] = true;
+                }
+            }
+            else if (time >= TIME_DAEPOKJIN_ICE_INTERVAL[2])
+            {
+                if (isDaepokjinIceGenerated[2] == false)
+                {
+                    newIcePosition.x += _dx;
+                    Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
+                    MakeIce(newIceBulletTransform);
+                    isDaepokjinIceGenerated[2] = true;
+                }
+            }
+            else if (time >= TIME_DAEPOKJIN_ICE_INTERVAL[1])
+            {
+                if (isDaepokjinIceGenerated[1] == false)
+                {
+                    newIcePosition.x += _dx;
+                    Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
+                    MakeIce(newIceBulletTransform);
+                    isDaepokjinIceGenerated[1] = true;
+                }
+            }
+            else if (time >= TIME_DAEPOKJIN_ICE_INTERVAL[0])
+            {
+                if (isDaepokjinIceGenerated[0] == false)
+                {
+                    newIcePosition.x += _dx;
+                    Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
+                    MakeIce(newIceBulletTransform);
+                    isDaepokjinIceGenerated[0] = true;
+                }
+            }
             time += Time.deltaTime;
         }
 
         // 
         StopDaepokjin();
         yield break;
+    }
+
+    /// <summary>
+    /// 대폭진 얼음을 생성합니다.
+    /// </summary>
+    /// <param name="position">대폭진 얼음을 생성할 위치입니다.</param>
+    void MakeIce(Transform transform)
+    {
+        Instantiate(_bulletUnits[1], transform.position, transform.rotation);
+        Destroy(transform.gameObject);
     }
 
     #endregion
@@ -1026,6 +1111,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             yield return false;
         }
         Jump();
+        LandBlocked = true;
         time = 0;
         Velocity = Vector2.zero;
         Vector3 position = transform.position;
@@ -1122,6 +1208,17 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         yield break;
     }
 
+    /// <summary>
+    /// 영상뢰화 번개를 생성합니다.
+    /// </summary>
+    /// <param name="position">영상뢰화 번개를 생성할 위치입니다.</param>
+    void MakeLightning(Transform transform)
+    {
+        ///Instantiate(_effects[2], transform.position, transform.rotation);
+        Instantiate(_bulletUnits[0], transform.position, transform.rotation);
+        Destroy(transform.gameObject);
+    }
+
     #endregion
 
 
@@ -1130,10 +1227,10 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
 
     #region 보조 메서드를 정의합니다.
     /// <summary>
-    /// 
+    /// 공격 위치를 구합니다.
     /// </summary>
-    /// <param name="startPosition"></param>
-    /// <returns></returns>
+    /// <param name="startPosition">공격 시작 위치입니다.</param>
+    /// <returns>바닥과 맞닿은 새 공격 위치를 반환합니다.</returns>
     Transform GetAttackTransform(Vector3 startPosition)
     {
         Vector2 startPos = new Vector2(startPosition.x, startPosition.y);
@@ -1144,15 +1241,6 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         GameObject gameObject = new GameObject();
         gameObject.transform.position = new Vector3(ray.point.x, ray.point.y);
         return gameObject.transform;
-    }
-    /// <summary>
-    /// 영상뢰화 번개를 생성합니다.
-    /// </summary>
-    /// <param name="position">영상뢰화 번개를 생성할 위치입니다.</param>
-    void MakeLightning(Transform transform)
-    {
-        Instantiate(_effects[2], transform.position, transform.rotation);
-        Destroy(transform.gameObject);
     }
 
     #endregion

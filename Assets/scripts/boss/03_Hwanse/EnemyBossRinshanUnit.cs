@@ -28,10 +28,27 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     public float TIME_SUKYEONG_RUN = 1f;
 
     /// <summary>
+    /// 수경이 아타호 근처에 생성되는 거리입니다.
+    /// </summary>
+    public float DIST_SUKYEONG_CREATE  = 1f;
+
+    /// <summary>
     /// 대폭진 행동 시간입니다.
     /// </summary>
     public float TIME_DAEPOKJIN_RUN = 1f;
+    /// <summary>
+    /// 대폭진 얼음이 솟아나는 시간 간격입니다.
+    /// </summary>
     public float[] TIME_DAEPOKJIN_ICE_INTERVAL = { 0.20f, 0.40f, 0.60f, 0.80f, 1.00f, 1.20f, 1.40f };
+
+    /// <summary>
+    /// 영상뢰화 점프 시간입니다.
+    /// </summary>
+    public float TIME_ROIHWA_JUMP = 0.6f;
+    /// <summary>
+    /// 영상뢰화 점프 높이입니다.
+    /// </summary>
+    public float DIST_ROIHWA_JUMP_HEIGHT = 3f;
 
     /// <summary>
     /// 영상뢰화 간격입니다.
@@ -41,6 +58,41 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     /// 영상뢰화가 끝나는 시간입니다.
     /// </summary>
     public float TIME_ROIHWA_END = 1f;
+
+    /// <summary>
+    /// 대폭진 얼음이 생성되는 X축 간격입니다.
+    /// </summary>
+    public float DIST_DAEPOKJIN_ICE_INTERVAL = 2f;
+
+    #endregion
+
+
+
+    #region 효과음을 정의합니다.
+    /// <summary>
+    /// 효과음 인덱스입니다.
+    /// </summary>
+    public enum SoundEffect
+    {
+        Appear,
+        Whoosh,
+        ThunderWarning,
+        Jump,
+        Land,
+        Thunder,
+        Daepokjin,
+        CriticalHit,
+        CriticalPure,
+    }
+    /// <summary>
+    /// 탄환 타입입니다.
+    /// </summary>
+    public enum Bullet
+    {
+        Sukyeong,
+        Daepokjin,
+        Roihwa,
+    }
 
     #endregion
 
@@ -108,7 +160,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     void Land()
     {
         _Groundable.Land();
-        SoundEffects[4].Play();
+        PlaySoundEffect(SoundEffect.Land);
     }
     /// <summary>
     /// 점프합니다.
@@ -117,9 +169,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     {
         ///_Groundable.Jump();
         Jumping = true;
-        Landed = false;
-        LandBlocked = true;
-        SoundEffects[3].Play();
+        PlaySoundEffect(SoundEffect.Jump);
     }
     /// <summary>
     /// 낙하합니다.
@@ -127,7 +177,6 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     void Fall()
     {
         _Groundable.Fall();
-        Landed = false;
     }
 
     /// <summary>
@@ -416,7 +465,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         // 착지 완료 후 왼쪽에서 보스 문을 박차고 들어옵니다.
         // 소환 후 등장 지점까지 이동합니다.
         Velocity = new Vector2(v0, 0);
-        SoundEffects[0].Play();
+        PlaySoundEffect(SoundEffect.Appear);
 
         bool explosionOn = false;
         Vector3 doorPos = _BattleManager._bossRoomDoor.transform.position;
@@ -785,6 +834,30 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         }
 
         // 
+        SoundEffects[(int)SoundEffect.CriticalPure].volume = 0.5f;
+        PlaySoundEffect(SoundEffect.CriticalPure);
+        EnemyBossAtahoUnit atahoUnit = HwanseBattleManager.Instance._atahoUnit;
+
+        Vector3 pos1 = atahoUnit.transform.position;
+        Vector3 pos2 = atahoUnit.transform.position;
+        pos1.x -= DIST_SUKYEONG_CREATE;
+        pos2.x += DIST_SUKYEONG_CREATE;
+        //Vector3 pos1 = new Vector3(-DIST_SUKYEONG_CREATE, 0);
+        //Vector3 pos2 = new Vector3(DIST_SUKYEONG_CREATE, 0);
+        GameObject sukyeongBulletObject1 = Instantiate(
+            _bulletUnits[2].gameObject, 
+            pos1,
+            atahoUnit.transform.rotation,
+            atahoUnit.transform
+            );
+        GameObject sukyeongBulletObject2 = Instantiate(
+            _bulletUnits[2].gameObject,
+            pos2,
+            atahoUnit.transform.rotation,
+            atahoUnit.transform
+            );
+
+        // 
         float time = 0;
         while (IsAnimatorInState("SukyeongRun"))
         {
@@ -806,7 +879,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     #endregion
 
 
-    public float _dx = 2f;
+
 
 
     #region "대폭진" 행동을 정의합니다.
@@ -863,7 +936,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         }
 
         // 바닥을 찍습니다.
-        SoundEffects[6].Play();
+        PlaySoundEffect(SoundEffect.Daepokjin);
         while (IsAnimatorInState("DaepokjinRun"))
         {
             yield return false;
@@ -884,7 +957,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             {
                 if (isDaepokjinIceGenerated[6] == false)
                 {
-                    newIcePosition.x += _dx;
+                    newIcePosition.x += DIST_DAEPOKJIN_ICE_INTERVAL;
                     Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
                     MakeIce(newIceBulletTransform);
                     isDaepokjinIceGenerated[6] = true;
@@ -894,7 +967,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             {
                 if (isDaepokjinIceGenerated[5] == false)
                 {
-                    newIcePosition.x += _dx;
+                    newIcePosition.x += DIST_DAEPOKJIN_ICE_INTERVAL;
                     Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
                     MakeIce(newIceBulletTransform);
                     isDaepokjinIceGenerated[5] = true;
@@ -904,7 +977,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             {
                 if (isDaepokjinIceGenerated[4] == false)
                 {
-                    newIcePosition.x += _dx;
+                    newIcePosition.x += DIST_DAEPOKJIN_ICE_INTERVAL;
                     Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
                     MakeIce(newIceBulletTransform);
                     isDaepokjinIceGenerated[4] = true;
@@ -914,7 +987,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             {
                 if (isDaepokjinIceGenerated[3] == false)
                 {
-                    newIcePosition.x += _dx;
+                    newIcePosition.x += DIST_DAEPOKJIN_ICE_INTERVAL;
                     Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
                     MakeIce(newIceBulletTransform);
                     isDaepokjinIceGenerated[3] = true;
@@ -924,7 +997,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             {
                 if (isDaepokjinIceGenerated[2] == false)
                 {
-                    newIcePosition.x += _dx;
+                    newIcePosition.x += DIST_DAEPOKJIN_ICE_INTERVAL;
                     Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
                     MakeIce(newIceBulletTransform);
                     isDaepokjinIceGenerated[2] = true;
@@ -934,7 +1007,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             {
                 if (isDaepokjinIceGenerated[1] == false)
                 {
-                    newIcePosition.x += _dx;
+                    newIcePosition.x += DIST_DAEPOKJIN_ICE_INTERVAL;
                     Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
                     MakeIce(newIceBulletTransform);
                     isDaepokjinIceGenerated[1] = true;
@@ -944,7 +1017,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             {
                 if (isDaepokjinIceGenerated[0] == false)
                 {
-                    newIcePosition.x += _dx;
+                    newIcePosition.x += DIST_DAEPOKJIN_ICE_INTERVAL;
                     Transform newIceBulletTransform = GetAttackTransform(newIcePosition);
                     MakeIce(newIceBulletTransform);
                     isDaepokjinIceGenerated[0] = true;
@@ -1034,17 +1107,17 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         {
             yield return false;
         }
-        SoundEffects[1].Play();
+        PlaySoundEffect(SoundEffect.Whoosh);
 
         // 팔 흔들기 2입니다.
         while (IsAnimatorInState("Roihwa4") == false)
         {
             yield return false;
         }
-        SoundEffects[1].Play();
+        PlaySoundEffect(SoundEffect.Whoosh);
 
         // 번개가 내리칠 지점에 효과를 생성합니다.
-        SoundEffects[2].Play();
+        PlaySoundEffect(SoundEffect.ThunderWarning);
         attackTransforms[0] = GetAttackTransform(_BattleManager.RoihwaPositions[0]);
         Instantiate(_effects[1], attackTransforms[0].position, attackTransforms[0].rotation);
 
@@ -1053,17 +1126,17 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         {
             yield return false;
         }
-        SoundEffects[1].Play();
+        PlaySoundEffect(SoundEffect.Whoosh);
 
         // 팔 흔들기 2입니다.
         while (IsAnimatorInState("Roihwa4 0") == false)
         {
             yield return false;
         }
-        SoundEffects[1].Play();
+        PlaySoundEffect(SoundEffect.Whoosh);
 
         // 번개가 내리칠 지점에 효과를 생성합니다.
-        SoundEffects[2].Play();
+        PlaySoundEffect(SoundEffect.ThunderWarning);
         attackTransforms[1] = GetAttackTransform(_BattleManager.RoihwaPositions[1]);
         Instantiate(_effects[1], attackTransforms[1].position, attackTransforms[1].rotation);
 
@@ -1072,10 +1145,10 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         {
             yield return false;
         }
-        SoundEffects[1].Play();
+        PlaySoundEffect(SoundEffect.Whoosh);
 
         // 번개가 내리칠 지점에 효과를 생성합니다.
-        SoundEffects[2].Play();
+        PlaySoundEffect(SoundEffect.ThunderWarning);
         attackTransforms[2] = GetAttackTransform(_BattleManager.RoihwaPositions[2]);
         Instantiate(_effects[1], attackTransforms[2].position, attackTransforms[2].rotation);
 
@@ -1084,10 +1157,10 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         {
             yield return false;
         }
-        SoundEffects[1].Play();
+        PlaySoundEffect(SoundEffect.Whoosh);
 
         // 번개가 내리칠 지점에 효과를 생성합니다.
-        SoundEffects[2].Play();
+        PlaySoundEffect(SoundEffect.ThunderWarning);
         attackTransforms[3] = GetAttackTransform(_BattleManager.RoihwaPositions[3]);
         Instantiate(_effects[1], attackTransforms[3].position, attackTransforms[3].rotation);
 
@@ -1096,11 +1169,11 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         {
             yield return false;
         }
-        SoundEffects[1].Play();
+        PlaySoundEffect(SoundEffect.Whoosh);
 
         // 번개가 내리칠 지점에 효과를 생성합니다.
         // 마지막 한 발만큼은 플레이어의 X 좌표를 가리키게 합시다.
-        SoundEffects[2].Play();
+        PlaySoundEffect(SoundEffect.ThunderWarning);
         Vector3 attackPosition = new Vector3(_StageManager.GetCurrentPlayerPosition().x, _BattleManager.RoihwaPositions[4].y);
         attackTransforms[4] = GetAttackTransform(attackPosition);
         Instantiate(_effects[1], attackTransforms[4].position, attackTransforms[4].rotation);
@@ -1110,6 +1183,8 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         {
             yield return false;
         }
+
+        // 점프 동작을 시작합니다.
         Jump();
         LandBlocked = true;
         time = 0;
@@ -1119,10 +1194,14 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         float vy0 = _Groundable._jumpSpeed;
         float vy = vy0;
         bool[] lightningOccurred = { false, false, false, false, false };
+        float baseY = transform.position.y;
+        float arcTopTime = 0.5f * TIME_ROIHWA_JUMP;
+        float g = 2 * DIST_ROIHWA_JUMP_HEIGHT / (arcTopTime * arcTopTime);
         while (IsAnimatorInState("Roihwa13"))
         {
             yield return false;
             float dt = Time.deltaTime;
+            time = Mathf.Clamp(time + dt, 0, TIME_ROIHWA_JUMP);
 
             // 
             if (time < TIME_ROIHWA_INTERVAL[0])
@@ -1166,7 +1245,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
                 }
             }
 
-            // 
+            /*
             position = transform.position;
 
             // 
@@ -1186,6 +1265,36 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
             else if (ds <= 0)
             {
                 Fall();
+                LandBlocked = false;
+            }
+            */
+
+            //
+            float arcParamT = time - arcTopTime;
+
+            // Compute the next position, with arc added in
+            float arcY = DIST_ROIHWA_JUMP_HEIGHT - 0.5f * g * arcParamT * arcParamT;
+            float h = Mathf.Clamp(arcY, 0, DIST_ROIHWA_JUMP_HEIGHT);
+            Vector3 nextPos = new Vector3(transform.position.x, baseY + h, transform.position.z);
+
+            // Rotate to face the next position, and then move there
+            if (transform.position.y > nextPos.y)
+            {
+                Fall();
+            }
+            ///Debug.Log(nextPos.y - transform.position.y);
+            transform.position = nextPos;
+            ///Debug.Log(transform.position);
+
+            // Do something when we reach the target
+            if (LandBlocked == false && Landed)
+            {
+                LandBlocked = false;
+                Land();
+                break;
+            }
+            else if (time > arcTopTime)
+            {
                 LandBlocked = false;
             }
         }
@@ -1226,6 +1335,14 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
 
 
     #region 보조 메서드를 정의합니다.
+    /// <summary>
+    /// 효과음을 재생합니다.
+    /// </summary>
+    /// <param name="seIndex">재생할 효과음의 인덱스입니다.</param>
+    public void PlaySoundEffect(SoundEffect seIndex)
+    {
+        SoundEffects[(int)seIndex].Play();
+    }
     /// <summary>
     /// 공격 위치를 구합니다.
     /// </summary>

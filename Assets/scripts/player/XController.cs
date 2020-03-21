@@ -1205,7 +1205,10 @@ public class XController : PlayerController
     protected override void Spawn()
     {
         base.Spawn();
-        SoundEffects[0].Play();
+
+        /// 최적화를 위해 플레이어가 먼저 소환되어 있으므로 소리 재생을 이 때 하면 안 됩니다.
+        ///SoundEffects[0].Play();
+        ///
     }
     /// <summary>
     /// 플레이어가 지상에 착륙할 때의 상태를 설정합니다.

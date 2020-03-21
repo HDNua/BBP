@@ -143,11 +143,26 @@ public class TitleSceneManager : HDSceneManager
                     {
                         case 0:
                             _nextLevelName = NAME_NEXT_SCENES[0];
+                            GameManager.Instance.Difficulty = 0;
                             _changeSceneRequested = true;
                             FadeManager.Instance.FadeOut();
                             break;
 
                         case 1:
+                            _nextLevelName = NAME_NEXT_SCENES[1];
+                            GameManager.Instance.Difficulty = 1;
+                            _changeSceneRequested = true;
+                            FadeManager.Instance.FadeOut();
+                            break;
+
+                        case 2:
+                            _nextLevelName = NAME_NEXT_SCENES[2];
+                            GameManager.Instance.Difficulty = 2;
+                            _changeSceneRequested = true;
+                            FadeManager.Instance.FadeOut();
+                            break;
+
+                        case 3:
                             Application.Quit();
                             break;
 
@@ -217,11 +232,26 @@ public class TitleSceneManager : HDSceneManager
                     {
                         case 0:
                             _nextLevelName = NAME_NEXT_SCENES[0];
+                            GameManager.Instance.Difficulty = 0;
                             _changeSceneRequested = true;
                             FadeManager.Instance.FadeOut();
                             break;
 
                         case 1:
+                            _nextLevelName = NAME_NEXT_SCENES[1];
+                            GameManager.Instance.Difficulty = 1;
+                            _changeSceneRequested = true;
+                            FadeManager.Instance.FadeOut();
+                            break;
+
+                        case 2:
+                            _nextLevelName = NAME_NEXT_SCENES[2];
+                            GameManager.Instance.Difficulty = 2;
+                            _changeSceneRequested = true;
+                            FadeManager.Instance.FadeOut();
+                            break;
+
+                        case 3:
                             Application.Quit();
                             break;
 

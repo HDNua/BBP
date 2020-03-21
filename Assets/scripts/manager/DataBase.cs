@@ -79,13 +79,12 @@ public class DataBase : MonoBehaviour
     }
 
     #endregion
-    
+
 
 
 
 
     #region 필드를 정의합니다.
-
 
     #endregion
 

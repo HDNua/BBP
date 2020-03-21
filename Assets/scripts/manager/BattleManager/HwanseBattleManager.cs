@@ -93,6 +93,11 @@ public class HwanseBattleManager : BattleManager
 
     #region 컨트롤러가 사용할 Unity 개체에 대한 참조를 보관합니다.
     /// <summary>
+    /// 난이도 별로 나눈 아타호 보스 프리팹입니다.
+    /// </summary>
+    public EnemyBossAtahoUnit[] _atahoPrefabs;
+
+    /// <summary>
     /// 아타호 적 보스 유닛입니다.
     /// </summary>
     public EnemyBossAtahoUnit _atahoUnit;
@@ -104,6 +109,23 @@ public class HwanseBattleManager : BattleManager
     /// 스마슈 유닛입니다.
     /// </summary>
     public EnemyBossSmashuUnit _smashuUnit;
+
+    #endregion
+
+
+
+    #region 프로퍼티를 정의합니다.
+    /// <summary>
+    /// 전투 관리자입니다.
+    /// </summary>
+    public static new HwanseBattleManager Instance
+    {
+        get
+        {
+            return GameObject.FindGameObjectWithTag("BattleManager")
+                .GetComponent<HwanseBattleManager>();
+        }
+    }
 
     #endregion
 
@@ -248,8 +270,14 @@ public class HwanseBattleManager : BattleManager
     {
         base.Awake();
 
-        // 
-        _atahoUnit = (EnemyBossAtahoUnit)_units[0];
+        ///_atahoUnit = (EnemyBossAtahoUnit)_units[StageManager.Instance._difficulty].gameObject;
+        _atahoUnit = Instantiate(_atahoPrefabs[StageManager.Instance._difficulty].gameObject).GetComponent<EnemyBossAtahoUnit>();
+        _atahoUnit.transform.parent = StageManager.Instance._enemyParent.transform;
+        _atahoUnit.gameObject.SetActive(false);
+
+        //
+        _units = new Unit[1];
+        _units[0] = _atahoUnit;
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트 합니다.
@@ -563,6 +591,14 @@ public class HwanseBattleManager : BattleManager
     {
         // 아타호가 생존해있다면 거짓, 죽었다면 참입니다.
         return _atahoUnit ? !_atahoUnit.IsAlive() : true;
+    }
+
+    /// <summary>
+    /// 보스 체력 재생을 요청합니다.
+    /// </summary>
+    protected override void RequestFillHealth()
+    {
+        _stageManager.HealBoss(_atahoUnit, _healStep);
     }
 
     #endregion

@@ -15,13 +15,12 @@ public class TimeManager : MonoBehaviour
     /// </summary>
     bool _isStopped = false;
 
+    /// <summary>
+    /// 성능을 위해 화면 주사율을 고정합니다.
+    /// </summary>
+    public bool _fixFrameRate = true;
 
     #endregion
-
-
-
-
-
 
 
 
@@ -37,13 +36,12 @@ public class TimeManager : MonoBehaviour
     /// </summary>
     public bool StageManagerRequested { get; set; }
 
-
     /// <summary>
-    /// 
+    /// 테스트용 시간 조정 값입니다.
     /// </summary>
     public bool TestTimeScale { get; set; }
     /// <summary>
-    /// 
+    /// 현재 시간 조정 값입니다.
     /// </summary>
     public float TimeScale
     {
@@ -51,13 +49,7 @@ public class TimeManager : MonoBehaviour
         set { Time.timeScale = value; }
     }
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -70,6 +62,12 @@ public class TimeManager : MonoBehaviour
     void Start()
     {
         _isStopped = (Time.timeScale == 0);
+
+        // 주사율을 고정합니다.
+        if (_fixFrameRate)
+        {
+            Application.targetFrameRate = 60;
+        }
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트 합니다.
@@ -79,13 +77,7 @@ public class TimeManager : MonoBehaviour
         UpdateTimeScale();
     }
 
-
     #endregion
-
-
-
-
-
 
 
 
@@ -98,13 +90,9 @@ public class TimeManager : MonoBehaviour
     void UpdateTimeScale()
     {
         if (TestTimeScale)
-        {
-            
+        {            
             return;
         }
-
-
-
 
         if (_isStopped)
         {

@@ -907,12 +907,12 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
         // 공격 코루틴을 시작합니다.
         StartAction();
-        _coroutineHokyokkwon = StartCoroutine(CoroutineHokyokkwon());
+        _coroutineHokyukkwon = StartCoroutine(CoroutineHokyokkwon());
     }
     /// <summary>
     /// 호격권을 중지합니다.
     /// </summary>
-    public void StopDoingHokyokkwon()
+    public void StopDoingHokyukkwon()
     {
         DoingHokyukkwon = false;
         EndAction();
@@ -929,7 +929,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
     /// <summary>
     /// 호격권 코루틴입니다.
     /// </summary>
-    Coroutine _coroutineHokyokkwon;
+    Coroutine _coroutineHokyukkwon;
     /// <summary>
     /// 호격권 코루틴입니다.
     /// </summary>
@@ -978,8 +978,8 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         }
 
         // 공격을 끝냅니다.
-        StopDoingHokyokkwon();
-        _coroutineHokyokkwon = null;
+        StopDoingHokyukkwon();
+        _coroutineHokyukkwon = null;
         yield break;
     }
 
@@ -1415,7 +1415,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         LookPlayer();
 
         //
-        SoundEffects[(int)seIndex].Play();
+        PlaySoundEffect(seIndex);
         GameObject effect = Instantiate
             (_effects[effectIndex], shotPosition.position, shotPosition.rotation);
         if (FacingRight)

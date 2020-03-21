@@ -106,7 +106,9 @@ public abstract class EnemyBulletScript : EnemyScript, IMovableEnemy
         base.FixedUpdate();
         Vector3 camPos = Camera.main.transform.position;
         Vector3 bulPos = transform.position;
-        if (Mathf.Abs(camPos.x - bulPos.x) > 10)
+
+        float dist = Vector3.Distance(camPos, bulPos);
+        if ((Mathf.Abs(camPos.x - bulPos.x) > 10) || dist > 30)
         {
             Destroy(gameObject);
         }

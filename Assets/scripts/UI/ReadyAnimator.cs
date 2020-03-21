@@ -59,6 +59,7 @@ public class ReadyAnimator : MonoBehaviour
             // 플레이어 소환을 요청합니다.
             stageManager._player.transform.position = _stageManager._PlayerSpawnPosition.position;
             stageManager._player.RequestSpawn();
+            stageManager._player.SoundEffects[0].Play();
         }
         else if (_stageManager is StageManager2P)
         {
@@ -71,9 +72,14 @@ public class ReadyAnimator : MonoBehaviour
             Vector3 mainSpawnPos = stageManager._PlayerSpawnPosition.position;
             stageManager.MainPlayer.transform.position = mainSpawnPos;
             stageManager.MainPlayer.RequestSpawn();
+
             stageManager.SubPlayer.transform.position = new Vector3
                 (mainSpawnPos.x - 1, mainSpawnPos.y);
             stageManager.SubPlayer.RequestSpawn();
+
+            // 
+            stageManager.MainPlayer.SoundEffects[0].Play();
+            stageManager.SubPlayer.SoundEffects[0].Play();
         }
         else
         {

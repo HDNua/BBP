@@ -71,6 +71,15 @@ public class GameManager
         set { _gameData.TryCount = value; }
     }
 
+    /// <summary>
+    /// 난이도입니다.
+    /// </summary>
+    public int Difficulty
+    {
+        get { return _gameData.Difficulty; }
+        set { _gameData.Difficulty = value; }
+    }
+
     #endregion
 
 

@@ -288,6 +288,7 @@ public class Unit : MonoBehaviour
         {
             _soundEffects[i] = gameObject.AddComponent<AudioSource>();
             _soundEffects[i].clip = _audioClips[i];
+            _soundEffects[i].playOnAwake = false;
         }
     }
     /// <summary>

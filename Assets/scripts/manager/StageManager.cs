@@ -17,6 +17,11 @@ public class StageManager : HDSceneManager
     /// </summary>
     public float THRES_FADER_ALPHA =  0.2f;
 
+    /// <summary>
+    /// 난이도입니다.
+    /// </summary>
+    public int _difficulty = 2;
+
     #endregion
 
 
@@ -244,14 +249,24 @@ public class StageManager : HDSceneManager
         _timeManager = _database.TimeManager;
         _bgmSource = GetComponent<AudioSource>();
 
+        // 난이도를 가져옵니다.
+        _difficulty = GameManager.Instance.Difficulty;
+
+        //
         InitializeGameManager();
 
+        /*
         // 불러온 캐릭터를 잠깐 사용 불가능하게 합니다.
         PlayerController[] players = _database._players;
         foreach (PlayerController player in players)
         {
             player.gameObject.SetActive(false);
         }
+
+        2020-03-19. 이렇게 하면 소환될 때 멈춤 현상이 생깁니다. 위쪽에서 막읍시다.
+
+        */
+
 
         // 맵 데이터를 초기화합니다.
         _playerSpawnPosition = _checkpointSpawnPositions[_database.GameManager.SpawnPositionIndex];

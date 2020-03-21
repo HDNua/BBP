@@ -39,6 +39,19 @@ public class GameData
         set { _tryCount = value; }
     }
 
+    /// <summary>
+    /// 난이도입니다.
+    /// </summary>
+    int _difficulty = 1;
+    /// <summary>
+    /// 난이도입니다.
+    /// </summary>
+    public int Difficulty
+    {
+        get { return _difficulty; }
+        set { _difficulty = value; }
+    }
+
     #endregion
 
 

@@ -271,7 +271,7 @@ public class HwanseBattleManager : BattleManager
         base.Awake();
 
         ///_atahoUnit = (EnemyBossAtahoUnit)_units[StageManager.Instance._difficulty].gameObject;
-        _atahoUnit = Instantiate(_atahoPrefabs[StageManager.Instance._difficulty].gameObject).GetComponent<EnemyBossAtahoUnit>();
+        _atahoUnit = Instantiate(_atahoPrefabs[GameManager.Instance.Difficulty].gameObject).GetComponent<EnemyBossAtahoUnit>();
         _atahoUnit.transform.parent = StageManager.Instance._enemyParent.transform;
         _atahoUnit.gameObject.SetActive(false);
 

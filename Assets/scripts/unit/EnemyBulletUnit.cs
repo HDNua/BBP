@@ -154,11 +154,6 @@ public class EnemyBulletUnit : EnemyUnit
     /// </summary>
     public override void Dead()
     {
-        // 폭발 효과를 생성하고 효과음을 재생합니다.
-        /// SoundE_ffects[0].Play();
-        /// Instantiate(e_ffects[0], transform.position, transform.rotation);
-        ///CreateExplosion(transform.position);
-
         // 캐릭터가 사망합니다.
         base.Dead();
 
@@ -176,11 +171,26 @@ public class EnemyBulletUnit : EnemyUnit
     }
 
     /// <summary>
-    /// 탄환 발사 방향을 지정합니다.
+    /// 탄환을 지정한 위치로 발사합니다.
     /// </summary>
     /// <param name="destination">이동할 위치입니다.</param>
-    public void MoveTo(Vector3 destination)
+    public virtual void MoveToDst(Vector3 destination)
     {
+        Vector3 bulletPos = transform.position;
+        Vector3 diff = destination - bulletPos;
+
+        // 플레이어를 향해 발사합니다.
+        _Rigidbody.velocity = diff.normalized * _movingSpeed;
+
+    }
+    /// <summary>
+    /// 탄환을 지정한 방향으로 발사합니다.
+    /// </summary>
+    /// <param name="direction">이동할 방향입니다.</param>
+    public virtual void MoveToDir(Vector3 direction)
+    {
+        // 플레이어를 향해 발사합니다.
+        _Rigidbody.velocity = direction.normalized * _movingSpeed;
 
     }
 
@@ -303,6 +313,22 @@ public class EnemyBulletUnit : EnemyUnit
             // 맞는 순간 폭발합니다.
             Dead();
         }
+    }
+
+    #endregion
+
+
+
+
+
+    #region 탄환 공용 메서드를 정의합니다.
+    /// <summary>
+    /// 폭발 효과를 생성합니다. (주의: 효과 0번은 폭발 개체여야 합니다.)
+    /// </summary>
+    protected virtual void CreateExplosion(Vector3 position)
+    {
+        Instantiate(DataBase.Instance.Explosion1Effect, position, transform.rotation)
+            .gameObject.SetActive(true);
     }
 
     #endregion

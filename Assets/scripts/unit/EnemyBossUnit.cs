@@ -421,11 +421,6 @@ public class EnemyBossUnit : EnemyUnit
 
 
     #region 구형 정의를 보관합니다.
-    [Obsolete("EnemyBulletUnit으로 대체될 것입니다.")]
-    /// <summary>
-    /// 탄환 개체입니다.
-    /// </summary>
-    public EnemyBulletScript[] _bullets;
 
     #endregion
 }

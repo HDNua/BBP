@@ -252,21 +252,9 @@ public class StageManager : HDSceneManager
         // 난이도를 가져옵니다.
         _difficulty = GameManager.Instance.Difficulty;
 
+
         //
         InitializeGameManager();
-
-        /*
-        // 불러온 캐릭터를 잠깐 사용 불가능하게 합니다.
-        PlayerController[] players = _database._players;
-        foreach (PlayerController player in players)
-        {
-            player.gameObject.SetActive(false);
-        }
-
-        2020-03-19. 이렇게 하면 소환될 때 멈춤 현상이 생깁니다. 위쪽에서 막읍시다.
-
-        */
-
 
         // 맵 데이터를 초기화합니다.
         _playerSpawnPosition = _checkpointSpawnPositions[_database.GameManager.SpawnPositionIndex];
@@ -276,17 +264,6 @@ public class StageManager : HDSceneManager
             // GameObject[] cameraZoneObjects = GameObject.FindGameObjectsWithTag("CameraZone");
 
             int offset = "Checkpoint".Length;
-
-            /*
-            foreach (GameObject go in cameraZoneObjects)
-            {
-                if (go.name.Contains("Checkpoint"))
-                {
-                    int index = int.Parse(go.name.Substring(offset));
-                    _checkpointCameraZones[index] = go.GetComponent<CameraZone>();
-                }
-            }
-            */
 
             // 
             CameraZone[] czs = FindObjectsOfType<CameraZone>();
@@ -444,7 +421,7 @@ public class StageManager : HDSceneManager
     /// </summary>
     public void BackToMainMenu()
     {
-        LoadingSceneManager.LoadLevel("Title");
+        LoadingSceneManager.LoadLevel("BBPTitle");
     }
 
     /// <summary>

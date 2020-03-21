@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 
 
+[Obsolete("임시로 구형으로 처리했습니다.")]
 /// <summary>
 /// 컷신을 관리합니다.
 /// </summary>

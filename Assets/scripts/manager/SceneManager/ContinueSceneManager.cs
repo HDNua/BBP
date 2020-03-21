@@ -5,6 +5,7 @@ using System.IO;
 
 
 
+[Obsolete("임시로 막아두었습니다.")]
 /// <summary>
 /// 이어하기 장면 관리자입니다.
 /// </summary>

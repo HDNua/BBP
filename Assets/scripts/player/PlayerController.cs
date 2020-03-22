@@ -1746,6 +1746,12 @@ public abstract class PlayerController : MonoBehaviour
                 newScale.x = FacingRight ? newScale.x : -newScale.x;
                 slideFog.transform.localScale = newScale;
             }
+
+            if (_slideFogEffect)
+            {
+                Destroy(_slideFogEffect);
+                _slideFogEffect = null;
+            }
             _slideFogEffect = slideFog;
 
             // 
@@ -2089,6 +2095,11 @@ public abstract class PlayerController : MonoBehaviour
         StopJumping();
         StopFalling();
         StopSliding();
+        if (_slideFogEffect != null)
+        {
+            Destroy(_slideFogEffect);
+            _slideFogEffect = null;
+        }
         
         // 플레이어에 대해 넉백 효과를 겁니다.
         if (IsAlive())

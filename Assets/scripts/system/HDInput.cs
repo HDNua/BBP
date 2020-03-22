@@ -88,7 +88,7 @@ public static class HDInput
             {
                 axisDown = true;
 
-                Debug.Log("TEST: " + axisName + ", " + value + ", " + axisValue);
+                ///Debug.Log("TEST: " + axisName + ", " + value + ", " + axisValue);
                 return true;
             }
         }
@@ -97,7 +97,7 @@ public static class HDInput
             var axisValue = Input.GetAxis(axisName);
             if (axisValue != value)
             {
-                Debug.Log("Key Released because of " + axisName + ", " + value + ", " + axisValue);
+                ///Debug.Log("Key Released because of " + axisName + ", " + value + ", " + axisValue);
                 axisDown = false;
             }
         }

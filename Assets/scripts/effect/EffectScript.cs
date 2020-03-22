@@ -92,9 +92,15 @@ public class EffectScript : MonoBehaviour
                 // 효과 개체에서 애니메이션은 유일하게 하나 존재합니다.
                 // 해당 애니메이션의 길이로 초기화 합니다.
                 var clips = _animator.runtimeAnimatorController.animationClips;
-                _clipLength = clips[0].length;
+                if (_clipLength == 0)
+                {
+                    _clipLength = clips[0].length;
+                }
             }
         }
+
+        // 
+        _audioSource = GetComponent<AudioSource>();
 
         // 
         _paletteUser = GetComponent<PaletteUser>();
@@ -115,10 +121,28 @@ public class EffectScript : MonoBehaviour
         if (DestroyRequested == false)
             return;
 
-        // 애니메이션이 재생중이거나 음원 재생중이라면
-        if (_animator.enabled || _audioSource && _audioSource.isPlaying)
+        // 애니메이션이 재생중이면
+        if (_animator.enabled)
         {
-            if (_playTime > _clipLength)
+            if (_clipLength > 0)
+            {
+                if (_playTime > _clipLength)
+                {
+                    Destroy(gameObject);
+                }
+            }
+        }
+        // 음원 재생중이라면
+        else if (_audioSource && _audioSource.isPlaying)
+        {
+            if (_clipLength > 0)
+            {
+                if (_playTime > _clipLength)
+                {
+                    Destroy(gameObject);
+                }
+            }
+            else
             {
                 Destroy(gameObject);
             }

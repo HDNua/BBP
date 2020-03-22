@@ -1392,6 +1392,73 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
 
 
 
+    #region "세레모니" 행동을 정의합니다.
+    /// <summary>
+    /// 세레모니 행동 중이라면 참입니다.
+    /// </summary>
+    bool _doingCeremony;
+    /// <summary>
+    /// 세레모니 행동 중이라면 참입니다.
+    /// </summary>
+    public bool DoingCeremony
+    {
+        get { return _doingCeremony; }
+        private set { _Animator.SetBool("Win", _doingCeremony = value); }
+    }
+    /// <summary>
+    /// 세레모니 행동입니다.
+    /// </summary>
+    public void Ceremony()
+    {
+        DoingCeremony = true;
+        _hasBulletImmunity = true;
+
+        // 세레모니 코루틴을 시작합니다.
+        StartAction();
+        _coroutineCeremony = StartCoroutine(CoroutineCeremony());
+    }
+    /// <summary>
+    /// 세레모니를 중지합니다.
+    /// </summary>
+    public void StopCeremonying()
+    {
+        DoingCeremony = false;
+        _hasBulletImmunity = false;
+
+        // 행동을 종료합니다.
+        EndAction();
+    }
+
+    /// <summary>
+    /// 세레모니 코루틴입니다.
+    /// </summary>
+    Coroutine _coroutineCeremony;
+    /// <summary>
+    /// 세레모니 코루틴입니다.
+    /// </summary>
+    IEnumerator CoroutineCeremony()
+    {
+        yield return false;
+        RunAction();
+
+        // 
+        while (IsAnimatorInState("Win"))
+        {
+            yield return false;
+        }
+
+        // 세레모니 상태를 끝냅니다.
+        StopCeremonying();
+        _coroutineCeremony = null;
+        yield break;
+    }
+
+    #endregion
+
+
+
+
+
     #region 보조 메서드를 정의합니다.
     /// <summary>
     /// 효과음을 재생합니다.

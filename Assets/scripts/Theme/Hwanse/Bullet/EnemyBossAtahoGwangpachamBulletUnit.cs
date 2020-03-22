@@ -269,6 +269,14 @@ public class EnemyBossAtahoGwangpachamBulletUnit : EnemyBulletUnit
     {
         base.Hurt(damage, hitTransform);
     }
+    /// <summary>
+    /// 탄환을 지정한 위치로 발사합니다.
+    /// </summary>
+    /// <param name="destination">이동할 위치입니다.</param>
+    public override void MoveToDst(Vector3 destination)
+    {
+        ///base.MoveToDst(destination);
+    }
 
     #endregion
 }

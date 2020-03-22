@@ -136,7 +136,7 @@ public abstract class AttackScript : MonoBehaviour
 
         // 효과음을 재생합니다.
         EffectScript hitEffect = hitParticle.GetComponent<EffectScript>();
-        hitEffect.PlayEffectSound(SoundEffects[1].clip);
+        ///hitEffect.PlayEffectSound(SoundEffects[1].clip);
 
         // 생성한 효과 객체를 반환합니다.
         return hitParticle;
@@ -161,7 +161,7 @@ public abstract class AttackScript : MonoBehaviour
 
         // 효과음을 재생합니다.
         EffectScript hitEffect = hitParticle.GetComponent<EffectScript>();
-        hitEffect.PlayEffectSound(SoundEffects[1].clip);
+        ///hitEffect.PlayEffectSound(SoundEffects[1].clip);
 
         // 생성한 효과 객체를 반환합니다.
         return hitParticle;
@@ -186,7 +186,7 @@ public abstract class AttackScript : MonoBehaviour
 
         // 효과음을 재생합니다.
         EffectScript hitEffect = particle.GetComponent<EffectScript>();
-        hitEffect.PlayEffectSound(SoundEffects[0].clip);
+        ///hitEffect.PlayEffectSound(SoundEffects[0].clip);
 
         // 생성한 효과 객체를 반환합니다.
         return particle;
@@ -211,7 +211,7 @@ public abstract class AttackScript : MonoBehaviour
 
         // 효과음을 재생합니다.
         EffectScript hitEffect = particle.GetComponent<EffectScript>();
-        hitEffect.PlayEffectSound(SoundEffects[0].clip);
+        ///hitEffect.PlayEffectSound(SoundEffects[0].clip);
 
         // 생성한 효과 객체를 반환합니다.
         return particle;

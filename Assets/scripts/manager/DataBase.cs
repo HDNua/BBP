@@ -201,11 +201,23 @@ public class DataBase : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public CameraZoneParent CameraZoneParent; // { get; set; }
-    public CameraZoneBorderParent CameraZoneBorderParent; //{ get; set; }
+    public CameraZoneParent CameraZoneParent;
+    /// <summary>
+    /// 
+    /// </summary>
+    public CameraZoneBorderParent CameraZoneBorderParent;
+    /// <summary>
+    /// 
+    /// </summary>
     public DeadZoneParent DeadZoneParent;
-    public TiledGeometryParent TiledGeometryParent; // { get; set; }
-    public InvisibleWallParent InvisibleWallParent; // { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public TiledGeometryParent TiledGeometryParent;
+    /// <summary>
+    /// 
+    /// </summary>
+    public InvisibleWallParent InvisibleWallParent;
 
     #endregion
 
@@ -260,6 +272,18 @@ public class DataBase : MonoBehaviour
     {
 
     }
+
+    #endregion
+
+
+
+
+
+    #region 디버깅용 필드 및 메서드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool DebuggingPlayer = false;
 
     #endregion
 

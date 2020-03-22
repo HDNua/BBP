@@ -347,23 +347,35 @@ public class XController : PlayerController
         // 테스트 코드입니다.
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            ChangeWeapon(_weaponState == 5 ? _defaultWeaponState : 5);
-            //Shot();
+            if (IsDebuggingPlayer())
+            {
+                ChangeWeapon(_weaponState == 5 ? _defaultWeaponState : 5);
+                Shot();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            ChangeWeapon(_weaponState == 6 ? _defaultWeaponState : 6);
-            //Shot();
+            if (IsDebuggingPlayer())
+            {
+                ChangeWeapon(_weaponState == 6 ? _defaultWeaponState : 6);
+                Shot();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            ChangeWeapon(_weaponState == 7 ? _defaultWeaponState : 7);
-            //Shot();
+            if (IsDebuggingPlayer())
+            {
+                ChangeWeapon(_weaponState == 7 ? _defaultWeaponState : 7);
+                Shot();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.V))
         {
-            ChangeWeapon(_weaponState == 8 ? _defaultWeaponState : 8);
-            //Shot();
+            if (IsDebuggingPlayer())
+            {
+                ChangeWeapon(_weaponState == 8 ? _defaultWeaponState : 8);
+                Shot();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -730,15 +742,12 @@ public class XController : PlayerController
         int bulletIndex = -1;
         int bulletSoundEffectIndex = -1;
 
-        /*
-        if (_weaponState != _defaultWeaponState)
+        if (IsDebuggingPlayer() && (_weaponState != _defaultWeaponState))
         {
             bulletIndex = _weaponState - _defaultWeaponState + 2;
             bulletSoundEffectIndex = 2;
         }
-        else 
-        */
-        if (_chargeTime < CHARGE_LEVEL[1])
+        else if (_chargeTime < CHARGE_LEVEL[1])
         {
             // 탄환 객체 인덱스를 업데이트합니다.
             bulletIndex = 0;
@@ -1585,8 +1594,6 @@ public class XController : PlayerController
         _PaletteUser.UpdatePaletteIndex(_weaponState);
     }
 
-
-
     #endregion
 
 
@@ -1594,6 +1601,101 @@ public class XController : PlayerController
 
 
     #region 정적 보조 메서드를 정의합니다.
+
+    #endregion
+
+
+
+
+
+    #region 디버깅용 메서드를 정의합니다.
+    /// <summary>
+    /// 버스터를 발사합니다.
+    /// </summary>
+    void TestShot()
+    {
+        // 탄환 객체 인덱스입니다.
+        int bulletIndex = -1;
+        int bulletSoundEffectIndex = -1;
+
+        if (_weaponState != _defaultWeaponState)
+        {
+            bulletIndex = _weaponState - _defaultWeaponState + 2;
+            bulletSoundEffectIndex = 2;
+        }
+        else if (_chargeTime < CHARGE_LEVEL[1])
+        {
+            // 탄환 객체 인덱스를 업데이트합니다.
+            bulletIndex = 0;
+            bulletSoundEffectIndex = 0;
+        }
+        else if (_chargeTime < CHARGE_LEVEL[2])
+        {
+            // 탄환 객체 인덱스를 업데이트합니다.
+            bulletIndex = 1;
+            bulletSoundEffectIndex = 1;
+        }
+        else
+        {
+            // 탄환 객체 인덱스를 업데이트합니다.
+            bulletIndex = 2;
+            bulletSoundEffectIndex = 2;
+        }
+
+        // 상태를 업데이트합니다.
+        {
+            // 차지 효과 객체의 상태를 업데이트 합니다.
+            if (_chargeEffect1 != null)
+            {
+                if (_chargeEffect2 != null)
+                {
+                    _chargeEffect2.GetComponent<EffectScript>().RequestDestroy();
+                    _chargeEffect2 = null;
+                }
+                _chargeEffect1.GetComponent<EffectScript>().RequestDestroy();
+                _chargeEffect1 = null;
+            }
+
+            // 필드를 초기화합니다.
+            _shotPressed = false;
+            _chargeTime = 0;
+            ShotTime = 0;
+            ResetBodyColor();
+
+            if (_chargeCoroutine != null)
+            {
+                StopCoroutine(_chargeCoroutine);
+                _chargeCoroutine = null;
+            }
+
+            Shooting = true;
+        }
+
+        // 버스터 탄환을 생성하고 초기화합니다.
+        StartCoroutine(CreateBulletCoroutine(bulletIndex));
+
+        // 효과음을 재생합니다.
+        SoundEffects[8 + bulletSoundEffectIndex].Play();
+        SoundEffects[7].Stop();
+
+        // 일정 시간 후에 샷 상태를 해제합니다.
+        Invoke("EndShot", END_SHOOTING_TIME);
+    }
+    #endregion
+
+
+
+
+
+    #region 디버깅용 필드 및 메서드를 정의합니다.
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public bool IsDebuggingPlayer()
+    {
+        return DataBase.Instance.DebuggingPlayer;
+    }
 
     #endregion
 

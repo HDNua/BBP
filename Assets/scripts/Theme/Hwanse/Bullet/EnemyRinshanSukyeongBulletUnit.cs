@@ -11,16 +11,16 @@ public class EnemyRinshanSukyeongBulletUnit : EnemyBulletUnit
 {
     #region 상수를 정의합니다.
     /// <summary>
-    /// 영상뢰화가 플레이어에게 대미지를 입히는 시간입니다.
+    /// 수경으로 채우는 마나 회복량입니다.
     /// </summary>
     public int MANA_SUKYEONG_FILL = 20;
 
     /// <summary>
-    /// 
+    /// 수경 등장 깜빡임 시간입니다.
     /// </summary>
     public float TIME_BLINK = TIME_30FPS * 12;
     /// <summary>
-    /// 
+    /// 수경 등장 깜빡임 간격입니다.
     /// </summary>
     public float TIME_BLINK_INTERVAL = TIME_30FPS;
 
@@ -110,7 +110,20 @@ public class EnemyRinshanSukyeongBulletUnit : EnemyBulletUnit
     /// <param name="other">자신이 아닌 충돌체 개체입니다.</param>
     protected override void OnTriggerEnter2D(Collider2D other)
     {
+        // 트리거가 발동한 상대 충돌체가 플레이어라면 대미지를 입힙니다.
+        if (other.CompareTag("PlayerAttack"))
+        {
+            GameObject pObject = other.gameObject;
+            AttackScript playerAttack = pObject.GetComponent<AttackScript>();
 
+            //
+            Hurt(playerAttack.damage, playerAttack.transform);
+            if (IsAlive() == false)
+            {
+                Dead();
+                _atahoUnit.FillMana(MANA_SUKYEONG_FILL);
+            }
+        }
     }
     /// <summary>
     /// 충돌체가 여전히 트리거 내부에 있습니다.

@@ -1546,13 +1546,20 @@ public class ZController : PlayerController
         }
         return false;
     }
-
     /// <summary>
-    /// 다친 상태를 끝냅니다.
+    /// 대미지 상태를 해제합니다.
     /// </summary>
     protected override void EndHurt()
     {
-        base.EndHurt();
+        EndHurtWithPaletteIndex(4);
+    }
+    /// <summary>
+    /// 대미지 상태를 해제합니다.
+    /// </summary>
+    /// <param name="returnPaletteIndex">돌아갈 팔레트 인덱스입니다.</param>
+    protected override void EndHurtWithPaletteIndex(int returnPaletteIndex)
+    {
+        base.EndHurtWithPaletteIndex(returnPaletteIndex);
         if (Danger && dangerVoicePlayed == false)
         {
             VoiceDanger.Play();

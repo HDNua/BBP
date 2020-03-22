@@ -2152,15 +2152,23 @@ public abstract class PlayerController : MonoBehaviour
     /// </summary>
     protected virtual void EndHurt()
     {
+        EndHurtWithPaletteIndex(4);
+    }
+    /// <summary>
+    /// 대미지 상태를 해제합니다.
+    /// </summary>
+    /// <param name="returnPaletteIndex">돌아갈 팔레트 인덱스입니다.</param>
+    protected virtual void EndHurtWithPaletteIndex(int returnPaletteIndex)
+    {
         Damaged = false;
         InputBlocked = false;
-        StartCoroutine(CoroutineInvencible());
+        StartCoroutine(CoroutineInvencible(returnPaletteIndex));
     }
     /// <summary>
     /// 무적 상태에 대한 코루틴입니다.
     /// </summary>
     /// <returns>코루틴 열거자입니다.</returns>
-    IEnumerator CoroutineInvencible()
+    IEnumerator CoroutineInvencible(int returnPaletteIndex, int invenciblePaletteIndex = 1)
     {
         bool invencibleColorState = false;
         InvencibleTime = 0;
@@ -2170,17 +2178,17 @@ public abstract class PlayerController : MonoBehaviour
 
             if (invencibleColorState)
             {
-                _PaletteUser.UpdatePaletteIndex(4);
+                _PaletteUser.UpdatePaletteIndex(returnPaletteIndex);
             }
             else
             {
-                _PaletteUser.UpdatePaletteIndex(1);
+                _PaletteUser.UpdatePaletteIndex(invenciblePaletteIndex);
             }
             invencibleColorState = !invencibleColorState;
             yield return new WaitForSeconds(TIME_30FPS);
         }
         Invencible = false;
-        _PaletteUser.UpdatePaletteIndex(4);
+        _PaletteUser.UpdatePaletteIndex(returnPaletteIndex);
         yield break;
     }
     

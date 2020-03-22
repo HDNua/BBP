@@ -1,4 +1,13 @@
-﻿BBP v1.6.1.1
+﻿BBP v1.6.1.2
+----
+
+- 소닉 BulletUnit 추가.
+
+
+end.
+
+
+BBP v1.6.1.1
 ----
 
 - BGM LOOP.

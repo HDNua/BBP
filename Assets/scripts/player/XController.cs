@@ -350,7 +350,7 @@ public class XController : PlayerController
             if (IsDebuggingPlayer())
             {
                 ChangeWeapon(_weaponState == 5 ? _defaultWeaponState : 5);
-                Shot();
+                ShotWithAnimation(_chargeTime);
             }
         }
         else if (Input.GetKeyDown(KeyCode.S))
@@ -358,7 +358,7 @@ public class XController : PlayerController
             if (IsDebuggingPlayer())
             {
                 ChangeWeapon(_weaponState == 6 ? _defaultWeaponState : 6);
-                Shot();
+                ShotWithAnimation(_chargeTime);
             }
         }
         else if (Input.GetKeyDown(KeyCode.D))
@@ -366,7 +366,7 @@ public class XController : PlayerController
             if (IsDebuggingPlayer())
             {
                 ChangeWeapon(_weaponState == 7 ? _defaultWeaponState : 7);
-                Shot();
+                ShotWithAnimation(_chargeTime);
             }
         }
         else if (Input.GetKeyDown(KeyCode.V))
@@ -374,7 +374,7 @@ public class XController : PlayerController
             if (IsDebuggingPlayer())
             {
                 ChangeWeapon(_weaponState == 8 ? _defaultWeaponState : 8);
-                Shot();
+                ShotWithAnimation(_chargeTime);
             }
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -686,7 +686,6 @@ public class XController : PlayerController
             // 샷을 발사합니다.
             Shot();
 
-
             // 이전 애니메이션이 Idle인 경우의 처리입니다.
             if (IsAnimationPlaying("Idle")
                 || IsAnimationPlaying("FallEnd")
@@ -742,12 +741,7 @@ public class XController : PlayerController
         int bulletIndex = -1;
         int bulletSoundEffectIndex = -1;
 
-        if (IsDebuggingPlayer() && (_weaponState != _defaultWeaponState))
-        {
-            bulletIndex = _weaponState - _defaultWeaponState + 2;
-            bulletSoundEffectIndex = 2;
-        }
-        else if (_chargeTime < CHARGE_LEVEL[1])
+        if (_chargeTime < CHARGE_LEVEL[1])
         {
             // 탄환 객체 인덱스를 업데이트합니다.
             bulletIndex = 0;
@@ -764,6 +758,12 @@ public class XController : PlayerController
             // 탄환 객체 인덱스를 업데이트합니다.
             bulletIndex = 2;
             bulletSoundEffectIndex = 2;
+
+            if (IsDebuggingPlayer() && (_weaponState != _defaultWeaponState))
+            {
+                bulletIndex = _weaponState - _defaultWeaponState + 2;
+                bulletSoundEffectIndex = 2;
+            }
         }
 
         // 상태를 업데이트합니다.
@@ -881,7 +881,7 @@ public class XController : PlayerController
         // 탄환 발사 효과에 대해 먼저 생성하고 처리합니다.
         int bulletFireEffectIndex = Mathf.Clamp(7 + bulletIndex, 7, 10);
         GameObject fireEffectObject = CloneObject(effects[bulletFireEffectIndex], shotPosition);
-        if (bulletIndex == 2)
+        if (bulletIndex >= 2)
         {
             if (IsAnimationPlaying("Idle"))
             {
@@ -897,7 +897,7 @@ public class XController : PlayerController
         GameObject _bullet = CloneObject(_bullets[bulletIndex], shotPosition);
 
         // 2단계 차지샷이라면 잠시 대기합니다.
-        if (bulletIndex == 2)
+        if (bulletIndex >= 2)
         {
             _bullet.GetComponent<SpriteRenderer>().color = Color.clear;
 
@@ -927,50 +927,33 @@ public class XController : PlayerController
             Vector3 bulletScale = _bullet.transform.localScale;
             bulletScale.x *= (toLeft ? -1 : 1);
             _bullet.transform.localScale = bulletScale;
-            _bullet.GetComponent<Rigidbody2D>().velocity
-                = (toLeft ? Vector3.left : Vector3.right) * _shotSpeed;
 
+            // 
+            float shotSpeed;
+            switch (bulletIndex)
+            {
+                case 3:
+                case 4:
+                    shotSpeed = _shotSpeed * 1.5f;
+                    break;
+                default:
+                    shotSpeed = _shotSpeed;
+                    break;
+            }
+
+            _bullet.GetComponent<Rigidbody2D>().velocity
+                = (toLeft ? Vector3.left : Vector3.right) * shotSpeed; 
+
+            /*
+             * 카메라는 필드로 정의하지 마세요. 이 코드는 이후에 발견하는 즉시 삭제 부탁합니다.
+             * 
             // 탄환 속성을 업데이트 합니다.
             XBusterScript buster = _bullet.GetComponent<XBusterScript>();
             buster.MainCamera = Camera.main; // stageManager.MainCamera;
+            */
         }
 
         yield break;
-    }
-    /// <summary>
-    /// 탄환을 생성합니다.
-    /// </summary>
-    /// <param name="index">탄환 타입을 표현하는 인덱스입니다.</param>
-    void CreateBullet(int index)
-    {
-        // 사용할 변수를 선언합니다.
-        Transform shotPosition = GetShotPosition();
-        GameObject _bullet = CloneObject(_bullets[index], shotPosition);
-        Vector3 bulletScale = _bullet.transform.localScale;
-        bool toLeft = (Sliding ? FacingRight : !FacingRight);
-
-        // 
-        GameObject fireEffect = CloneObject(effects[7 + index], shotPosition);
-        if (index == 2)
-        {
-            fireEffect.transform.position = transform.position;
-        }
-        Vector3 effectScale = fireEffect.transform.localScale;
-
-        // 위치를 조정합니다.
-        bulletScale.x *= (toLeft ? -1 : 1);
-        _bullet.transform.localScale = bulletScale;
-        _bullet.GetComponent<Rigidbody2D>().velocity
-            = (toLeft ? Vector3.left : Vector3.right) * _shotSpeed;
-
-        // 발사 효과를 생성합니다.
-        effectScale.x *= (toLeft ? -1 : 1);
-        fireEffect.transform.localScale = effectScale;
-        fireEffect.transform.parent = shotPosition.transform;
-
-        // 버스터 컴포넌트를 발사체에 붙입니다.
-        XBusterScript buster = _bullet.GetComponent<XBusterScript>();
-        buster.MainCamera = Camera.main; // _stageManager.MainCamera;
     }
     /// <summary>
     /// 샷이 시작되는 위치를 결정합니다.
@@ -1504,7 +1487,15 @@ public class XController : PlayerController
     /// </summary>
     protected override void EndHurt()
     {
-        base.EndHurt();
+        EndHurtWithPaletteIndex(_weaponState);
+    }
+    /// <summary>
+    /// 대미지 상태를 해제합니다.
+    /// </summary>
+    /// <param name="returnPaletteIndex">돌아갈 팔레트 인덱스입니다.</param>
+    protected override void EndHurtWithPaletteIndex(int returnPaletteIndex)
+    {
+        base.EndHurtWithPaletteIndex(returnPaletteIndex);
         
         // 블록된 행동 상태를 해제합니다.
         ShotBlocked = false;
@@ -1610,77 +1601,31 @@ public class XController : PlayerController
 
     #region 디버깅용 메서드를 정의합니다.
     /// <summary>
-    /// 버스터를 발사합니다.
+    /// 
     /// </summary>
-    void TestShot()
+    /// <param name="chargeTime"></param>
+    void ShotWithAnimation(float chargeTime)
     {
-        // 탄환 객체 인덱스입니다.
-        int bulletIndex = -1;
-        int bulletSoundEffectIndex = -1;
+        Shot();
 
-        if (_weaponState != _defaultWeaponState)
+        // 이전 애니메이션이 Idle인 경우의 처리입니다.
+        if (IsAnimationPlaying("Idle")
+            || IsAnimationPlaying("FallEnd")
+            || IsAnimationPlaying("Shot")
+            || IsAnimationPlaying("ChargeShot"))
         {
-            bulletIndex = _weaponState - _defaultWeaponState + 2;
-            bulletSoundEffectIndex = 2;
-        }
-        else if (_chargeTime < CHARGE_LEVEL[1])
-        {
-            // 탄환 객체 인덱스를 업데이트합니다.
-            bulletIndex = 0;
-            bulletSoundEffectIndex = 0;
-        }
-        else if (_chargeTime < CHARGE_LEVEL[2])
-        {
-            // 탄환 객체 인덱스를 업데이트합니다.
-            bulletIndex = 1;
-            bulletSoundEffectIndex = 1;
-        }
-        else
-        {
-            // 탄환 객체 인덱스를 업데이트합니다.
-            bulletIndex = 2;
-            bulletSoundEffectIndex = 2;
-        }
-
-        // 상태를 업데이트합니다.
-        {
-            // 차지 효과 객체의 상태를 업데이트 합니다.
-            if (_chargeEffect1 != null)
+            if (chargeTime > CHARGE_LEVEL[2])
             {
-                if (_chargeEffect2 != null)
-                {
-                    _chargeEffect2.GetComponent<EffectScript>().RequestDestroy();
-                    _chargeEffect2 = null;
-                }
-                _chargeEffect1.GetComponent<EffectScript>().RequestDestroy();
-                _chargeEffect1 = null;
+                _Animator.Play("ChargeShot", 0, 0);
+                ShotBlocked = true;
             }
-
-            // 필드를 초기화합니다.
-            _shotPressed = false;
-            _chargeTime = 0;
-            ShotTime = 0;
-            ResetBodyColor();
-
-            if (_chargeCoroutine != null)
+            else
             {
-                StopCoroutine(_chargeCoroutine);
-                _chargeCoroutine = null;
+                _Animator.Play("Shot", 0, 0);
             }
-
-            Shooting = true;
         }
-
-        // 버스터 탄환을 생성하고 초기화합니다.
-        StartCoroutine(CreateBulletCoroutine(bulletIndex));
-
-        // 효과음을 재생합니다.
-        SoundEffects[8 + bulletSoundEffectIndex].Play();
-        SoundEffects[7].Stop();
-
-        // 일정 시간 후에 샷 상태를 해제합니다.
-        Invoke("EndShot", END_SHOOTING_TIME);
     }
+
     #endregion
 
 
@@ -1704,6 +1649,59 @@ public class XController : PlayerController
 
 
     #region 구형 정의를 보관합니다.
+    [Obsolete("이거 뭐에요?")]
+    /// <summary>
+    /// 탄환을 생성합니다.
+    /// </summary>
+    /// <param name="index">탄환 타입을 표현하는 인덱스입니다.</param>
+    void CreateBullet(int index)
+    {
+        // 사용할 변수를 선언합니다.
+        Transform shotPosition = GetShotPosition();
+        GameObject _bullet = CloneObject(_bullets[index], shotPosition);
+        Vector3 bulletScale = _bullet.transform.localScale;
+        bool toLeft = (Sliding ? FacingRight : !FacingRight);
+
+        // 
+        GameObject fireEffect = CloneObject(effects[7 + index], shotPosition);
+        if (index >= 2)
+        {
+            fireEffect.transform.position = transform.position;
+        }
+        Vector3 effectScale = fireEffect.transform.localScale;
+
+        // 위치를 조정합니다.
+        bulletScale.x *= (toLeft ? -1 : 1);
+        _bullet.transform.localScale = bulletScale;
+
+        // 
+        float shotSpeed;
+        switch (index)
+        {
+            case 3:
+            case 4:
+                shotSpeed = _shotSpeed * 1.5f;
+                break;
+            default:
+                shotSpeed = _shotSpeed;
+                break;
+        }
+
+        // 
+        _bullet.GetComponent<Rigidbody2D>().velocity
+            = (toLeft ? Vector3.left : Vector3.right) * shotSpeed;
+
+        // 발사 효과를 생성합니다.
+        effectScale.x *= (toLeft ? -1 : 1);
+        fireEffect.transform.localScale = effectScale;
+        fireEffect.transform.parent = shotPosition.transform;
+
+        /*
+        // 버스터 컴포넌트를 발사체에 붙입니다.
+        XBusterScript buster = _bullet.GetComponent<XBusterScript>();
+        buster.MainCamera = Camera.main; // _stageManager.MainCamera;
+        */
+    }
 
     #endregion
 }

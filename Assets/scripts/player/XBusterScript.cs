@@ -12,15 +12,6 @@ public class XBusterScript : AttackScript
 {
     #region 컨트롤러가 사용할 Unity 객체를 정의합니다.
     /// <summary>
-    /// 
-    /// </summary>
-    Camera mainCamera;
-    /// <summary>
-    /// 
-    /// </summary>
-    public Camera MainCamera { set { mainCamera = value; } }
-
-    /// <summary>
     /// Collider2D 컴포넌트입니다.
     /// </summary>
     Collider2D _collider;
@@ -81,6 +72,9 @@ public class XBusterScript : AttackScript
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        // 
+        Camera mainCamera = Camera.main;
         if (mainCamera != null)
         {
             Vector3 camPos = mainCamera.transform.position;

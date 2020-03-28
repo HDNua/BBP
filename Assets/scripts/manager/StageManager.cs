@@ -303,6 +303,7 @@ public class StageManager : HDSceneManager
             PlayReadyAnimation();
         }
 
+        /*
         // 특수 키 입력에 대한 처리입니다.
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -319,6 +320,7 @@ public class StageManager : HDSceneManager
             // 플레이어의 체력을 모두 회복합니다.
             HealPlayer();
         }
+        */
 
         // 
         if (Input.GetKeyDown(KeyCode.Return))

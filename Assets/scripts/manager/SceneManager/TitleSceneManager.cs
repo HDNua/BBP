@@ -23,6 +23,11 @@ public class TitleSceneManager : HDSceneManager
     /// </summary>
     public AudioClip[] soundEffects;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public GameObject _pointer;
+
     #endregion
 
 
@@ -33,7 +38,7 @@ public class TitleSceneManager : HDSceneManager
     /// <summary>
     /// 메뉴 인덱스입니다.
     /// </summary>
-    int _menuIndex = 0;
+    public int _menuIndex = 2;
     /// <summary>
     /// 장면 변화 요청이 들어왔습니다.
     /// </summary>
@@ -88,17 +93,11 @@ public class TitleSceneManager : HDSceneManager
             {
                 if (HDInput.IsUpKeyDown()) // (HDInput.IsUpKeyPressed()) // (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    if (0 < _menuIndex)
-                    {
-                        ChangeMenuItem(_menuIndex - 1);
-                    }
+                    ChangeMenuItem(_menuIndex - 1);
                 }
                 else if (HDInput.IsDownKeyDown()) // (HDInput.IsDownKeyPressed()) // (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    if (_menuIndex < menuItems.Length - 1)
-                    {
-                        ChangeMenuItem(_menuIndex + 1);
-                    }
+                    ChangeMenuItem(_menuIndex + 1);
                 }
                 else if (IsSelectKeyPressed())
                 {
@@ -177,17 +176,11 @@ public class TitleSceneManager : HDSceneManager
             {
                 if (HDInput.IsUpKeyPressed()) // (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    if (0 < _menuIndex)
-                    {
-                        ChangeMenuItem(_menuIndex - 1);
-                    }
+                    ChangeMenuItem(_menuIndex - 1);
                 }
                 else if (HDInput.IsDownKeyPressed()) // (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    if (_menuIndex < menuItems.Length - 1)
-                    {
-                        ChangeMenuItem(_menuIndex + 1);
-                    }
+                    ChangeMenuItem(_menuIndex + 1);
                 }
                 else if (IsSelectKeyPressed())
                 {
@@ -278,12 +271,24 @@ public class TitleSceneManager : HDSceneManager
     /// <param name="index">선택할 메뉴 아이템의 인덱스입니다.</param>
     void ChangeMenuItem(int index)
     {
+        if (index < 0)
+        {
+            index = menuItems.Length - 1;
+        }
+        else if (menuItems.Length <= index)
+        {
+            index = 0;
+        }
+
         GameObject prevItem = menuItems[_menuIndex];
         GameObject nextItem = menuItems[index];
         prevItem.GetComponent<SpriteRenderer>().sprite = sprites[2 * _menuIndex + 1];
         nextItem.GetComponent<SpriteRenderer>().sprite = sprites[2 * index];
         _menuIndex = index;
         AudioSources[0].Play();
+
+        // 
+        _pointer.transform.position = new Vector3(_pointer.transform.position.x, nextItem.transform.position.y);
     }
     
     /// <summary>

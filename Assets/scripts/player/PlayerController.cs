@@ -1408,7 +1408,7 @@ public abstract class PlayerController : MonoBehaviour
         {
             if (gm.DecreaseCountRequested == false)
             {
-                LoadingSceneManager.LoadLevel("Title");
+                LoadingSceneManager.LoadLevel("BBPTitle");
             }
         }
         else

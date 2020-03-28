@@ -16,6 +16,11 @@ public class StageManager1P : StageManager
     /// </summary>
     public PlayerController _player;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public GameObject[] _objects;
+
     #endregion
 
 
@@ -52,6 +57,15 @@ public class StageManager1P : StageManager
     protected override void Start()
     {
         base.Start();
+
+        // 
+        if (GameManager.Instance.TryCount == 0)
+        {
+            foreach (GameObject go in _objects)
+            {
+                go.SetActive(false);
+            }
+        }
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트 합니다.

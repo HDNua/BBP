@@ -220,10 +220,10 @@ public class PlayerSonicBullet : AttackScript
                     // 타격 효과를 생성하고 대미지를 입힙니다.
                     // MakeHitParticle(_rigidbody.velocity.x < 0, transform);
                     enemy.Hurt(damage, transform);
-                }
 
-                // 탄환을 필드 밖으로 튕겨냅니다.
-                Disappear();
+                    // 탄환을 필드 밖으로 튕겨냅니다.
+                    Disappear();
+                }
             }
         }
         // X 버스터가 통과할 수 없는 레이어와 충돌했습니다.

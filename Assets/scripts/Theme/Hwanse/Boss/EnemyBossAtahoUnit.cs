@@ -1445,6 +1445,7 @@ public class EnemyBossAtahoUnit : EnemyBossUnit
         while (IsAnimatorInState("Win"))
         {
             yield return false;
+            RunAction();
         }
 
         // 세레모니 상태를 끝냅니다.

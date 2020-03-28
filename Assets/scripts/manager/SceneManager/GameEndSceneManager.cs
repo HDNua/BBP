@@ -24,6 +24,11 @@ public class GameEndSceneManager : HDSceneManager
     /// </summary>
     public AudioClip[] soundEffects;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public GameObject _pointer;
+
     #endregion
 
 
@@ -111,7 +116,7 @@ public class GameEndSceneManager : HDSceneManager
                             break;
 
                         case 1:
-                            _nextLevelName = "03_Hwanse";
+                            _nextLevelName = "BBPTitle";
                             _changeSceneRequested = true;
                             FadeManager.Instance.FadeOut();
                             break;
@@ -146,7 +151,7 @@ public class GameEndSceneManager : HDSceneManager
                             break;
 
                         case 1:
-                            _nextLevelName = "03_Hwanse";
+                            _nextLevelName = "BBPTitle";
                             _changeSceneRequested = true;
                             FadeManager.Instance.FadeOut();
                             break;
@@ -193,6 +198,9 @@ public class GameEndSceneManager : HDSceneManager
         nextItem.GetComponent<SpriteRenderer>().sprite = sprites[2 * index];
         _menuIndex = index;
         _seSources[0].Play();
+
+        // 
+        _pointer.transform.position = new Vector3(_pointer.transform.position.x, nextItem.transform.position.y);
     }
 
     /// <summary>

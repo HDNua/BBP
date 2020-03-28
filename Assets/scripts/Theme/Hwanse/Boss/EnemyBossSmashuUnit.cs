@@ -245,6 +245,13 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
     {
         get { return _effects[0]; }
     }
+    /// <summary>
+    /// 대타격 대시 효과입니다.
+    /// </summary>
+    GameObject EffectDaetakyukDash
+    {
+        get { return _effects[1]; }
+    }
 
     #endregion
 
@@ -799,8 +806,10 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         LookPlayer();
         while (IsAnimatorInState("DaetakyukBeg"))
         {
+            _damage = DAMAGE_DAETAKYUK;
             yield return false;
         }
+        _damage = DAMAGE_DAETAKYUK;
         RunEndRequest = false;
 
         // 대타격 진행 시에는 몸에 닿았을 때의 대미지도 칼로 베었을 때와 같게 합니다.
@@ -811,6 +820,14 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         // 플레이어를 쳐다보는 방향으로 대타격을 진행합니다.
         float x = transform.localScale.x;
         float dirX = x;
+
+        // 
+        GameObject effectDaetakyukDash = Instantiate(
+            EffectDaetakyukDash,
+            transform.position,
+            transform.rotation,
+            transform);
+        effectDaetakyukDash.SetActive(true);
 
         // 
         Transform dstPosition;
@@ -845,12 +862,14 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
                 }
             }
             yield return false;
+            _damage = DAMAGE_DAETAKYUK;
         }
 
         // Run 애니메이션의 종료 시점을 모르는 경우 대기를 위해 사용합니다.
         RunEndRequest = true;
         while (_Animator.GetBool("RunEndRequest") == false)
         {
+            _damage = DAMAGE_DAETAKYUK;
             yield return false;
         }
 
@@ -984,6 +1003,25 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         StopKwaejinkyuk();
         _coroutineKwaejinkyuk = null;
         yield break;
+    }
+
+    #endregion
+
+
+
+
+
+    #region 기타 재정의입니다.
+    /// <summary>
+    /// 플레이어를 공격할 수 없는 상태로 전환합니다.
+    /// </summary>
+    public override void MakeUnattackable()
+    {
+        base.MakeUnattackable();
+        foreach (EnemyUnit attackRange in _attackRanges)
+        {
+            attackRange.gameObject.SetActive(false);
+        }
     }
 
     #endregion

@@ -661,7 +661,7 @@ public class HwanseBattleManager : BattleManager
         // 플레이어는 아타호의 마력 회복 행동을 통해
         // 아타호가 마력이 부족할 때 마나 회복을 할 것이라고 예상할 수 있습니다.
         PlayerController player = _stageManager.MainPlayer;
-        if (player.IsDead)
+        if (player.IsAlive() == false)
         {
             _atahoUnit.Ceremony();
 
@@ -675,6 +675,10 @@ public class HwanseBattleManager : BattleManager
                 yield return false;
             }
             while (_atahoUnit.IsActionEnded == false)
+            {
+                yield return false;
+            }
+            while (true)
             {
                 yield return false;
             }
@@ -725,9 +729,27 @@ public class HwanseBattleManager : BattleManager
         UpdateCondition(_atahoUnit, player);
 
         // 업데이트한 조건을 바탕으로 전략을 수행합니다.
-        if (player.IsDead)
+        if (player.IsAlive() == false)
         {
             _atahoUnit.Ceremony();
+
+            // 
+            while (_atahoUnit.IsActionStarted == false)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionRunning)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionEnded == false)
+            {
+                yield return false;
+            }
+            while (true)
+            {
+                yield return false;
+            }
         }
         else
         {
@@ -794,7 +816,30 @@ public class HwanseBattleManager : BattleManager
         // 게임 시작 시에 반드시 아타호의 마력이 0인 상태이므로
         // 플레이어는 아타호의 마력 회복 행동을 통해
         // 아타호가 마력이 부족할 때 마나 회복을 할 것이라고 예상할 수 있습니다.
-        if (_atahoUnit._mana == 0)
+        PlayerController player = _stageManager.MainPlayer;
+        if (player.IsAlive() == false)
+        {
+            _atahoUnit.Ceremony();
+
+            // 행동이 종료될 때까지 대기합니다.
+            while (_atahoUnit.IsActionStarted == false)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionRunning)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionEnded == false)
+            {
+                yield return false;
+            }
+            while (true)
+            {
+                yield return false;
+            }
+        }
+        else if (_atahoUnit._mana == 0)
         {
             _atahoUnit.DrinkMana();
 
@@ -830,7 +875,7 @@ public class HwanseBattleManager : BattleManager
 
         //////////////////////////////////////////////////////////
         // 코루틴 도중 둘 중 하나가 끝났다면 코루틴을 중지합니다.
-        PlayerController player = _stageManager.MainPlayer;
+        player = _stageManager.MainPlayer;
         if (player == null || _atahoUnit.IsDead)
         {
             yield break;
@@ -840,35 +885,60 @@ public class HwanseBattleManager : BattleManager
         UpdateCondition(_atahoUnit, player);
 
         // 업데이트한 조건을 바탕으로 전략을 수행합니다.
-        switch (_direction)
+        if (player.IsAlive() == false)
         {
-            case Direction.LU:
-                PerformAtahoPattern2ActionLU(_atahoUnit, player);
-                break;
-            case Direction.U:
-                PerformAtahoPattern2ActionU(_atahoUnit, player);
-                break;
-            case Direction.RU:
-                PerformAtahoPattern2ActionRU(_atahoUnit, player);
-                break;
-            case Direction.L:
-                PerformAtahoPattern2ActionL(_atahoUnit, player);
-                break;
-            case Direction.R:
-                PerformAtahoPattern2ActionR(_atahoUnit, player);
-                break;
-            case Direction.LD:
-                PerformAtahoPattern2ActionLD(_atahoUnit, player);
-                break;
-            case Direction.D:
-                PerformAtahoPattern2ActionD(_atahoUnit, player);
-                break;
-            case Direction.RD:
-                PerformAtahoPattern2ActionRD(_atahoUnit, player);
-                break;
-            default:
-                PerformAtahoPattern2ActionM(_atahoUnit, player);
-                break;
+            _atahoUnit.Ceremony();
+
+            // 
+            while (_atahoUnit.IsActionStarted == false)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionRunning)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionEnded == false)
+            {
+                yield return false;
+            }
+            while (true)
+            {
+                yield return false;
+            }
+        }
+        else
+        {
+            switch (_direction)
+            {
+                case Direction.LU:
+                    PerformAtahoPattern2ActionLU(_atahoUnit, player);
+                    break;
+                case Direction.U:
+                    PerformAtahoPattern2ActionU(_atahoUnit, player);
+                    break;
+                case Direction.RU:
+                    PerformAtahoPattern2ActionRU(_atahoUnit, player);
+                    break;
+                case Direction.L:
+                    PerformAtahoPattern2ActionL(_atahoUnit, player);
+                    break;
+                case Direction.R:
+                    PerformAtahoPattern2ActionR(_atahoUnit, player);
+                    break;
+                case Direction.LD:
+                    PerformAtahoPattern2ActionLD(_atahoUnit, player);
+                    break;
+                case Direction.D:
+                    PerformAtahoPattern2ActionD(_atahoUnit, player);
+                    break;
+                case Direction.RD:
+                    PerformAtahoPattern2ActionRD(_atahoUnit, player);
+                    break;
+                default:
+                    PerformAtahoPattern2ActionM(_atahoUnit, player);
+                    break;
+            }
         }
 
         // 행동이 종료될 때까지 대기합니다.
@@ -902,7 +972,30 @@ public class HwanseBattleManager : BattleManager
         // 게임 시작 시에 반드시 아타호의 마력이 0인 상태이므로
         // 플레이어는 아타호의 마력 회복 행동을 통해
         // 아타호가 마력이 부족할 때 마나 회복을 할 것이라고 예상할 수 있습니다.
-        if (_atahoUnit._mana == 0)
+        PlayerController player = _stageManager.MainPlayer;
+        if (player.IsAlive() == false)
+        {
+            _atahoUnit.Ceremony();
+
+            // 행동이 종료될 때까지 대기합니다.
+            while (_atahoUnit.IsActionStarted == false)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionRunning)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionEnded == false)
+            {
+                yield return false;
+            }
+            while (true)
+            {
+                yield return false;
+            }
+        }
+        else if (_atahoUnit._mana == 0)
         {
             _atahoUnit.DrinkMana();
 
@@ -946,7 +1039,7 @@ public class HwanseBattleManager : BattleManager
 
         //////////////////////////////////////////////////////////
         // 코루틴 도중 둘 중 하나가 끝났다면 코루틴을 중지합니다.
-        PlayerController player = _stageManager.MainPlayer;
+        player = _stageManager.MainPlayer;
         if (player == null || _atahoUnit.IsDead)
         {
             yield break;
@@ -956,35 +1049,60 @@ public class HwanseBattleManager : BattleManager
         UpdateCondition(_atahoUnit, player);
 
         // 업데이트한 조건을 바탕으로 전략을 수행합니다.
-        switch (_direction)
+        if (player.IsAlive() == false)
         {
-            case Direction.LU:
-                PerformAtahoPattern3ActionLU(_atahoUnit, player);
-                break;
-            case Direction.U:
-                PerformAtahoPattern3ActionU(_atahoUnit, player);
-                break;
-            case Direction.RU:
-                PerformAtahoPattern3ActionRU(_atahoUnit, player);
-                break;
-            case Direction.L:
-                PerformAtahoPattern3ActionL(_atahoUnit, player);
-                break;
-            case Direction.R:
-                PerformAtahoPattern3ActionR(_atahoUnit, player);
-                break;
-            case Direction.LD:
-                PerformAtahoPattern3ActionLD(_atahoUnit, player);
-                break;
-            case Direction.D:
-                PerformAtahoPattern3ActionD(_atahoUnit, player);
-                break;
-            case Direction.RD:
-                PerformAtahoPattern3ActionRD(_atahoUnit, player);
-                break;
-            default:
-                PerformAtahoPattern3ActionM(_atahoUnit, player);
-                break;
+            _atahoUnit.Ceremony();
+
+            // 
+            while (_atahoUnit.IsActionStarted == false)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionRunning)
+            {
+                yield return false;
+            }
+            while (_atahoUnit.IsActionEnded == false)
+            {
+                yield return false;
+            }
+            while (true)
+            {
+                yield return false;
+            }
+        }
+        else
+        {
+            switch (_direction)
+            {
+                case Direction.LU:
+                    PerformAtahoPattern3ActionLU(_atahoUnit, player);
+                    break;
+                case Direction.U:
+                    PerformAtahoPattern3ActionU(_atahoUnit, player);
+                    break;
+                case Direction.RU:
+                    PerformAtahoPattern3ActionRU(_atahoUnit, player);
+                    break;
+                case Direction.L:
+                    PerformAtahoPattern3ActionL(_atahoUnit, player);
+                    break;
+                case Direction.R:
+                    PerformAtahoPattern3ActionR(_atahoUnit, player);
+                    break;
+                case Direction.LD:
+                    PerformAtahoPattern3ActionLD(_atahoUnit, player);
+                    break;
+                case Direction.D:
+                    PerformAtahoPattern3ActionD(_atahoUnit, player);
+                    break;
+                case Direction.RD:
+                    PerformAtahoPattern3ActionRD(_atahoUnit, player);
+                    break;
+                default:
+                    PerformAtahoPattern3ActionM(_atahoUnit, player);
+                    break;
+            }
         }
 
         // 행동이 종료될 때까지 대기합니다.
@@ -3368,7 +3486,7 @@ public class HwanseBattleManager : BattleManager
     {
         // 대타격을 수행합니다.
         PlayerController player = _stageManager.MainPlayer;
-        if (player.IsDead)
+        if (player.IsAlive() == false)
         {
             _smashuUnit.Ceremony();
         }
@@ -3409,7 +3527,7 @@ public class HwanseBattleManager : BattleManager
         }
 
         // 
-        if (player.IsDead)
+        if (player.IsAlive() == false)
         {
             _smashuUnit.Ceremony();
         }
@@ -3461,7 +3579,7 @@ public class HwanseBattleManager : BattleManager
     {
         // 대타격을 수행합니다.
         PlayerController player = _stageManager.MainPlayer;
-        if (player.IsDead)
+        if (player.IsAlive() == false)
         {
             _smashuUnit.Ceremony();
         }
@@ -3502,7 +3620,7 @@ public class HwanseBattleManager : BattleManager
         }
 
         // 
-        if (player.IsDead)
+        if (player.IsAlive() == false)
         {
             _smashuUnit.Ceremony();
         }

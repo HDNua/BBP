@@ -14,8 +14,17 @@ public class XController : PlayerController
     /// <summary>
     /// 차지 단계가 변하는 시간입니다.
     /// </summary>
-    public float[] CHARGE_LEVEL = { 0.2f, 0.3f, 1.7f };
-    
+    public float[] TIME_CHARGE = { 0.2f, 0.3f, 1.4f };
+    /// <summary>
+    /// 기본 차지 단계가 변하는 시간입니다.
+    /// </summary>
+    public float[] TIME_CHARGE_DEFAULT = { 0.2f, 0.3f, 1.4f };
+    /// <summary>
+    /// 소닉 차지 단계가 변하는 시간입니다.
+    /// </summary>
+    public float[] TIME_CHARGE_SONIC = { 0.2f, 0.3f, 1f };
+
+
     /// <summary>
     /// 샷 발사 시에 반짝이는 시간입니다.
     /// </summary>
@@ -110,15 +119,15 @@ public class XController : PlayerController
     /// <summary>
     /// 샷 키가 눌린 상태라면 참입니다.
     /// </summary>
-    bool _shotPressed = false;
+    public bool _shotPressed = false;
     /// <summary>
     /// 차지한 시간을 나타냅니다.
     /// </summary>
-    float _chargeTime = 0;
+    public float _chargeTime = 0;
     /// <summary>
     /// 샷이 막혀있다면 참입니다.
     /// </summary>
-    bool _shotBlocked = false;
+    public bool _shotBlocked = false;
     
     /// <summary>
     /// 위험 경고 효과음이 재생되었다면 참입니다.
@@ -357,11 +366,24 @@ public class XController : PlayerController
         }
         */
         // 테스트 코드입니다.
+        /*
         else if (Input.GetKeyDown(KeyCode.A))
         {
             if (IsDebuggingPlayer())
             {
                 if (_shotPressed == false)
+                {
+                    ChangeWeapon(_weaponState == 5 ? _defaultWeaponState : 5);
+                    ShotWithAnimation(_chargeTime);
+                }
+            }
+        }
+        */
+        else if (IsKeyDown("Weapon"))
+        {
+            if (IsDebuggingPlayer())
+            {
+                if (_shotPressed == false && _shotBlocked == false)
                 {
                     ChangeWeapon(_weaponState == 5 ? _defaultWeaponState : 5);
                     ShotWithAnimation(_chargeTime);
@@ -394,10 +416,12 @@ public class XController : PlayerController
             }
         }
         */
+        /*
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             ChangeWeapon(_defaultWeaponState);
         }
+        */
     }
     /// <summary>
     /// FixedTimestep에 설정된 값에 따라 일정한 간격으로 업데이트 합니다.
@@ -709,7 +733,7 @@ public class XController : PlayerController
                     || IsAnimationPlaying("Shot")
                     || IsAnimationPlaying("ChargeShot"))
                 {
-                    if (chargeTime > CHARGE_LEVEL[2])
+                    if (chargeTime > TIME_CHARGE[2])
                     {
                         _Animator.Play("ChargeShot", 0, 0);
                         ShotBlocked = true;
@@ -759,7 +783,7 @@ public class XController : PlayerController
         int bulletIndex = -1;
         int bulletSoundEffectIndex = -1;
 
-        if (_chargeTime < CHARGE_LEVEL[1])
+        if (_chargeTime < TIME_CHARGE[1])
         {
             // 탄환 객체 인덱스를 업데이트합니다.
             bulletIndex = 0;
@@ -772,7 +796,7 @@ public class XController : PlayerController
                 bulletSoundEffectIndex = 0;
             }
         }
-        else if (_chargeTime < CHARGE_LEVEL[2])
+        else if (_chargeTime < TIME_CHARGE[2])
         {
             // 탄환 객체 인덱스를 업데이트합니다.
             bulletIndex = 1;
@@ -851,7 +875,7 @@ public class XController : PlayerController
     void Charge()
     {
         // 차지 효과음 재생에 관한 코드입니다.
-        if (_chargeTime < CHARGE_LEVEL[0])
+        if (_chargeTime < TIME_CHARGE[0])
         {
 
         }
@@ -866,7 +890,7 @@ public class XController : PlayerController
         }
 
         // 차지 애니메이션 재생에 관한 코드입니다.
-        if (_chargeTime < CHARGE_LEVEL[0])
+        if (_chargeTime < TIME_CHARGE[0])
         {
 
         }
@@ -875,7 +899,7 @@ public class XController : PlayerController
             _chargeEffect1 = CloneObject(effects[5], _chargeEffectPosition);
             _chargeEffect1.transform.SetParent(_chargeEffectPosition);
         }
-        else if (_chargeTime < CHARGE_LEVEL[2])
+        else if (_chargeTime < TIME_CHARGE[2])
         {
 
         }
@@ -1057,7 +1081,7 @@ public class XController : PlayerController
 
         while (_chargeTime >= 0)
         {
-            if (_chargeTime < CHARGE_LEVEL[1])
+            if (_chargeTime < TIME_CHARGE[1])
             {
                 yield return null;
             }
@@ -1071,7 +1095,7 @@ public class XController : PlayerController
                     _CurrentPalette = palette;
                     */
 
-                    int chargeColorIndex = (_chargeTime < CHARGE_LEVEL[2]) ? 2 : 3;
+                    int chargeColorIndex = (_chargeTime < TIME_CHARGE[2]) ? 2 : 3;
                     _PaletteUser.UpdatePaletteIndex(chargeColorIndex);
                 }
                 else
@@ -1598,6 +1622,28 @@ public class XController : PlayerController
     {
         _weaponState = weaponIndex;
         _PaletteUser.UpdatePaletteIndex(_weaponState);
+
+        // 
+        UpdateChargeTime();
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    void UpdateChargeTime()
+    {
+        switch (_weaponState)
+        {
+            case 5:
+                TIME_CHARGE[0] = TIME_CHARGE_SONIC[0];
+                TIME_CHARGE[1] = TIME_CHARGE_SONIC[1];
+                TIME_CHARGE[2] = TIME_CHARGE_SONIC[2];
+                break;
+            default:
+                TIME_CHARGE[0] = TIME_CHARGE_DEFAULT[0];
+                TIME_CHARGE[1] = TIME_CHARGE_DEFAULT[1];
+                TIME_CHARGE[2] = TIME_CHARGE_DEFAULT[2];
+                break;
+        }
     }
 
 
@@ -1609,7 +1655,7 @@ public class XController : PlayerController
         base.UpdateColor();
 
         // 플레이어가 차지 중이라면 색을 업데이트합니다.
-        if (_chargeTime > CHARGE_LEVEL[0])
+        if (_chargeTime > TIME_CHARGE[0])
         {
             // 차지 효과 색상을 업데이트 합니다.
             if (_chargeEffect2 != null)
@@ -1665,7 +1711,7 @@ public class XController : PlayerController
             || IsAnimationPlaying("Shot")
             || IsAnimationPlaying("ChargeShot"))
         {
-            if (chargeTime > CHARGE_LEVEL[2])
+            if (chargeTime > TIME_CHARGE[2])
             {
                 _Animator.Play("ChargeShot", 0, 0);
                 ShotBlocked = true;

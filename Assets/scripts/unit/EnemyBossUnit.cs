@@ -401,7 +401,7 @@ public class EnemyBossUnit : EnemyUnit
     /// <summary>
     /// 플레이어를 공격할 수 없는 상태로 전환합니다.
     /// </summary>
-    public void MakeUnattackable()
+    public virtual void MakeUnattackable()
     {
         _damage = 0;
     }

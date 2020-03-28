@@ -808,6 +808,14 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         {
             _damage = DAMAGE_DAETAKYUK;
             yield return false;
+            if (IsAlive() == false)
+            {
+                MakeUnattackable();
+                StopDaetakyuk();
+                StopCoroutine(_coroutineDaetakyuk);
+                _coroutineDaetakyuk = null;
+                yield break;
+            }
         }
         _damage = DAMAGE_DAETAKYUK;
         RunEndRequest = false;
@@ -862,6 +870,14 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
                 }
             }
             yield return false;
+            if (IsAlive() == false)
+            {
+                MakeUnattackable();
+                StopDaetakyuk();
+                StopCoroutine(_coroutineDaetakyuk);
+                _coroutineDaetakyuk = null;
+                yield break;
+            }
             _damage = DAMAGE_DAETAKYUK;
         }
 
@@ -871,6 +887,14 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         {
             _damage = DAMAGE_DAETAKYUK;
             yield return false;
+            if (IsAlive() == false)
+            {
+                MakeUnattackable();
+                StopDaetakyuk();
+                StopCoroutine(_coroutineDaetakyuk);
+                _coroutineDaetakyuk = null;
+                yield break;
+            }
         }
 
         // 공격을 진행합니다.
@@ -883,6 +907,14 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
             _damage = DAMAGE_DAETAKYUK;
             attackRange._damage = DAMAGE_DAETAKYUK;
             yield return false;
+            if (IsAlive() == false)
+            {
+                MakeUnattackable();
+                StopDaetakyuk();
+                StopCoroutine(_coroutineDaetakyuk);
+                _coroutineDaetakyuk = null;
+                yield break;
+            }
         }
 
         // 공격을 끝냅니다.
@@ -892,6 +924,14 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
             _damage = DAMAGE_DAETAKYUK;
             attackRange._damage = DAMAGE_DAETAKYUK;
             yield return false;
+            if (IsAlive() == false)
+            {
+                MakeUnattackable();
+                StopDaetakyuk();
+                StopCoroutine(_coroutineDaetakyuk);
+                _coroutineDaetakyuk = null;
+                yield break;
+            }
         }
         RunEndRequest = false;
         attackRange.gameObject.SetActive(false);
@@ -902,6 +942,14 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
             _damage = _defaultDamage;
             attackRange._damage = 0;
             yield return false;
+            if (IsAlive() == false)
+            {
+                MakeUnattackable();
+                StopDaetakyuk();
+                StopCoroutine(_coroutineDaetakyuk);
+                _coroutineDaetakyuk = null;
+                yield break;
+            }
         }
         _damage = _defaultDamage;
 
@@ -970,6 +1018,14 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         while (IsAnimatorInState("KwaejinkyukBeg"))
         {
             yield return false;
+            if (IsAlive() == false)
+            {
+                MakeUnattackable();
+                StopKwaejinkyuk();
+                StopCoroutine(_coroutineKwaejinkyuk);
+                _coroutineKwaejinkyuk = null;
+                yield break;
+            }
         }
 
         // 
@@ -997,10 +1053,19 @@ public class EnemyBossSmashuUnit : EnemyBossUnit
         {
             _damage = DAMAGE_KWAEJINKYUK;
             yield return false;
+            if (IsAlive() == false)
+            {
+                MakeUnattackable();
+                StopKwaejinkyuk();
+                StopCoroutine(_coroutineKwaejinkyuk);
+                _coroutineKwaejinkyuk = null;
+                yield break;
+            }
         }
 
         // 행동을 종료합니다.
         StopKwaejinkyuk();
+        StopCoroutine(_coroutineKwaejinkyuk);
         _coroutineKwaejinkyuk = null;
         yield break;
     }

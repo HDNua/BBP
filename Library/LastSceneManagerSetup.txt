@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/bbp/BBPTitle.unity
+- path: Assets/Scenes/bbp/03_Hwanse.unity
   isLoaded: 1
   isActive: 1

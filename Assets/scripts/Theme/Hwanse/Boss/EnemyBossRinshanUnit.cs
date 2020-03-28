@@ -738,6 +738,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         }
         IsKnockouted = false;
         _health = _maxHealth;
+        _PaletteUser.EnableTexture();
         _PaletteUser.UpdatePaletteIndex(0);
 
         // 재정비 상태에 들어갑니다.

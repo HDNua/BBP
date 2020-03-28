@@ -286,6 +286,10 @@ public class XController : PlayerController
             if (JumpBlocked)
             {
             }
+            else if (AirDashing)
+            {
+
+            }
             else if (Sliding)
             {
                 if (IsKeyPressed("Dash"))
@@ -334,6 +338,14 @@ public class XController : PlayerController
             }
             else
             {
+                if (FacingRight && IsLeftKeyPressed())
+                {
+                    Flip();
+                }
+                else if (FacingRight == false && IsRightKeyPressed())
+                {
+                    Flip();
+                }
                 Dash();
             }
         }
@@ -349,10 +361,14 @@ public class XController : PlayerController
         {
             if (IsDebuggingPlayer())
             {
-                ChangeWeapon(_weaponState == 5 ? _defaultWeaponState : 5);
-                ShotWithAnimation(_chargeTime);
+                if (_shotPressed == false)
+                {
+                    ChangeWeapon(_weaponState == 5 ? _defaultWeaponState : 5);
+                    ShotWithAnimation(_chargeTime);
+                }
             }
         }
+        /*
         else if (Input.GetKeyDown(KeyCode.S))
         {
             if (IsDebuggingPlayer())
@@ -377,6 +393,7 @@ public class XController : PlayerController
                 ShotWithAnimation(_chargeTime);
             }
         }
+        */
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             ChangeWeapon(_defaultWeaponState);
@@ -527,8 +544,6 @@ public class XController : PlayerController
 
             UnblockSliding();
         }
-
-
 
         // 방향 키 입력에 대해 처리합니다.
         if (Dashing)
@@ -684,22 +699,25 @@ public class XController : PlayerController
             float chargeTime = _chargeTime;
 
             // 샷을 발사합니다.
-            Shot();
-
-            // 이전 애니메이션이 Idle인 경우의 처리입니다.
-            if (IsAnimationPlaying("Idle")
-                || IsAnimationPlaying("FallEnd")
-                || IsAnimationPlaying("Shot")
-                || IsAnimationPlaying("ChargeShot"))
+            if (IsShotAvailable())
             {
-                if (chargeTime > CHARGE_LEVEL[2])
+                Shot();
+
+                // 이전 애니메이션이 Idle인 경우의 처리입니다.
+                if (IsAnimationPlaying("Idle")
+                    || IsAnimationPlaying("FallEnd")
+                    || IsAnimationPlaying("Shot")
+                    || IsAnimationPlaying("ChargeShot"))
                 {
-                    _Animator.Play("ChargeShot", 0, 0);
-                    ShotBlocked = true;
-                }
-                else
-                {
-                    _Animator.Play("Shot", 0, 0);
+                    if (chargeTime > CHARGE_LEVEL[2])
+                    {
+                        _Animator.Play("ChargeShot", 0, 0);
+                        ShotBlocked = true;
+                    }
+                    else
+                    {
+                        _Animator.Play("Shot", 0, 0);
+                    }
                 }
             }
         }
@@ -746,12 +764,26 @@ public class XController : PlayerController
             // 탄환 객체 인덱스를 업데이트합니다.
             bulletIndex = 0;
             bulletSoundEffectIndex = 0;
+
+            // 
+            if (IsDebuggingPlayer() && (_weaponState != _defaultWeaponState))
+            {
+                bulletIndex = 3 * (_weaponState - _defaultWeaponState) + 0;
+                bulletSoundEffectIndex = 0;
+            }
         }
         else if (_chargeTime < CHARGE_LEVEL[2])
         {
             // 탄환 객체 인덱스를 업데이트합니다.
             bulletIndex = 1;
             bulletSoundEffectIndex = 1;
+
+            // 
+            if (IsDebuggingPlayer() && (_weaponState != _defaultWeaponState))
+            {
+                bulletIndex = 3 * (_weaponState - _defaultWeaponState) + 1;
+                bulletSoundEffectIndex = 1;
+            }
         }
         else
         {
@@ -759,9 +791,10 @@ public class XController : PlayerController
             bulletIndex = 2;
             bulletSoundEffectIndex = 2;
 
+            //
             if (IsDebuggingPlayer() && (_weaponState != _defaultWeaponState))
             {
-                bulletIndex = _weaponState - _defaultWeaponState + 2;
+                bulletIndex = 3 * (_weaponState - _defaultWeaponState) + 2;
                 bulletSoundEffectIndex = 2;
             }
         }
@@ -878,10 +911,13 @@ public class XController : PlayerController
         Transform shotPosition = GetShotPosition();
         bool toLeft = (Sliding ? FacingRight : !FacingRight);
 
+        // 
+        int bulletOffset = bulletIndex % 3;
+
         // 탄환 발사 효과에 대해 먼저 생성하고 처리합니다.
-        int bulletFireEffectIndex = Mathf.Clamp(7 + bulletIndex, 7, 10);
+        int bulletFireEffectIndex = 7 + bulletIndex;
         GameObject fireEffectObject = CloneObject(effects[bulletFireEffectIndex], shotPosition);
-        if (bulletIndex >= 2)
+        if (bulletOffset == 2)
         {
             if (IsAnimationPlaying("Idle"))
             {
@@ -891,13 +927,16 @@ public class XController : PlayerController
         Vector3 effectScale = fireEffectObject.transform.localScale;
         effectScale.x *= (toLeft ? -1 : 1);
         fireEffectObject.transform.localScale = effectScale;
-        fireEffectObject.transform.parent = shotPosition.transform;
+        fireEffectObject.transform.position = shotPosition.position;
+        Vector3 fireEffectObjectPosition = fireEffectObject.transform.position;
+        ///fireEffectObject.transform.parent = shotPosition.transform;
 
         // 버스터 컴포넌트를 발사체에 붙입니다.
-        GameObject _bullet = CloneObject(_bullets[bulletIndex], shotPosition);
+        ///GameObject _bullet = CloneObject(_bullets[bulletIndex], shotPosition);
+        GameObject _bullet = CloneObject(_bullets[bulletIndex], fireEffectObject.transform);
 
         // 2단계 차지샷이라면 잠시 대기합니다.
-        if (bulletIndex >= 2)
+        if (bulletOffset == 2)
         {
             _bullet.GetComponent<SpriteRenderer>().color = Color.clear;
 
@@ -921,7 +960,9 @@ public class XController : PlayerController
         if (_bullet != null)
         {
             _bullet.GetComponent<SpriteRenderer>().color = Color.white;
-            _bullet.transform.position = shotPosition.position;
+            ///_bullet.transform.position = shotPosition.position;
+            ///_bullet.transform.position = fireEffectObject.transform.position;
+            _bullet.transform.position = fireEffectObjectPosition;
 
             // 위치를 조정합니다.
             Vector3 bulletScale = _bullet.transform.localScale;
@@ -932,9 +973,19 @@ public class XController : PlayerController
             float shotSpeed;
             switch (bulletIndex)
             {
-                case 3:
-                case 4:
+                case 3: // 미니 소닉
+                case 4: // 미니 소닉
+                    shotSpeed = _shotSpeed * 1.3f;
+                    break;
+                case 5: // 소닉
                     shotSpeed = _shotSpeed * 1.5f;
+                    break;
+                case 6:
+                case 7:
+                    shotSpeed = _shotSpeed * 1.2f;
+                    break;
+                case 8:
+                    shotSpeed = _shotSpeed * 1.4f;
                     break;
                 default:
                     shotSpeed = _shotSpeed;
@@ -1624,6 +1675,26 @@ public class XController : PlayerController
                 _Animator.Play("Shot", 0, 0);
             }
         }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    bool IsShotAvailable()
+    {
+        if (_weaponState != _defaultWeaponState)
+        {
+            if (ShotTime >= END_SHOOTING_TIME)
+            {
+                return true;
+            }
+            else
+            {
+                _shotPressed = false;
+                return false;
+            }
+        }
+        return true;
     }
 
     #endregion

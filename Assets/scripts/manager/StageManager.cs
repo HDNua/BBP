@@ -593,9 +593,8 @@ public class StageManager : HDSceneManager
         AudioSource specialSoundSource = AudioSources[item.SoundEffectIndexes[0]];
         AudioSource healSoundSource = AudioSources[item.SoundEffectIndexes[1]];
         float time = 0f;
-        float firstWaitingTime = specialSoundSource.clip.length * 2;
+        float firstWaitingTime = specialSoundSource.clip.length * 1.5f;
         float unitTime = 0.02f;
-
 
         // 첫 번째 대기 루프입니다.
         specialSoundSource.Play();

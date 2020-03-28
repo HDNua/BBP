@@ -111,6 +111,7 @@ public class PauseMenuManager : MonoBehaviour
     /// </summary>
     public void RequestPauseToggle()
     {
+        /*
         if (_paused)
         {
             _paused = false;
@@ -128,6 +129,7 @@ public class PauseMenuManager : MonoBehaviour
             _defaultBgmVolume = StageManager.Instance.GetBackgroundMusicVolume();
             StageManager.Instance.SetBackgroundMusicVolume(0.1f);
         }
+        */
     }
 
     #endregion

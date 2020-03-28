@@ -107,7 +107,7 @@ public class GameEndSceneManager : HDSceneManager
                     switch (_menuIndex)
                     {
                         case 0:
-                            Application.OpenURL("https://forms.gle/kH71RHEu9ZRNvVW37");
+                            Application.OpenURL("https://forms.gle/CRCJj7oyEuksKhoU7");
                             break;
 
                         case 1:

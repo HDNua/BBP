@@ -280,6 +280,10 @@ public class ZController : PlayerController
             {
                 
             }
+            else if (AirDashing)
+            {
+
+            }
             else if (Sliding)
             {
                 if (IsKeyPressed("Dash"))

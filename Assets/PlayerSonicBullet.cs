@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// 
+/// 소닉 플레이어 탄환을 정의합니다.
 /// </summary>
 public class PlayerSonicBullet : AttackScript
 {
@@ -30,6 +30,11 @@ public class PlayerSonicBullet : AttackScript
     /// 버스터가 통과할 수 없는 지형에 대한 마스크입니다.
     /// </summary>
     public LayerMask _busterUnpassable;
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public float _volume = 0.5f;
 
     /// <summary>
     /// 
@@ -93,7 +98,7 @@ public class PlayerSonicBullet : AttackScript
 
         // 
         SoundEffects[8].enabled = true;
-        SoundEffects[8].volume = 0.75f;
+        SoundEffects[8].volume = _volume;
         SoundEffects[8].Play();
     }
     /// <summary>

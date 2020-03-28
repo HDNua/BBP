@@ -271,33 +271,21 @@ public class ItemScript : MonoBehaviour
         }
     }
 
-
     #endregion
 
 
 
-
-
-
-
-
+          
 
     #region 메서드를 정의합니다.
 
-
     #endregion
 
 
-
-
-
-
-
-
+          
 
 
     #region 구형 정의를 보관합니다.
-
 
     #endregion
 }

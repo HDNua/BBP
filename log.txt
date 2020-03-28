@@ -1,4 +1,15 @@
-﻿BBP v1.6.2.2
+﻿BBP v1.6.3.0 (RELEASE)
+----
+
+- 린샹이 문 부수고 들어온 후에 활성화되는 InvisibleWall에 FrictionlessWall material이 적용 안 되던 문제 수정.
+
+- 타일 맵 업데이트.
+
+
+end.
+
+
+BBP v1.6.2.2
 ----
 
 - 버그 해결.

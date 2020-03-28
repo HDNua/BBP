@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objecttypes>
+ <objecttype name="TiledGeometry" color="#00aa00">
+  <property name="AddComponent" type="string" default="TiledGeometryScript"/>
+  <property name="_isBottomExist" type="bool"/>
+  <property name="_isGroundExist" type="bool"/>
+  <property name="_isLeftExist" type="bool"/>
+  <property name="_isRightExist" type="bool"/>
+  <property name="_material" type="string" default="FrictionlessWall"/>
+  <property name="unity:isTrigger" type="string" default="True"/>
+  <property name="unity:layer" type="string" default="13"/>
+ </objecttype>
+ <objecttype name="DeadZone" color="#ff0000">
+  <property name="AddComponent" type="string" default="DeadZoneScript"/>
+  <property name="unity:isTrigger" type="string" default="True"/>
+ </objecttype>
+ <objecttype name="CameraZone" color="#00ffff">
+  <property name="AddComponent" type="string" default="CameraZone"/>
+  <property name="_cameraZoneID" type="string"/>
+  <property name="_isBottomBounded" type="bool"/>
+  <property name="_isBottomFirst" type="bool"/>
+  <property name="_isLeftBounded" type="bool"/>
+  <property name="_isLeftFirst" type="bool"/>
+  <property name="_isRightBounded" type="bool"/>
+  <property name="_isRightFirst" type="bool"/>
+  <property name="_isTopBounded" type="bool"/>
+  <property name="_isTopFirst" type="bool"/>
+ </objecttype>
+ <objecttype name="TestCameraZone" color="#00aaff"/>
+ <objecttype name="CameraZoneBorder" color="#5500ff">
+  <property name="AddComponent" type="string" default="CameraZoneBorder"/>
+  <property name="_beginTransition" type="bool"/>
+  <property name="_fromID" type="string"/>
+  <property name="_toID" type="string"/>
+  <property name="unity:isTrigger" type="string" default="True"/>
+ </objecttype>
+ <objecttype name="InvisibleWall" color="#a0a0a4">
+  <property name="_material" type="string" default="FrictionlessWall"/>
+  <property name="unity:layer" type="string" default="8"/>
+ </objecttype>
+</objecttypes>

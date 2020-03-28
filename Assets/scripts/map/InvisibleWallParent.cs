@@ -15,7 +15,7 @@ public class InvisibleWallParent : MonoBehaviour
     void Start()
     {
         PhysicsMaterial2D material = DataBase.Instance.FrictionlessWall;
-        Collider2D[] children = GetComponentsInChildren<Collider2D>();
+        Collider2D[] children = GetComponentsInChildren<Collider2D>(includeInactive: true);
 
         // 
         foreach (Collider2D child in children)

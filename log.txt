@@ -1,4 +1,15 @@
-﻿BBP v1.6.2.2
+﻿BBP v1.6.3.0 (RELEASE)
+----
+
+- InvisibleWall 관련 버그 수정.
+
+- Debugger가 팔레트 생성하던 거 막음.
+
+
+end.
+
+
+BBP v1.6.2.2
 ----
 
 - 버그 해결.

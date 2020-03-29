@@ -27,6 +27,14 @@ public class TiledGeometryScript : MonoBehaviour
     /// </summary>
     PolygonCollider2D _slopeGroundCollider;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool _alwaysSlidable = true;
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool _isWallSlidable = true;
 
     #endregion
 
@@ -109,7 +117,7 @@ public class TiledGeometryScript : MonoBehaviour
 
         // leftEdge
         childObject = new GameObject();
-        childObject.layer = LayerMask.NameToLayer("Wall");
+        childObject.layer = IsWallSlidable() ? LayerMask.NameToLayer("Wall") : LayerMask.NameToLayer("MapBlock");
         childObject.transform.parent = gameObject.transform;
         childObject.transform.localScale = originScale;
         childObject.isStatic = true;
@@ -117,7 +125,7 @@ public class TiledGeometryScript : MonoBehaviour
 
         // rightEdge
         childObject = new GameObject();
-        childObject.layer = LayerMask.NameToLayer("Wall");
+        childObject.layer = IsWallSlidable() ? LayerMask.NameToLayer("Wall") : LayerMask.NameToLayer("MapBlock");
         childObject.transform.parent = gameObject.transform;
         childObject.transform.localScale = originScale;
         childObject.isStatic = true;
@@ -187,7 +195,7 @@ public class TiledGeometryScript : MonoBehaviour
 
         // leftEdge
         childObject = new GameObject();
-        childObject.layer = LayerMask.NameToLayer("Wall");
+        childObject.layer = IsWallSlidable() ? LayerMask.NameToLayer("Wall") : LayerMask.NameToLayer("MapBlock");
         childObject.transform.parent = gameObject.transform;
         childObject.transform.localScale = originScale;
         childObject.isStatic = true;
@@ -195,7 +203,7 @@ public class TiledGeometryScript : MonoBehaviour
 
         // rightEdge
         childObject = new GameObject();
-        childObject.layer = LayerMask.NameToLayer("Wall");
+        childObject.layer = IsWallSlidable() ? LayerMask.NameToLayer("Wall") : LayerMask.NameToLayer("MapBlock");
         childObject.transform.parent = gameObject.transform;
         childObject.transform.localScale = originScale;
         childObject.isStatic = true;
@@ -272,6 +280,14 @@ public class TiledGeometryScript : MonoBehaviour
         ret[2] = sorted[1];
         ret[3] = sorted[3];
         return ret;
+    }
+    /// <summary>
+    /// 벽이 슬라이딩 가능한지를 확인합니다.
+    /// </summary>
+    /// <returns>슬라이딩 가능하다면 참입니다.</returns>
+    bool IsWallSlidable()
+    {
+        return (_alwaysSlidable) || (_isWallSlidable);
     }
 
     #endregion

@@ -440,6 +440,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     IEnumerator CoroutineAppear()
     {
         // 초기 설정을 진행합니다.
+        _hasBulletImmunity = true;
         transform.position = _BattleManager._rinshanSpawnPosition.position;
         yield return false;
         RunAction();
@@ -485,7 +486,8 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
         transform.position = new Vector3(_BattleManager._rinshanSpawnEndPosition.position.x, transform.position.y, transform.position.z);
         Velocity = Vector2.zero;
 
-        // 수경 등을 이용하여 들어온 문을 막습니다.
+        // 탄환 무적 상태를 종료합니다.
+        _hasBulletImmunity = false;
 
         // 등장을 끝냅니다.
         StopAppearing();
@@ -1038,7 +1040,7 @@ public class EnemyBossRinshanUnit : EnemyBossUnit
     /// <param name="position">대폭진 얼음을 생성할 위치입니다.</param>
     void MakeIce(Transform transform)
     {
-        Instantiate(_bulletUnits[1], transform.position, transform.rotation);
+        Instantiate(_bulletUnits[1], transform.position, transform.rotation, StageManager.Instance._enemyParent.transform);
         Destroy(transform.gameObject);
     }
 

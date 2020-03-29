@@ -194,10 +194,10 @@ public class PlayerSonicBullet : AttackScript
                 {
                     // 대미지를 입힙니다.
                     rinshanUnit.Hurt(damage, transform);
-                }
 
-                // 탄환을 필드 밖으로 튕겨냅니다.
-                Disappear();
+                    // 탄환을 필드 밖으로 튕겨냅니다.
+                    Disappear();
+                }
             }
             else if (enemyUnit)
             {

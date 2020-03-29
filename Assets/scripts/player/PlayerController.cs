@@ -2022,6 +2022,7 @@ public abstract class PlayerController : MonoBehaviour
     public void IncreaseMaxHealth()
     {
         MaxHealth++;
+        Health++;
     }
 
     /// <summary>

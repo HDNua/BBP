@@ -134,6 +134,10 @@ public class StageManager1P : StageManager
     protected override IEnumerator CoroutineClearStage()
     {
         // 
+        _player.ResetBodyColorToDefault();
+        yield return false;
+
+        // 
         AudioSource audioSource = AudioSources[5];
         audioSource.Play();
         while (audioSource.isPlaying)

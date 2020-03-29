@@ -33,7 +33,7 @@ public class Debugger : MonoBehaviour
     /// </summary>
     void Start()
     {
-        SavePalette();
+        ///SavePalette();
     }
     /// <summary>
     /// 프레임이 갱신될 때 MonoBehaviour 개체 정보를 업데이트 합니다.

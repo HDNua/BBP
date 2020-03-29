@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/bbp/03_Hwanse.unity
+- path: Assets/Scenes/SnakeHead.unity
   isLoaded: 1
   isActive: 1

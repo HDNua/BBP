@@ -2264,15 +2264,23 @@ public abstract class PlayerController : MonoBehaviour
     /// <summary>
     /// 세레머니를 요청합니다.
     /// </summary>
-    public void RequestCeremony()
+    public virtual void RequestCeremony()
     {
         _Animator.Play("Ceremony");
     }
 
     /// <summary>
-    /// 
+    /// 바디 색상을 원래대로 되돌립니다.
     /// </summary>
-    /// <param name="position"></param>
+    public virtual void ResetBodyColorToDefault()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// 플레이어 소환을 요청합니다.
+    /// </summary>
+    /// <param name="position">플레이어를 소환할 위치입니다.</param>
     public void RequestSpawn(Vector3 position)
     {
         transform.position = position;

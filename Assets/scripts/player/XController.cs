@@ -1743,6 +1743,21 @@ public class XController : PlayerController
         return true;
     }
 
+    /// <summary>
+    /// 세레머니를 요청합니다.
+    /// </summary>
+    public override void RequestCeremony()
+    {
+        base.RequestCeremony();
+    }
+    /// <summary>
+    /// 바디 색상을 원래대로 되돌립니다.
+    /// </summary>
+    public override void ResetBodyColorToDefault()
+    {
+        _PaletteUser.UpdatePaletteIndex(_defaultWeaponState);
+    }
+
     #endregion
 
 

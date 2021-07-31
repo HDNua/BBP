@@ -282,7 +282,7 @@ TextureImporter:
     21300554: GrayRinshang 277
     21300556: GrayRinshang 278
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -300,6 +300,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -310,7 +312,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -330,11 +332,13 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -344,7 +348,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Standalone
+  - serializedVersion: 2
+    buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -371,6 +376,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 983f3e3bf29ee9f4abf795d163e83b11
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 1
       rect:
@@ -385,6 +396,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 53bf5376af6affb4c9a50f5e991b82d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 2
       rect:
@@ -399,6 +416,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 28a5fa9f994d4454ab60e26d90532eb8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 3
       rect:
@@ -413,6 +436,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 055ec5a03f144f04db83ba9db8e52f51
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 4
       rect:
@@ -427,6 +456,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2aad002ad6ac0ed46a3b7d3a4b4f3e8f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 5
       rect:
@@ -441,6 +476,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bc3fae75ff8edb5419ea716eff8a7785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 6
       rect:
@@ -455,6 +496,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2f11092e51e9f4742a3559a5d8aa70fe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 7
       rect:
@@ -469,6 +516,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 18551a4ac34703849a388f58a815776e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 8
       rect:
@@ -483,6 +536,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 166320ed3b7aa944692fdabcbaab8be9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 9
       rect:
@@ -497,6 +556,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 211a6496056d8d848a680fd369a55a37
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 10
       rect:
@@ -511,6 +576,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a00cd9228a7f1b340934cd6e62b44813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 11
       rect:
@@ -525,6 +596,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e154a6d36987d5f4084902da63086273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 12
       rect:
@@ -539,6 +616,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a20ebfddd08d7d54a9df0518b7de25c9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 13
       rect:
@@ -553,6 +636,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a68879154a5faa24cac4b3459e677c90
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 14
       rect:
@@ -567,6 +656,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fed0d557517df204bbcd89d9b54809a5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 15
       rect:
@@ -581,6 +676,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 07bbe290ac2e8a844af4eb825db3ed46
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 16
       rect:
@@ -595,6 +696,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d609c7f356a108749a625bc86527953c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 17
       rect:
@@ -609,6 +716,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5764cc671be3b774da7ff65700674470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 18
       rect:
@@ -623,6 +736,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0bb6dbaed8f84c84ca380775987ad5be
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 19
       rect:
@@ -637,6 +756,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f671683b01cea684eb6f77eb1e57f616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 20
       rect:
@@ -651,6 +776,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6bf3cefb8d93c5c48bef1b027571b854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 21
       rect:
@@ -665,6 +796,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 503ed3dbca0926a42bc61dcfd8eb6037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 22
       rect:
@@ -679,6 +816,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e2b78955bb05fa44c85f7b62716f6ea7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 23
       rect:
@@ -693,6 +836,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ee738e6f55b918f4e9d891b3185f3cf4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 24
       rect:
@@ -707,6 +856,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 114ceead55100424eb27e33eae984491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 25
       rect:
@@ -721,6 +876,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 41922fdb4b3c8684dae5404ad15bb6e0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 26
       rect:
@@ -735,6 +896,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 04c7a97ebe35c6e48a5a752442343751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 27
       rect:
@@ -749,6 +916,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b5d967be30f96494ab2711d6befdf9c2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 28
       rect:
@@ -763,6 +936,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6b0bc20caab49fd4e8506d614d534c18
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 29
       rect:
@@ -777,6 +956,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 78ea72b8be8687642bdb35d0c97f202d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 30
       rect:
@@ -791,6 +976,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d9d399a7fe27361458f87c2f490107a8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 31
       rect:
@@ -805,6 +996,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a2e82eb48fcc67a4399734048db0ba19
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 32
       rect:
@@ -819,6 +1016,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 475dc0c83e3fe424ca2c796261881889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 33
       rect:
@@ -833,6 +1036,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1cec639a2932c96448f2af5de705defb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 34
       rect:
@@ -847,6 +1056,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6695bc1f22426fc4fb3fd55f4a6f02f8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 35
       rect:
@@ -861,6 +1076,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c08a0e318a59d6f41b015047962dfdd6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 36
       rect:
@@ -875,6 +1096,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 12ae9857680a117479b7fe8fa4520342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 37
       rect:
@@ -889,6 +1116,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0cc8c575a0a1a624689f5343bca1823a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 38
       rect:
@@ -903,6 +1136,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e38d2b923036c9740846c0a32f787eef
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 39
       rect:
@@ -917,6 +1156,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d2ff0baaebc16ba4d85e6a4a4b70b8ee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 40
       rect:
@@ -931,6 +1176,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9fef12eda3e3e5649bea74b03d3e90c0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 41
       rect:
@@ -945,6 +1196,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bfb6a58f69263324cb2041676837a113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 42
       rect:
@@ -959,6 +1216,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c34a7772968ce7c40b3460abc413d76c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 43
       rect:
@@ -973,6 +1236,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d96d36953d7db6a488d589c51ed2a46a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 44
       rect:
@@ -987,6 +1256,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c3dbab31697d30b41b333c864acb61a5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 45
       rect:
@@ -1001,6 +1276,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 64df257f6ba644c4bbb59f5efe1b27b6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 46
       rect:
@@ -1015,6 +1296,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6082d5b78d698804abc80fa95a2642c6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 47
       rect:
@@ -1029,6 +1316,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cc6680e117c2ac24ab31d9ce885296e1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 48
       rect:
@@ -1043,6 +1336,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 367fc2319a3180f4e92330994ffc095d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 49
       rect:
@@ -1057,6 +1356,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6b1e90b368f82c14792ecf4fbddfbb0f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 50
       rect:
@@ -1071,6 +1376,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2d17a23de2648994289a9051e5717321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 51
       rect:
@@ -1085,6 +1396,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 964350e6be2d3ea44b90937ef8d3fce9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 52
       rect:
@@ -1099,6 +1416,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 07053c109e548fb4392204f335d5cff5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 53
       rect:
@@ -1113,6 +1436,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bd3bbfc5284cf6f4197baba436971d04
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 54
       rect:
@@ -1127,6 +1456,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7b2a98112c53ef74fa4b572cd6101d6c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 55
       rect:
@@ -1141,6 +1476,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bf513aaccc5f4184dba48a370d9022c4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 56
       rect:
@@ -1155,6 +1496,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 97ab0cea8a0ec5e4cb24a107e199e7d9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 57
       rect:
@@ -1169,6 +1516,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5a6bd03f89f86fe45a936e71aa7e62ab
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 58
       rect:
@@ -1183,6 +1536,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 54f36699383718445a880d910f7c54e9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 59
       rect:
@@ -1197,6 +1556,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 93bd80337cafb1f4ba79412488485d50
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 60
       rect:
@@ -1211,6 +1576,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 28643a1d5c9584d43b921817558474ff
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 61
       rect:
@@ -1225,6 +1596,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 06f6b7e3415d4dd43b01589440d6defe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 62
       rect:
@@ -1239,6 +1616,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 59e2c00788dfb0643b6f17e0406f9f5a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 63
       rect:
@@ -1253,6 +1636,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5d3cc1158f9514d4b9254e00ec579a27
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 64
       rect:
@@ -1267,6 +1656,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7c225c043d2963048942acafe16aef83
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 65
       rect:
@@ -1281,6 +1676,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6101da7dda774074a92dad4f3e040ec5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 66
       rect:
@@ -1295,6 +1696,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e6f499087d02bce46ad0538b6f2e3345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 67
       rect:
@@ -1309,6 +1716,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 56c5f6728290ab84abe48d0bf021b783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 68
       rect:
@@ -1323,6 +1736,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d3640df6e5e5c514db7bbfbea15d30a1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 69
       rect:
@@ -1337,6 +1756,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 682202dd7d59572478b9142071ddf84c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 70
       rect:
@@ -1351,6 +1776,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 89d856709c76008409982468d9808a53
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 71
       rect:
@@ -1365,6 +1796,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9a010de769c98494eb2ee537f92254fa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 72
       rect:
@@ -1379,6 +1816,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9ba3355afe62b99448a153ed860091c3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 73
       rect:
@@ -1393,6 +1836,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 809325a828859144a9041cbb6f3bda18
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 74
       rect:
@@ -1407,6 +1856,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 934c392bb929340438c50f05d67559b1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 75
       rect:
@@ -1421,6 +1876,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a9e439273e1124a40a354bbcc3499f0c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 76
       rect:
@@ -1435,6 +1896,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: af0d188bbb82cfa488e86f4c6094b408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 77
       rect:
@@ -1449,6 +1916,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 818efba9857e88d409ac89c9e4fc758d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 78
       rect:
@@ -1463,6 +1936,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2839380178833344e8689e1630bf256c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 79
       rect:
@@ -1477,6 +1956,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 12c77b7550edad943a5ac15b1722f7ba
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 80
       rect:
@@ -1491,6 +1976,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7fdc75b6d743924449eff7953235c985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 81
       rect:
@@ -1505,6 +1996,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ac5127b0a3862a6469d1566935e7344d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 82
       rect:
@@ -1519,6 +2016,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 62201817cce969945b73f781da186c8f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 83
       rect:
@@ -1533,6 +2036,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9e7af741051c72a448a844d91cafc193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 84
       rect:
@@ -1547,6 +2056,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c5aa2b24c27854b4fb050d5f0e8f71a3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 85
       rect:
@@ -1561,6 +2076,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 78676e53db520454786d58c62078905f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 86
       rect:
@@ -1575,6 +2096,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2d33045dcbcc0e74fb862a2b813ac9a2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 87
       rect:
@@ -1589,6 +2116,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7746bf78579a0bc479a3046c4fecfe49
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 88
       rect:
@@ -1603,6 +2136,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4ca96e298f86f6447ade85a61e9703f7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 89
       rect:
@@ -1617,6 +2156,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ec46978d6394dcc49bce3b562f68cd65
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 90
       rect:
@@ -1631,6 +2176,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 10218e3d461d28a4b87073d4e55b579b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 91
       rect:
@@ -1645,6 +2196,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9da7ce1abaea8464f93118f9c27012ae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 92
       rect:
@@ -1659,6 +2216,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ff52e324ce889a44b8a73534edf1eb7a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 93
       rect:
@@ -1673,6 +2236,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ec550f7496aee3547bdfe1d4012963e6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 94
       rect:
@@ -1687,6 +2256,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b59507746bb224045a7704b794a4ce90
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 95
       rect:
@@ -1701,6 +2276,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e9edf665eb5f3a841bd9275aa5fd4678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 96
       rect:
@@ -1715,6 +2296,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7e8f678f71906a249a44266d60161e16
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 97
       rect:
@@ -1729,6 +2316,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8597f7c7968e9d44088dafc7180e31b8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 98
       rect:
@@ -1743,6 +2336,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 67fe7929074338547abeb43368ee0aea
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 99
       rect:
@@ -1757,6 +2356,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cc904efdccaeb0d47b236d5db8e8e463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 100
       rect:
@@ -1771,6 +2376,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d7f2fd33b6ced47478d801dee5c0469d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 101
       rect:
@@ -1785,6 +2396,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7207b6d986fc577428e03eef5efd1091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 102
       rect:
@@ -1799,6 +2416,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6277b9aa583a92d47a50f7d22304b29a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 103
       rect:
@@ -1813,6 +2436,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 22b1a6ddc4c42f1439f9855754ccfc79
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 104
       rect:
@@ -1827,6 +2456,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 17b57db663836e24f8671de99e0b15da
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 105
       rect:
@@ -1841,6 +2476,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a9db136e5bc186f4b94b947a23935c2d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 106
       rect:
@@ -1855,6 +2496,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 80622c51515dce5409ffd18f6de7f5bb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 107
       rect:
@@ -1869,6 +2516,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dd79176815bb90d458a02348a130c3be
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 108
       rect:
@@ -1883,6 +2536,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5f16cdeaed19dfa4298419fc34d36b8a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 109
       rect:
@@ -1897,6 +2556,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2aaee280bbffe32478a0b33dea90ab74
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 110
       rect:
@@ -1911,6 +2576,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cd66b9a13f7347940b8871250571feba
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 111
       rect:
@@ -1925,6 +2596,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8890a8314686fb6489ae2a25d6b21c69
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 112
       rect:
@@ -1939,6 +2616,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2a00d1bccad80b84a9f5179e8d00f63f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 113
       rect:
@@ -1953,6 +2636,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9bd1a7cfa5f60de4398498acdb854243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 114
       rect:
@@ -1967,6 +2656,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: eb3752b9d18f9d348886f2a5ad40a662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 115
       rect:
@@ -1981,6 +2676,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b1f2500572269c54087a7ccc200cf52b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 116
       rect:
@@ -1995,6 +2696,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6c0a176b588448c4881d9a56f4da1bb8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 117
       rect:
@@ -2009,6 +2716,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 57112a81e35207247bd9b97c35573f02
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 118
       rect:
@@ -2023,6 +2736,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c386a9dc0f209ac4080280c3bf978efa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 119
       rect:
@@ -2037,6 +2756,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ba5493ed12934a04eac722f9f9a0927d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 120
       rect:
@@ -2051,6 +2776,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5917ea8e26d664e41927857ad8108ce0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 121
       rect:
@@ -2065,6 +2796,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ba73c2a126ea6004ebd52520b89f5277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 122
       rect:
@@ -2079,6 +2816,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 179c017d41f08c6419b18bea740a1036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 123
       rect:
@@ -2093,6 +2836,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5b904ddfed0c7d74e8f0977ffd3fefc3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 124
       rect:
@@ -2107,6 +2856,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 013a39afabc1ad549b0561af3fb64696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 125
       rect:
@@ -2121,6 +2876,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 42dda6377d3fd9f4bbf74fac7d725b6c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 126
       rect:
@@ -2135,6 +2896,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 226589f77451da44d8074e2faa2ad14e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 127
       rect:
@@ -2149,6 +2916,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b8e57977557999b48848200b7d39d759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 128
       rect:
@@ -2163,6 +2936,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f9cd7f0ff6cc7344ea12e9c6a65e7b09
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 129
       rect:
@@ -2177,6 +2956,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d1699939087cfb3478d4c08cb00f470b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 130
       rect:
@@ -2191,6 +2976,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1b0e832067e8c2445a08bd401768a5e4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 131
       rect:
@@ -2205,6 +2996,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d2a358533403092488cb67708da86643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 132
       rect:
@@ -2219,6 +3016,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a0983ebaeee43f04289f6ac5aaa0d661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 133
       rect:
@@ -2233,6 +3036,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: aa353f9f7343fae40935b255d5759822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 134
       rect:
@@ -2247,6 +3056,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 380b093b87e400949a3b001256dcc11b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 135
       rect:
@@ -2261,6 +3076,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d05b03e7f28560646b272d322c5548c3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 136
       rect:
@@ -2275,6 +3096,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7fae8ba4bbe3d744fbf75b88c1cd6d41
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 137
       rect:
@@ -2289,6 +3116,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fbe6b53d49afda0438d9d2c141911d7a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 138
       rect:
@@ -2303,6 +3136,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 01a4008150d98fa41831f9429393aad3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 139
       rect:
@@ -2317,6 +3156,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e27f6bb2ea7bd144384e81443f64a3ed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 140
       rect:
@@ -2331,6 +3176,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: da9d7ed194cef0746b0cb242ef4df7e2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 141
       rect:
@@ -2345,6 +3196,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 172be007dec47324abacb50548447b06
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 142
       rect:
@@ -2359,6 +3216,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: da363d9e5c07f9c4992af040af7f2026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 143
       rect:
@@ -2373,6 +3236,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 714813eb86553db408038babe53fb737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 144
       rect:
@@ -2387,6 +3256,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 57d09b6971db47748beb275fca494d7f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 145
       rect:
@@ -2401,6 +3276,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 123f8b92aeb9a9f4a961c33f48916ed7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 146
       rect:
@@ -2415,6 +3296,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d8a50a44a34b44342b93dd8815691777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 147
       rect:
@@ -2429,6 +3316,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0e0e5e4e9398edb4cbe24a462a6ed30c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 148
       rect:
@@ -2443,6 +3336,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 23f527cdc669f0141808c9fe32c8e32e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 149
       rect:
@@ -2457,6 +3356,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 944b8e598efc9ec4c906c29d94ba7933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 150
       rect:
@@ -2471,6 +3376,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0477fd6c82b24ab45bda5810bcf2092a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 151
       rect:
@@ -2485,6 +3396,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0e0a1a7a5ac410e4ebd01e75485e7d67
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 152
       rect:
@@ -2499,6 +3416,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d6bb26ba8a980b5488ee7f2148b0709c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 153
       rect:
@@ -2513,6 +3436,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3a96f0ff4ee75354bbf9bc029ef20e49
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 154
       rect:
@@ -2527,6 +3456,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 30f07e6ca630beb4996b8d5ebb1217c3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 155
       rect:
@@ -2541,6 +3476,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0c0ae9cbdd488dc4b937966ddf7a162b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 156
       rect:
@@ -2555,6 +3496,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ac783b5fd2faaea44869749ef62a8ff8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 157
       rect:
@@ -2569,6 +3516,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e1b5ddda24f49304c802213487e304a7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 158
       rect:
@@ -2583,6 +3536,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bd3482f30712814449d4bf477b24c630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 159
       rect:
@@ -2597,6 +3556,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e1a2243726a1c204ea9b910143556458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 160
       rect:
@@ -2611,6 +3576,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2f60ae5d48dfd5b4186f8f8e2a3f76ee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 161
       rect:
@@ -2625,6 +3596,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 17ac5afc786b0c148b1c8608253d58af
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 162
       rect:
@@ -2639,6 +3616,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 06c7e41285d17a84eb5a140ea68907b8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 163
       rect:
@@ -2653,6 +3636,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5fe6e4c41a93c1e4eaf6eb794bceefb6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 164
       rect:
@@ -2667,6 +3656,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bb126f14efa075743ae87eb1ff50fb7f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 165
       rect:
@@ -2681,6 +3676,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 034704cdd7d1eeb409ecf0be12effae8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 166
       rect:
@@ -2695,6 +3696,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a1fc602f4c5438a4e9df44a670ff4236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 167
       rect:
@@ -2709,6 +3716,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ef989525a74f2cc43a493926f9cccd88
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 168
       rect:
@@ -2723,6 +3736,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1d2c7d7bf1e1d5f4f9381f95762d2cfa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 169
       rect:
@@ -2737,6 +3756,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9d8bf99004a997f44b02c5486d14fd25
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 170
       rect:
@@ -2751,6 +3776,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: da0a76e133128b94a91a84ce068f4d3f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 171
       rect:
@@ -2765,6 +3796,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9e7a5f4c0fedf1844a569af789099b93
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 172
       rect:
@@ -2779,6 +3816,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 41edaa5ceca0f0a4ebf530eb4dc3c540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 173
       rect:
@@ -2793,6 +3836,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9662847daf76240429ef4e8510c2eda1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 174
       rect:
@@ -2807,6 +3856,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e1654339b52872b4fa6a73377b2dab93
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 175
       rect:
@@ -2821,6 +3876,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f75b699990a4c39409132ad1f07b06c4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 176
       rect:
@@ -2835,6 +3896,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 295e4480ac198224c85dd27c996aa43f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 177
       rect:
@@ -2849,6 +3916,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1943bafae75698442a743fac600130c9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 178
       rect:
@@ -2863,6 +3936,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0e164586b6b29bd458b54a10a8cf4b37
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 179
       rect:
@@ -2877,6 +3956,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6b66a0992f1a4cb419f6e44627d1c211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 180
       rect:
@@ -2891,6 +3976,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0c00f1e700ac1fa488e62bd78fdf6f5d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 181
       rect:
@@ -2905,6 +3996,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 515d7899caab50d4f878d834f86f8580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 182
       rect:
@@ -2919,6 +4016,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 51baa6d1fe2bf614da4b9f965264ea54
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 183
       rect:
@@ -2933,6 +4036,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8b4a4d1523cf4a04ea08eaf1e11b5e4f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 184
       rect:
@@ -2947,6 +4056,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ab42e8b24aadb094786d81a0ecb29c6e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 185
       rect:
@@ -2961,6 +4076,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 14a9c5bc9b14e2a409838698afb3c53d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 186
       rect:
@@ -2975,6 +4096,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3f917da38a07a0d46a0e298c536c2a1a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 187
       rect:
@@ -2989,6 +4116,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b5383c0223ad97441b0c9bee132827c7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 188
       rect:
@@ -3003,6 +4136,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a13f52dabbe062d4ea599a5e3b48605c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 189
       rect:
@@ -3017,6 +4156,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 28b61c67f9739a04cbdf60309ff313f4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 190
       rect:
@@ -3031,6 +4176,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b1e8159a4a63fec4fb955ceff22e86dc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 191
       rect:
@@ -3045,6 +4196,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c5f23204079bc8f4d8e21a934bf004e9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 192
       rect:
@@ -3059,6 +4216,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c90850447a1a4eb438d831f52002dc79
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 193
       rect:
@@ -3073,6 +4236,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7fa9864551bc6ed4a9745c50c74ecc3c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 194
       rect:
@@ -3087,6 +4256,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 070962e317f792842a174da38c382eb7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 195
       rect:
@@ -3101,6 +4276,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 442658de7e9739a45b62828c2002e53b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 196
       rect:
@@ -3115,6 +4296,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8e8af6332a599e34394735943dc3ea7c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 197
       rect:
@@ -3129,6 +4316,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 00e8186ebd25a0d4a81771fdd94e11be
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 198
       rect:
@@ -3143,6 +4336,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9f5d884dd8361e14d8db875d42d7479a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 199
       rect:
@@ -3157,6 +4356,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 43a4664290049fd40ac1769ea7e10930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 200
       rect:
@@ -3171,6 +4376,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e1105ede4ce766e429bd645c22bd9d36
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 201
       rect:
@@ -3185,6 +4396,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7c0e4fbb586f03a418f531a41faabb0f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 202
       rect:
@@ -3199,6 +4416,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ea0c8088c0b34fc43995398702d94b14
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 203
       rect:
@@ -3213,6 +4436,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b4ad88d445da2a74abf30e3105914fd6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 204
       rect:
@@ -3227,6 +4456,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 99de6fcd7b7416448a59c6a0ace89192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 205
       rect:
@@ -3241,6 +4476,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 105af10684a72d14ebd16c6cd0c3ad7e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 206
       rect:
@@ -3255,6 +4496,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cfacf212a21a0194ea5ee099fa61b2b5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 207
       rect:
@@ -3269,6 +4516,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 15aae1a0b87d0d845abba7cec4c6eb16
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 208
       rect:
@@ -3283,6 +4536,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f1627e34764cc0546a01dcbe71de46ba
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 209
       rect:
@@ -3297,6 +4556,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d21c9efa716906646ae57ba010a4af2b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 210
       rect:
@@ -3311,6 +4576,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3a797f6503f7d9d459f0885cc433bb13
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 211
       rect:
@@ -3325,6 +4596,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2353aac1a4edbc54d819d52b4f6fe17e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 212
       rect:
@@ -3339,6 +4616,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fa8451ed927733c4586a7d4ee7eadca5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 213
       rect:
@@ -3353,6 +4636,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 98b505da0a6c6a5489f4c130d7541dad
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 214
       rect:
@@ -3367,6 +4656,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 64b9c14ca9c44064b9d26b17e494e7cf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 215
       rect:
@@ -3381,6 +4676,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e2135d56305f6c447b0bec90e5762408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 216
       rect:
@@ -3395,6 +4696,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c87f678355f2f974e9db27fa56165f0c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 217
       rect:
@@ -3409,6 +4716,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7a1ebf6d1411f8c4dbabb671638125a7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 218
       rect:
@@ -3423,6 +4736,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 62a0bfbf0d7b9ec489eace7d7f97d940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 219
       rect:
@@ -3437,6 +4756,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 07566fe01becfd14e834ad761125270d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 220
       rect:
@@ -3451,6 +4776,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 307aa2e1b8b8c4145aa2cd6680e23760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 221
       rect:
@@ -3465,6 +4796,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6d8a79aa0da700b43bbe728807eb4824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 222
       rect:
@@ -3479,6 +4816,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 463f9122393e48a46b5764cb695c02f9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 223
       rect:
@@ -3493,6 +4836,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0d223a867dcf1c24db28563e4a73d8b8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 224
       rect:
@@ -3507,6 +4856,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 72d890a851a313b4c9e0432c0a98eaf8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 225
       rect:
@@ -3521,6 +4876,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 221b305bbe8e1c046ac170fb2664ec19
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 226
       rect:
@@ -3535,6 +4896,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a22ece7f6e6cf674dbc765a59d3390df
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 227
       rect:
@@ -3549,6 +4916,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 86b534a397f82bd41b2b2c9924deca7f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 228
       rect:
@@ -3563,6 +4936,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4172f2a827dccf64cb61c44800083d8a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 229
       rect:
@@ -3577,6 +4956,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5e9c71dcf3c327d489ee709eeb2d33fe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 230
       rect:
@@ -3591,6 +4976,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 76a1597bb7a1b2245be027a007277893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 231
       rect:
@@ -3605,6 +4996,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1e57c871d23f06048a7940097bc79e68
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 232
       rect:
@@ -3619,6 +5016,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0d44881a87118b24c884dc274ebd5e4b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 233
       rect:
@@ -3633,6 +5036,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 47a1d781c363b57439df293c77820c91
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 234
       rect:
@@ -3647,6 +5056,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 34df3a53be8f2eb4b860f5074f0d5ba2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 235
       rect:
@@ -3661,6 +5076,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 88cba315419560b4f849d9d1b661848f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 236
       rect:
@@ -3675,6 +5096,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0823e05b0ffc96a4faaf099b3611313d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 237
       rect:
@@ -3689,6 +5116,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1377fb5ef491e07448f3081e8a65be68
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 238
       rect:
@@ -3703,6 +5136,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6341040a75d79894d95dd6872ec3a9c7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 239
       rect:
@@ -3717,6 +5156,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9b8080cbffb1aa04ba86edb3844d2e31
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 240
       rect:
@@ -3731,6 +5176,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cfe1ef3989658e343adcd98e76a4b0a6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 241
       rect:
@@ -3745,6 +5196,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 96fe049d56638524a9b9a23349351d38
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 242
       rect:
@@ -3759,6 +5216,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 55529da5124f2264eb9aa6122039e4e0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 243
       rect:
@@ -3773,6 +5236,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3c917f32e7e1b78499406203e9dea58e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 244
       rect:
@@ -3787,6 +5256,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ea1958ff80f20db408564555b244b085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 245
       rect:
@@ -3801,6 +5276,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 085c48557a6a95f47a313bdd5248e691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 246
       rect:
@@ -3815,6 +5296,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: df877b971ee60df488cd26d1e24c28ea
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 247
       rect:
@@ -3829,6 +5316,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 11ee01e815ba49f4286a6022b273ee97
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 248
       rect:
@@ -3843,6 +5336,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 71ef3be6d2c266f4cb58c627c112026c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 249
       rect:
@@ -3857,6 +5356,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e2a65f451164536478450ed270927e5e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 250
       rect:
@@ -3871,6 +5376,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0f4b1304890580647a68a4bd97b1d174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 251
       rect:
@@ -3885,6 +5396,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9d971059a4142cd43a94cce12021f45a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 252
       rect:
@@ -3899,6 +5416,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0fab37bdf4e3bb54db2bfcfd936ed37e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 253
       rect:
@@ -3913,6 +5436,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fc858add9bee56a4f96a19ebd04fe18b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 254
       rect:
@@ -3927,6 +5456,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 83ebeed0b6db0ef448cefd4287e16b2b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 255
       rect:
@@ -3941,6 +5476,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dd7c9802ba75dc247beeb72da722e936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 256
       rect:
@@ -3955,6 +5496,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6db9333957713824883742e130aba7e7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 257
       rect:
@@ -3969,6 +5516,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f5c8542b48e331042ba6d33ee1eeb63c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 258
       rect:
@@ -3983,6 +5536,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a0b6bec35d135f74abb5ae0d8e1253bd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 259
       rect:
@@ -3997,6 +5556,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0f83a687794fd084fa37a51290c3af11
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 260
       rect:
@@ -4011,6 +5576,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1dd90bf111f9c2a4282af44ffcd51987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 261
       rect:
@@ -4025,6 +5596,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e2e570cab5d195346bdb2dc749815f7b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 262
       rect:
@@ -4039,6 +5616,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 77229b87b48110d49a85227b23d3bc02
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 263
       rect:
@@ -4053,6 +5636,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e0f9be97e97a38a41adbd5f0514dde54
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 264
       rect:
@@ -4067,6 +5656,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a7fd565af66845442bc288738d578daf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 265
       rect:
@@ -4081,6 +5676,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 60bbed08244af0c4db49b4f33046d090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 266
       rect:
@@ -4095,6 +5696,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 44ccf1b06d0cdf54b884f735960d9f44
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 267
       rect:
@@ -4109,6 +5716,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d2e1818ac2d7c3b4b9b4ec7ac8bf0993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 268
       rect:
@@ -4123,6 +5736,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2567a139e24c68c47bc64bb404fd6f07
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 269
       rect:
@@ -4137,6 +5756,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cd22a605a1988b2418241b7bce2afdf9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 270
       rect:
@@ -4151,6 +5776,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 792175f7494201d47a955e26968fa039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 271
       rect:
@@ -4165,6 +5796,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cecb8d231df7358438a8a54ef663f10e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 272
       rect:
@@ -4179,6 +5816,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 209494518f6fe274f98f6eebdb919a8f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 273
       rect:
@@ -4193,6 +5836,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e0bb4c4f76752b64a82071c0da284449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 274
       rect:
@@ -4207,6 +5856,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0daab9261c39dc6499ce8c0822d928db
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 275
       rect:
@@ -4221,6 +5876,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 40159d861323b224992722569eda9082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 276
       rect:
@@ -4235,6 +5896,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: faea45cbfc346e14a9d3f9fe2c21d699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 277
       rect:
@@ -4249,6 +5916,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ef980a739c611ac4f989b500167e0314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayRinshang 278
       rect:
@@ -4263,9 +5936,23 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a70fc0d6747c0324085057a72fd5866a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

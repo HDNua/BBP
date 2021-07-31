@@ -43,7 +43,7 @@ TextureImporter:
     21300076: GrayTryUpX 38
     21300078: GrayTryUpX 39
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -61,6 +61,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -71,7 +73,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -91,11 +93,13 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 92
     resizeAlgorithm: 0
     textureFormat: -1
@@ -122,6 +126,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7f91b141863815740ad8bfe41109c6e2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 1
       rect:
@@ -136,6 +146,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 69f98ce6698bad1469565c4b6b9f4024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 2
       rect:
@@ -150,6 +166,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 24e5cc43634bdd94cbeb8d82a64d33c9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 3
       rect:
@@ -164,6 +186,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d3f676040602d394794a33dd3d5181bd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 4
       rect:
@@ -178,6 +206,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b3c50288a6606ab4da7cee0e07bc7268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 5
       rect:
@@ -192,6 +226,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0b94775231d6140438453ca504a298b9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 6
       rect:
@@ -206,6 +246,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 070da69328f96764faee2d8082fd6eec
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 7
       rect:
@@ -220,6 +266,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8ca7cdabc77f3b84eaf2c3aaa90c85d4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 8
       rect:
@@ -234,6 +286,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 94165fed84260154e9734ebd4d340782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 9
       rect:
@@ -248,6 +306,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6b4731703c42f4244b484a9a6ceb602c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 10
       rect:
@@ -262,6 +326,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 170b6f2b1b3194643a9f127ee433923e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 11
       rect:
@@ -276,6 +346,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bd167db5b183a4043922059f9925754b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 12
       rect:
@@ -290,6 +366,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ff14637f8c650be4594d8cd0b612c3b9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 13
       rect:
@@ -304,6 +386,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c3bb6356ed339cf4cbc933a35ecf00f6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 14
       rect:
@@ -318,6 +406,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f734896ca2e2d6948be91bdece59c6c8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 15
       rect:
@@ -332,6 +426,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7926c6ef99c62b649a179009712dab6e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 16
       rect:
@@ -346,6 +446,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 297a7c1a6cfee614da117cc5138ec354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 17
       rect:
@@ -360,6 +466,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1b64e560cd56dcd41a855a6ca9b42c49
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 18
       rect:
@@ -374,6 +486,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d0441c84faf45334e84dded343ea4d9c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 19
       rect:
@@ -388,6 +506,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2a999b4d27b1a2647bb075b2ac9fb149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 20
       rect:
@@ -402,6 +526,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 633198e97162ead47a732070de5e45c8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 21
       rect:
@@ -416,6 +546,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 77ad05910acfb994ea3abfe3a25c6644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 22
       rect:
@@ -430,6 +566,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 230334c9fba27814cb77b08d478d6773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 23
       rect:
@@ -444,6 +586,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d7deb0ba8afe6c34ab65e337fd1c61e2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 24
       rect:
@@ -458,6 +606,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1ded953df5c83e04fb4f1927ecb33367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 25
       rect:
@@ -472,6 +626,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a39a8ae210dac654db3e1009e55adb1a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 26
       rect:
@@ -486,6 +646,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 369a98c61c3b1d54c9288161c89ebc44
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 27
       rect:
@@ -500,6 +666,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 60eebe85ad9890d4892411036e65366d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 28
       rect:
@@ -514,6 +686,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5ca992dbe68807d40a9e43e8e0a83ce2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 29
       rect:
@@ -528,6 +706,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: de1522a8b009b524f8738420e57be67f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 30
       rect:
@@ -542,6 +726,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b1675d3384bd0c44ca523cc02b8bea3f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 31
       rect:
@@ -556,6 +746,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 173efec43fc45fc479e524891466fbbb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 32
       rect:
@@ -570,6 +766,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9f82378e9f7b2844a9a216a746f3c17c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 33
       rect:
@@ -584,6 +786,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b480df91c569c3449a772b9e84774e17
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 34
       rect:
@@ -598,6 +806,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 167c2624283148e428aa301cc7843c96
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 35
       rect:
@@ -612,6 +826,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7491b042c4ee0fe45b66a4943a8967f2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 36
       rect:
@@ -626,6 +846,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4ac5d801329ab8c45ae1b04c9ff6298c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 37
       rect:
@@ -640,6 +866,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8bef71e6e9acaf44391baa5153cd72ca
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 38
       rect:
@@ -654,6 +886,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 25720b8f10a1c9749ba7263242a0b5d0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayTryUpX 39
       rect:
@@ -668,9 +906,23 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ad9e455326f83dd4bb429889c04a3dbd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

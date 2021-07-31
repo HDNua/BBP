@@ -148,7 +148,7 @@ TextureImporter:
     21300286: Rinshang 143
     21300288: Rinshang 144
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -166,6 +166,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -176,7 +178,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -196,11 +198,13 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -227,6 +231,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e70dbaa84ba0ddd488337939c8e2e0d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 1
       rect:
@@ -241,6 +251,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a98229ee67d674b4fab8c6cb4071a162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 2
       rect:
@@ -255,6 +271,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 91c76deb475662148b278929ba7cbf62
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 3
       rect:
@@ -269,6 +291,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e8674263be9845546a433e4f1eab8537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 4
       rect:
@@ -283,6 +311,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 55f74bce203f0b8428840a3d5c3245dc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 5
       rect:
@@ -297,6 +331,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a08f50f95be643145a9d927bf8571e9d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 6
       rect:
@@ -311,6 +351,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f97d5bda9b8cf074e82a73a78a1c9d65
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 7
       rect:
@@ -325,6 +371,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 98bf82c0ddabbb54b8259a72fbee65fa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 8
       rect:
@@ -339,6 +391,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 83ea1b246fa703344a0888c2cb9beeb3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 9
       rect:
@@ -353,6 +411,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dd0c6420172793a4388cafc6a90a91fd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 10
       rect:
@@ -367,6 +431,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ba2d88080e78c834bab81bf970c20392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 11
       rect:
@@ -381,6 +451,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a9a8cb90003576a4b9086c5cdfc74300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 12
       rect:
@@ -395,6 +471,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 085b94de3f3589a4b9b4452cdef2f266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 13
       rect:
@@ -409,6 +491,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d6ce01645dd6026409562b71a8819773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 14
       rect:
@@ -423,6 +511,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1bf021ec8bc81d54db03d438e37a617e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 15
       rect:
@@ -437,6 +531,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ccdcad9aa9faea944b86058e75e4b631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 16
       rect:
@@ -451,6 +551,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dce020ceaef398648a4d78a5d5699cac
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 17
       rect:
@@ -465,6 +571,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 29353001eb0d2064583078f9181adc81
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 18
       rect:
@@ -479,6 +591,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1f9ce919b79ba924fa15aa80b88af615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 19
       rect:
@@ -493,6 +611,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4fadced93069d0d45b2f4aebe4e9449b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 20
       rect:
@@ -507,6 +631,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 15e71cf813e302944bd67d4c88f1b186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 21
       rect:
@@ -521,6 +651,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 24b78c0025031e44f95e201efab0b876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 22
       rect:
@@ -535,6 +671,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4602127f101a9bf4d9c520261dbb9cdf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 23
       rect:
@@ -549,6 +691,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5e5c8cb495656be4992ccca7e0d071dd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 24
       rect:
@@ -563,6 +711,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a45434ce84e0b214ab130fea8b72886e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 25
       rect:
@@ -577,6 +731,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5591a30c1ff12334fa10398807d253a6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 26
       rect:
@@ -591,6 +751,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c57aa6cc0710a5c44b52f955621b34ce
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 27
       rect:
@@ -605,6 +771,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6d0ea0a71b5905c46b7600d267701e63
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 28
       rect:
@@ -619,6 +791,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a4120b19cf3fad645a8a1aafbfc81c6f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 29
       rect:
@@ -633,6 +811,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a291956762f5b69479d3ec72254d0317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 30
       rect:
@@ -647,6 +831,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5f6dbc6fd5f5c244bbb057b4c1d27e10
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 31
       rect:
@@ -661,6 +851,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: aa14f7f8ce49a8642b95652a5476dde3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 32
       rect:
@@ -675,6 +871,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bdef91b05d4b3ae45be8fb3aa234b429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 33
       rect:
@@ -689,6 +891,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fa0551b1d1164b24e86b82b04dc84aac
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 34
       rect:
@@ -703,6 +911,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 78e113d54c6e30e47b315b850bae01c8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 35
       rect:
@@ -717,6 +931,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 125d99fdc699cf444af3603fa5ce36a4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 36
       rect:
@@ -731,6 +951,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3ff0fd0b9be216e4486327646758abb1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 37
       rect:
@@ -745,6 +971,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f3e5cc5670a39594fa47472fa58dd996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 38
       rect:
@@ -759,6 +991,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a87a963cc06780843854c9333ce8084d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 39
       rect:
@@ -773,6 +1011,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 00de898624a40514bb5b48c4826f27c1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 40
       rect:
@@ -787,6 +1031,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a0a4fc5c9d2cd454aa6080e5fc076221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 41
       rect:
@@ -801,6 +1051,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ce60ddea6a604c748865d5be703b0ab0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 42
       rect:
@@ -815,6 +1071,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bc6cb656360b6ce48b7b9963f4b33cd7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 43
       rect:
@@ -829,6 +1091,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b73cc3387585e8646bb07db24fa06322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 44
       rect:
@@ -843,6 +1111,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: abc8fb31a0edcbc42a2060f8bc5f68ed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 45
       rect:
@@ -857,6 +1131,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 67c28540265c1224ba373aaf82274ce0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 46
       rect:
@@ -871,6 +1151,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b553f899009018149bc2b2ebdd26f6bc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 47
       rect:
@@ -885,6 +1171,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 886f75e055136aa47a790e317efc69a7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 48
       rect:
@@ -899,6 +1191,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 844acda6dc63e6b4086c398c76cd2f62
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 49
       rect:
@@ -913,6 +1211,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c43062f077cb23c408bf0bd5804e8271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 50
       rect:
@@ -927,6 +1231,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 05afea4b62bc99e4b822e1cd2436305c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 51
       rect:
@@ -941,6 +1251,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b0650336cb4e29942b7fcd4306738828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 52
       rect:
@@ -955,6 +1271,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 75865c3a28112e447a005a59902ba84b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 53
       rect:
@@ -969,6 +1291,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7e619f6759303ea4ba0fa921516854d1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 54
       rect:
@@ -983,6 +1311,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7dd444b08f314ef4ba751e237ff2e1dc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 55
       rect:
@@ -997,6 +1331,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 89f8b7f7cb334dc42a20e8e08a324a65
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 56
       rect:
@@ -1011,6 +1351,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 68955f8cd0cf062409259cae21d2fa0e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 57
       rect:
@@ -1025,6 +1371,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9a11df0689de49e45aa9427755120c38
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 58
       rect:
@@ -1039,6 +1391,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c737699f9d342fa47b04aaaea98c695a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 59
       rect:
@@ -1053,6 +1411,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d1abfd830d9dc9043b4c23ded3131eda
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 60
       rect:
@@ -1067,6 +1431,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 269a15e989c2dd44c9707b8c74d6d87b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 61
       rect:
@@ -1081,6 +1451,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9027e6ad2baa7b14b92daed2a2f1cc9a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 62
       rect:
@@ -1095,6 +1471,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 64d2695095a997646b7935a68d2baf50
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 63
       rect:
@@ -1109,6 +1491,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 776d28a4818d9ff499763174ea3d1d6e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 64
       rect:
@@ -1123,6 +1511,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c9c05c6db98a0014cb0fc69b32282919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 65
       rect:
@@ -1137,6 +1531,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b43aefe333ff20245984ecea608c08f3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 66
       rect:
@@ -1151,6 +1551,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 39e4536e535e852429e56da775b8d4f7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 67
       rect:
@@ -1165,6 +1571,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4e68bfc75ffaaf641a197f3a53ea0354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 68
       rect:
@@ -1179,6 +1591,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7a62c922d9d8e4d4ebc5b3fb55b2d30b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 69
       rect:
@@ -1193,6 +1611,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d80381c44849ac14182fbb47c64ce9df
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 70
       rect:
@@ -1207,6 +1631,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0d5f42c2b43e783439ac87559223a5d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 71
       rect:
@@ -1221,6 +1651,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 20e1c7ec958526d4dbc3d1628978816b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 72
       rect:
@@ -1235,6 +1671,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4856ae41ae83b8e4dbdbdd6fcad3a85e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 73
       rect:
@@ -1249,6 +1691,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 33c831b514d24eb43a98d9054ef223f6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 74
       rect:
@@ -1263,6 +1711,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 295c0b2551e06ce4883533c11f2ef2d4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 75
       rect:
@@ -1277,6 +1731,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c443f1d6674fee24395f62be36172f8f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 76
       rect:
@@ -1291,6 +1751,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c3d146a845ba4d24686a9718bd99ed2e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 77
       rect:
@@ -1305,6 +1771,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d66834713730abe408779c4a8fdfc01a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 78
       rect:
@@ -1319,6 +1791,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: edb6016ac273f7c4082c38279fa80e7d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 79
       rect:
@@ -1333,6 +1811,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 25732f0a5319f0e43bf8db0b3b865f0d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 80
       rect:
@@ -1347,6 +1831,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: df9729b30675cd24398ca065470cdb47
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 81
       rect:
@@ -1361,6 +1851,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dce8aed5dd4b6114bb87975224f515d4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 82
       rect:
@@ -1375,6 +1871,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d099d1791bb835840be56e752d801cae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 83
       rect:
@@ -1389,6 +1891,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f1cab8d51675def49bb9b54ea609d2e4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 84
       rect:
@@ -1403,6 +1911,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0c0ad8bcd1a54d54a8899178185bdf3c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 85
       rect:
@@ -1417,6 +1931,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: eedfa50078276cc4c92bbed07d4cc196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 86
       rect:
@@ -1431,6 +1951,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 08253c93f2c8e254f9967faaa65b177d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 87
       rect:
@@ -1445,6 +1971,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0832541821254914f8199c3b128b0e9b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 88
       rect:
@@ -1459,6 +1991,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8d0c02120b93e73419f8f2f0e52d618d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 89
       rect:
@@ -1473,6 +2011,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 286b6878248641a45853a1472bb39221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 90
       rect:
@@ -1487,6 +2031,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0444cf81401c504438d6dbbb58aa7ad8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 91
       rect:
@@ -1501,6 +2051,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: deb02eb988687254cad8dd754529b922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 92
       rect:
@@ -1515,6 +2071,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 91c4380c1eefd2641b70fdd3d703c8d4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 93
       rect:
@@ -1529,6 +2091,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dab009de6c2e57841a5695e73d92b394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 94
       rect:
@@ -1543,6 +2111,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4cad1883258240d4c8cf8bf793a07f3b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 95
       rect:
@@ -1557,6 +2131,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a2befbf6bde3edd4c931fd328ce835c7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 96
       rect:
@@ -1571,6 +2151,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: be3d54c88045dc646b6d4131e4ea5440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 97
       rect:
@@ -1585,6 +2171,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f4f7c60c27c70d745a1741ba50a2eb9d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 98
       rect:
@@ -1599,6 +2191,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 625223a71b756844988bd7936679b70c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 99
       rect:
@@ -1613,6 +2211,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: abcdea16ffc45474abc8c506b8b9d751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 100
       rect:
@@ -1627,6 +2231,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c30f6bcbabc5f7b49bdd0fa4a5aa096c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 101
       rect:
@@ -1641,6 +2251,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bc823cc938966cf4890b89046199e25f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 102
       rect:
@@ -1655,6 +2271,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 71512242c731acb40ad5678e9c84346d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 103
       rect:
@@ -1669,6 +2291,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c6384974cbb951b44a7e1b4e76c124d6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 104
       rect:
@@ -1683,6 +2311,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 04775792f79c35947a9313ed6d08d5c3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 105
       rect:
@@ -1697,6 +2331,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6d16c5a6564c23a42aed185682e61fd7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 106
       rect:
@@ -1711,6 +2351,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8e32d47aec5c80b4dbe375f29730759e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 107
       rect:
@@ -1725,6 +2371,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 025e189387f1dbe4196f365390b7c91d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 108
       rect:
@@ -1739,6 +2391,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e46bb930aed1e234988393d28c07a432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 109
       rect:
@@ -1753,6 +2411,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5006043b25eed76488da0199a54f3e22
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 110
       rect:
@@ -1767,6 +2431,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7c524d9422083664b87c6057623e4ef6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 111
       rect:
@@ -1781,6 +2451,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 88f6cb9f32267354bb66620bcab67253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 112
       rect:
@@ -1795,6 +2471,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: df2442c6ed1ef324f9605362a5cea027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 113
       rect:
@@ -1809,6 +2491,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fb7c6e8cfc727dc459ec09d3e6f60a98
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 114
       rect:
@@ -1823,6 +2511,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5e97e334cabb62c4986b45a6dc8edf01
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 115
       rect:
@@ -1837,6 +2531,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8625a7aae1269af499c76f09e20f4bad
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 116
       rect:
@@ -1851,6 +2551,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b7126b9e32e37044b858e13a04008e6d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 117
       rect:
@@ -1865,6 +2571,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5981f956bc2bd7941abbb782dae639bc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 118
       rect:
@@ -1879,6 +2591,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 06885c71215935347bc30d3d7f899db3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 119
       rect:
@@ -1893,6 +2611,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a12c46d0c7c5a434c995e7de6e9d8ce1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 120
       rect:
@@ -1907,6 +2631,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5c2a5d115f5da084294238e34cd05771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 121
       rect:
@@ -1921,6 +2651,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 50b3a86887b46d44182d39e0ca08821b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 122
       rect:
@@ -1935,6 +2671,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 27bd896fd465ff849bd61cb80dabe661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 123
       rect:
@@ -1949,6 +2691,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0d617c5308151104eb9d07efd8603c93
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 124
       rect:
@@ -1963,6 +2711,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bfb49e3731442324999dd01b7d840524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 125
       rect:
@@ -1977,6 +2731,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ab4fccf465f48b64caf460edbf24803c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 126
       rect:
@@ -1991,6 +2751,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 882582ffcb2f3244e99264d458f69e18
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 127
       rect:
@@ -2005,6 +2771,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cc50ef35f9149b740ad3a25d1706779d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 128
       rect:
@@ -2019,6 +2791,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1d3370f7c4bafa44cade494a39c419fd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 129
       rect:
@@ -2033,6 +2811,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 134cbd4f673a5504d99156e1fd639fe4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 130
       rect:
@@ -2047,6 +2831,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a5a156dbddc78214d8004cc4ff0a72e7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 131
       rect:
@@ -2061,6 +2851,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9f86b27f51fcf1a4787edbcbc64da5a1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 132
       rect:
@@ -2075,6 +2871,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d955af251fcea9d4280b1d4b5975c89a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 133
       rect:
@@ -2089,6 +2891,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ea7d651247b49fc4fb30f55e1781f921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 134
       rect:
@@ -2103,6 +2911,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b7eca796a5941b24086cbb15138df353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 135
       rect:
@@ -2117,6 +2931,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e69603f713b77de40a21d1270777ddcc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 136
       rect:
@@ -2131,6 +2951,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cc3f167b1e00e6d408aa471ace0f212c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 137
       rect:
@@ -2145,6 +2971,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0a3ccbe9958609a4e9245e9c336b86ab
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 138
       rect:
@@ -2159,6 +2991,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7c1b8a4392bf142478291f3df471ae25
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 139
       rect:
@@ -2173,6 +3011,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f972ce30a37d7cc46942a224ff007c33
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 140
       rect:
@@ -2187,6 +3031,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f01064fc13b1aa24ea4f0f83110ecbf1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 141
       rect:
@@ -2201,6 +3051,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ef3ba4a1cfece3d48bdd6df5a654759d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 142
       rect:
@@ -2215,6 +3071,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8a87b88fc84770d43b76371a93553ce4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 143
       rect:
@@ -2229,6 +3091,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 81041fdf137e1d041b19ee866d0a4591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Rinshang 144
       rect:
@@ -2243,9 +3111,23 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f15f9d3ebb038a449ba5575e9ff44c64
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

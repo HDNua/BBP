@@ -320,7 +320,7 @@ TextureImporter:
     21300630: GrayAtaho 315
     21300632: GrayAtaho 316
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -338,6 +338,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -348,7 +350,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -368,11 +370,13 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -382,8 +386,9 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Standalone
-    maxTextureSize: 1792
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -409,6 +414,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c8596b904bfc8f84fb20eda5c09415d7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 1
       rect:
@@ -423,6 +434,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b0b70bde7a665f743b6419daee3595bb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 2
       rect:
@@ -437,6 +454,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f039f94a8be667843bc7b1eb32d74e7f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 3
       rect:
@@ -451,6 +474,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: eb29a7cff65680c4db100772ae0caefb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 4
       rect:
@@ -465,6 +494,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e9b08321fc6ddce49b655f3ab25fec53
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 5
       rect:
@@ -479,6 +514,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 656aaca09a831774fbb6e63338b91265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 6
       rect:
@@ -493,6 +534,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0c8ac3a2073f9ca4ba6964729dd9a7b8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 7
       rect:
@@ -507,6 +554,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5e96b7b4a85da0049bcfc2e22ecca633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 8
       rect:
@@ -521,6 +574,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 04c5538c0ee217a49b67d8b2234298f4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 9
       rect:
@@ -535,6 +594,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2df8b013fb520914b8a8e6f9dbcc3d6c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 10
       rect:
@@ -549,6 +614,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 09d62c5612814fd4cb0bdcb166a89e2d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 11
       rect:
@@ -563,6 +634,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2d47cfc74fac36a499b0f9d347c750ac
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 12
       rect:
@@ -577,6 +654,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3dc0efebf4972e5418f2b298d80f6a38
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 13
       rect:
@@ -591,6 +674,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3126ae92b8fcc054db6280b01c60de3f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 14
       rect:
@@ -605,6 +694,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 19dcf239e83f17244b2d41b61545528e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 15
       rect:
@@ -619,6 +714,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a3fa727cad55cbd4fa54d01417701d71
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 16
       rect:
@@ -633,6 +734,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d4e573e18d9ef5949b8aac53e253225c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 17
       rect:
@@ -647,6 +754,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5fbfc80deb5836344a39cfe4e647a3e6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 18
       rect:
@@ -661,6 +774,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f24eac8744287e54f8894547f14f5035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 19
       rect:
@@ -675,6 +794,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 25894d8bd52f0bf47b61783aca6006b0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 20
       rect:
@@ -689,6 +814,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9202f733791c36048afcdedd69599f6a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 21
       rect:
@@ -703,6 +834,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c698872aa211a82449079338adcfe956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 22
       rect:
@@ -717,6 +854,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: da9d0126856b2dc40af306426a31547e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 23
       rect:
@@ -731,6 +874,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 85e59faeb11e89246961f2f6dccf7ceb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 24
       rect:
@@ -745,6 +894,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: acc9b02a4e330f14ea81e2478cc99542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 25
       rect:
@@ -759,6 +914,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3ac059c373a7044488c53d0f512d5355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 26
       rect:
@@ -773,6 +934,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 67c4c58a212657a44a7fb2f54b8742d1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 27
       rect:
@@ -787,6 +954,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 686f1cc19e6d3364fad51060a15ff8f1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 28
       rect:
@@ -801,6 +974,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3023cff245c8c2e44bc1123e6f9b7e27
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 29
       rect:
@@ -815,6 +994,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8149f8c871d7850428a3452f255e0fa4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 30
       rect:
@@ -829,6 +1014,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 70f3d2ae8d6040040952830eb1486c6b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 31
       rect:
@@ -843,6 +1034,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 41490101fe4dfd14bbb042adb5fb2cb6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 32
       rect:
@@ -857,6 +1054,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2bc6c1108b9e07748bca189287def61b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 33
       rect:
@@ -871,6 +1074,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 07743c80f1309644780c5c09aab0a42c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 34
       rect:
@@ -885,6 +1094,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 22bb31041881a084988b2c8ef00082a8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 35
       rect:
@@ -899,6 +1114,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5d8b2956e913854429e21f600a8696c4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 36
       rect:
@@ -913,6 +1134,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e7c7e1551fd337a41acac9b579fc78d5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 37
       rect:
@@ -927,6 +1154,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 49e2cdf377df3964185a8ffa39ca47d1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 38
       rect:
@@ -941,6 +1174,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6c90e18def2045e428ed8e68979eaa4e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 39
       rect:
@@ -955,6 +1194,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dfae432a028505e4b9ffa096a8f818ec
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 40
       rect:
@@ -969,6 +1214,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d60624b8ebc8d3c4d9d01cb6f08c6351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 41
       rect:
@@ -983,6 +1234,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a4b4b8cf976daeb4cad421e71ecd391c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 42
       rect:
@@ -997,6 +1254,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 48fc38506d6248741acdb522a5f0bb89
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 43
       rect:
@@ -1011,6 +1274,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ab7ea18f3f84ac4468ab105fa2187f96
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 44
       rect:
@@ -1025,6 +1294,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a61aee617e361974ebccd2653c4023f6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 45
       rect:
@@ -1039,6 +1314,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 18c43672613acc34ea8d277a31a93312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 46
       rect:
@@ -1053,6 +1334,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0a760f37452d06a48a0d0896860ab676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 47
       rect:
@@ -1067,6 +1354,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ab0bf49266b874441a2ea5cbadd70d1a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 48
       rect:
@@ -1081,6 +1374,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6f2d5b926b41fbb49999e209d993f808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 49
       rect:
@@ -1095,6 +1394,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b59d44d27f5822e428cae15e8f63c4cc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 50
       rect:
@@ -1109,6 +1414,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b915200b41eec9649abac43360f9b921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 51
       rect:
@@ -1123,6 +1434,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d17f820ec572203488ed6e4343f762e5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 52
       rect:
@@ -1137,6 +1454,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e3168d124c2f0b84b86761f811f05a5c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 53
       rect:
@@ -1151,6 +1474,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 15e4437abb9b12c47a0f84cd8676c523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 54
       rect:
@@ -1165,6 +1494,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ec7306d25c8cd46499491d6bea8ff78b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 55
       rect:
@@ -1179,6 +1514,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 238d345dd1dbf1741a2c095533cd0deb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 56
       rect:
@@ -1193,6 +1534,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 463979df67c52624e9c3abaf3ea82701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 57
       rect:
@@ -1207,6 +1554,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 410d9de9b009d674d940f5f33868692c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 58
       rect:
@@ -1221,6 +1574,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: df644bff98390d445b81e6ae1a1b5925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 59
       rect:
@@ -1235,6 +1594,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 09056818fac0dd64fa5c4c8b36144679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 60
       rect:
@@ -1249,6 +1614,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 21ffd79236d18f049a54a1d1a3f81f45
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 61
       rect:
@@ -1263,6 +1634,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 56bbdbddfa8fe354c8f81409f8c53fed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 62
       rect:
@@ -1277,6 +1654,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3a9f3b2be965f6e4f8e3977621a89cf2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 63
       rect:
@@ -1291,6 +1674,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 11e068f7fccab5a428e71ebc43cb165d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 64
       rect:
@@ -1305,6 +1694,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9e0bace61a58b2244ac4ee8bc03456d7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 65
       rect:
@@ -1319,6 +1714,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 82177338477a68f4ebee38bd5fde6433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 66
       rect:
@@ -1333,6 +1734,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: df6c2f109dc9a774ba79bbb1c840374d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 67
       rect:
@@ -1347,6 +1754,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 20ba424bf45ec5d428ce6c46a746ff06
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 68
       rect:
@@ -1361,6 +1774,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6c01c287a2f1c024588962730a61e33d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 69
       rect:
@@ -1375,6 +1794,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d6d1e3520f3a79c4586fa6a148a8cec0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 70
       rect:
@@ -1389,6 +1814,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 392284d226142654b93cbbc9b6398b21
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 71
       rect:
@@ -1403,6 +1834,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9914677236fa1a946b88e3ce9405d118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 72
       rect:
@@ -1417,6 +1854,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3715f2d7d396705478f66b68adb50d7c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 73
       rect:
@@ -1431,6 +1874,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ac61dc9d671f0ae478b827ede55b2ee5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 74
       rect:
@@ -1445,6 +1894,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ab4c2ee32b3961c409967d6287b4a0cb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 75
       rect:
@@ -1459,6 +1914,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 96c0bfffabd125b4e8c83e323008ec75
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 76
       rect:
@@ -1473,6 +1934,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f9bd456e70e97ee4f8f18aef8a5767f5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 77
       rect:
@@ -1487,6 +1954,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 46ba8dbbe52faf2498c3c340558d8f88
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 78
       rect:
@@ -1501,6 +1974,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 82226f92c4c6c294ca5ba3614afa7f92
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 79
       rect:
@@ -1515,6 +1994,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3cc3b99fe2d7a704bbb767bcd8f42884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 80
       rect:
@@ -1529,6 +2014,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3372c02558973e94d9405ffabec786ac
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 81
       rect:
@@ -1543,6 +2034,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2d8af79ee8bb175479841afb8ba13a60
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 82
       rect:
@@ -1557,6 +2054,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7747f567714de8648bdf7d8343c51893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 83
       rect:
@@ -1571,6 +2074,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5bf46ed35c91f584492baf457f529315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 84
       rect:
@@ -1585,6 +2094,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 78d4c1900e2780144a16f5ea04f31697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 85
       rect:
@@ -1599,6 +2114,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e2fbadd5fc928a4428e4fc22b9448b35
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 86
       rect:
@@ -1613,6 +2134,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 104629d17b25d4545b789aef2a3f1ae2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 87
       rect:
@@ -1627,6 +2154,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ec614a10d7adc564eb5799b628000c30
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 88
       rect:
@@ -1641,6 +2174,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b965d37be1dd8af4c802f912e57e1d46
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 89
       rect:
@@ -1655,6 +2194,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 10043e7c1cc109348bfdd105f284ea5f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 90
       rect:
@@ -1669,6 +2214,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b17d1ebd8f94fae4397997c8844ff6c0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 91
       rect:
@@ -1683,6 +2234,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0cd896218e3c6934d8f300c2024020b2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 92
       rect:
@@ -1697,6 +2254,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6432dc89eb83c894fabd9a121b2e5f24
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 93
       rect:
@@ -1711,6 +2274,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: df7b694099aa44240b676517961f21a6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 94
       rect:
@@ -1725,6 +2294,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d53e51754e6b53d4a8a68a97988b314b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 95
       rect:
@@ -1739,6 +2314,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 77be866126716674d8ac1f31299ad5cd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 96
       rect:
@@ -1753,6 +2334,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 551911e0a03020949b374e3836fb177e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 97
       rect:
@@ -1767,6 +2354,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 788ff846cdea9cb42917d6f9a91680c6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 98
       rect:
@@ -1781,6 +2374,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bb2e52b4e83b28642b4fe55299542c0b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 99
       rect:
@@ -1795,6 +2394,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a74494f7e3f21ee4eaa77be071d3acd2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 100
       rect:
@@ -1809,6 +2414,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2e5f36ca517a66345bb913638e5e7eb0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 101
       rect:
@@ -1823,6 +2434,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ffa970240c886194cbe8957f93c9426b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 102
       rect:
@@ -1837,6 +2454,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a80d73e77c65a6a4382ef38fed29f075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 103
       rect:
@@ -1851,6 +2474,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3df2ce4f84167c24ca3bef2676ed2a3c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 104
       rect:
@@ -1865,6 +2494,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cf52fd0cd111bda46aa41c7d46cc7658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 105
       rect:
@@ -1879,6 +2514,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3dc8452833c08a34cae0276966033298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 106
       rect:
@@ -1893,6 +2534,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 21dc048e8df610745a44e109b994239b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 107
       rect:
@@ -1907,6 +2554,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: eda3c1fe09cb7b444b064af228532679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 108
       rect:
@@ -1921,6 +2574,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0891aac63c1cd3b498eb477768c01d91
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 109
       rect:
@@ -1935,6 +2594,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 764b7c16aefa7c1458cf7f6225fa705b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 110
       rect:
@@ -1949,6 +2614,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 554fe59dd4d309d4aa6156ca22d6d5ed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 111
       rect:
@@ -1963,6 +2634,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3c8e18a814f08f949928c5dc20f6803f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 112
       rect:
@@ -1977,6 +2654,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4c91fd833a139f44792e61e01da624b4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 113
       rect:
@@ -1991,6 +2674,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8e99d5dc98c567542b65d74c4f37e2ce
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 114
       rect:
@@ -2005,6 +2694,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5fde779942e44c34585f52e2264c9339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 115
       rect:
@@ -2019,6 +2714,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 31365e1fee0608149bd88cb581e27a51
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 116
       rect:
@@ -2033,6 +2734,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d0acf43d25a579347b54e4d9e1b5ff22
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 117
       rect:
@@ -2047,6 +2754,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 74c25e41d387a584f988a3d9757611e2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 118
       rect:
@@ -2061,6 +2774,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0fdc03eb4a2b70f479c9cc7b63699bcb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 119
       rect:
@@ -2075,6 +2794,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8aa19514ac00ef947bca1b54928a9355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 120
       rect:
@@ -2089,6 +2814,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2e43c07c662fdd14a94493c41f517063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 121
       rect:
@@ -2103,6 +2834,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5ee074dcf02c2f048a8aedfa3dd470b9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 122
       rect:
@@ -2117,6 +2854,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 99b8a68d52163bc4ab3d3b04fb99aa24
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 123
       rect:
@@ -2131,6 +2874,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d96fd245f9cc0ca43a1ac1bbd3b70497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 124
       rect:
@@ -2145,6 +2894,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5cc792777b1389f44b0a9c47876259e3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 125
       rect:
@@ -2159,6 +2914,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 354f05ae3397e254487b9034e8f4a4a8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 126
       rect:
@@ -2173,6 +2934,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 159f7d0e845eafa4fa9cc83b1e10cb5f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 127
       rect:
@@ -2187,6 +2954,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 965ba90ca41622340a60d13513ce3535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 128
       rect:
@@ -2201,6 +2974,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dd8a1512af2daaa40adc07e8efab7280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 129
       rect:
@@ -2215,6 +2994,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 986657444c6f9504fa04fd4e8b15f034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 130
       rect:
@@ -2229,6 +3014,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2f8e6fc926432ff40b727a5ae3c4c168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 131
       rect:
@@ -2243,6 +3034,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 51652f7ce6f0ce24f8bbdb0022efb0a2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 132
       rect:
@@ -2257,6 +3054,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 45288388163648642931fe62926f3d19
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 133
       rect:
@@ -2271,6 +3074,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 526eae41e741f8f43bf448a7565339bf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 134
       rect:
@@ -2285,6 +3094,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e1c81e9732afd5240b90d19dfafe5708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 135
       rect:
@@ -2299,6 +3114,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0fdd403961fcfef4fa67dd1ada40b1d8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 136
       rect:
@@ -2313,6 +3134,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a01a4b7dd764f764a836c61d2d7959fa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 137
       rect:
@@ -2327,6 +3154,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4a4475c5be6bb3b4ba7a163d96a2476a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 138
       rect:
@@ -2341,6 +3174,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 912eb2981ee8fd545b462ca4ebacedd8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 139
       rect:
@@ -2355,6 +3194,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 03d42394df0908441ba0d970f6a97464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 140
       rect:
@@ -2369,6 +3214,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 547e0b09cd0fc2e408838ba3970894dc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 141
       rect:
@@ -2383,6 +3234,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 166976f3730d42343b2d7b9fa5d1fd52
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 142
       rect:
@@ -2397,6 +3254,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cde77cd029736724caa78b420761ed60
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 143
       rect:
@@ -2411,6 +3274,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5ce86ca74c13acc4fbb3e95666fbab82
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 144
       rect:
@@ -2425,6 +3294,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5793fe74c371b6d4c946176ecd280acc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 145
       rect:
@@ -2439,6 +3314,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cb772f1be1c34f34a872039bc33fb326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 146
       rect:
@@ -2453,6 +3334,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5db9e7e3e270e1245b730aebfaac1915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 147
       rect:
@@ -2467,6 +3354,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ed6aa3530e12ca84ba4c1c49d65b103f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 148
       rect:
@@ -2481,6 +3374,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 58a02a245c7f86c4c979eb28228833b7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 149
       rect:
@@ -2495,6 +3394,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: baee56f70e5572f42b3a28e136459c73
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 150
       rect:
@@ -2509,6 +3414,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bc6993cd4d9027743900b26656622a6c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 151
       rect:
@@ -2523,6 +3434,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1e3d2f7529f85b64e99510c172a685cb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 152
       rect:
@@ -2537,6 +3454,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d78c8f53100881642a0f43d0ec59616e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 153
       rect:
@@ -2551,6 +3474,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6da8d4e44d708284d8b569f0a5e2e9ad
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 154
       rect:
@@ -2565,6 +3494,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 422662ca884f10b43b8ac1a6352d6004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 155
       rect:
@@ -2579,6 +3514,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bcb3a0688d5bf9049bbcf25469636367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 156
       rect:
@@ -2593,6 +3534,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8a230fbee48ed8548a434e4b96ee6149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 157
       rect:
@@ -2607,6 +3554,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4b1035efe191434408e07c0635afa41a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 158
       rect:
@@ -2621,6 +3574,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ee856cd3d5e690043921ce4c67b8ecba
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 159
       rect:
@@ -2635,6 +3594,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bab03ace226e5e4438db26b41b1bc5e1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 160
       rect:
@@ -2649,6 +3614,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1eb5de54435d0c943875b6a7f850fd70
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 161
       rect:
@@ -2663,6 +3634,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 77d7cdd412b10a64cb37e5920c4a35a1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 162
       rect:
@@ -2677,6 +3654,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4e7c23b69d9484b43a39acf18b84680c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 163
       rect:
@@ -2691,6 +3674,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d35662827ce6a4a4f8f60f86791f45c2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 164
       rect:
@@ -2705,6 +3694,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 57bcb762dcd49374eac5b923056ca84b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 165
       rect:
@@ -2719,6 +3714,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bc23343a68345bc429c5e2cbec52b9f0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 166
       rect:
@@ -2733,6 +3734,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1225ecc099ffe5f4391d9301a77de4ab
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 167
       rect:
@@ -2747,6 +3754,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d2050c5e4a1a5634bb10032c1cc9d051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 168
       rect:
@@ -2761,6 +3774,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9e222cc42ecbc81468bfb8314e2bd11f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 169
       rect:
@@ -2775,6 +3794,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0981398baabf85f4b9887aeec767eef9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 170
       rect:
@@ -2789,6 +3814,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 392a924536c4e0c48ad1f69b060687cc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 171
       rect:
@@ -2803,6 +3834,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a006caf9ed2bc844fa420fe8a5ac83eb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 172
       rect:
@@ -2817,6 +3854,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6a36936e02ab9cd478d2caa3554c7eee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 173
       rect:
@@ -2831,6 +3874,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c78625758a908ca4e951573ad4c153d6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 174
       rect:
@@ -2845,6 +3894,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: aba58ec3e2f2d874d8993951b0d63525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 175
       rect:
@@ -2859,6 +3914,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5be5d371ac7270048b5682a199ceddbf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 176
       rect:
@@ -2873,6 +3934,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 78ee88335fb987d429f753fad55eee7e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 177
       rect:
@@ -2887,6 +3954,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d3b19359a5121e24a95a22c32ad78f07
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 178
       rect:
@@ -2901,6 +3974,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 97e67ab3ee38ebd49a75b2a4f56e746a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 179
       rect:
@@ -2915,6 +3994,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8680bb0abde66a4489b20fd6505da0bb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 180
       rect:
@@ -2929,6 +4014,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2722ac3415282a0429b7d7cdaa1b315b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 181
       rect:
@@ -2943,6 +4034,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b5964d0a0110e214fac800d3a4bc53a5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 182
       rect:
@@ -2957,6 +4054,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 402a53c338879fd438525d5d065dab47
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 183
       rect:
@@ -2971,6 +4074,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 380d37cd96114544a9a40eb3073e5e10
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 184
       rect:
@@ -2985,6 +4094,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 63b84d7b5ae35ba45a0d87164916455e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 185
       rect:
@@ -2999,6 +4114,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 800d2c53827594847bbfaac5e7b531a1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 186
       rect:
@@ -3013,6 +4134,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 87581fdc7b8d2314c80390af296103f5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 187
       rect:
@@ -3027,6 +4154,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 643313a76a03d8348b5685b101e0721f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 188
       rect:
@@ -3041,6 +4174,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cc308536fbdc53a4aac3911fa6b6bf18
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 189
       rect:
@@ -3055,6 +4194,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bd94b16c88e2fe74aa276909abec5bf1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 190
       rect:
@@ -3069,6 +4214,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fdb1827ea4fbf344eb92d7bae0118761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 191
       rect:
@@ -3083,6 +4234,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4f5d158d63456634f92fc23db891924a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 192
       rect:
@@ -3097,6 +4254,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 89d38cefbedab5946bd8fd5f367d917a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 193
       rect:
@@ -3111,6 +4274,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 783c36cf79a39a84db49fbe34fabb09d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 194
       rect:
@@ -3125,6 +4294,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ee656bbc8bfe5a142ba5fb4db8ed022b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 195
       rect:
@@ -3139,6 +4314,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f6d46b9f2a5787748befd7d54c8345fb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 196
       rect:
@@ -3153,6 +4334,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f657d6a0324a7d549baede6aa3015a68
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 197
       rect:
@@ -3167,6 +4354,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 345c5c820d5b11d4ebec652a52584d57
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 198
       rect:
@@ -3181,6 +4374,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cd706cb13c010c94db7f8a12d81afc46
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 199
       rect:
@@ -3195,6 +4394,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6c070dfef9d564b4093d92a513707b99
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 200
       rect:
@@ -3209,6 +4414,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 451dee66fdc366d4eab7b617b8fbad8c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 201
       rect:
@@ -3223,6 +4434,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f48f69be8e65c064caeaf4ef28799297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 202
       rect:
@@ -3237,6 +4454,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 607cd066511d3d7499188e612c5d8dbd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 203
       rect:
@@ -3251,6 +4474,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3f8e8144c2b4ee344a22d2ae3188bc92
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 204
       rect:
@@ -3265,6 +4494,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0a516e741ba6a654aa2977085d413f53
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 205
       rect:
@@ -3279,6 +4514,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b55be867af3572f4bbce79342dd33bd1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 206
       rect:
@@ -3293,6 +4534,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 85d7daa9f285a8248b2a54d9cdef602b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 207
       rect:
@@ -3307,6 +4554,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: af8b7f36fce0c5b45978aa7882ea3a4d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 208
       rect:
@@ -3321,6 +4574,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 46e43742557edf246b3d873379b60bc2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 209
       rect:
@@ -3335,6 +4594,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0693ddca3f85806478fd09b2d71f7765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 210
       rect:
@@ -3349,6 +4614,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c3cb76100afbb8e4a8abe9acc0bb262a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 211
       rect:
@@ -3363,6 +4634,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9cd356fe33bef04448fc35b8c056d03e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 212
       rect:
@@ -3377,6 +4654,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 382d7e0cb39a52f4ba0b4fb64b0e51a7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 213
       rect:
@@ -3391,6 +4674,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c9e859a0d1ae8404d8ffa2107ec68717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 214
       rect:
@@ -3405,6 +4694,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c6c64c703c3b5b6478b63d5538e99734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 215
       rect:
@@ -3419,6 +4714,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c7000341b2dfc8440bff5cf597e0485c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 216
       rect:
@@ -3433,6 +4734,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c2a6cceeaacabf441ae5f651139dad09
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 217
       rect:
@@ -3447,6 +4754,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3427327e8dcad6f4eb09d9e42a8ef0c3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 218
       rect:
@@ -3461,6 +4774,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 61c6bb28e251ac54caaafa34ee07a561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 219
       rect:
@@ -3475,6 +4794,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b9fa802357ce4c048bec04885568e32c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 220
       rect:
@@ -3489,6 +4814,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e709594ac6a3b6e49b37f453f8dc1146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 221
       rect:
@@ -3503,6 +4834,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d7b1731c2275db2429cbcb3be6a218c5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 222
       rect:
@@ -3517,6 +4854,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ebb9875a5a986f642bb1d57d863b56fd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 223
       rect:
@@ -3531,6 +4874,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a317a0ba941a40d41b2c9832dadd9ccf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 224
       rect:
@@ -3545,6 +4894,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b0e6d70a582948c4aa6c34f2af31d4ec
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 225
       rect:
@@ -3559,6 +4914,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 35c41f261ed4aba4a98d56d22c35193c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 226
       rect:
@@ -3573,6 +4934,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e3dcb90e4dc9e3c4cb32c53141d12f7a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 227
       rect:
@@ -3587,6 +4954,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 800ce14f395793d49a00b3679f37a1b0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 228
       rect:
@@ -3601,6 +4974,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dbf3d19956d13974d8c8dca0e3b75cdf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 229
       rect:
@@ -3615,6 +4994,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fb6dc5f7b46fdee4b86775cd4696b75f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 230
       rect:
@@ -3629,6 +5014,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5826bccba8e33bc4db0dc7bf189708d6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 231
       rect:
@@ -3643,6 +5034,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 493b3c8804b74344e97e1a1549715ac0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 232
       rect:
@@ -3657,6 +5054,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3a4977d2542ec13458f67320a3e6327f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 233
       rect:
@@ -3671,6 +5074,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f96ef0952a9f4c34da7756d62a56d9b7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 234
       rect:
@@ -3685,6 +5094,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a62cc8213fa66114d886074dd56a41ec
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 235
       rect:
@@ -3699,6 +5114,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3ef94721d406c664d9fb7a15a31c7fae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 236
       rect:
@@ -3713,6 +5134,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 352726b48aab1e2449cb4f976607b794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 237
       rect:
@@ -3727,6 +5154,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6e09fa8754828a54ebd2ed031d75b399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 238
       rect:
@@ -3741,6 +5174,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8a947ec62823af64fa97dfa7b41bda1d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 239
       rect:
@@ -3755,6 +5194,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b9540c970326e0640bc8285d4cbf7f9e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 240
       rect:
@@ -3769,6 +5214,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4402691050abab5498c7141057d52a08
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 241
       rect:
@@ -3783,6 +5234,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 41be06388af551f409ed5bf66d0b3f54
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 242
       rect:
@@ -3797,6 +5254,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b05b99a834671994faab9f0f1101dc98
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 243
       rect:
@@ -3811,6 +5274,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6beda4f7e7b773f42897c29d326c74f2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 244
       rect:
@@ -3825,6 +5294,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9b2db1736113a194f879a68e17bb9b11
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 245
       rect:
@@ -3839,6 +5314,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 70fd5418855c37b46878e615f74d16a4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 246
       rect:
@@ -3853,6 +5334,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b1b822e84d260dc4ca749105466c59b3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 247
       rect:
@@ -3867,6 +5354,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 70d8cfcd5ecd7874fb2316b7ca8f94f4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 248
       rect:
@@ -3881,6 +5374,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 27cd2123050243b4ea90ddd3588e4107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 249
       rect:
@@ -3895,6 +5394,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 66a409bd6642f2640899fb2ceaa4c1d2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 250
       rect:
@@ -3909,6 +5414,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 86f6cf8584ea1e041a890d562b37271b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 251
       rect:
@@ -3923,6 +5434,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 566f85bc3c067cb468c8fd2eee5de54c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 252
       rect:
@@ -3937,6 +5454,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a5871b62f980cf54d824c26edb9c13cf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 253
       rect:
@@ -3951,6 +5474,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8bf0c54320ea8c544840dd807d684c5d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 254
       rect:
@@ -3965,6 +5494,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c5c917c46aee54b489d177722f46bf10
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 255
       rect:
@@ -3979,6 +5514,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2b54937529e98764b807c3c6ea5a0b56
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 256
       rect:
@@ -3993,6 +5534,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e58a36bd414ea91419f30f8de9da2b18
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 257
       rect:
@@ -4007,6 +5554,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e0450bc36bb73854e989b8d07bbce2e1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 258
       rect:
@@ -4021,6 +5574,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6ed385dbab218cb43a42c14079aeb319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 259
       rect:
@@ -4035,6 +5594,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ad687c6823295da44b3c2a5d67e89ce3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 260
       rect:
@@ -4049,6 +5614,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 53ba487fde6464045a98c087aeb6b6ea
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 261
       rect:
@@ -4063,6 +5634,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 376dab7c7302ef844966e26c5f86a877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 262
       rect:
@@ -4077,6 +5654,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 845ad1406ced4f04ba191b033d8e32f1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 263
       rect:
@@ -4091,6 +5674,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 712505691f72870419c95483285ced0d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 264
       rect:
@@ -4105,6 +5694,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 012f2a8dfba2a8742bff04a08a4f5ded
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 265
       rect:
@@ -4119,6 +5714,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3e6b329ebf6510746967294b0834912a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 266
       rect:
@@ -4133,6 +5734,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 677fccc2311d00a479aa0588e76b132c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 267
       rect:
@@ -4147,6 +5754,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cb06cc7856b8fe844ada123097bbc860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 268
       rect:
@@ -4161,6 +5774,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 52597024c6e4a3e40909ca5bb19a68d8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 269
       rect:
@@ -4175,6 +5794,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 77c6aa4642998be40ae854c8fd2feb46
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 270
       rect:
@@ -4189,6 +5814,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f1e8c30e4188b064288023263699c215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 271
       rect:
@@ -4203,6 +5834,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ab59b00236c1b8045871ea0f0efb9f3b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 272
       rect:
@@ -4217,6 +5854,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fb7fe2a6305f53f4890050865732935d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 273
       rect:
@@ -4231,6 +5874,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c1bca01f04c04bc469c4a6d878b866a6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 274
       rect:
@@ -4245,6 +5894,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e12327fb665a9b34ea14801287b4d39e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 275
       rect:
@@ -4259,6 +5914,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 604c52ffcc6abcb429ef25daa80caefc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 276
       rect:
@@ -4273,6 +5934,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e8354acb58edab742a58fe23d63515ff
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 277
       rect:
@@ -4287,6 +5954,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4703089bbaf1d4342b678b55927810bd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 278
       rect:
@@ -4301,6 +5974,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b5364f0df225bc7428d0693ecdd5659b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 279
       rect:
@@ -4315,6 +5994,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f8c8d6ebafb4d8145a3241635e3046e6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 280
       rect:
@@ -4329,6 +6014,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 138a56390d3e6d4429e7972a15d0184e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 281
       rect:
@@ -4343,6 +6034,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: abf7cc489b826bc49a8a48cdbd69c9ea
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 282
       rect:
@@ -4357,6 +6054,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9dc245c721196f54e8e4b27b8d481cd8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 283
       rect:
@@ -4371,6 +6074,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 713927f12d85865459582709d0e84430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 284
       rect:
@@ -4385,6 +6094,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9d57685f2aee4894eb4e8c9329e21348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 285
       rect:
@@ -4399,6 +6114,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e6259064462067d4da0a158322ce20b4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 286
       rect:
@@ -4413,6 +6134,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 720860ddada48c04f86e0754c610dd94
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 287
       rect:
@@ -4427,6 +6154,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f62856f9e1a110041b43fded5ca0e4db
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 288
       rect:
@@ -4441,6 +6174,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ba44c30c39b82e548b3d88d2c82b6d4a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 289
       rect:
@@ -4455,6 +6194,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b76dce5513d208d46b36732d3578d9ed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 290
       rect:
@@ -4469,6 +6214,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9404583b062123a4696be41aef1ff7b8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 291
       rect:
@@ -4483,6 +6234,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d174bf208e694ad4a942365e5aa1af00
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 292
       rect:
@@ -4497,6 +6254,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 654d8ac3756e1af4fb688404d571143f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 293
       rect:
@@ -4511,6 +6274,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0a47df3faba048344a531caa05978ae2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 294
       rect:
@@ -4525,6 +6294,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f24b660552d514a4ea63e4be92d98835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 295
       rect:
@@ -4539,6 +6314,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1acec09bca97778468974187f19bb581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 296
       rect:
@@ -4553,6 +6334,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e7ccd093e272bcc41b66628de0fdab6f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 297
       rect:
@@ -4567,6 +6354,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bb71918f4f0d82546987e03795bc8016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 298
       rect:
@@ -4581,6 +6374,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f03c7ba891036c34f9f41cf6a63c5c1c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 299
       rect:
@@ -4595,6 +6394,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e030eee3e8e0d994f9c8e495a7062115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 300
       rect:
@@ -4609,6 +6414,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3ce4721d28727684cbc0c4afd0b80393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 301
       rect:
@@ -4623,6 +6434,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3f6e727f4bad4d6468d193f6c5130e2e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 302
       rect:
@@ -4637,6 +6454,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c4143c09aed11fa4095f03569f821302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 303
       rect:
@@ -4651,6 +6474,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ee4e473d4fb6b2545b1b47bb564b9b86
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 304
       rect:
@@ -4665,6 +6494,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bade12b9a7bed2845ac6bea540582e19
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 305
       rect:
@@ -4679,6 +6514,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4ed70d155ed60274d99eaa38b523e6e7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 306
       rect:
@@ -4693,6 +6534,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 35a36031839d051429ff6ab44b6cd60b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 307
       rect:
@@ -4707,6 +6554,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5dc1f9b72877de4449c130f7c4c8b5cd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 308
       rect:
@@ -4721,6 +6574,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d18093cdfb8aafc42875c7998bfb0bf3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 309
       rect:
@@ -4735,6 +6594,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a16efccfe2a9ea0439ab8f4b10bacb1a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 310
       rect:
@@ -4749,6 +6614,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ba7459d2b48b2c140baf91c1394071ab
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 311
       rect:
@@ -4763,6 +6634,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1e0b85c1777d6cc4db4d3f222001d71f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 312
       rect:
@@ -4777,6 +6654,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 366d20c1cee787f42a916f7595c7d96f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 313
       rect:
@@ -4791,6 +6674,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2eed328042d6d2d428889463a79b9540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 314
       rect:
@@ -4805,6 +6694,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 38e5243170a30da4b8b12680c87f089b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 315
       rect:
@@ -4819,6 +6714,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b6ac3671b2b36d74cac7c9270686a598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrayAtaho 316
       rect:
@@ -4833,9 +6734,23 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4630589081f422e4b92558d8c993e06a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

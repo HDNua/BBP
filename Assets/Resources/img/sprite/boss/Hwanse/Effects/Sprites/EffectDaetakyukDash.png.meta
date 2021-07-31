@@ -71,7 +71,7 @@ TextureImporter:
     21300132: EffectDaetakyukDash 66
     21300134: EffectDaetakyukDash 67
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -89,6 +89,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -99,7 +101,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -119,11 +121,13 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 3072
     resizeAlgorithm: 0
     textureFormat: -1
@@ -150,6 +154,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0007b3740100d7049a78bc7def3a319f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 1
       rect:
@@ -164,6 +174,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e8f54f1968d034e4bb1c6f92b62fc5c2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 2
       rect:
@@ -178,6 +194,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5a338943183e06745aecfab085cbcc9a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 3
       rect:
@@ -192,6 +214,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 72785ea4115e2d8428e82154105bea3a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 4
       rect:
@@ -206,6 +234,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fc2714fdfaca4934588ff8309bde234b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 5
       rect:
@@ -220,6 +254,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 23b8f43bc354363498862b61ef2f4248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 6
       rect:
@@ -234,6 +274,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2148bd16f0dfc0143a264f2e7dd508f3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 7
       rect:
@@ -248,6 +294,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ea6bb043420e81b40be34dd74d36d515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 8
       rect:
@@ -262,6 +314,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 30fc34cbc4f99f546bb1da9ff52b5e83
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 9
       rect:
@@ -276,6 +334,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: acedd46f166fa4245889305b005023fd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 10
       rect:
@@ -290,6 +354,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8ec860bf5496e834e810041678ec189d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 11
       rect:
@@ -304,6 +374,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 526164753b7ac984a8fe8205c49ffdf3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 12
       rect:
@@ -318,6 +394,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d9b0c823a8d8db345b1bdf21607e7635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 13
       rect:
@@ -332,6 +414,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1c8c7d0e74b9a224282eb69c6dfacb7e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 14
       rect:
@@ -346,6 +434,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 694869aacc2d2db44abeb554fb6294bd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 15
       rect:
@@ -360,6 +454,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a595ca748d71e2d48b1d94af059d242c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 16
       rect:
@@ -374,6 +474,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 274c7866121d2ce42bd503b03d1845b9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 17
       rect:
@@ -388,6 +494,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1813664a108d3a544a78d616fa518af2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 18
       rect:
@@ -402,6 +514,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3756ae0f9c2027b46ab551de0859ba51
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 19
       rect:
@@ -416,6 +534,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b352554e35319a64aa0c9fde64927a42
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 20
       rect:
@@ -430,6 +554,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6be1aaf74b571c640ae4bd50da60fece
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 21
       rect:
@@ -444,6 +574,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 24911ad88fed06b48a27f68d48482893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 22
       rect:
@@ -458,6 +594,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9456667d79796d940b698c52ba715c65
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 23
       rect:
@@ -472,6 +614,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d6b88b47479c9414a8508352ec011b04
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 24
       rect:
@@ -486,6 +634,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0106ed0ea9c21d044ab1f14e75fa917d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 25
       rect:
@@ -500,6 +654,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8317148e4534fd540bd5dfde2ccff36d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 26
       rect:
@@ -514,6 +674,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e2fd7bab3dd22464e85ef9f28aafa26b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 27
       rect:
@@ -528,6 +694,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2a2803528422d3c4aac152ea2f273083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 28
       rect:
@@ -542,6 +714,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 462aa8317b3f4964fb7ee4068f314b29
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 29
       rect:
@@ -556,6 +734,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 967e8b5ed9d791e42a005441d685f1d7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 30
       rect:
@@ -570,6 +754,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 16bfc7fa57cbf7a42aeb3a963561ed1f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 31
       rect:
@@ -584,6 +774,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cb77e0dcacb2f5449ae371710b2b2980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 32
       rect:
@@ -598,6 +794,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9f89910fe39fb514694728fce1f0eb0f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 33
       rect:
@@ -612,6 +814,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c1dd7689cdf10c141980478429536459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 34
       rect:
@@ -626,6 +834,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e0462a0785e3c7247b56fefffda53a19
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 35
       rect:
@@ -640,6 +854,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8bd44b28e1654e84cb20ba5131dad82f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 36
       rect:
@@ -654,6 +874,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 92d26235188b0e348bbb5a7675c91ee0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 37
       rect:
@@ -668,6 +894,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1f2afd290eb94e046a977060ababffc5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 38
       rect:
@@ -682,6 +914,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5fab4549457e64d4592245aa0ffd0996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 39
       rect:
@@ -696,6 +934,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a5cf4b0b5ce993b41a7e8089ca27d177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 40
       rect:
@@ -710,6 +954,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 50a83dcb75e1cd94091e8e79557d3130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 41
       rect:
@@ -724,6 +974,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6843fccf96bf9934580da3bb3a913474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 42
       rect:
@@ -738,6 +994,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f686f6c81a16f8c4c821cd61e3bef878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 43
       rect:
@@ -752,6 +1014,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 35f0aa591549962438bb78b8c09bc71a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 44
       rect:
@@ -766,6 +1034,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5f56405b1787a0e4cbe80a4eba2fc0e2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 45
       rect:
@@ -780,6 +1054,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bfa099ec449519a4e881c88d4fed110c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 46
       rect:
@@ -794,6 +1074,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0fdd3d4efa2652445a579ac5bad9fb9a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 47
       rect:
@@ -808,6 +1094,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d6725b09a9c30c148a46db1cde604078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 48
       rect:
@@ -822,6 +1114,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7c1a53d6e391318468376ceee224f41d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 49
       rect:
@@ -836,6 +1134,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6f734fe4d2c249a45b97085eb5ab0431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 50
       rect:
@@ -850,6 +1154,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d96084caed9da3242a9827792f5e395c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 51
       rect:
@@ -864,6 +1174,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 62952cbb9ae2c6745bbf87c18e38e9b9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 52
       rect:
@@ -878,6 +1194,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4c6de28a8cd2a3a45bb0dc30f5861898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 53
       rect:
@@ -892,6 +1214,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6e1195ea0256f564ca6a4c28df302c7f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 54
       rect:
@@ -906,6 +1234,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 33647c091c107484a9f6e04438752507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 55
       rect:
@@ -920,6 +1254,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c694f5d747afcd64d8734ad90441e785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 56
       rect:
@@ -934,6 +1274,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8b520d41ca6de3b47b2b335ec6e52d38
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 57
       rect:
@@ -948,6 +1294,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 10fa4e251babe9347aa31d956f38e06c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 58
       rect:
@@ -962,6 +1314,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b4889b2717460004fb758d1278edee39
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 59
       rect:
@@ -976,6 +1334,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 85ee273a94316e148925d9286a6dc0d5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 60
       rect:
@@ -990,6 +1354,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9254fb1f967a314478c5e93cb34442a7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 61
       rect:
@@ -1004,6 +1374,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c24b7b85aafb9cb418bcd7584b0652f5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 62
       rect:
@@ -1018,6 +1394,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 02793f25418b6ad44b93e3fc0df5b08e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 63
       rect:
@@ -1032,6 +1414,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 29ec8a08ef8a73f4696aa685e7dc641b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 64
       rect:
@@ -1046,6 +1434,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5b502431be42bd443b4c55fd8104c0ce
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 65
       rect:
@@ -1060,6 +1454,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: aa30413469e577e4fb1c5291e98bcc36
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 66
       rect:
@@ -1074,6 +1474,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ed3ae10ac18ddc043aa5944b33fb164d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EffectDaetakyukDash 67
       rect:
@@ -1088,9 +1494,23 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 91b427c6e869a4b4f810464718112a83
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

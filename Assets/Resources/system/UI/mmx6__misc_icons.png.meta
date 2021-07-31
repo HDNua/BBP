@@ -112,7 +112,7 @@ TextureImporter:
     21300214: mmx6__misc_icons_107
     21300216: mmx6__misc_icons_108
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -130,6 +130,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -140,7 +142,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -160,11 +162,13 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -174,7 +178,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Standalone
+  - serializedVersion: 2
+    buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -184,7 +189,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: WebGL
+  - serializedVersion: 2
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -211,6 +217,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: dec648e314d7cca4db9757e93942873d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_1
       rect:
@@ -225,6 +237,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 1613d30c8ae0d414b9988362c64795e2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_2
       rect:
@@ -239,6 +257,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: ea671a65653a6e54597880827fa35c4c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_3
       rect:
@@ -253,6 +277,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 6f3822b20711f4442a7f1e1ff52279ac
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_4
       rect:
@@ -267,6 +297,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 73c1829d38b5a2945a6d1f6694bbfce3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_5
       rect:
@@ -281,6 +317,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 834a670bad7dbb048880ec03a0df4f77
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_6
       rect:
@@ -295,6 +337,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: d10157e51845f534b86e366a93839c7f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_7
       rect:
@@ -309,6 +357,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: f11e0bf466a1162499d61f8fe8efe091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_8
       rect:
@@ -323,6 +377,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 44fde3c9531eed34e84b0a2dafcf0ee6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_9
       rect:
@@ -337,6 +397,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a942942f476417b40b4f24aabaf6da7e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_10
       rect:
@@ -351,6 +417,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: b82b39ed72dcbd04b8b2ca930c854411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_11
       rect:
@@ -365,6 +437,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e4a79885bb89cbd49a5dc65826c4850a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_12
       rect:
@@ -379,6 +457,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 1041d69b80a297141848944de650e1d4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_13
       rect:
@@ -393,6 +477,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: ddb635e8c9063664ba8fe80ab6b201a8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_14
       rect:
@@ -407,6 +497,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: f99aebc7302502f4c8defd86db534505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_15
       rect:
@@ -421,6 +517,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a55a2edf12024f64997286a10e364342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_16
       rect:
@@ -435,6 +537,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 0193ca29c64ec044a812f0769399b506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_17
       rect:
@@ -449,6 +557,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 3b8d6f1f1a225d241b271ed2731de6ab
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_18
       rect:
@@ -463,6 +577,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: bb494195b9dea324b94cc6c566064d1f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_19
       rect:
@@ -477,6 +597,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 1532a8076cf633c4d8deb35fcc9df595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_20
       rect:
@@ -491,6 +617,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 3e3a64dd4e6ccd84fb8ab1be9a97702b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_21
       rect:
@@ -505,6 +637,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 1493c8603762b7b4aa691e6d0038b36a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_22
       rect:
@@ -519,6 +657,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: dfef0434344c0a04db6d91101814ea23
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_23
       rect:
@@ -533,6 +677,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 0bb140791f6142d46b70f6d9b9c40cbe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_24
       rect:
@@ -547,6 +697,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 7e8baca9051d5884f8264a73fef86ffb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_25
       rect:
@@ -561,6 +717,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c5a42fc96419c1844a38d4bb50cebecd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_26
       rect:
@@ -575,6 +737,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 7c8acc9bfd13b16468c6165fd1d9fed3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_27
       rect:
@@ -589,6 +757,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 9991ac294bbfba840aa4f368f98d48d6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_28
       rect:
@@ -603,6 +777,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: fdfa9b811f7405049b4f8f1d993c6ffe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_29
       rect:
@@ -617,6 +797,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: f173789bd8d8e2542a4dcd4de4fb68f5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_30
       rect:
@@ -631,6 +817,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 26791f4cf4f3df44c80a6c6851f46e60
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_31
       rect:
@@ -645,6 +837,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: cfdc325b6fdae7d43bba0328b69f01b4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_32
       rect:
@@ -659,6 +857,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 621cd6c6cf53dc84591abfe13d1ec7a6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_33
       rect:
@@ -673,6 +877,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: cd41af7875fdda24b972e90e193673fd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_34
       rect:
@@ -687,6 +897,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 0c02764b0f633b048a3ff581b75c6cde
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_35
       rect:
@@ -701,6 +917,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 09624d0543b528c4eab11793af80c22f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_36
       rect:
@@ -715,6 +937,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a400a4d4aad46ea49a04a86937222709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_37
       rect:
@@ -729,6 +957,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a9d61439594ba6347987715c8fa5061a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_38
       rect:
@@ -743,6 +977,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 19538c1d9088d7f4d892aa9ab51212e6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_39
       rect:
@@ -757,6 +997,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: dde57a5312dde2d41bf257b4d520fd1d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_40
       rect:
@@ -771,6 +1017,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 27d03cbc7c9d37a4bb09dfb4d1cdad24
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_41
       rect:
@@ -785,6 +1037,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 950a793e4bbf1a2448e389a15143b83f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_42
       rect:
@@ -799,6 +1057,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 55d28d8f8511a7f4aaa3179e62c5d194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_43
       rect:
@@ -813,6 +1077,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c65e0de7709870244a6eae28581fcc87
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_44
       rect:
@@ -827,6 +1097,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e51cd63d0ba9bb2459d8e2b0ed077c12
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_45
       rect:
@@ -841,6 +1117,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 19bf833c4e67b4a42b2e972fab2ce204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_46
       rect:
@@ -855,6 +1137,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 68a30f83486f5594eb26d82695f5c4ee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_47
       rect:
@@ -869,6 +1157,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 101b90a9a3189e84ab21e2aa5cbcd0d5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_48
       rect:
@@ -883,6 +1177,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 5326e2a6bbb93fe4dadbe82bced7c9a1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_49
       rect:
@@ -897,6 +1197,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 2e1e98cf85c3fa645871cce741d29e01
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_50
       rect:
@@ -911,6 +1217,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: de7593e36f505d1498d4dda66ca8f47b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_51
       rect:
@@ -925,6 +1237,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: cda30ac2ca070164fb01ba25df5d44e3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_52
       rect:
@@ -939,6 +1257,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 761a5a28e9c670f4e858676b96435bb9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_53
       rect:
@@ -953,6 +1277,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 4472140418ab04740b1af7d3fbbd827c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_54
       rect:
@@ -967,6 +1297,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 2d75a9107229e1e4196d1820a660b259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_55
       rect:
@@ -981,6 +1317,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 984685edf0ce49c43850ca53b3d1ea1d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_56
       rect:
@@ -995,6 +1337,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: ee1f7b6bf43eb7745a60e01ace1d9eec
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_57
       rect:
@@ -1009,6 +1357,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a90ee6f0e643049489c58681d12f972d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_58
       rect:
@@ -1023,6 +1377,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 5724809f5c434924e84ee5b98d69f17b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_59
       rect:
@@ -1037,6 +1397,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 10a7e38cb8329aa46a40fd0fb8bee098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_60
       rect:
@@ -1051,6 +1417,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e20107e64914b6a4da7d46e6eda774ba
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_61
       rect:
@@ -1065,6 +1437,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: de975f720c459d6478adb6ba65abace4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_62
       rect:
@@ -1079,6 +1457,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 4173cbf14a8281a4d845bc36b40dac4e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_63
       rect:
@@ -1093,6 +1477,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: f0fe3da30d8fe4646bebb8f1d7886d97
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_64
       rect:
@@ -1107,6 +1497,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c680226be5d8039428880ec502e06cdd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_65
       rect:
@@ -1121,6 +1517,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 38c9ef93427b4b74f9018523501e6c4c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_66
       rect:
@@ -1135,6 +1537,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: ad32f9b26bd51494e8187c251384e053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_67
       rect:
@@ -1149,6 +1557,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 2ebdf2fd7e447a34ea2191abde5ad5b5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_68
       rect:
@@ -1163,6 +1577,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 24549bb68fd262a46ad75911f7877045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_69
       rect:
@@ -1177,6 +1597,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 90e951404cc6dd74292bf6037a90349d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_70
       rect:
@@ -1191,6 +1617,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 365c4cbe4c958f2498f44105a4d91c98
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_71
       rect:
@@ -1205,6 +1637,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c6f6d84c82647ca429cb6353d8efd9b4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_72
       rect:
@@ -1219,6 +1657,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: fb86ca5d633e724409f9f8bbef084f79
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_73
       rect:
@@ -1233,6 +1677,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: f9b35bf956a6d314da03322820da10c4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_74
       rect:
@@ -1247,6 +1697,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 522cc475b04753b40bd9118a426da655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_75
       rect:
@@ -1261,6 +1717,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 3147c9a3d8157f143a72e4f569a99f6c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_76
       rect:
@@ -1275,6 +1737,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a2d9a4b31152a5648ae4fa2bb57a01fd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_77
       rect:
@@ -1289,6 +1757,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 4be1cf8965224014ca15cebb4e73c7ca
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_78
       rect:
@@ -1303,6 +1777,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 56d5c560b830edd45a57c41aa50cd06c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_79
       rect:
@@ -1317,6 +1797,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c1ac7f3174c73024ca39e80e24b277f7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_80
       rect:
@@ -1331,6 +1817,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 807484a7ee90efc4e85e7a4d25b44836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_81
       rect:
@@ -1345,6 +1837,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 312211b10b4ebc84e9d685baab1558b9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_82
       rect:
@@ -1359,6 +1857,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 05734ad89b5686d499f0ec8a35deb266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_83
       rect:
@@ -1373,6 +1877,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 1b271f564d2b7eb42ba4654d0fbfa7e6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_84
       rect:
@@ -1387,6 +1897,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 481b0d4e9edddb942b225c3028ec7c5e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_85
       rect:
@@ -1401,6 +1917,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: f3b5af60dba734542bc072ace5830a72
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_86
       rect:
@@ -1415,6 +1937,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 608cc7da39ffcb94494b9af009ccafe4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_87
       rect:
@@ -1429,6 +1957,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 2957f9772edc01144941d8a16ea4ce85
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_88
       rect:
@@ -1443,6 +1977,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 9ae2cf4a617dfba4591439b83c8c7924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_89
       rect:
@@ -1457,6 +1997,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 1d6bebebc489a1949af24be6386373ca
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_90
       rect:
@@ -1471,6 +2017,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 518f0fce27cff9d4a8ef733f408964c2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_91
       rect:
@@ -1485,6 +2037,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 23245a07f7ef0d84b87d935207bc828d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_92
       rect:
@@ -1499,6 +2057,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 94c6a97b98f5c164b983e0e2011f6135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_93
       rect:
@@ -1513,6 +2077,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 9a56c67419ff9dc4a90096154112c081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_94
       rect:
@@ -1527,6 +2097,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: bf9de85baf1246c47a081cde690a03ea
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_95
       rect:
@@ -1541,6 +2117,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: aeff59e27bb061945a613d713c8d09b3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_96
       rect:
@@ -1555,6 +2137,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 342a721766b7a734aa45c31d1af5c717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_97
       rect:
@@ -1569,6 +2157,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a26a6dde30354d9419e6b56c7eb9cc32
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_98
       rect:
@@ -1583,6 +2177,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 78b8083c7b8fd994ebd786e3d2e1aece
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_99
       rect:
@@ -1597,6 +2197,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: f2665043530059446bf3b9afce392b91
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_100
       rect:
@@ -1611,6 +2217,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 2fd3f6766dd50b140a9deafc70914cba
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_101
       rect:
@@ -1625,6 +2237,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: d7b297a2b35f8f64bb6aa3a0e2e17780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_102
       rect:
@@ -1639,6 +2257,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 73925aa4850b56949971d42598022ffa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_103
       rect:
@@ -1653,6 +2277,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c707eefb03c72154c82a91d7a3eb81cc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_104
       rect:
@@ -1667,6 +2297,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 0b5084673c4bd6c44ae91938387412ae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_105
       rect:
@@ -1681,6 +2317,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 22f809b32cbed8b4a89ec1fdd9447b8a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_106
       rect:
@@ -1695,6 +2337,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 35ef488c2b2cb5842bedc3edf0948bbc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_107
       rect:
@@ -1709,6 +2357,12 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 9085f1ae04fe8654b92599cf5d22cc62
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: mmx6__misc_icons_108
       rect:
@@ -1723,9 +2377,23 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: ef3a0cc8fa937c04e97d9d53759a6532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
